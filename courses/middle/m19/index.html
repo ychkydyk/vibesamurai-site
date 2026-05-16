@@ -1,0 +1,305 @@
+<!DOCTYPE html><html lang="en"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Incidents &amp; post-mortems — Vibesamurai</title><meta name="description" content="Когда агент сломался в проде. Incident response, blameless post-mortems, системные уроки из инцидентов."><meta property="og:title" content="Incidents &#38; post-mortems"><meta property="og:type" content="article"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Inter:wght@300..800&family=JetBrains+Mono:wght@400..600&display=swap" rel="stylesheet"><link rel="stylesheet" href="/vibesamurai-site/_astro/_slug_.DpgmObvf.css">
+<style>.reader-sidebar[data-astro-cid-khgtvzrl] .soon[data-astro-cid-khgtvzrl]{display:block;color:var(--text-mute);font-size:var(--size-2);padding:var(--space-1) 0}.reader-sidebar[data-astro-cid-khgtvzrl] .soon[data-astro-cid-khgtvzrl] em[data-astro-cid-khgtvzrl]{font-style:normal;font-family:var(--font-mono);font-size:.85em;color:var(--accent);margin-left:4px;text-transform:uppercase;letter-spacing:.1em}
+</style></head> <body> <div class="reader-app"> <aside class="reader-rail"> <a href="/vibesamurai-site/" class="logo" aria-label="Vibesamurai home">V</a> </aside> <aside class="reader-sidebar" data-astro-cid-khgtvzrl> <div class="breadcrumb" data-astro-cid-khgtvzrl>Vibesamurai · Middle Path · m19</div> <h4 data-astro-cid-khgtvzrl>В этом курсе</h4> <ul data-astro-cid-khgtvzrl> <li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m1" class data-astro-cid-khgtvzrl>M1 · Что такое agentic AI в SDLC</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m2" class data-astro-cid-khgtvzrl>M2 · Границы агента</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m3" class data-astro-cid-khgtvzrl>M3 · Observability &amp; HITL</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m4" class data-astro-cid-khgtvzrl>M4 · Tool inventory &amp; permissions</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m5" class data-astro-cid-khgtvzrl>M5 · MCP deep dive</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m6" class data-astro-cid-khgtvzrl>M6 · Claude Code mastery</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m7" class data-astro-cid-khgtvzrl>M7 · Codex CLI &amp; OpenAI Agents</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m8" class data-astro-cid-khgtvzrl>M8 · Cursor + IDE-агенты</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m9" class data-astro-cid-khgtvzrl>M9 · Memory strategies</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m10" class data-astro-cid-khgtvzrl>M10 · State, drift, continuity</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m11" class data-astro-cid-khgtvzrl>M11 · Метрики оценки</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m12" class data-astro-cid-khgtvzrl>M12 · Regression testing</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m13" class data-astro-cid-khgtvzrl>M13 · Tuning, когда метрики стоят</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m14" class data-astro-cid-khgtvzrl>M14 · Pipelines &amp; orchestration</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m15" class data-astro-cid-khgtvzrl>M15 · Multi-agent роли</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m16" class data-astro-cid-khgtvzrl>M16 · Когда multi-agent — overkill</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m17" class data-astro-cid-khgtvzrl>M17 · Деплой агентов в прод</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m18" class data-astro-cid-khgtvzrl>M18 · Production security</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m19" class="current" data-astro-cid-khgtvzrl>M19 · Incidents &amp; post-mortems</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m20" class data-astro-cid-khgtvzrl>M20 · Финал Middle</a> </li> </ul>  </aside> <main class="reader-main"> <div class="chapter-eyebrow">Middle Path · m19</div> <h1 class="chapter-title">M19 · Incidents &amp; post-mortems</h1> <p class="chapter-subtitle">Когда агент сломался в проде. Incident response, blameless post-mortems, системные уроки из инцидентов.</p>  <blockquote>
+<p>Черновик M19 в голосе DmitriyM.</p>
+</blockquote>
+<h2 id="hook">Hook</h2>
+<pre class="astro-code astro-code-themes github-light github-dark-default" style="background-color:#fff;--shiki-dark-bg:#0d1117;color:#24292e;--shiki-dark:#e6edf3; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>ВО ВРЕМЯ ИНЦИДЕНТА:              ПОСЛЕ:</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>03:42 PagerDuty       →          post-mortem</span></span>
+<span class="line"><span>"agents stalled                  - что случилось (timeline)</span></span>
+<span class="line"><span> cost 5x normal"                 - почему (RCA, 5 whys)</span></span>
+<span class="line"><span>03:43 acknowledge                - что чинить (action items)</span></span>
+<span class="line"><span>03:45 kill switch ON             - blameless</span></span>
+<span class="line"><span>03:46 mitigation                 - системные изменения</span></span>
+<span class="line"><span>03:50 hotfix</span></span>
+<span class="line"><span>04:10 monitoring восстановлено</span></span></code></pre>
+<p>Друзья, всем привет! 👋</p>
+<p>Эта глава — про то, <strong>что делать</strong>, когда agent в проде <strong>уже сломался</strong>. Это <strong>обязательный</strong> навык для тех, кто запускает agents в продакшен. Inцидентов <strong>не избежать</strong> — можно только <strong>сделать дешевле</strong>.</p>
+<p>Час. Глава достаточно практичная, без избытка терминологии.</p>
+<h2 id="концепция-incident--это-информация-не-позор">Концепция: incident — это <strong>информация</strong>, не <strong>позор</strong></h2>
+<p>В классической инженерии есть <strong>зрелое</strong> отношение к инцидентам:</p>
+<pre class="astro-code astro-code-themes github-light github-dark-default" style="background-color:#fff;--shiki-dark-bg:#0d1117;color:#24292e;--shiki-dark:#e6edf3; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>┌─────────────────────────────────────────────────────┐</span></span>
+<span class="line"><span>│  Незрелая команда:                                  │</span></span>
+<span class="line"><span>│  - Инцидент = чья-то ошибка                         │</span></span>
+<span class="line"><span>│  - Постмортем = поиск виноватого                    │</span></span>
+<span class="line"><span>│  - Action items = увольнение/выговор                │</span></span>
+<span class="line"><span>│  - Результат: люди скрывают инциденты               │</span></span>
+<span class="line"><span>│                                                     │</span></span>
+<span class="line"><span>│  Зрелая команда:                                    │</span></span>
+<span class="line"><span>│  - Инцидент = сигнал о системе                      │</span></span>
+<span class="line"><span>│  - Постмортем = blameless analysis                  │</span></span>
+<span class="line"><span>│  - Action items = починка СИСТЕМЫ, не человека      │</span></span>
+<span class="line"><span>│  - Результат: каждый инцидент = улучшение           │</span></span>
+<span class="line"><span>└─────────────────────────────────────────────────────┘</span></span></code></pre>
+<p>С агентами — <strong>усугубляется</strong>. Поскольку агент <strong>не детерминирован</strong>, инциденты часто <strong>не воспроизводятся</strong> на 100%. Это <strong>не повод</strong> искать «случайность» — это повод смотреть <strong>системно</strong>.</p>
+<h2 id="anatomy-of-an-agent-incident">Anatomy of an agent incident</h2>
+<p>Типовой incident lifecycle для agent system:</p>
+<pre class="astro-code astro-code-themes github-light github-dark-default" style="background-color:#fff;--shiki-dark-bg:#0d1117;color:#24292e;--shiki-dark:#e6edf3; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>T0      Trigger (что-то пошло не так)</span></span>
+<span class="line"><span>T+1m    Detection (алёрт / жалоба)</span></span>
+<span class="line"><span>T+2m    Acknowledge (on-call принимает)</span></span>
+<span class="line"><span>T+5m    Mitigation (kill switch / failover)</span></span>
+<span class="line"><span>T+15m   Hotfix (если возможен)</span></span>
+<span class="line"><span>T+30m   Resolution (сервис восстановлен)</span></span>
+<span class="line"><span>T+1h    Stabilization (наблюдение)</span></span>
+<span class="line"><span>T+24h   Post-mortem draft</span></span>
+<span class="line"><span>T+72h   Post-mortem review</span></span>
+<span class="line"><span>T+1w    Action items в работе</span></span></code></pre>
+<p>Каждая стадия имеет <strong>свои</strong> правила.</p>
+<h2 id="стадия-1-detection">Стадия 1. Detection</h2>
+<p><strong>Хорошее</strong> обнаружение — это когда <strong>алёрт сработал</strong> до жалобы пользователя.</p>
+<p>Метрики, на которые <strong>обязательно</strong> должны быть алёрты:</p>
+<ul>
+<li><strong>Error rate</strong> > 5% за 5 минут → P1</li>
+<li><strong>Cost rate</strong> > 2× от baseline за 10 минут → P1</li>
+<li><strong>Latency p95</strong> > 30 минут → P2</li>
+<li><strong>Saturation</strong> (очередь растёт) → P2</li>
+<li><strong>Specific tool failures</strong> (например, deploy_tool fails 3 times) → P1</li>
+</ul>
+<p>Без алёртов — узнаёте о проблеме <strong>из жалоб</strong>, через час-два. <strong>Дорого</strong>.</p>
+<h2 id="стадия-2-acknowledge">Стадия 2. Acknowledge</h2>
+<p>On-call видит алёрт. <strong>5 минут</strong> на acknowledge — иначе escalation. Это <strong>дисциплина</strong>.</p>
+<p>В чате <strong>отдельный канал инцидента</strong>:</p>
+<pre class="astro-code astro-code-themes github-light github-dark-default" style="background-color:#fff;--shiki-dark-bg:#0d1117;color:#24292e;--shiki-dark:#e6edf3; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>#incident-2026-05-16-agent-stall</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>[03:43] @oncall acknowledged</span></span>
+<span class="line"><span>[03:44] @oncall investigating — cost 5x normal, no error spike</span></span>
+<span class="line"><span>[03:45] @oncall pulling logs from last 30 min</span></span>
+<span class="line"><span>...</span></span></code></pre>
+<p><strong>Все</strong> действия — в канал, в timeline. Это потом — материал для post-mortem.</p>
+<h2 id="стадия-3-mitigation">Стадия 3. Mitigation</h2>
+<p><strong>Первое правило:</strong> остановите <strong>кровотечение</strong> до того, как искать корень.</p>
+<p>Mitigations, по убыванию мягкости:</p>
+<ol>
+<li><strong>Throttle</strong> — снизить rate (50% задач только)</li>
+<li><strong>Pause new</strong> — feature flag, новые задачи не берутся, текущие доделываются</li>
+<li><strong>Kill switch</strong> — все агенты остановлены, очередь стоит</li>
+<li><strong>Rollback</strong> — откатить deploy к последнему известному good</li>
+</ol>
+<p>Выбор зависит от <strong>природы</strong> инцидента:</p>
+<ul>
+<li>Costs runaway → kill switch (немедленно)</li>
+<li>Latency spike → throttle (мягко)</li>
+<li>Регрессия после deploy → rollback</li>
+</ul>
+<p><strong>Не пытайтесь</strong> <strong>сразу</strong> «починить root cause». Сначала <strong>stop the bleeding</strong>, потом разбирайтесь.</p>
+<h2 id="стадия-4-diagnosis">Стадия 4. Diagnosis</h2>
+<p>После mitigation — <strong>диагностика</strong>. Тут пригодится <strong>всё</strong>, что вы построили в M17 (logs, traces, audit log).</p>
+<p>Шаги:</p>
+<ol>
+<li><strong>Timeline</strong> — что произошло, когда (из логов)</li>
+<li><strong>What changed?</strong> — deploy, config, model version, traffic pattern</li>
+<li><strong>Hypothesis</strong> — что могло вызвать</li>
+<li><strong>Verification</strong> — данными подтвердить/опровергнуть гипотезу</li>
+</ol>
+<h3 id="специфика-agent-инцидентов">Специфика agent-инцидентов</h3>
+<p>В отличие от обычных incident’ов:</p>
+<ul>
+<li><strong>Non-determinism</strong> — одна и та же задача может сломаться <strong>не каждый раз</strong></li>
+<li><strong>Model drift</strong> — провайдер мог <strong>тихо</strong> обновить snapshot</li>
+<li><strong>Prompt injection</strong> — атака могла прийти через user input</li>
+<li><strong>Cost runaway</strong> — обычно causally связан с loops, не с <strong>одной</strong> дорогой задачей</li>
+</ul>
+<p>Поэтому <strong>больше</strong> копать в:</p>
+<ul>
+<li>Сессионных traces</li>
+<li>Логах tool calls</li>
+<li>Сравнении с baseline harness’а (M12)</li>
+</ul>
+<h2 id="стадия-5-hotfix">Стадия 5. Hotfix</h2>
+<p>Если <strong>видимо</strong>, что чинит — hotfix. Маленькое изменение, <strong>только</strong> то, что нужно остановить дальнейшие повторения.</p>
+<p><strong>Не</strong> делайте hotfix больше нужного. <strong>Не</strong> рефакторите по ходу. <strong>Не</strong> добавляйте «давно хотел». Hotfix = <strong>минимально</strong> достаточный fix.</p>
+<h2 id="стадия-6-resolution--stabilization">Стадия 6. Resolution &#x26; stabilization</h2>
+<p>Мониторинг возвращается к baseline. Очередь обрабатывается. Алёрты — clear.</p>
+<p><strong>Stabilization period</strong> — 1-2 часа активного наблюдения. Может <strong>повториться</strong>, или <strong>другая</strong> симптоматика вылезти.</p>
+<h2 id="стадия-7-post-mortem">Стадия 7. Post-mortem</h2>
+<p><strong>Через 24-48 часов</strong> — пишем post-mortem. Не на горячую голову, не через неделю (когда уже все забыли).</p>
+<h3 id="структура">Структура</h3>
+<pre class="astro-code astro-code-themes github-light github-dark-default" style="background-color:#fff;--shiki-dark-bg:#0d1117;color:#24292e;--shiki-dark:#e6edf3; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="markdown"><code><span class="line"><span style="color:#005CC5;--shiki-light-font-weight:bold;--shiki-dark:#79C0FF;--shiki-dark-font-weight:bold"># Post-mortem: Agent stall 2026-05-16</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#005CC5;--shiki-light-font-weight:bold;--shiki-dark:#79C0FF;--shiki-dark-font-weight:bold">## Summary</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E6EDF3">One-paragraph: что случилось, кого затронуло, как долго.</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#005CC5;--shiki-light-font-weight:bold;--shiki-dark:#79C0FF;--shiki-dark-font-weight:bold">## Impact</span></span>
+<span class="line"><span style="color:#E36209;--shiki-dark:#FFA657">-</span><span style="color:#24292E;--shiki-dark:#E6EDF3"> Affected users: 230</span></span>
+<span class="line"><span style="color:#E36209;--shiki-dark:#FFA657">-</span><span style="color:#24292E;--shiki-dark:#E6EDF3"> Failed sessions: 47</span></span>
+<span class="line"><span style="color:#E36209;--shiki-dark:#FFA657">-</span><span style="color:#24292E;--shiki-dark:#E6EDF3"> Excess cost: $342</span></span>
+<span class="line"><span style="color:#E36209;--shiki-dark:#FFA657">-</span><span style="color:#24292E;--shiki-dark:#E6EDF3"> Duration: 03:42 → 04:10 = 28 min</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#005CC5;--shiki-light-font-weight:bold;--shiki-dark:#79C0FF;--shiki-dark-font-weight:bold">## Timeline (UTC)</span></span>
+<span class="line"><span style="color:#E36209;--shiki-dark:#FFA657">-</span><span style="color:#24292E;--shiki-dark:#E6EDF3"> 03:42 — алёрт cost-rate > 2× baseline</span></span>
+<span class="line"><span style="color:#E36209;--shiki-dark:#FFA657">-</span><span style="color:#24292E;--shiki-dark:#E6EDF3"> 03:43 — @oncall acknowledged</span></span>
+<span class="line"><span style="color:#E36209;--shiki-dark:#FFA657">-</span><span style="color:#24292E;--shiki-dark:#E6EDF3"> 03:45 — выявлен loop в supervisor agent</span></span>
+<span class="line"><span style="color:#E36209;--shiki-dark:#FFA657">-</span><span style="color:#24292E;--shiki-dark:#E6EDF3"> ... (полный timeline из канала инцидента)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#005CC5;--shiki-light-font-weight:bold;--shiki-dark:#79C0FF;--shiki-dark-font-weight:bold">## Root cause</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E6EDF3">Supervisor agent попал в loop из-за того, что worker возвращал invalid JSON,</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E6EDF3">а supervisor retry-policy не имела лимита. Worker'у в обновлённом prompt'е</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E6EDF3">была добавлена инструкция, ломающая существующую JSON schema.</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#005CC5;--shiki-light-font-weight:bold;--shiki-dark:#79C0FF;--shiki-dark-font-weight:bold">## Contributing factors</span></span>
+<span class="line"><span style="color:#E36209;--shiki-dark:#FFA657">-</span><span style="color:#24292E;--shiki-dark:#E6EDF3"> Промпт worker'а изменён за 12 часов до инцидента без regression-eval</span></span>
+<span class="line"><span style="color:#E36209;--shiki-dark:#FFA657">-</span><span style="color:#24292E;--shiki-dark:#E6EDF3"> Retry-policy supervisor'а не имела жёсткого лимита (только exponential backoff)</span></span>
+<span class="line"><span style="color:#E36209;--shiki-dark:#FFA657">-</span><span style="color:#24292E;--shiki-dark:#E6EDF3"> Cost alert pороj был слишком высокий (3× — обновили на 2×)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#005CC5;--shiki-light-font-weight:bold;--shiki-dark:#79C0FF;--shiki-dark-font-weight:bold">## What went well</span></span>
+<span class="line"><span style="color:#E36209;--shiki-dark:#FFA657">-</span><span style="color:#24292E;--shiki-dark:#E6EDF3"> Алёрт сработал за 1 минуту до cost runaway</span></span>
+<span class="line"><span style="color:#E36209;--shiki-dark:#FFA657">-</span><span style="color:#24292E;--shiki-dark:#E6EDF3"> Kill switch активирован за 3 минуты</span></span>
+<span class="line"><span style="color:#E36209;--shiki-dark:#FFA657">-</span><span style="color:#24292E;--shiki-dark:#E6EDF3"> Mitigation эффективна, costs стабилизировались</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#005CC5;--shiki-light-font-weight:bold;--shiki-dark:#79C0FF;--shiki-dark-font-weight:bold">## What went wrong</span></span>
+<span class="line"><span style="color:#E36209;--shiki-dark:#FFA657">-</span><span style="color:#24292E;--shiki-dark:#E6EDF3"> Не было pre-deploy harness прогона для prompt-изменения</span></span>
+<span class="line"><span style="color:#E36209;--shiki-dark:#FFA657">-</span><span style="color:#24292E;--shiki-dark:#E6EDF3"> Retry-policy не имела hard cap</span></span>
+<span class="line"><span style="color:#E36209;--shiki-dark:#FFA657">-</span><span style="color:#24292E;--shiki-dark:#E6EDF3"> Post-mortem-канал создан только через 5 минут</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#005CC5;--shiki-light-font-weight:bold;--shiki-dark:#79C0FF;--shiki-dark-font-weight:bold">## Action items</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E6EDF3">| # | Action | Owner | Due |</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E6EDF3">|---|---|---|---|</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E6EDF3">| 1 | Добавить hard cap (max 5 retries) в supervisor | @alice | 2026-05-20 |</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E6EDF3">| 2 | Mandatory harness run на любое изменение prompts | @bob | 2026-05-25 |</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E6EDF3">| 3 | Lower cost alert threshold to 1.5× | @carol | 2026-05-17 |</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E6EDF3">| 4 | Schema validation на worker output | @alice | 2026-05-22 |</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#005CC5;--shiki-light-font-weight:bold;--shiki-dark:#79C0FF;--shiki-dark-font-weight:bold">## Lessons learned (system level)</span></span>
+<span class="line"><span style="color:#E36209;--shiki-dark:#FFA657">-</span><span style="color:#24292E;--shiki-dark:#E6EDF3"> Agent prompts — это </span><span style="color:#24292E;--shiki-light-font-weight:bold;--shiki-dark:#E6EDF3;--shiki-dark-font-weight:bold">**код**</span><span style="color:#24292E;--shiki-dark:#E6EDF3">. Должны проходить через тот же gate (eval), что и обычные изменения.</span></span>
+<span class="line"><span style="color:#E36209;--shiki-dark:#FFA657">-</span><span style="color:#24292E;--shiki-dark:#E6EDF3"> Cost alerts — самая ранняя сигнал runaway. Держим низкий порог.</span></span>
+<span class="line"><span style="color:#E36209;--shiki-dark:#FFA657">-</span><span style="color:#24292E;--shiki-dark:#E6EDF3"> Retry policies — всегда hard cap. Exponential backoff — не замена.</span></span></code></pre>
+<h3 id="правила-хорошего-post-mortem">Правила хорошего post-mortem</h3>
+<p><strong>1. Blameless.</strong> Не «Алиса сломала», а «процесс позволил Алисе сломать». Цель — <strong>система</strong>, не человек.</p>
+<p><strong>2. Конкретный.</strong> Не «улучшить тестирование», а «add regression suite for prompt changes by 2026-05-25».</p>
+<p><strong>3. С owner и сроком.</strong> Action item без owner = не сделается.</p>
+<p><strong>4. Доступный.</strong> Все в команде читают. Подняли уровень коллективного понимания.</p>
+<p><strong>5. С follow-up.</strong> Через месяц — review, что из action items сделано. Без follow-up post-mortems становятся театром.</p>
+<h2 id="короткая-вставка">Короткая вставка ⚡</h2>
+<p>Самая частая ошибка в post-mortem с агентами — <strong>списать на «нестабильность LLM»</strong>. «Ну вот модель такая, иногда так делает, что поделаешь».</p>
+<p>Это <strong>отговорка</strong>. Да, модель non-deterministic. Но <strong>система вокруг</strong> — детерминированная. <strong>Бюджеты</strong>, <strong>retry policies</strong>, <strong>validation</strong>, <strong>kill switch</strong> — это <strong>ваше</strong>, не «модель такая».</p>
+<p>Если post-mortem заканчивается «LLM are stochastic, oh well» — <strong>этот</strong> post-mortem <strong>не выполнил</strong> свою работу. Должны быть <strong>системные</strong> действия.</p>
+<h2 id="категории-инцидентов-и-типовые-ответы">Категории инцидентов и типовые ответы</h2>
+<h3 id="1-cost-runaway">1. Cost runaway</h3>
+<p>Симптом: cost rate спайк.</p>
+<p>Причины:</p>
+<ul>
+<li>Loop (агент сам себя дёргает)</li>
+<li>Retry без cap</li>
+<li>Один пользователь шлёт огромные prompts</li>
+</ul>
+<p>Ответ:</p>
+<ul>
+<li>Per-tenant rate limit</li>
+<li>Hard cap на retries</li>
+<li>Cost alert на 1.5× baseline</li>
+</ul>
+<h3 id="2-pass-rate-drop">2. Pass rate drop</h3>
+<p>Симптом: harness показал падение pass rate после deploy.</p>
+<p>Причины:</p>
+<ul>
+<li>Изменение prompt</li>
+<li>Обновление модели от провайдера</li>
+<li>Изменение зависимости</li>
+</ul>
+<p>Ответ:</p>
+<ul>
+<li>Pre-deploy harness gate</li>
+<li>Зафиксировать model ID</li>
+<li>Lock dependency versions</li>
+</ul>
+<h3 id="3-stuck-session">3. Stuck session</h3>
+<p>Симптом: сессии не завершаются.</p>
+<p>Причины:</p>
+<ul>
+<li>Tool не возвращает (внешний API hang)</li>
+<li>Agent ждёт human input</li>
+<li>Deadlock между подзадачами</li>
+</ul>
+<p>Ответ:</p>
+<ul>
+<li>Timeout per tool call</li>
+<li>Timeout per session</li>
+<li>Heartbeat монитор</li>
+</ul>
+<h3 id="4-data-exfiltration">4. Data exfiltration</h3>
+<p>Симптом: подозрительные egress, или жалоба о утечке.</p>
+<p>Причины:</p>
+<ul>
+<li>Prompt injection</li>
+<li>Compromised MCP</li>
+<li>Bypassed sandbox</li>
+</ul>
+<p>Ответ:</p>
+<ul>
+<li><strong>Немедленно</strong> kill switch</li>
+<li>Rotate ALL secrets</li>
+<li>Audit log review</li>
+<li>Forensics, изоляция inicident</li>
+</ul>
+<h3 id="5-cross-tenant-leak">5. Cross-tenant leak</h3>
+<p>Симптом: tenant A видит данные tenant B.</p>
+<p>Причины:</p>
+<ul>
+<li>Shared cache без isolation</li>
+<li>Wrong tenant_id в session</li>
+<li>Race condition в session management</li>
+</ul>
+<p>Ответ:</p>
+<ul>
+<li><strong>Немедленно</strong> stop affected service</li>
+<li>Identify affected tenants</li>
+<li><strong>Notify</strong> клиентов (юридическое требование во многих юрисдикциях)</li>
+<li>Forensics</li>
+</ul>
+<h2 id="тренировка-chaos--gamedays">Тренировка: chaos / gamedays</h2>
+<p>Чтобы команда <strong>не училась</strong> на боевых инцидентах — проводите <strong>gamedays</strong>. Раз в квартал:</p>
+<ol>
+<li>Кто-то из команды <strong>симулирует</strong> инцидент (kill процесс, испорти конфиг, simulate spike)</li>
+<li>On-call <strong>проходит</strong> через response как <strong>на боевой</strong></li>
+<li>Замеряете: time-to-detection, time-to-mitigation</li>
+<li>Post-mortem — на учебном инциденте</li>
+</ol>
+<p>Это <strong>дёшево</strong> и <strong>окупается</strong> на <strong>первом реальном</strong> инциденте.</p>
+<h2 id="practice-60-90-минут">Practice (60-90 минут)</h2>
+<h3 id="задание-1-30-минут--runbook">Задание 1 (30 минут) — runbook</h3>
+<p>Напишите <strong>runbook</strong> для одного типового инцидента в <strong>вашем</strong> agent system. По шаблону:</p>
+<pre class="astro-code astro-code-themes github-light github-dark-default" style="background-color:#fff;--shiki-dark-bg:#0d1117;color:#24292e;--shiki-dark:#e6edf3; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="markdown"><code><span class="line"><span style="color:#005CC5;--shiki-light-font-weight:bold;--shiki-dark:#79C0FF;--shiki-dark-font-weight:bold"># Runbook: Cost runaway</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#005CC5;--shiki-light-font-weight:bold;--shiki-dark:#79C0FF;--shiki-dark-font-weight:bold">## How to detect</span></span>
+<span class="line"><span style="color:#E36209;--shiki-dark:#FFA657">-</span><span style="color:#24292E;--shiki-dark:#E6EDF3"> Alert "cost-rate > 2x baseline"</span></span>
+<span class="line"><span style="color:#E36209;--shiki-dark:#FFA657">-</span><span style="color:#24292E;--shiki-dark:#E6EDF3"> Manual: check Grafana dashboard "Agent Costs"</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#005CC5;--shiki-light-font-weight:bold;--shiki-dark:#79C0FF;--shiki-dark-font-weight:bold">## Immediate actions</span></span>
+<span class="line"><span style="color:#E36209;--shiki-dark:#FFA657">1.</span><span style="color:#24292E;--shiki-dark:#E6EDF3"> Acknowledge alert</span></span>
+<span class="line"><span style="color:#E36209;--shiki-dark:#FFA657">2.</span><span style="color:#24292E;--shiki-dark:#E6EDF3"> Check kill switch toggle (#incident-channel)</span></span>
+<span class="line"><span style="color:#E36209;--shiki-dark:#FFA657">3.</span><span style="color:#24292E;--shiki-dark:#E6EDF3"> If cost still climbing: activate kill switch</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#005CC5;--shiki-light-font-weight:bold;--shiki-dark:#79C0FF;--shiki-dark-font-weight:bold">## Diagnosis</span></span>
+<span class="line"><span style="color:#E36209;--shiki-dark:#FFA657">1.</span><span style="color:#24292E;--shiki-dark:#E6EDF3"> Open Grafana → Costs by Session</span></span>
+<span class="line"><span style="color:#E36209;--shiki-dark:#FFA657">2.</span><span style="color:#24292E;--shiki-dark:#E6EDF3"> Find top-cost sessions</span></span>
+<span class="line"><span style="color:#E36209;--shiki-dark:#FFA657">3.</span><span style="color:#24292E;--shiki-dark:#E6EDF3"> Open session logs in Loki</span></span>
+<span class="line"><span style="color:#E36209;--shiki-dark:#FFA657">4.</span><span style="color:#24292E;--shiki-dark:#E6EDF3"> Look for loops in tool calls</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#005CC5;--shiki-light-font-weight:bold;--shiki-dark:#79C0FF;--shiki-dark-font-weight:bold">## Resolution</span></span>
+<span class="line"><span style="color:#E36209;--shiki-dark:#FFA657">-</span><span style="color:#24292E;--shiki-dark:#E6EDF3"> If loop: restart specific worker, file ticket</span></span>
+<span class="line"><span style="color:#E36209;--shiki-dark:#FFA657">-</span><span style="color:#24292E;--shiki-dark:#E6EDF3"> If single large session: kill session, investigate</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#005CC5;--shiki-light-font-weight:bold;--shiki-dark:#79C0FF;--shiki-dark-font-weight:bold">## Communication</span></span>
+<span class="line"><span style="color:#E36209;--shiki-dark:#FFA657">-</span><span style="color:#24292E;--shiki-dark:#E6EDF3"> Update #incident channel every 5 min</span></span>
+<span class="line"><span style="color:#E36209;--shiki-dark:#FFA657">-</span><span style="color:#24292E;--shiki-dark:#E6EDF3"> Notify affected tenants if > 30 min</span></span></code></pre>
+<h3 id="задание-2-30-минут--гипотетический-post-mortem">Задание 2 (30 минут) — гипотетический post-mortem</h3>
+<p>Возьмите <strong>реальный</strong> инцидент из вашего опыта (хоть локального — «у меня агент проиграл $5 на API за час»). Напишите post-mortem <strong>по шаблону</strong> выше. Найдите 2-3 системных action item.</p>
+<h3 id="задание-3-15-30-минут--gameday">Задание 3 (15-30 минут) — gameday</h3>
+<p>Договоритесь с коллегой (или сами с собой через timer): один симулирует «алёрт» в случайный момент в течение дня, второй <strong>проходит</strong> через response. Замерьте время.</p>
+<h2 id="recap">Recap</h2>
+<ul>
+<li><strong>Incidents — это информация о системе</strong>, не позор человека. Blameless всегда.</li>
+<li><strong>Stage:</strong> detect → ack → mitigate → diagnose → hotfix → resolve → post-mortem. Каждая — отдельные правила.</li>
+<li><strong>Post-mortem с action items, owner, сроком.</strong> Без follow-up — театр.</li>
+</ul>
+<h2 id="скептик-самурай">Скептик Самурай</h2>
+<aside class="skeptic">
+<p><strong>🥷 Скептик Самурай спрашивает:</strong>
+«У меня маленький сервис, мне-то зачем эти процедуры?»</p>
+<p><strong>Ответ:</strong> <strong>Объём</strong> процедур масштабируется. Маленький сервис: <strong>минимум</strong> — runbook на 2-3 типовых инцидента, kill switch, alert на cost runaway. <strong>Post-mortem</strong> даже в маленькой команде — <strong>окупается</strong> первым же инцидентом, который <strong>повторился</strong> бы, не запиши вы lesson. Большой сервис — формальный incident management, dedicated on-call, регулярные gamedays. <strong>Не на каждом</strong> уровне нужно всё, но <strong>что-то</strong> на каждом — обязательно. Минимум, который <strong>никогда не пропускают</strong>: kill switch + cost alert + runbook на runaway. <strong>Не идеально, но реально работает.</strong></p>
+</aside>
+<h2 id="дальше">Дальше</h2>
+<p>В <strong>M20 — Финал Middle-трека</strong> — что вы умеете сейчас, куда дальше, как <strong>продолжить расти</strong> уже <strong>без</strong> курса. Карта индустрии в 2026-м, направления развития, комьюнити, ресурсы. Это <strong>выход</strong> в самостоятельное движение.</p>
+<p>Если зашло — поделитесь главой с тем, у кого agent в проде, но <strong>без</strong> инцидент-процедур. Если у вас был <strong>обучающий</strong> инцидент — расскажите в комменты, разберём анонимно. Ваша обратная связь реально помогает шлифовать материал.</p>
+<p>Всех обнял, всегда ваш — Илья ❤️</p>  <nav class="chapter-nav"> <a href="/vibesamurai-site/courses/middle/m18"> <span class="dir">← Назад</span> <span class="title">M18 · Security в проде: secrets, sandbox, audit</span> </a> <a href="/vibesamurai-site/courses/middle/m20"> <span class="dir">Дальше →</span> <span class="title">M20 · Финал: куда дальше после Middle</span> </a> </nav> </main> </div> </body></html>

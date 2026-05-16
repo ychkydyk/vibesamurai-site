@@ -1,0 +1,214 @@
+<!DOCTYPE html><html lang="en"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Cursor vs Claude Code vs Codex CLI — Vibesamurai</title><meta name="description" content="Карта зоопарка агентов. Что выбрать под задачу, на чём работаю лично я, и почему «лучшего» инструмента нет."><meta property="og:title" content="Cursor vs Claude Code vs Codex CLI"><meta property="og:type" content="article"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Inter:wght@300..800&family=JetBrains+Mono:wght@400..600&display=swap" rel="stylesheet"><link rel="stylesheet" href="/vibesamurai-site/_astro/_slug_.DpgmObvf.css">
+<style>.reader-sidebar[data-astro-cid-khgtvzrl] .soon[data-astro-cid-khgtvzrl]{display:block;color:var(--text-mute);font-size:var(--size-2);padding:var(--space-1) 0}.reader-sidebar[data-astro-cid-khgtvzrl] .soon[data-astro-cid-khgtvzrl] em[data-astro-cid-khgtvzrl]{font-style:normal;font-family:var(--font-mono);font-size:.85em;color:var(--accent);margin-left:4px;text-transform:uppercase;letter-spacing:.1em}
+</style></head> <body> <div class="reader-app"> <aside class="reader-rail"> <a href="/vibesamurai-site/" class="logo" aria-label="Vibesamurai home">V</a> </aside> <aside class="reader-sidebar" data-astro-cid-khgtvzrl> <div class="breadcrumb" data-astro-cid-khgtvzrl>Vibesamurai · Beginner Path · b8</div> <h4 data-astro-cid-khgtvzrl>В этом курсе</h4> <ul data-astro-cid-khgtvzrl> <li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b1" class data-astro-cid-khgtvzrl>B1 · Что такое AI-агент</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b2" class data-astro-cid-khgtvzrl>B2 · Установка Claude Code</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b3" class data-astro-cid-khgtvzrl>B3 · Первый разговор</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b4" class data-astro-cid-khgtvzrl>B4 · Репозиторий и коммиты</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b5" class data-astro-cid-khgtvzrl>B5 · Первый проект: todo</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b6" class data-astro-cid-khgtvzrl>B6 · Читать код агента</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b7" class data-astro-cid-khgtvzrl>B7 · Безопасность для новичков</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b8" class="current" data-astro-cid-khgtvzrl>B8 · Cursor vs Claude vs Codex</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b9" class data-astro-cid-khgtvzrl>B9 · Деплой первого проекта</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b10" class data-astro-cid-khgtvzrl>B10 · Оценка вывода агента</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b11" class data-astro-cid-khgtvzrl>B11 · Капстоун</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b12" class data-astro-cid-khgtvzrl>B12 · Куда дальше</a> </li> </ul>  </aside> <main class="reader-main"> <div class="chapter-eyebrow">Beginner Path · b8</div> <h1 class="chapter-title">B8 · Cursor vs Claude Code vs Codex CLI</h1> <p class="chapter-subtitle">Карта зоопарка агентов. Что выбрать под задачу, на чём работаю лично я, и почему «лучшего» инструмента нет.</p>  <blockquote>
+<p>Черновик B8 в голосе DmitriyM (см. <code>scripts/tg_voice_analysis/_summary.md</code>).</p>
+</blockquote>
+<h2 id="hook">Hook</h2>
+<pre class="astro-code astro-code-themes github-light github-dark-default" style="background-color:#fff;--shiki-dark-bg:#0d1117;color:#24292e;--shiki-dark:#e6edf3; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>ОДИН АГЕНТ?                  ИЛИ ЗООПАРК?</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>Claude Code      →           Claude Code   ← основной</span></span>
+<span class="line"><span>(всё ок)                     Cursor        ← когда удобнее IDE</span></span>
+<span class="line"><span>                             Codex CLI     ← когда лимиты Claude</span></span>
+<span class="line"><span>                             ...</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>100% задач                   90% удобно, 10% запасной план</span></span></code></pre>
+<p>Друзья, всем привет! 👋</p>
+<p>Эта глава — <strong>карта зоопарка</strong>. Я расскажу, какие основные агенты есть, чем они отличаются, и <strong>на чём я работаю сам</strong>. Без религиозных войн «X лучше Y». В реальности у каждого инструмента <strong>есть своя зона</strong>, и нормальный «вайб-кодер» в 2026 году обычно держит <strong>два-три</strong> под рукой.</p>
+<p>Двадцать минут — и у вас есть полная картина, чтобы выбрать первый-второй инструмент <strong>под себя</strong>, а не «потому что блогер сказал».</p>
+<h2 id="концепция-три-формы-агента">Концепция: три формы агента</h2>
+<p>Все современные агенты делятся на <strong>три типа</strong> по форме взаимодействия:</p>
+<pre class="astro-code astro-code-themes github-light github-dark-default" style="background-color:#fff;--shiki-dark-bg:#0d1117;color:#24292e;--shiki-dark:#e6edf3; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>┌─────────────────────────────────────────────────────┐</span></span>
+<span class="line"><span>│  1. CLI       — терминальный (Claude Code, Codex)   │</span></span>
+<span class="line"><span>│  2. IDE       — внутри редактора (Cursor, Windsurf) │</span></span>
+<span class="line"><span>│  3. Web       — в браузере (claude.ai, ChatGPT)     │</span></span>
+<span class="line"><span>└─────────────────────────────────────────────────────┘</span></span></code></pre>
+<p>CLI — самый «голый» и универсальный. IDE — самый комфортный для тех, кто привык к редактору. Web — самый ограниченный (нет рук, см. B2).</p>
+<p>В этой главе сравниваем <strong>первые два</strong> — CLI и IDE. Web-агенты как «основной» инструмент мы не рекомендуем.</p>
+<h2 id="большая-тройка">Большая тройка</h2>
+<h3 id="claude-code-anthropic">Claude Code (Anthropic)</h3>
+<p><strong>Что это:</strong> CLI-агент. Запускаете <code>claude</code> в папке проекта, общаетесь через терминал.</p>
+<p><strong>Плюсы:</strong></p>
+<ul>
+<li><strong>Самые сильные defaults</strong> для новичка — встроенная безопасность, чёткие подсказки</li>
+<li><strong>Permissions модель</strong> — спрашивает перед каждым опасным действием</li>
+<li><strong>MCP, hooks, subagents, skills</strong> — расширяется на любой workflow</li>
+<li><strong>CLAUDE.md в проекте</strong> — настройки и контекст автоматически подхватываются</li>
+<li><strong>Подписка Pro/Max</strong> — фикс-цена в месяц, не платите за каждый токен</li>
+</ul>
+<p><strong>Минусы:</strong></p>
+<ul>
+<li><strong>Лимиты на Pro/Max</strong> — после интенсивной работы можно упереться (5-6 часов активной сессии)</li>
+<li><strong>Меньше «магии IDE»</strong> — нет автодополнения по ходу, как в Cursor</li>
+<li><strong>CLI</strong> — кому-то непривычно работать через текст</li>
+</ul>
+<p><strong>Кому подойдёт:</strong></p>
+<ul>
+<li>Новичку — потому что <strong>доверие к defaults</strong></li>
+<li>Тем, кто работает с <strong>несколькими проектами в день</strong> — переключение быстрое</li>
+<li>Тем, кому важна <strong>прозрачность</strong> работы агента</li>
+</ul>
+<h3 id="codex-cli-openai">Codex CLI (OpenAI)</h3>
+<p><strong>Что это:</strong> CLI-агент от OpenAI. Похож на Claude Code по форме (терминал, файлы, MCP), но <strong>под капотом</strong> GPT-модели и <strong>OS-уровневый sandbox</strong>.</p>
+<p><strong>Плюсы:</strong></p>
+<ul>
+<li><strong>Встроенный OS-sandbox</strong> (macOS sandbox-exec, Linux seccomp, Windows Job Objects) — агент <strong>не может</strong> выйти за пределы папки/сети без явного разрешения</li>
+<li><strong>AGENTS.md</strong> — аналог CLAUDE.md (часто делают <strong>симлинк</strong>, чтобы оба агента читали один файл)</li>
+<li><strong>GPT-модели</strong> — другая «голова», иногда сильнее в одних задачах, слабее в других</li>
+<li><strong>OpenAI Plus/Pro</strong> — отдельная подписка, не съедает Claude-лимиты</li>
+</ul>
+<p><strong>Минусы:</strong></p>
+<ul>
+<li><strong>Подписка отдельная</strong> ($20-200/мес у OpenAI) — если уже есть Claude, дублирование</li>
+<li><strong>Меньше готовых интеграций</strong> (skills, hooks — пока проще, чем у Claude Code)</li>
+<li><strong>Документация рваная</strong> — экосистема младше</li>
+</ul>
+<p><strong>Кому подойдёт:</strong></p>
+<ul>
+<li>Тем, кто <strong>упирается в лимиты Claude</strong> и не хочет на следующую неделю простоя</li>
+<li>Тем, кто хочет <strong>двойной разум</strong> — спросить две модели на одну задачу и сравнить</li>
+<li>Тем, кому важен <strong>OS-уровневый sandbox</strong> (на боевых машинах)</li>
+</ul>
+<h3 id="cursor-cursor">Cursor (Cursor)</h3>
+<p><strong>Что это:</strong> Полноценный <strong>IDE</strong> (форк VS Code) со встроенным AI-агентом. Открываете проект, как в редакторе, и работаете <strong>в нём же</strong>.</p>
+<p><strong>Плюсы:</strong></p>
+<ul>
+<li><strong>Самый комфортный UX</strong> для тех, кто привык к VS Code/JetBrains</li>
+<li><strong>Composer</strong> — режим, где агент работает над несколькими файлами сразу</li>
+<li><strong>Tab-completion AI</strong> — дописывает код по ходу набора (это тот самый «магический» опыт)</li>
+<li><strong>Reject/Accept на каждое изменение</strong> — удобный визуальный контроль</li>
+<li><strong><code>.cursor/rules/</code></strong> — правила для агента, привязанные к проекту</li>
+</ul>
+<p><strong>Минусы:</strong></p>
+<ul>
+<li><strong>Подписка</strong> ($20+/мес отдельно от Claude/OpenAI)</li>
+<li><strong>Зависим от одного приложения</strong> — если упал Cursor, не работаете</li>
+<li><strong>Запутать новичка проще</strong> — много кнопок, режимов</li>
+</ul>
+<p><strong>Кому подойдёт:</strong></p>
+<ul>
+<li>Тем, кто <strong>уже работает в VS Code</strong> и не хочет терминал</li>
+<li>Тем, кому важно <strong>видеть код перед глазами</strong> все время</li>
+<li>Тем, кто делает <strong>большие проекты с десятками файлов</strong></li>
+</ul>
+<h2 id="сравнительная-таблица">Сравнительная таблица</h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Параметр</th><th>Claude Code</th><th>Codex CLI</th><th>Cursor</th></tr></thead><tbody><tr><td><strong>Форма</strong></td><td>CLI</td><td>CLI</td><td>IDE</td></tr><tr><td><strong>Базовая модель</strong></td><td>Claude (Opus/Sonnet)</td><td>GPT-5/Codex</td><td>Claude/GPT/Gemini (на выбор)</td></tr><tr><td><strong>Подписка</strong></td><td>Pro $20 / Max $100+</td><td>Plus $20 / Pro $200</td><td>$20+/мес</td></tr><tr><td><strong>Permissions</strong></td><td>allow/deny + prompt</td><td>OS sandbox</td><td>per-edit accept/reject</td></tr><tr><td><strong>Расширения</strong></td><td>MCP, hooks, skills, subagents</td><td>MCP, AGENTS.md</td><td>rules, MCP</td></tr><tr><td><strong>Кривая входа</strong></td><td>Низкая</td><td>Низкая</td><td>Средняя</td></tr><tr><td><strong>Лучше для</strong></td><td>Новичка, ежедневной работы</td><td>Высоконагрузочного, sandbox</td><td>IDE-фанатов, больших проектов</td></tr></tbody></table>
+<h2 id="менее-известные-но-достойные">Менее известные, но достойные</h2>
+<h3 id="windsurf-codeium">Windsurf (Codeium)</h3>
+<p><strong>IDE-агент</strong>, конкурент Cursor. Сильная сторона — <strong>Cascade</strong> (агент, который понимает контекст всего проекта). Хорош в больших монорепо. По UX чуть «попроще» Cursor.</p>
+<h3 id="aider-open-source">Aider (open-source)</h3>
+<p><strong>CLI</strong>, опенсорс. Подключается к <strong>любой</strong> модели (Claude, GPT, локальная). Минималистичный, но мощный для тех, кто хочет полную свободу. <strong>Не для совсем нулевого новичка</strong>.</p>
+<h3 id="cline-open-source-плагин-для-vs-code">Cline (open-source, плагин для VS Code)</h3>
+<p><strong>Бесплатный плагин</strong>, который превращает VS Code в подобие Cursor. Подключаете свой ключ Claude/OpenAI. Отличный вариант, если <strong>не хочется отдельной подписки</strong> Cursor.</p>
+<h2 id="моя-личная-связка">Моя личная связка</h2>
+<blockquote>
+<p><em>По состоянию на май 2026, у меня:</em></p>
+</blockquote>
+<ul>
+<li><strong>Claude Code Max</strong> — основная работа, 80-90% времени</li>
+<li><strong>Codex CLI Plus</strong> — когда упёрся в лимиты Claude (бывает на больших проектах ближе к вечеру) или для второго мнения</li>
+<li><strong>Cursor</strong> — для длинных рефакторингов, где удобно видеть diff</li>
+<li><strong>Claude.ai в браузере</strong> — для чисто разговорных задач (планы, объяснения, идеи)</li>
+</ul>
+<p>Это <strong>не «правильно»</strong> — это то, что <strong>мне</strong> удобно. У вас может быть совсем другое.</p>
+<blockquote>
+<p><em>Принципиально:</em> не надо собирать «зоопарк» сразу. Начните с <strong>одного</strong>. Когда упрётесь в его ограничения — поймёте, какой второй вам нужен. <strong>Не идеально, но реально работает.</strong></p>
+</blockquote>
+<h2 id="как-выбрать-первый">Как выбрать первый</h2>
+<p>Если <strong>новичок и хочется быстрый старт</strong> → <strong>Claude Code</strong>. Самые мягкие defaults, лучшая onboarding-документация, не надо настраивать.</p>
+<p>Если <strong>уже привык к VS Code и не хочется в терминал</strong> → <strong>Cursor</strong> (или <strong>Cline</strong> как бесплатная альтернатива).</p>
+<p>Если <strong>есть OpenAI Pro и не хочется Anthropic</strong> → <strong>Codex CLI</strong>. Работает похоже, экосистема активно растёт.</p>
+<p>Если <strong>бюджет 0 рублей</strong> → <strong>Cline + бесплатный API-ключ</strong> (например, через free-tier Anthropic API). Это не «прям удобно», но <strong>рабочая</strong> связка для обучения.</p>
+<h2 id="как-добавить-второй-когда-время-придёт">Как добавить второй (когда время придёт)</h2>
+<p>Сигнал, что пора добавить второй инструмент:</p>
+<ol>
+<li><strong>Регулярно упираетесь в лимиты</strong> одного и теряете час «потому что закончились запросы»</li>
+<li><strong>Заметили слабую сторону</strong> — например, ваш агент плохо в SQL, а другой — отлично</li>
+<li><strong>Хочется чего-то, чего нет</strong> — например, OS-sandbox или Composer-режима</li>
+</ol>
+<p>Тогда <strong>поставьте второй</strong>, держите один <strong>CLAUDE.md / AGENTS.md</strong> (через симлинк) на проект, и используйте под задачу.</p>
+<h2 id="practice-20-минут">Practice (20 минут)</h2>
+<h3 id="задание-1-10-минут--оценить-свой-workflow">Задание 1 (10 минут) — оценить свой workflow</h3>
+<p>После пары недель работы с Claude Code из B2-B7, ответьте себе на три вопроса:</p>
+<ol>
+<li>Где мне было <strong>неудобно</strong>? (Терминал? Лимиты? Что-то ещё?)</li>
+<li>Что я бы <strong>хотел</strong> иметь? (Подсказки в редакторе? Sandbox? Второе мнение?)</li>
+<li>Какой инструмент <strong>закрывает</strong> именно это?</li>
+</ol>
+<p>Если ответы — «всё ок» — отлично, <strong>не плодите сущности</strong>. Один Claude Code хватает огромному большинству.</p>
+<h3 id="задание-2-10-минут--попробуйте-альтернативу">Задание 2 (10 минут) — попробуйте альтернативу</h3>
+<p>Поставьте <strong>один</strong> альтернативный инструмент (Cursor или Cline или Codex CLI). Сделайте в нём <strong>ту же задачу</strong>, что в B5 (todo-приложение). Сравните:</p>
+<ul>
+<li>Что было удобнее?</li>
+<li>Где запутался?</li>
+<li>В каком инструменте сам код получился чище?</li>
+</ul>
+<p>Запишите свои выводы — это и есть <strong>ваш персональный benchmark</strong>.</p>
+<h2 id="recap">Recap</h2>
+<ul>
+<li><strong>Большая тройка:</strong> Claude Code (CLI), Codex CLI (CLI), Cursor (IDE). Плюс достойные альтернативы (Windsurf, Aider, Cline).</li>
+<li><strong>Один инструмент</strong> покрывает 80%+ задач новичка. <strong>Не плодите зоопарк</strong> заранее.</li>
+<li><strong>Сигнал добавить второй:</strong> лимиты, слабые стороны, конкретная фича, которой не хватает.</li>
+</ul>
+<h2 id="скептик-самурай">Скептик Самурай</h2>
+<aside class="skeptic">
+<p><strong>🥷 Скептик Самурай спрашивает:</strong>
+«А почему вы советуете Claude Code, а не самый дешёвый/бесплатный? Это реклама?»</p>
+<p><strong>Ответ:</strong> Если бы у Anthropic было бесплатно — я бы советовал бесплатно. Сейчас <strong>Claude Code</strong> — это <strong>лучший onboarding для нулевого новичка</strong> из платных, и <strong>Cline</strong> — лучший бесплатный. Я искренне работаю на Claude Max ($100/мес), потому что <strong>окупается</strong> в первую неделю — для <strong>моей</strong> работы. Для <strong>вашей</strong> учёбы — Pro ($20) с головой, или вообще бесплатный Cline на free-tier API. <strong>Никакой рекламы</strong>, я не сотрудничаю ни с одной из этих компаний. Если завтра выйдет инструмент, который <strong>очевидно лучше</strong> — буду советовать его. <strong>Не идеально, но реально работает</strong> — выбирайте под бюджет и удобство, не под бренд.</p>
+</aside>
+<h2 id="дальше">Дальше</h2>
+<p>В <strong>B9 — Деплой первого проекта</strong> разберём, как сделать так, чтобы ваш todo-приложение (или любой другой проект) стал <strong>доступным в интернете по ссылке</strong>. Без серверов, без админки — через <strong>GitHub Pages</strong> или <strong>Cloudflare Pages</strong>, бесплатно, 15 минут до результата. Это тот самый момент «у меня <strong>есть</strong> ссылка, я могу её скинуть другу».</p>
+<p>Если зашло — поделитесь главой с тем, кто застрял на одном инструменте и боится попробовать другое. Если у вас уже сложилась своя связка — напишите в комменты, обсудим. <strong>За лайк и комментарий — отдельная благодарность</strong>, ваша обратная связь реально помогает шлифовать материал.</p>
+<p>Всех обнял, всегда ваш — Илья ❤️</p>  <nav class="chapter-nav"> <a href="/vibesamurai-site/courses/beginner/b7"> <span class="dir">← Назад</span> <span class="title">B7 · Безопасность для начинающего</span> </a> <a href="/vibesamurai-site/courses/beginner/b9"> <span class="dir">Дальше →</span> <span class="title">B9 · Деплой первого проекта</span> </a> </nav> </main> </div> </body></html>

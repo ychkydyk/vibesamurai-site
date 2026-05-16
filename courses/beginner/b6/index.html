@@ -1,0 +1,238 @@
+<!DOCTYPE html><html lang="en"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Чтение кода, который написал агент — Vibesamurai</title><meta name="description" content="Базовая ориентация в коде, который агент создал. Не «научиться кодить», а перестать быть слепым в своём проекте."><meta property="og:title" content="Чтение кода, который написал агент"><meta property="og:type" content="article"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Inter:wght@300..800&family=JetBrains+Mono:wght@400..600&display=swap" rel="stylesheet"><link rel="stylesheet" href="/vibesamurai-site/_astro/_slug_.DpgmObvf.css">
+<style>.reader-sidebar[data-astro-cid-khgtvzrl] .soon[data-astro-cid-khgtvzrl]{display:block;color:var(--text-mute);font-size:var(--size-2);padding:var(--space-1) 0}.reader-sidebar[data-astro-cid-khgtvzrl] .soon[data-astro-cid-khgtvzrl] em[data-astro-cid-khgtvzrl]{font-style:normal;font-family:var(--font-mono);font-size:.85em;color:var(--accent);margin-left:4px;text-transform:uppercase;letter-spacing:.1em}
+</style></head> <body> <div class="reader-app"> <aside class="reader-rail"> <a href="/vibesamurai-site/" class="logo" aria-label="Vibesamurai home">V</a> </aside> <aside class="reader-sidebar" data-astro-cid-khgtvzrl> <div class="breadcrumb" data-astro-cid-khgtvzrl>Vibesamurai · Beginner Path · b6</div> <h4 data-astro-cid-khgtvzrl>В этом курсе</h4> <ul data-astro-cid-khgtvzrl> <li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b1" class data-astro-cid-khgtvzrl>B1 · Что такое AI-агент</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b2" class data-astro-cid-khgtvzrl>B2 · Установка Claude Code</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b3" class data-astro-cid-khgtvzrl>B3 · Первый разговор</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b4" class data-astro-cid-khgtvzrl>B4 · Репозиторий и коммиты</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b5" class data-astro-cid-khgtvzrl>B5 · Первый проект: todo</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b6" class="current" data-astro-cid-khgtvzrl>B6 · Читать код агента</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b7" class data-astro-cid-khgtvzrl>B7 · Безопасность для новичков</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b8" class data-astro-cid-khgtvzrl>B8 · Cursor vs Claude vs Codex</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b9" class data-astro-cid-khgtvzrl>B9 · Деплой первого проекта</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b10" class data-astro-cid-khgtvzrl>B10 · Оценка вывода агента</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b11" class data-astro-cid-khgtvzrl>B11 · Капстоун</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b12" class data-astro-cid-khgtvzrl>B12 · Куда дальше</a> </li> </ul>  </aside> <main class="reader-main"> <div class="chapter-eyebrow">Beginner Path · b6</div> <h1 class="chapter-title">B6 · Чтение кода, который написал агент</h1> <p class="chapter-subtitle">Базовая ориентация в коде, который агент создал. Не «научиться кодить», а перестать быть слепым в своём проекте.</p>  <blockquote>
+<p>Черновик B6 в голосе DmitriyM (см. <code>scripts/tg_voice_analysis/_summary.md</code>).</p>
+</blockquote>
+<h2 id="hook">Hook</h2>
+<pre class="astro-code astro-code-themes github-light github-dark-default" style="background-color:#fff;--shiki-dark-bg:#0d1117;color:#24292e;--shiki-dark:#e6edf3; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>БЕЗ ориентации:                  С ориентацией:</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>«Тут что-то на JS,        →     index.html — структура страницы</span></span>
+<span class="line"><span> я не понимаю...»                style.css  — как это выглядит</span></span>
+<span class="line"><span>                                 app.js     — что происходит при клике</span></span>
+<span class="line"><span>                                                ↑</span></span>
+<span class="line"><span>                                       примерно понятно</span></span></code></pre>
+<p>Друзья, всем привет! 👋</p>
+<p>Эта глава — <strong>не про то, чтобы научиться программировать</strong>. И это не «прочитайте Кормена и поймёте свой проект». Это про <strong>базовую ориентацию</strong>: открываете файл, видите код, и <strong>примерно понимаете</strong>, что эта штука делает. Не построчно, не идеально — но понимаете, в каком месте лежит логика, в каком — оформление, и куда смотреть, если что-то сломалось.</p>
+<p>Двадцать-тридцать минут. После главы вы не будете бояться открывать файлы, которые написал агент.</p>
+<h2 id="концепция-ориентация--программирование">Концепция: ориентация ≠ программирование</h2>
+<p>Представьте, что вы пришли в новую квартиру. Чтобы там <strong>жить</strong>, не обязательно знать, как устроена электропроводка в стенах. Достаточно понимать: вот выключатель, вот розетка, вот счётчик. Если перегорело — знаете, куда смотреть.</p>
+<p>С кодом то же самое. Чтобы <strong>работать с агентом</strong>, не обязательно знать каждую конструкцию языка. Достаточно понимать:</p>
+<pre class="astro-code astro-code-themes github-light github-dark-default" style="background-color:#fff;--shiki-dark-bg:#0d1117;color:#24292e;--shiki-dark:#e6edf3; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>┌─────────────────────────────────────────────────────┐</span></span>
+<span class="line"><span>│  1. КАКОЙ ФАЙЛ ЗА ЧТО ОТВЕЧАЕТ                      │</span></span>
+<span class="line"><span>│  2. ГДЕ В ФАЙЛЕ ЛОГИКА, ГДЕ ОФОРМЛЕНИЕ              │</span></span>
+<span class="line"><span>│  3. КАК НАЙТИ КОНКРЕТНУЮ ФИЧУ В КОДЕ                │</span></span>
+<span class="line"><span>└─────────────────────────────────────────────────────┘</span></span></code></pre>
+<p>Этого хватит, чтобы:</p>
+<ul>
+<li>Скзать агенту «вот в этом куске поправь», а не «поправь где-нибудь»</li>
+<li>Заметить, если агент трогает то, что не должен</li>
+<li>Понять, что значит ошибка из консоли — хотя бы примерно</li>
+</ul>
+<h2 id="минимальная-ориентация-по-типам-файлов">Минимальная ориентация по типам файлов</h2>
+<p>Большинство учебных проектов состоит из нескольких типичных типов файлов. Запомните на уровне «это про что вообще»:</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Расширение</th><th>Что внутри</th><th>Зачем</th></tr></thead><tbody><tr><td><code>.html</code></td><td><strong>Структура страницы</strong></td><td>Что есть на странице — заголовок, кнопки, форма, список</td></tr><tr><td><code>.css</code></td><td><strong>Оформление</strong></td><td>Цвета, шрифты, отступы, размеры</td></tr><tr><td><code>.js</code></td><td><strong>Логика</strong></td><td>Что происходит при действиях — клик, ввод, перезагрузка</td></tr><tr><td><code>.json</code></td><td><strong>Данные/настройки</strong></td><td>Список зависимостей, конфиги, сохранённое состояние</td></tr><tr><td><code>.md</code></td><td><strong>Текст для людей</strong></td><td>README, документация, заметки</td></tr></tbody></table>
+<p>Это <strong>минимум миниморум</strong>. Если в проекте есть <code>.html</code>, <code>.css</code>, <code>.js</code> — вы уже знаете, в каком из них что искать.</p>
+<h3 id="ещё-пара-важных-файлов">Ещё пара важных файлов</h3>
+<ul>
+<li><code>package.json</code> — список <strong>зависимостей</strong> (что проект использует) и <strong>скриптов запуска</strong>. Если что-то не запускается, обычно смотрят сюда первым.</li>
+<li><code>README.md</code> — <strong>инструкция по проекту</strong>. Хорошие агенты её пишут. Если есть — прочитайте, там есть «как запускать» и «что это вообще такое».</li>
+<li><code>.gitignore</code> — список того, что <strong>не сохранять в git</strong>. Обычно туда попадают <code>node_modules/</code>, <code>.env</code>, временные файлы.</li>
+</ul>
+<h2 id="пример-смотрим-в-todo-приложение-из-b5">Пример: смотрим в todo-приложение из B5</h2>
+<p>Открываем папку <code>my-todo/</code> в текстовом редакторе. Например, <a href="https://code.visualstudio.com">VS Code</a> — бесплатный, есть на всех OS, агент его любит.</p>
+<p>Видим:</p>
+<pre class="astro-code astro-code-themes github-light github-dark-default" style="background-color:#fff;--shiki-dark-bg:#0d1117;color:#24292e;--shiki-dark:#e6edf3; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>my-todo/</span></span>
+<span class="line"><span>├── index.html</span></span>
+<span class="line"><span>├── style.css</span></span>
+<span class="line"><span>├── app.js</span></span>
+<span class="line"><span>└── README.md</span></span></code></pre>
+<p>Уже из имён всё примерно понятно — структура, стиль, логика, описание.</p>
+<h3 id="раунд-1-заглянем-в-indexhtml">Раунд 1. Заглянем в <code>index.html</code></h3>
+<p>Открыли — увидели что-то вроде:</p>
+<pre class="astro-code astro-code-themes github-light github-dark-default" style="background-color:#fff;--shiki-dark-bg:#0d1117;color:#24292e;--shiki-dark:#e6edf3; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="html"><code><span class="line"><span style="color:#24292E;--shiki-dark:#E6EDF3">&#x3C;!</span><span style="color:#22863A;--shiki-dark:#7EE787">DOCTYPE</span><span style="color:#6F42C1;--shiki-dark:#79C0FF"> html</span><span style="color:#24292E;--shiki-dark:#E6EDF3">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E6EDF3">&#x3C;</span><span style="color:#22863A;--shiki-dark:#7EE787">html</span><span style="color:#6F42C1;--shiki-dark:#79C0FF"> lang</span><span style="color:#24292E;--shiki-dark:#E6EDF3">=</span><span style="color:#032F62;--shiki-dark:#A5D6FF">"ru"</span><span style="color:#24292E;--shiki-dark:#E6EDF3">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E6EDF3">&#x3C;</span><span style="color:#22863A;--shiki-dark:#7EE787">head</span><span style="color:#24292E;--shiki-dark:#E6EDF3">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E6EDF3">  &#x3C;</span><span style="color:#22863A;--shiki-dark:#7EE787">title</span><span style="color:#24292E;--shiki-dark:#E6EDF3">>Мой todo-лист&#x3C;/</span><span style="color:#22863A;--shiki-dark:#7EE787">title</span><span style="color:#24292E;--shiki-dark:#E6EDF3">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E6EDF3">  &#x3C;</span><span style="color:#22863A;--shiki-dark:#7EE787">link</span><span style="color:#6F42C1;--shiki-dark:#79C0FF"> rel</span><span style="color:#24292E;--shiki-dark:#E6EDF3">=</span><span style="color:#032F62;--shiki-dark:#A5D6FF">"stylesheet"</span><span style="color:#6F42C1;--shiki-dark:#79C0FF"> href</span><span style="color:#24292E;--shiki-dark:#E6EDF3">=</span><span style="color:#032F62;--shiki-dark:#A5D6FF">"style.css"</span><span style="color:#24292E;--shiki-dark:#E6EDF3">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E6EDF3">&#x3C;/</span><span style="color:#22863A;--shiki-dark:#7EE787">head</span><span style="color:#24292E;--shiki-dark:#E6EDF3">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E6EDF3">&#x3C;</span><span style="color:#22863A;--shiki-dark:#7EE787">body</span><span style="color:#24292E;--shiki-dark:#E6EDF3">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E6EDF3">  &#x3C;</span><span style="color:#22863A;--shiki-dark:#7EE787">h1</span><span style="color:#24292E;--shiki-dark:#E6EDF3">>Мой todo-лист&#x3C;/</span><span style="color:#22863A;--shiki-dark:#7EE787">h1</span><span style="color:#24292E;--shiki-dark:#E6EDF3">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E6EDF3">  &#x3C;</span><span style="color:#22863A;--shiki-dark:#7EE787">input</span><span style="color:#6F42C1;--shiki-dark:#79C0FF"> id</span><span style="color:#24292E;--shiki-dark:#E6EDF3">=</span><span style="color:#032F62;--shiki-dark:#A5D6FF">"task-input"</span><span style="color:#6F42C1;--shiki-dark:#79C0FF"> placeholder</span><span style="color:#24292E;--shiki-dark:#E6EDF3">=</span><span style="color:#032F62;--shiki-dark:#A5D6FF">"Новая задача"</span><span style="color:#24292E;--shiki-dark:#E6EDF3">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E6EDF3">  &#x3C;</span><span style="color:#22863A;--shiki-dark:#7EE787">button</span><span style="color:#6F42C1;--shiki-dark:#79C0FF"> id</span><span style="color:#24292E;--shiki-dark:#E6EDF3">=</span><span style="color:#032F62;--shiki-dark:#A5D6FF">"add-btn"</span><span style="color:#24292E;--shiki-dark:#E6EDF3">>Добавить&#x3C;/</span><span style="color:#22863A;--shiki-dark:#7EE787">button</span><span style="color:#24292E;--shiki-dark:#E6EDF3">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E6EDF3">  &#x3C;</span><span style="color:#22863A;--shiki-dark:#7EE787">ul</span><span style="color:#6F42C1;--shiki-dark:#79C0FF"> id</span><span style="color:#24292E;--shiki-dark:#E6EDF3">=</span><span style="color:#032F62;--shiki-dark:#A5D6FF">"task-list"</span><span style="color:#24292E;--shiki-dark:#E6EDF3">>&#x3C;/</span><span style="color:#22863A;--shiki-dark:#7EE787">ul</span><span style="color:#24292E;--shiki-dark:#E6EDF3">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E6EDF3">  &#x3C;</span><span style="color:#22863A;--shiki-dark:#7EE787">script</span><span style="color:#6F42C1;--shiki-dark:#79C0FF"> src</span><span style="color:#24292E;--shiki-dark:#E6EDF3">=</span><span style="color:#032F62;--shiki-dark:#A5D6FF">"app.js"</span><span style="color:#24292E;--shiki-dark:#E6EDF3">>&#x3C;/</span><span style="color:#22863A;--shiki-dark:#7EE787">script</span><span style="color:#24292E;--shiki-dark:#E6EDF3">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E6EDF3">&#x3C;/</span><span style="color:#22863A;--shiki-dark:#7EE787">body</span><span style="color:#24292E;--shiki-dark:#E6EDF3">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E6EDF3">&#x3C;/</span><span style="color:#22863A;--shiki-dark:#7EE787">html</span><span style="color:#24292E;--shiki-dark:#E6EDF3">></span></span></code></pre>
+<p>Не пытайтесь понять <strong>каждую строку</strong>. Просто посмотрите глазами и узнайте знакомые куски:</p>
+<ul>
+<li><code>&#x3C;title>Мой todo-лист&#x3C;/title></code> — заголовок в браузере, видели сверху вкладки</li>
+<li><code>&#x3C;h1>Мой todo-лист&#x3C;/h1></code> — большой заголовок на странице</li>
+<li><code>&#x3C;input ...></code> — поле ввода, куда пишете задачу</li>
+<li><code>&#x3C;button ...>Добавить&#x3C;/button></code> — та самая кнопка</li>
+<li><code>&#x3C;ul id="task-list"></code> — пустой список, куда добавляются задачи</li>
+<li><code>&#x3C;link rel="stylesheet" href="style.css"></code> — «подключи оформление из <code>style.css</code>»</li>
+<li><code>&#x3C;script src="app.js">&#x3C;/script></code> — «подключи логику из <code>app.js</code>»</li>
+</ul>
+<p>Видите? Вы <strong>уже</strong> можете показать пальцем — «вот тут заголовок, вот тут кнопка». Это <strong>полный фарш</strong> для нашей задачи.</p>
+<h3 id="раунд-2-заглянем-в-stylecss">Раунд 2. Заглянем в <code>style.css</code></h3>
+<pre class="astro-code astro-code-themes github-light github-dark-default" style="background-color:#fff;--shiki-dark-bg:#0d1117;color:#24292e;--shiki-dark:#e6edf3; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="css"><code><span class="line"><span style="color:#22863A;--shiki-dark:#7EE787">body</span><span style="color:#24292E;--shiki-dark:#E6EDF3"> {</span></span>
+<span class="line"><span style="color:#005CC5;--shiki-dark:#79C0FF">  font-family</span><span style="color:#24292E;--shiki-dark:#E6EDF3">: </span><span style="color:#005CC5;--shiki-dark:#79C0FF">sans-serif</span><span style="color:#24292E;--shiki-dark:#E6EDF3">;</span></span>
+<span class="line"><span style="color:#005CC5;--shiki-dark:#79C0FF">  max-width</span><span style="color:#24292E;--shiki-dark:#E6EDF3">: </span><span style="color:#005CC5;--shiki-dark:#79C0FF">600</span><span style="color:#D73A49;--shiki-dark:#FF7B72">px</span><span style="color:#24292E;--shiki-dark:#E6EDF3">;</span></span>
+<span class="line"><span style="color:#005CC5;--shiki-dark:#79C0FF">  margin</span><span style="color:#24292E;--shiki-dark:#E6EDF3">: </span><span style="color:#005CC5;--shiki-dark:#79C0FF">40</span><span style="color:#D73A49;--shiki-dark:#FF7B72">px</span><span style="color:#005CC5;--shiki-dark:#79C0FF"> auto</span><span style="color:#24292E;--shiki-dark:#E6EDF3">;</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E6EDF3">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#22863A;--shiki-dark:#7EE787">button</span><span style="color:#24292E;--shiki-dark:#E6EDF3"> {</span></span>
+<span class="line"><span style="color:#005CC5;--shiki-dark:#79C0FF">  background</span><span style="color:#24292E;--shiki-dark:#E6EDF3">: </span><span style="color:#005CC5;--shiki-dark:#79C0FF">#4CAF50</span><span style="color:#24292E;--shiki-dark:#E6EDF3">;</span></span>
+<span class="line"><span style="color:#005CC5;--shiki-dark:#79C0FF">  color</span><span style="color:#24292E;--shiki-dark:#E6EDF3">: </span><span style="color:#005CC5;--shiki-dark:#79C0FF">white</span><span style="color:#24292E;--shiki-dark:#E6EDF3">;</span></span>
+<span class="line"><span style="color:#005CC5;--shiki-dark:#79C0FF">  border</span><span style="color:#24292E;--shiki-dark:#E6EDF3">: </span><span style="color:#005CC5;--shiki-dark:#79C0FF">none</span><span style="color:#24292E;--shiki-dark:#E6EDF3">;</span></span>
+<span class="line"><span style="color:#005CC5;--shiki-dark:#79C0FF">  padding</span><span style="color:#24292E;--shiki-dark:#E6EDF3">: </span><span style="color:#005CC5;--shiki-dark:#79C0FF">8</span><span style="color:#D73A49;--shiki-dark:#FF7B72">px</span><span style="color:#005CC5;--shiki-dark:#79C0FF"> 16</span><span style="color:#D73A49;--shiki-dark:#FF7B72">px</span><span style="color:#24292E;--shiki-dark:#E6EDF3">;</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E6EDF3">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6F42C1;--shiki-dark:#79C0FF">.done</span><span style="color:#24292E;--shiki-dark:#E6EDF3"> {</span></span>
+<span class="line"><span style="color:#005CC5;--shiki-dark:#79C0FF">  text-decoration</span><span style="color:#24292E;--shiki-dark:#E6EDF3">: </span><span style="color:#005CC5;--shiki-dark:#79C0FF">line-through</span><span style="color:#24292E;--shiki-dark:#E6EDF3">;</span></span>
+<span class="line"><span style="color:#005CC5;--shiki-dark:#79C0FF">  color</span><span style="color:#24292E;--shiki-dark:#E6EDF3">: </span><span style="color:#005CC5;--shiki-dark:#79C0FF">gray</span><span style="color:#24292E;--shiki-dark:#E6EDF3">;</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E6EDF3">}</span></span></code></pre>
+<p>Логика та же — <strong>узнавайте знакомое</strong>:</p>
+<ul>
+<li><code>font-family: sans-serif</code> — какой шрифт</li>
+<li><code>background: #4CAF50</code> — цвет (зелёный)</li>
+<li><code>text-decoration: line-through</code> — зачёркнутый текст</li>
+<li><code>.done</code> — это про задачу, которая выполнена</li>
+</ul>
+<p>Опять, <strong>не вдаваясь в детали</strong> — вы понимаете, что <strong>тут оформление</strong>, и если хочется поменять цвет кнопки — это сюда.</p>
+<h3 id="раунд-3-заглянем-в-appjs">Раунд 3. Заглянем в <code>app.js</code></h3>
+<p>Самое страшное по виду, но логика та же. Смотрим <strong>на уровне комментариев и имён</strong>:</p>
+<pre class="astro-code astro-code-themes github-light github-dark-default" style="background-color:#fff;--shiki-dark-bg:#0d1117;color:#24292e;--shiki-dark:#e6edf3; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#D73A49;--shiki-dark:#FF7B72">const</span><span style="color:#005CC5;--shiki-dark:#79C0FF"> input</span><span style="color:#D73A49;--shiki-dark:#FF7B72"> =</span><span style="color:#24292E;--shiki-dark:#E6EDF3"> document.</span><span style="color:#6F42C1;--shiki-dark:#D2A8FF">getElementById</span><span style="color:#24292E;--shiki-dark:#E6EDF3">(</span><span style="color:#032F62;--shiki-dark:#A5D6FF">'task-input'</span><span style="color:#24292E;--shiki-dark:#E6EDF3">);</span></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#FF7B72">const</span><span style="color:#005CC5;--shiki-dark:#79C0FF"> addBtn</span><span style="color:#D73A49;--shiki-dark:#FF7B72"> =</span><span style="color:#24292E;--shiki-dark:#E6EDF3"> document.</span><span style="color:#6F42C1;--shiki-dark:#D2A8FF">getElementById</span><span style="color:#24292E;--shiki-dark:#E6EDF3">(</span><span style="color:#032F62;--shiki-dark:#A5D6FF">'add-btn'</span><span style="color:#24292E;--shiki-dark:#E6EDF3">);</span></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#FF7B72">const</span><span style="color:#005CC5;--shiki-dark:#79C0FF"> list</span><span style="color:#D73A49;--shiki-dark:#FF7B72"> =</span><span style="color:#24292E;--shiki-dark:#E6EDF3"> document.</span><span style="color:#6F42C1;--shiki-dark:#D2A8FF">getElementById</span><span style="color:#24292E;--shiki-dark:#E6EDF3">(</span><span style="color:#032F62;--shiki-dark:#A5D6FF">'task-list'</span><span style="color:#24292E;--shiki-dark:#E6EDF3">);</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E6EDF3">addBtn.</span><span style="color:#6F42C1;--shiki-dark:#D2A8FF">addEventListener</span><span style="color:#24292E;--shiki-dark:#E6EDF3">(</span><span style="color:#032F62;--shiki-dark:#A5D6FF">'click'</span><span style="color:#24292E;--shiki-dark:#E6EDF3">, () </span><span style="color:#D73A49;--shiki-dark:#FF7B72">=></span><span style="color:#24292E;--shiki-dark:#E6EDF3"> {</span></span>
+<span class="line"><span style="color:#6A737D;--shiki-dark:#8B949E">  // что происходит при клике на «Добавить»</span></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#FF7B72">  const</span><span style="color:#005CC5;--shiki-dark:#79C0FF"> text</span><span style="color:#D73A49;--shiki-dark:#FF7B72"> =</span><span style="color:#24292E;--shiki-dark:#E6EDF3"> input.value;</span></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#FF7B72">  if</span><span style="color:#24292E;--shiki-dark:#E6EDF3"> (</span><span style="color:#D73A49;--shiki-dark:#FF7B72">!</span><span style="color:#24292E;--shiki-dark:#E6EDF3">text) </span><span style="color:#D73A49;--shiki-dark:#FF7B72">return</span><span style="color:#24292E;--shiki-dark:#E6EDF3">;</span></span>
+<span class="line"><span style="color:#6F42C1;--shiki-dark:#D2A8FF">  addTask</span><span style="color:#24292E;--shiki-dark:#E6EDF3">(text);</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E6EDF3">  input.value </span><span style="color:#D73A49;--shiki-dark:#FF7B72">=</span><span style="color:#032F62;--shiki-dark:#A5D6FF"> ''</span><span style="color:#24292E;--shiki-dark:#E6EDF3">;</span></span>
+<span class="line"><span style="color:#6F42C1;--shiki-dark:#D2A8FF">  saveTasks</span><span style="color:#24292E;--shiki-dark:#E6EDF3">();</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E6EDF3">});</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#FF7B72">function</span><span style="color:#6F42C1;--shiki-dark:#D2A8FF"> addTask</span><span style="color:#24292E;--shiki-dark:#E6EDF3">(</span><span style="color:#E36209;--shiki-dark:#FFA657">text</span><span style="color:#24292E;--shiki-dark:#E6EDF3">) {</span></span>
+<span class="line"><span style="color:#6A737D;--shiki-dark:#8B949E">  // создаём новый элемент списка</span></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#FF7B72">  ...</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E6EDF3">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#FF7B72">function</span><span style="color:#6F42C1;--shiki-dark:#D2A8FF"> saveTasks</span><span style="color:#24292E;--shiki-dark:#E6EDF3">() {</span></span>
+<span class="line"><span style="color:#6A737D;--shiki-dark:#8B949E">  // сохраняем в localStorage</span></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#FF7B72">  ...</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E6EDF3">}</span></span></code></pre>
+<p>Что мы здесь <strong>понимаем без знания JS</strong>:</p>
+<ul>
+<li><code>addBtn.addEventListener('click', ...)</code> — «когда кликают на addBtn, делать это»</li>
+<li><code>addTask(text)</code> — функция, которая добавляет задачу</li>
+<li><code>saveTasks()</code> — функция, которая сохраняет</li>
+<li>Имена <strong>говорят сами за себя</strong> — <code>addTask</code>, <code>saveTasks</code>, <code>taskInput</code></li>
+</ul>
+<p>И если потом захочется поменять что-то в сохранении — вы <strong>знаете</strong>, что лезть надо в <code>saveTasks</code> в <code>app.js</code>.</p>
+<h2 id="лайфхак-1-попросите-агента-сделать-explainer">Лайфхак №1: попросите агента сделать explainer</h2>
+<p>Самый недооценённый приём для новичка. Когда не понимаете файл — <strong>попросите агента объяснить</strong>:</p>
+<blockquote>
+<p>«Объясни мне в трёх предложениях, что делает файл <code>app.js</code>. Без кода, простыми словами, как для человека, который раньше никогда не видел JavaScript.»</p>
+</blockquote>
+<p>Агент выдаст что-то вроде:</p>
+<blockquote>
+<p>«Этот файл реализует логику todo-приложения. Когда вы нажимаете «Добавить», он берёт текст из поля ввода, создаёт новый элемент списка и сохраняет все задачи в браузерной памяти (localStorage). Перезагрузка страницы не теряет задачи — они подгружаются обратно из этой памяти.»</p>
+</blockquote>
+<p>Всё, теперь у вас есть <strong>карта файла</strong>. Не идеальная, но достаточная.</p>
+<h2 id="лайфхак-2-покажи-мне-где-x">Лайфхак №2: «покажи мне, где X»</h2>
+<p>Когда что-то надо поменять, и вы не знаете, где это лежит, не лезьте искать — <strong>спросите</strong>:</p>
+<blockquote>
+<p>«В каком файле и в какой строке находится код, который сохраняет задачи в localStorage? Покажи мне сам кусок.»</p>
+</blockquote>
+<p>Агент покажет конкретное место. Дальше вы либо просите его поменять там, либо смотрите своими глазами, чтобы убедиться, что <strong>меняется именно это</strong>.</p>
+<h2 id="лайфхак-3-следите-за-тем-что-агент-трогает">Лайфхак №3: следите за тем, что агент трогает</h2>
+<p>В Claude Code после каждого изменения видно — какие файлы были изменены. Это критично, чтобы не пропустить «случайные» правки.</p>
+<p>Если попросили «измени цвет кнопки», а агент трогает <code>app.js</code> — стоп, что-то не так. Зачем ему логика? Спросите:</p>
+<blockquote>
+<p>«Зачем ты изменил <code>app.js</code>? Я просил только цвет кнопки. Откати это изменение.»</p>
+</blockquote>
+<p>Это нормально — <strong>переспрашивать</strong>. Это не «недоверие к агенту», это <strong>базовая гигиена</strong>.</p>
+<h2 id="что-делать-когда-совсем-ничего-не-понятно">Что делать, когда «совсем ничего не понятно»</h2>
+<h3 id="случай-1-открыли-файл-и-там-500-строк-голова-кругом">Случай 1. Открыли файл, и там 500 строк, голова кругом</h3>
+<p>Не паникуйте. <strong>Никто не читает 500 строк подряд</strong>. Делайте так:</p>
+<ol>
+<li>Спросите агента: «дай мне оглавление этого файла — какие функции, что каждая делает, в одной строке»</li>
+<li>Найдите ту, которая делает то, что вас интересует</li>
+<li>Просите показать <strong>только её</strong></li>
+</ol>
+<h3 id="случай-2-видите-название-функции--не-понимаете-что-значит">Случай 2. Видите название функции — не понимаете, что значит</h3>
+<p>Спросите агента: «что значит <code>setInterval</code> в этом коде, простыми словами». Это <strong>не глупый вопрос</strong>. Это лучший способ научиться — спрашивать в контексте, на живом примере.</p>
+<h3 id="случай-3-ошибка-в-консоли--куча-красного-текста">Случай 3. Ошибка в консоли — куча красного текста</h3>
+<p>Скопируйте <strong>первую</strong> ошибку (обычно она самая важная) и спросите:</p>
+<blockquote>
+<p>«Эта ошибка появилась в консоли браузера: <code>&#x3C;вставить></code>. Что это значит и где это исправить?»</p>
+</blockquote>
+<p>Агент покажет файл, строку, и обычно сразу предложит фикс.</p>
+<h2 id="practice-20-30-минут">Practice (20-30 минут)</h2>
+<h3 id="задание-1-15-минут--explainerы">Задание 1 (15 минут) — explainer’ы</h3>
+<p>Откройте свой <code>my-todo</code> из B5 (или любую папку с агентским кодом). Для <strong>каждого</strong> файла попросите агента:</p>
+<blockquote>
+<p>«Объясни в трёх предложениях, что делает этот файл. Без кода, простыми словами.»</p>
+</blockquote>
+<p>Перепишите ответы себе <strong>своими словами</strong> в блокнот или README. Это нужно не для красоты — этот процесс сам по себе <strong>закрепляет понимание</strong>.</p>
+<h3 id="задание-2-15-минут--найдите-фичу">Задание 2 (15 минут) — найдите фичу</h3>
+<p>Откройте <code>app.js</code> (или другой логический файл). Найдите функцию, которая отвечает за <strong>одну конкретную фичу</strong> — например, «удаление задачи» или «сохранение в localStorage». Сделайте две вещи:</p>
+<ol>
+<li>Расскажите вслух (или напишите) — что эта функция делает по шагам, своими словами</li>
+<li>Сверьтесь с агентом: «функция <code>&#x3C;имя></code> — правильно ли я понимаю, что она работает так-то?»</li>
+</ol>
+<p>Если правильно — отлично, вы только что <strong>прочитали реальный код</strong>. Если нет — агент поправит, вы дополните своё понимание.</p>
+<h2 id="recap">Recap</h2>
+<ul>
+<li><strong>Ориентация ≠ программирование.</strong> Знать «какой файл за что отвечает» — уже 80% пользы.</li>
+<li><strong>Расширения говорят сами за себя:</strong> <code>.html</code> — структура, <code>.css</code> — оформление, <code>.js</code> — логика, <code>.json</code> — настройки, <code>.md</code> — текст.</li>
+<li><strong>Главный лайфхак — просить explainer’ы у агента</strong>, а не «учить язык». В контексте, на живом примере, по чуть-чуть.</li>
+</ul>
+<h2 id="скептик-самурай">Скептик Самурай</h2>
+<aside class="skeptic">
+<p><strong>🥷 Скептик Самурай спрашивает:</strong>
+«А если я в принципе не хочу читать код? Я же не программист, я думал, агент сам всё сделает.»</p>
+<p><strong>Ответ:</strong> Никто не заставляет вас читать код <strong>построчно</strong>. Но если вы вообще никогда <strong>не открываете</strong> свои файлы, то происходит интересное: вы становитесь <strong>полностью зависимы</strong> от агента, который, бывает, и сам не знает, что натворил. Минимальная ориентация — это <strong>ваш контроль над своим же проектом</strong>. Это как ездить на автомобиле, не зная, где капот: ехать можно, но если что-то стучит — вы беспомощны. <strong>Не идеально, но реально работает</strong> — даже минимальное чтение кода превращает вас из пассажира в водителя.</p>
+</aside>
+<h2 id="дальше">Дальше</h2>
+<p>В <strong>B7 — Безопасность для начинающего</strong> разберём, <strong>что агенту нельзя давать</strong> и <strong>как защитить себя</strong> на этапе обучения. Без паранойи, но и без наивности — есть несколько простых правил, которые избавят вас от 90% типовых факапов: про API-ключи, про секреты, про папки, в которые лучше не пускать.</p>
+<p>Если зашло — поделитесь главой с тем, кто работает с агентом, но <strong>в код не смотрит вообще</strong>. Если у вас есть файл, в котором ничего не понятно — закиньте кусок в комменты, разберём вместе. <strong>За лайк и комментарий — отдельная благодарность</strong>, ваша обратная связь реально помогает шлифовать материал.</p>
+<p>Всех обнял, всегда ваш — Илья ❤️</p>  <nav class="chapter-nav"> <a href="/vibesamurai-site/courses/beginner/b5"> <span class="dir">← Назад</span> <span class="title">B5 · Запускаем первый проект (todo-приложение)</span> </a> <a href="/vibesamurai-site/courses/beginner/b7"> <span class="dir">Дальше →</span> <span class="title">B7 · Безопасность для начинающего</span> </a> </nav> </main> </div> </body></html>

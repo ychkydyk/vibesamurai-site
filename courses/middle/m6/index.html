@@ -1,0 +1,293 @@
+<!DOCTYPE html><html lang="en"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Claude Code CLI mastery — Vibesamurai</title><meta name="description" content="Установка, конфигурация, hooks, skills, custom commands, subagents и .claude/settings.json паттерны."><meta property="og:title" content="Claude Code CLI mastery"><meta property="og:type" content="article"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Inter:wght@300..800&family=JetBrains+Mono:wght@400..600&display=swap" rel="stylesheet"><link rel="stylesheet" href="/vibesamurai-site/_astro/_slug_.DpgmObvf.css">
+<style>.reader-sidebar[data-astro-cid-khgtvzrl] .soon[data-astro-cid-khgtvzrl]{display:block;color:var(--text-mute);font-size:var(--size-2);padding:var(--space-1) 0}.reader-sidebar[data-astro-cid-khgtvzrl] .soon[data-astro-cid-khgtvzrl] em[data-astro-cid-khgtvzrl]{font-style:normal;font-family:var(--font-mono);font-size:.85em;color:var(--accent);margin-left:4px;text-transform:uppercase;letter-spacing:.1em}
+</style></head> <body> <div class="reader-app"> <aside class="reader-rail"> <a href="/vibesamurai-site/" class="logo" aria-label="Vibesamurai home">V</a> </aside> <aside class="reader-sidebar" data-astro-cid-khgtvzrl> <div class="breadcrumb" data-astro-cid-khgtvzrl>Vibesamurai · Middle Path · m6</div> <h4 data-astro-cid-khgtvzrl>В этом курсе</h4> <ul data-astro-cid-khgtvzrl> <li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m1" class data-astro-cid-khgtvzrl>M1 · Что такое agentic AI в SDLC</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m2" class data-astro-cid-khgtvzrl>M2 · Границы агента</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m3" class data-astro-cid-khgtvzrl>M3 · Observability &amp; HITL</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m4" class data-astro-cid-khgtvzrl>M4 · Tool inventory &amp; permissions</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m5" class data-astro-cid-khgtvzrl>M5 · MCP deep dive</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m6" class="current" data-astro-cid-khgtvzrl>M6 · Claude Code mastery</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m7" class data-astro-cid-khgtvzrl>M7 · Codex CLI &amp; OpenAI Agents</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m8" class data-astro-cid-khgtvzrl>M8 · Cursor + IDE-агенты</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m9" class data-astro-cid-khgtvzrl>M9 · Memory strategies</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m10" class data-astro-cid-khgtvzrl>M10 · State, drift, continuity</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m11" class data-astro-cid-khgtvzrl>M11 · Метрики оценки</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m12" class data-astro-cid-khgtvzrl>M12 · Regression testing</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m13" class data-astro-cid-khgtvzrl>M13 · Tuning, когда метрики стоят</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m14" class data-astro-cid-khgtvzrl>M14 · Pipelines &amp; orchestration</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m15" class data-astro-cid-khgtvzrl>M15 · Multi-agent роли</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m16" class data-astro-cid-khgtvzrl>M16 · Когда multi-agent — overkill</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m17" class data-astro-cid-khgtvzrl>M17 · Деплой агентов в прод</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m18" class data-astro-cid-khgtvzrl>M18 · Production security</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m19" class data-astro-cid-khgtvzrl>M19 · Incidents &amp; post-mortems</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m20" class data-astro-cid-khgtvzrl>M20 · Финал Middle</a> </li> </ul>  </aside> <main class="reader-main"> <div class="chapter-eyebrow">Middle Path · m6</div> <h1 class="chapter-title">M6 · Claude Code CLI mastery</h1> <p class="chapter-subtitle">Установка, конфигурация, hooks, skills, custom commands, subagents и .claude/settings.json паттерны.</p>  <blockquote>
+<p>Черновик M6 в голосе DmitriyM (см. <code>scripts/tg_voice_analysis/_summary.md</code>). Авторский блок — выходит за рамки GH-600.</p>
+</blockquote>
+<h2 id="о-чём-эта-глава">О чём эта глава</h2>
+<p>Друзья, всем привет! 👋</p>
+<p>Сразу скажу — это первая глава, которая <strong>выходит за рамки GH-600</strong>. Майкрософт-сертификация про конкретные тулы говорит мало: общие принципы, абстрактные паттерны. Это нормально для сертификации, потому что она долгоживущая. Но если вы пришли учиться <strong>реально работать с агентом</strong> — без глубокого знакомства с конкретными тулами это не работает.</p>
+<p>Поэтому в M6, M7, M8 я даю «полный фарш» по трём основным тулзам мая 2026:</p>
+<ul>
+<li><strong>M6 — Claude Code</strong> (CLI и IDE-плагин от Anthropic)</li>
+<li><strong>M7 — GPT-5.3 Codex CLI</strong> (CLI от OpenAI)</li>
+<li><strong>M8 — Cursor Composer + другие IDE-агенты</strong> (Cline, Aider, Windsurf)</li>
+</ul>
+<p>Начнём с Claude Code. <strong>Не потому что я его больше люблю</strong> (хотя, спойлер, да — я в нём провожу больше всего времени), а потому что архитектурно он наиболее «эталонный»: то как сделаны hooks, skills, settings — стало де-факто стандартом, на который ориентируются остальные.</p>
+<h2 id="установка-и-первый-запуск">Установка и первый запуск</h2>
+<p>Минимальная установка (май 2026):</p>
+<pre class="astro-code astro-code-themes github-light github-dark-default" style="background-color:#fff;--shiki-dark-bg:#0d1117;color:#24292e;--shiki-dark:#e6edf3; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#6A737D;--shiki-dark:#8B949E"># npm-канал, рекомендованный</span></span>
+<span class="line"><span style="color:#6F42C1;--shiki-dark:#FFA657">npm</span><span style="color:#032F62;--shiki-dark:#A5D6FF"> install</span><span style="color:#005CC5;--shiki-dark:#79C0FF"> -g</span><span style="color:#032F62;--shiki-dark:#A5D6FF"> @anthropic-ai/claude-code</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D;--shiki-dark:#8B949E"># первый запуск — авторизация</span></span>
+<span class="line"><span style="color:#6F42C1;--shiki-dark:#FFA657">claude</span></span></code></pre>
+<p>Альтернативы установки на разных платформах:</p>
+<ul>
+<li><strong>macOS native</strong> — <code>brew install claude-code</code> или <code>.dmg</code> с anthropic.com</li>
+<li><strong>Windows native</strong> — <code>.exe</code> инсталлер или MS Store. На Windows я сам сижу — работает нативно, не требует WSL.</li>
+<li><strong>Linux</strong> — <code>npm</code> или <code>.deb</code>/<code>.rpm</code> для основных дистрибутивов</li>
+</ul>
+<p>После первого запуска <code>claude</code> попросит залогиниться через браузер (Pro/Max-подписка) или ввести API ключ (pay-per-use). Лично я сижу на Max-подписке — окупается в первый день, если вы пишете каждый день.</p>
+<h3 id="базовая-структура-установки">Базовая структура установки</h3>
+<p>После установки и логина у вас появляются:</p>
+<pre class="astro-code astro-code-themes github-light github-dark-default" style="background-color:#fff;--shiki-dark-bg:#0d1117;color:#24292e;--shiki-dark:#e6edf3; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>~/.claude.json                     # глобальный конфиг (mcp servers, settings)</span></span>
+<span class="line"><span>~/.claude/                         # папка пользователя</span></span>
+<span class="line"><span>├── commands/                      # global slash-commands</span></span>
+<span class="line"><span>├── agents/                        # global subagents</span></span>
+<span class="line"><span>├── skills/                        # global skills</span></span>
+<span class="line"><span>├── projects/                      # session history по проектам</span></span>
+<span class="line"><span>└── settings.json                  # global permissions + hooks</span></span></code></pre>
+<p>В каждом проекте может быть локальный конфиг:</p>
+<pre class="astro-code astro-code-themes github-light github-dark-default" style="background-color:#fff;--shiki-dark-bg:#0d1117;color:#24292e;--shiki-dark:#e6edf3; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>project-root/</span></span>
+<span class="line"><span>├── .claude/</span></span>
+<span class="line"><span>│   ├── settings.json              # project-level overrides</span></span>
+<span class="line"><span>│   ├── settings.local.json        # gitignored, personal</span></span>
+<span class="line"><span>│   ├── commands/                  # project slash-commands</span></span>
+<span class="line"><span>│   ├── agents/                    # project subagents</span></span>
+<span class="line"><span>│   └── skills/                    # project skills</span></span>
+<span class="line"><span>├── CLAUDE.md                      # «памятка» проекта для агента</span></span>
+<span class="line"><span>└── .mcp.json                      # project MCP servers</span></span></code></pre>
+<p>Правило: <strong>глобальное — для тебя</strong>, <strong>проектное — для команды</strong> (под git, через PR). <code>settings.local.json</code> — твоя личная отсебятина, <strong>не уходит в репо</strong>.</p>
+<h2 id="claudemd--главный-файл">CLAUDE.md — главный файл</h2>
+<p>Самый важный артефакт. <code>CLAUDE.md</code> в корне проекта — это <strong>постоянный контекст</strong>, который Claude Code читает в каждой сессии. Это и есть то, что отличает «агент с памятью» от «агент-однодневка».</p>
+<p>Что писать в <code>CLAUDE.md</code>:</p>
+<ul>
+<li><strong>Тип проекта</strong> (Node/Python/Rust/etc., версия)</li>
+<li><strong>Команды</strong>: как запустить тесты, линтер, сборку</li>
+<li><strong>Архитектурные конвенции</strong> проекта</li>
+<li><strong>Что НЕ трогать</strong> (legacy-код, генерируемые файлы, чужие зоны)</li>
+<li><strong>Стиль коммитов</strong>, конвенция веток</li>
+<li><strong>Любые “tribal knowledge”</strong>, которое команда узнала на горьком опыте</li>
+</ul>
+<p>Пример минимального <code>CLAUDE.md</code> для Node-проекта:</p>
+<pre class="astro-code astro-code-themes github-light github-dark-default" style="background-color:#fff;--shiki-dark-bg:#0d1117;color:#24292e;--shiki-dark:#e6edf3; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="markdown"><code><span class="line"><span style="color:#005CC5;--shiki-light-font-weight:bold;--shiki-dark:#79C0FF;--shiki-dark-font-weight:bold"># Project context for Claude Code</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E6EDF3">This is a TypeScript SaaS backend on Node 22 + Fastify + Prisma + Postgres.</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#005CC5;--shiki-light-font-weight:bold;--shiki-dark:#79C0FF;--shiki-dark-font-weight:bold">## Commands</span></span>
+<span class="line"><span style="color:#E36209;--shiki-dark:#FFA657">-</span><span style="color:#24292E;--shiki-dark:#E6EDF3"> Tests: </span><span style="color:#005CC5;--shiki-dark:#79C0FF">`npm test`</span><span style="color:#24292E;--shiki-dark:#E6EDF3"> (vitest, ~30s)</span></span>
+<span class="line"><span style="color:#E36209;--shiki-dark:#FFA657">-</span><span style="color:#24292E;--shiki-dark:#E6EDF3"> Lint: </span><span style="color:#005CC5;--shiki-dark:#79C0FF">`npm run lint`</span><span style="color:#24292E;--shiki-dark:#E6EDF3"> (eslint + prettier)</span></span>
+<span class="line"><span style="color:#E36209;--shiki-dark:#FFA657">-</span><span style="color:#24292E;--shiki-dark:#E6EDF3"> Typecheck: </span><span style="color:#005CC5;--shiki-dark:#79C0FF">`npm run typecheck`</span></span>
+<span class="line"><span style="color:#E36209;--shiki-dark:#FFA657">-</span><span style="color:#24292E;--shiki-dark:#E6EDF3"> Dev: </span><span style="color:#005CC5;--shiki-dark:#79C0FF">`npm run dev`</span><span style="color:#24292E;--shiki-dark:#E6EDF3"> (auto-reload on 3000)</span></span>
+<span class="line"><span style="color:#E36209;--shiki-dark:#FFA657">-</span><span style="color:#24292E;--shiki-dark:#E6EDF3"> Build: </span><span style="color:#005CC5;--shiki-dark:#79C0FF">`npm run build`</span><span style="color:#24292E;--shiki-dark:#E6EDF3"> (output to dist/)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#005CC5;--shiki-light-font-weight:bold;--shiki-dark:#79C0FF;--shiki-dark-font-weight:bold">## Conventions</span></span>
+<span class="line"><span style="color:#E36209;--shiki-dark:#FFA657">-</span><span style="color:#24292E;--shiki-dark:#E6EDF3"> Path aliases: use </span><span style="color:#005CC5;--shiki-dark:#79C0FF">`@/`</span><span style="color:#24292E;--shiki-dark:#E6EDF3"> (mapped to src/)</span></span>
+<span class="line"><span style="color:#E36209;--shiki-dark:#FFA657">-</span><span style="color:#24292E;--shiki-dark:#E6EDF3"> Imports: named only, no default</span></span>
+<span class="line"><span style="color:#E36209;--shiki-dark:#FFA657">-</span><span style="color:#24292E;--shiki-dark:#E6EDF3"> Async: top-level await is fine</span></span>
+<span class="line"><span style="color:#E36209;--shiki-dark:#FFA657">-</span><span style="color:#24292E;--shiki-dark:#E6EDF3"> Errors: throw typed errors from </span><span style="color:#005CC5;--shiki-dark:#79C0FF">`src/errors/`</span><span style="color:#24292E;--shiki-dark:#E6EDF3">, never strings</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#005CC5;--shiki-light-font-weight:bold;--shiki-dark:#79C0FF;--shiki-dark-font-weight:bold">## Do NOT touch</span></span>
+<span class="line"><span style="color:#E36209;--shiki-dark:#FFA657">-</span><span style="color:#005CC5;--shiki-dark:#79C0FF"> `src/legacy/`</span><span style="color:#24292E;--shiki-dark:#E6EDF3"> — being deprecated, frozen</span></span>
+<span class="line"><span style="color:#E36209;--shiki-dark:#FFA657">-</span><span style="color:#005CC5;--shiki-dark:#79C0FF"> `prisma/migrations/`</span><span style="color:#24292E;--shiki-dark:#E6EDF3"> — never edit existing, only add new</span></span>
+<span class="line"><span style="color:#E36209;--shiki-dark:#FFA657">-</span><span style="color:#005CC5;--shiki-dark:#79C0FF"> `.env*`</span><span style="color:#24292E;--shiki-dark:#E6EDF3"> — secrets, ask the human</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#005CC5;--shiki-light-font-weight:bold;--shiki-dark:#79C0FF;--shiki-dark-font-weight:bold">## Commit style</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E6EDF3">Conventional commits with type prefix: </span><span style="color:#005CC5;--shiki-dark:#79C0FF">`feat:`</span><span style="color:#24292E;--shiki-dark:#E6EDF3">, </span><span style="color:#005CC5;--shiki-dark:#79C0FF">`fix:`</span><span style="color:#24292E;--shiki-dark:#E6EDF3">, </span><span style="color:#005CC5;--shiki-dark:#79C0FF">`refactor:`</span><span style="color:#24292E;--shiki-dark:#E6EDF3">, </span><span style="color:#005CC5;--shiki-dark:#79C0FF">`chore:`</span></span></code></pre>
+<p>Это — <strong>первый артефакт, который ты создаёшь в новом проекте</strong> перед серьёзной работой с агентом. Без него агент будет каждую сессию заново открывать репо и переоткрывать ваши конвенции.</p>
+<blockquote>
+<p><em>Лайфхак:</em> <code>CLAUDE.md</code> тоже можно сгенерировать самим Claude Code. Команда <code>/init</code> в свежем проекте — он прочитает структуру и предложит первую версию. Дальше вы её правите вручную.</p>
+</blockquote>
+<h2 id="claudesettingsjson--permissions-и-hooks">.claude/settings.json — permissions и hooks</h2>
+<p>Структура файла:</p>
+<pre class="astro-code astro-code-themes github-light github-dark-default" style="background-color:#fff;--shiki-dark-bg:#0d1117;color:#24292e;--shiki-dark:#e6edf3; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="json"><code><span class="line"><span style="color:#24292E;--shiki-dark:#E6EDF3">{</span></span>
+<span class="line"><span style="color:#005CC5;--shiki-dark:#7EE787">  "permissions"</span><span style="color:#24292E;--shiki-dark:#E6EDF3">: {</span></span>
+<span class="line"><span style="color:#005CC5;--shiki-dark:#7EE787">    "allow"</span><span style="color:#24292E;--shiki-dark:#E6EDF3">: [</span><span style="color:#B31D28;--shiki-light-font-style:italic;--shiki-dark:#FFA198;--shiki-dark-font-style:italic">...</span><span style="color:#24292E;--shiki-dark:#E6EDF3">],</span></span>
+<span class="line"><span style="color:#005CC5;--shiki-dark:#7EE787">    "deny"</span><span style="color:#24292E;--shiki-dark:#E6EDF3">: [</span><span style="color:#B31D28;--shiki-light-font-style:italic;--shiki-dark:#FFA198;--shiki-dark-font-style:italic">...</span><span style="color:#24292E;--shiki-dark:#E6EDF3">]</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E6EDF3">  },</span></span>
+<span class="line"><span style="color:#005CC5;--shiki-dark:#7EE787">  "hooks"</span><span style="color:#24292E;--shiki-dark:#E6EDF3">: {</span></span>
+<span class="line"><span style="color:#005CC5;--shiki-dark:#7EE787">    "PreToolUse"</span><span style="color:#24292E;--shiki-dark:#E6EDF3">: [</span><span style="color:#B31D28;--shiki-light-font-style:italic;--shiki-dark:#FFA198;--shiki-dark-font-style:italic">...</span><span style="color:#24292E;--shiki-dark:#E6EDF3">],</span></span>
+<span class="line"><span style="color:#005CC5;--shiki-dark:#7EE787">    "PostToolUse"</span><span style="color:#24292E;--shiki-dark:#E6EDF3">: [</span><span style="color:#B31D28;--shiki-light-font-style:italic;--shiki-dark:#FFA198;--shiki-dark-font-style:italic">...</span><span style="color:#24292E;--shiki-dark:#E6EDF3">],</span></span>
+<span class="line"><span style="color:#005CC5;--shiki-dark:#7EE787">    "Stop"</span><span style="color:#24292E;--shiki-dark:#E6EDF3">: [</span><span style="color:#B31D28;--shiki-light-font-style:italic;--shiki-dark:#FFA198;--shiki-dark-font-style:italic">...</span><span style="color:#24292E;--shiki-dark:#E6EDF3">]</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E6EDF3">  },</span></span>
+<span class="line"><span style="color:#005CC5;--shiki-dark:#7EE787">  "env"</span><span style="color:#24292E;--shiki-dark:#E6EDF3">: {</span><span style="color:#B31D28;--shiki-light-font-style:italic;--shiki-dark:#FFA198;--shiki-dark-font-style:italic">...</span><span style="color:#24292E;--shiki-dark:#E6EDF3">},</span></span>
+<span class="line"><span style="color:#005CC5;--shiki-dark:#7EE787">  "model"</span><span style="color:#24292E;--shiki-dark:#E6EDF3">: </span><span style="color:#032F62;--shiki-dark:#A5D6FF">"claude-opus-4-7"</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E6EDF3">}</span></span></code></pre>
+<h3 id="permissions-повтор-m4-в-специфике">Permissions (повтор M4 в специфике)</h3>
+<p>Уже разбирали в M4. Ключевые паттерны:</p>
+<pre class="astro-code astro-code-themes github-light github-dark-default" style="background-color:#fff;--shiki-dark-bg:#0d1117;color:#24292e;--shiki-dark:#e6edf3; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="json"><code><span class="line"><span style="color:#032F62;--shiki-dark:#A5D6FF">"allow"</span><span style="color:#24292E;--shiki-dark:#E6EDF3">: [</span></span>
+<span class="line"><span style="color:#032F62;--shiki-dark:#A5D6FF">  "Bash(npm run test:*)"</span><span style="color:#24292E;--shiki-dark:#E6EDF3">,</span></span>
+<span class="line"><span style="color:#032F62;--shiki-dark:#A5D6FF">  "Bash(npm run lint)"</span><span style="color:#24292E;--shiki-dark:#E6EDF3">,</span></span>
+<span class="line"><span style="color:#032F62;--shiki-dark:#A5D6FF">  "Bash(git status)"</span><span style="color:#24292E;--shiki-dark:#E6EDF3">,</span></span>
+<span class="line"><span style="color:#032F62;--shiki-dark:#A5D6FF">  "Bash(git diff:*)"</span><span style="color:#24292E;--shiki-dark:#E6EDF3">,</span></span>
+<span class="line"><span style="color:#032F62;--shiki-dark:#A5D6FF">  "Bash(git log:*)"</span><span style="color:#24292E;--shiki-dark:#E6EDF3">,</span></span>
+<span class="line"><span style="color:#032F62;--shiki-dark:#A5D6FF">  "Read"</span><span style="color:#24292E;--shiki-dark:#E6EDF3">,</span></span>
+<span class="line"><span style="color:#032F62;--shiki-dark:#A5D6FF">  "Edit"</span><span style="color:#24292E;--shiki-dark:#E6EDF3">,</span></span>
+<span class="line"><span style="color:#032F62;--shiki-dark:#A5D6FF">  "Glob"</span><span style="color:#24292E;--shiki-dark:#E6EDF3">,</span></span>
+<span class="line"><span style="color:#032F62;--shiki-dark:#A5D6FF">  "Grep"</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E6EDF3">],</span></span>
+<span class="line"><span style="color:#032F62;--shiki-dark:#A5D6FF">"deny"</span><span style="color:#24292E;--shiki-dark:#E6EDF3">: [</span></span>
+<span class="line"><span style="color:#032F62;--shiki-dark:#A5D6FF">  "Bash(rm:*)"</span><span style="color:#24292E;--shiki-dark:#E6EDF3">,</span></span>
+<span class="line"><span style="color:#032F62;--shiki-dark:#A5D6FF">  "Bash(git push:*)"</span><span style="color:#24292E;--shiki-dark:#E6EDF3">,</span></span>
+<span class="line"><span style="color:#032F62;--shiki-dark:#A5D6FF">  "Bash(git reset --hard:*)"</span><span style="color:#24292E;--shiki-dark:#E6EDF3">,</span></span>
+<span class="line"><span style="color:#032F62;--shiki-dark:#A5D6FF">  "Read(./.env*)"</span><span style="color:#24292E;--shiki-dark:#E6EDF3">,</span></span>
+<span class="line"><span style="color:#032F62;--shiki-dark:#A5D6FF">  "Read(~/.ssh/**)"</span><span style="color:#24292E;--shiki-dark:#E6EDF3">,</span></span>
+<span class="line"><span style="color:#032F62;--shiki-dark:#A5D6FF">  "Read(~/.aws/**)"</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E6EDF3">]</span></span></code></pre>
+<h3 id="hooks--самая-мощная-штука-claude-code">Hooks — самая мощная штука Claude Code</h3>
+<p><strong>Hook</strong> — это команда, которая запускается <strong>детерминированно</strong> в ответ на агентское событие. Это не «попросить агента что-то сделать», это <strong>гарантированный скрипт</strong>, который выполнит харнес.</p>
+<p>События:</p>
+<ul>
+<li><code>PreToolUse</code> — перед каждым вызовом тула</li>
+<li><code>PostToolUse</code> — после каждого вызова тула</li>
+<li><code>UserPromptSubmit</code> — когда пользователь отправил промпт</li>
+<li><code>Notification</code> — на уведомления (ждёт ввод, например)</li>
+<li><code>Stop</code> — когда сессия завершается</li>
+</ul>
+<p>Пример: автоматический prettier после каждого edit:</p>
+<pre class="astro-code astro-code-themes github-light github-dark-default" style="background-color:#fff;--shiki-dark-bg:#0d1117;color:#24292e;--shiki-dark:#e6edf3; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="json"><code><span class="line"><span style="color:#032F62;--shiki-dark:#A5D6FF">"hooks"</span><span style="color:#24292E;--shiki-dark:#E6EDF3">: {</span></span>
+<span class="line"><span style="color:#005CC5;--shiki-dark:#7EE787">  "PostToolUse"</span><span style="color:#24292E;--shiki-dark:#E6EDF3">: [</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E6EDF3">    {</span></span>
+<span class="line"><span style="color:#005CC5;--shiki-dark:#7EE787">      "matcher"</span><span style="color:#24292E;--shiki-dark:#E6EDF3">: </span><span style="color:#032F62;--shiki-dark:#A5D6FF">"Edit|Write"</span><span style="color:#24292E;--shiki-dark:#E6EDF3">,</span></span>
+<span class="line"><span style="color:#005CC5;--shiki-dark:#7EE787">      "hooks"</span><span style="color:#24292E;--shiki-dark:#E6EDF3">: [</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E6EDF3">        {</span></span>
+<span class="line"><span style="color:#005CC5;--shiki-dark:#7EE787">          "type"</span><span style="color:#24292E;--shiki-dark:#E6EDF3">: </span><span style="color:#032F62;--shiki-dark:#A5D6FF">"command"</span><span style="color:#24292E;--shiki-dark:#E6EDF3">,</span></span>
+<span class="line"><span style="color:#005CC5;--shiki-dark:#7EE787">          "command"</span><span style="color:#24292E;--shiki-dark:#E6EDF3">: </span><span style="color:#032F62;--shiki-dark:#A5D6FF">"npx prettier --write $CLAUDE_TOOL_INPUT_file_path"</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E6EDF3">        }</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E6EDF3">      ]</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E6EDF3">    }</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E6EDF3">  ]</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E6EDF3">}</span></span></code></pre>
+<p>Пример: запрет на правку файлов в <code>legacy/</code>:</p>
+<pre class="astro-code astro-code-themes github-light github-dark-default" style="background-color:#fff;--shiki-dark-bg:#0d1117;color:#24292e;--shiki-dark:#e6edf3; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="json"><code><span class="line"><span style="color:#032F62;--shiki-dark:#A5D6FF">"hooks"</span><span style="color:#24292E;--shiki-dark:#E6EDF3">: {</span></span>
+<span class="line"><span style="color:#005CC5;--shiki-dark:#7EE787">  "PreToolUse"</span><span style="color:#24292E;--shiki-dark:#E6EDF3">: [</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E6EDF3">    {</span></span>
+<span class="line"><span style="color:#005CC5;--shiki-dark:#7EE787">      "matcher"</span><span style="color:#24292E;--shiki-dark:#E6EDF3">: </span><span style="color:#032F62;--shiki-dark:#A5D6FF">"Edit|Write"</span><span style="color:#24292E;--shiki-dark:#E6EDF3">,</span></span>
+<span class="line"><span style="color:#005CC5;--shiki-dark:#7EE787">      "hooks"</span><span style="color:#24292E;--shiki-dark:#E6EDF3">: [</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E6EDF3">        {</span></span>
+<span class="line"><span style="color:#005CC5;--shiki-dark:#7EE787">          "type"</span><span style="color:#24292E;--shiki-dark:#E6EDF3">: </span><span style="color:#032F62;--shiki-dark:#A5D6FF">"command"</span><span style="color:#24292E;--shiki-dark:#E6EDF3">,</span></span>
+<span class="line"><span style="color:#005CC5;--shiki-dark:#7EE787">          "command"</span><span style="color:#24292E;--shiki-dark:#E6EDF3">: </span><span style="color:#032F62;--shiki-dark:#A5D6FF">"node .claude/scripts/check-legacy.js"</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E6EDF3">        }</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E6EDF3">      ]</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E6EDF3">    }</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E6EDF3">  ]</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E6EDF3">}</span></span></code></pre>
+<p>И в <code>check-legacy.js</code>:</p>
+<pre class="astro-code astro-code-themes github-light github-dark-default" style="background-color:#fff;--shiki-dark-bg:#0d1117;color:#24292e;--shiki-dark:#e6edf3; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="js"><code><span class="line"><span style="color:#6A737D;--shiki-dark:#8B949E">#!/usr/bin/env node</span></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#FF7B72">const</span><span style="color:#005CC5;--shiki-dark:#79C0FF"> path</span><span style="color:#D73A49;--shiki-dark:#FF7B72"> =</span><span style="color:#24292E;--shiki-dark:#E6EDF3"> process.env.CLAUDE_TOOL_INPUT_file_path;</span></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#FF7B72">if</span><span style="color:#24292E;--shiki-dark:#E6EDF3"> (path?.</span><span style="color:#6F42C1;--shiki-dark:#D2A8FF">includes</span><span style="color:#24292E;--shiki-dark:#E6EDF3">(</span><span style="color:#032F62;--shiki-dark:#A5D6FF">'/legacy/'</span><span style="color:#24292E;--shiki-dark:#E6EDF3">)) {</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E6EDF3">  console.</span><span style="color:#6F42C1;--shiki-dark:#D2A8FF">error</span><span style="color:#24292E;--shiki-dark:#E6EDF3">(</span><span style="color:#032F62;--shiki-dark:#A5D6FF">'Editing files in legacy/ is forbidden by hook.'</span><span style="color:#24292E;--shiki-dark:#E6EDF3">);</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E6EDF3">  process.</span><span style="color:#6F42C1;--shiki-dark:#D2A8FF">exit</span><span style="color:#24292E;--shiki-dark:#E6EDF3">(</span><span style="color:#005CC5;--shiki-dark:#79C0FF">2</span><span style="color:#24292E;--shiki-dark:#E6EDF3">);  </span><span style="color:#6A737D;--shiki-dark:#8B949E">// exit 2 = block the tool use</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E6EDF3">}</span></span></code></pre>
+<p>Это <strong>физическое ограничение</strong>, не «попросили модель не трогать». Прошёл <code>exit 2</code> — тул-вызов заблокирован, агент видит ошибку и пересматривает.</p>
+<blockquote>
+<p><em>Принцип:</em> любое правило, которое <strong>критично соблюсти</strong> — оно должно быть hook-ом, не инструкцией в <code>CLAUDE.md</code>. Инструкции модель может «забыть»; hook — нет.</p>
+</blockquote>
+<h2 id="slash-commands--повторяемые-задачи">Slash-commands — повторяемые задачи</h2>
+<p>Slash-command — это <strong>именованная задача</strong>, которую вы можете запустить из любой сессии. Хранится в <code>.claude/commands/&#x3C;name>.md</code>.</p>
+<p>Простейший пример <code>.claude/commands/review.md</code>:</p>
+<pre class="astro-code astro-code-themes github-light github-dark-default" style="background-color:#fff;--shiki-dark-bg:#0d1117;color:#24292e;--shiki-dark:#e6edf3; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="markdown"><code><span class="line"><span style="color:#005CC5;--shiki-light-font-weight:bold;--shiki-dark:#79C0FF;--shiki-dark-font-weight:bold">---</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E6EDF3">description: Review uncommitted changes against project conventions</span></span>
+<span class="line"><span style="color:#005CC5;--shiki-light-font-weight:bold;--shiki-dark:#79C0FF;--shiki-dark-font-weight:bold">---</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E6EDF3">Прочитай git diff текущих uncommitted изменений и проведи code review по чек-листу:</span></span>
+<span class="line"><span style="color:#E36209;--shiki-dark:#FFA657">-</span><span style="color:#24292E;--shiki-dark:#E6EDF3"> Соответствие conventions из CLAUDE.md</span></span>
+<span class="line"><span style="color:#E36209;--shiki-dark:#FFA657">-</span><span style="color:#24292E;--shiki-dark:#E6EDF3"> Naming</span></span>
+<span class="line"><span style="color:#E36209;--shiki-dark:#FFA657">-</span><span style="color:#24292E;--shiki-dark:#E6EDF3"> Error handling</span></span>
+<span class="line"><span style="color:#E36209;--shiki-dark:#FFA657">-</span><span style="color:#24292E;--shiki-dark:#E6EDF3"> Test coverage для новых функций</span></span>
+<span class="line"><span style="color:#E36209;--shiki-dark:#FFA657">-</span><span style="color:#24292E;--shiki-dark:#E6EDF3"> Безопасность (нет ли хардкоженных секретов)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E6EDF3">В конце — итог "ok / needs work / blocking issues".</span></span></code></pre>
+<p>Использование в чате: просто <code>/review</code> — и Claude знает, что делать.</p>
+<p>Командам можно передавать аргументы:</p>
+<pre class="astro-code astro-code-themes github-light github-dark-default" style="background-color:#fff;--shiki-dark-bg:#0d1117;color:#24292e;--shiki-dark:#e6edf3; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="markdown"><code><span class="line"><span style="color:#005CC5;--shiki-light-font-weight:bold;--shiki-dark:#79C0FF;--shiki-dark-font-weight:bold">---</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E6EDF3">description: Generate test for a specific function</span></span>
+<span class="line"><span style="color:#005CC5;--shiki-light-font-weight:bold;--shiki-dark:#79C0FF;--shiki-dark-font-weight:bold">---</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E6EDF3">Сгенерируй тест-файл для функции $1 из файла $2.</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E6EDF3">Используй vitest. Покрой нормальные кейсы + edge cases + error path.</span></span></code></pre>
+<p>Использование: <code>/test parseDate src/utils/date.ts</code></p>
+<p>Команды бывают глобальные (<code>~/.claude/commands/</code>) и проектные (<code>.claude/commands/</code>). Проектные ходят в git, разделяются командой. Это <strong>уровень шаблонизации</strong>, который сильно ускоряет повседневную работу.</p>
+<h2 id="subagents--изолированные-исполнители">Subagents — изолированные исполнители</h2>
+<p>Subagent — это <strong>отдельный агент с собственным system prompt</strong>, к которому основной агент может делегировать задачу. Хранится в <code>.claude/agents/&#x3C;name>.md</code>.</p>
+<p>Зачем нужны:</p>
+<ul>
+<li><strong>Изолированный контекст</strong> — subagent не видит вашей основной сессии, не путается в неё.</li>
+<li><strong>Специализированный prompt</strong> — например, агент-ревьювер с другим системным промптом, чем агент-писатель.</li>
+<li><strong>Параллельная работа</strong> — основной агент может запустить 3 subagent-а параллельно (например, на разные части кодовой базы).</li>
+</ul>
+<p>Пример <code>.claude/agents/code-reviewer.md</code>:</p>
+<pre class="astro-code astro-code-themes github-light github-dark-default" style="background-color:#fff;--shiki-dark-bg:#0d1117;color:#24292e;--shiki-dark:#e6edf3; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="markdown"><code><span class="line"><span style="color:#005CC5;--shiki-light-font-weight:bold;--shiki-dark:#79C0FF;--shiki-dark-font-weight:bold">---</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E6EDF3">name: code-reviewer</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E6EDF3">description: Strict code reviewer. Use when reviewing diffs against project conventions.</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E6EDF3">tools: Read, Grep, Glob, Bash(git diff:</span><span style="color:#24292E;--shiki-light-font-style:italic;--shiki-dark:#E6EDF3;--shiki-dark-font-style:italic">*), Bash(git log:*</span><span style="color:#24292E;--shiki-dark:#E6EDF3">)</span></span>
+<span class="line"><span style="color:#005CC5;--shiki-light-font-weight:bold;--shiki-dark:#79C0FF;--shiki-dark-font-weight:bold">---</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E6EDF3">You are a strict but constructive code reviewer.</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E6EDF3">Your job: read the diff, compare it against CLAUDE.md conventions, and produce a structured review.</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E6EDF3">Focus on:</span></span>
+<span class="line"><span style="color:#E36209;--shiki-dark:#FFA657">-</span><span style="color:#24292E;--shiki-dark:#E6EDF3"> Convention violations</span></span>
+<span class="line"><span style="color:#E36209;--shiki-dark:#FFA657">-</span><span style="color:#24292E;--shiki-dark:#E6EDF3"> Logical errors</span></span>
+<span class="line"><span style="color:#E36209;--shiki-dark:#FFA657">-</span><span style="color:#24292E;--shiki-dark:#E6EDF3"> Missing tests</span></span>
+<span class="line"><span style="color:#E36209;--shiki-dark:#FFA657">-</span><span style="color:#24292E;--shiki-dark:#E6EDF3"> Security issues</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E6EDF3">Do NOT modify any files.</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E6EDF3">Output as markdown with sections: BLOCKING, MAJOR, MINOR, NITS.</span></span></code></pre>
+<p>В сессии основной агент может делегировать через тул <code>Task</code> (доступен по умолчанию):</p>
+<pre class="astro-code astro-code-themes github-light github-dark-default" style="background-color:#fff;--shiki-dark-bg:#0d1117;color:#24292e;--shiki-dark:#e6edf3; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>Use Task tool, subagent_type=code-reviewer, prompt="Review the diff in src/api/auth.ts"</span></span></code></pre>
+<p>И вернётся <strong>только итоговый ответ ревьювера</strong>, без всей промежуточной возни. Контекст основного агента сохраняется чистым.</p>
+<p>Это <strong>один из самых недооценённых features</strong> Claude Code. Если у вас длинная сессия с большим контекстом — subagents для побочных задач это <strong>ваша основная защита от размытия контекста</strong>.</p>
+<h2 id="skills--упакованные-капабилити">Skills — упакованные капабилити</h2>
+<p>Skills — это <strong>папки с инструкциями + опциональными скриптами</strong>, которые агент может «активировать» по ключевым словам.</p>
+<p>Структура skill:</p>
+<pre class="astro-code astro-code-themes github-light github-dark-default" style="background-color:#fff;--shiki-dark-bg:#0d1117;color:#24292e;--shiki-dark:#e6edf3; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>~/.claude/skills/skill-name/</span></span>
+<span class="line"><span>├── SKILL.md                # описание + frontmatter с триггерами</span></span>
+<span class="line"><span>├── scripts/                # вспомогательные скрипты</span></span>
+<span class="line"><span>└── reference/              # файлы, которые skill подгружает по требованию</span></span></code></pre>
+<p>Пример <code>SKILL.md</code>:</p>
+<pre class="astro-code astro-code-themes github-light github-dark-default" style="background-color:#fff;--shiki-dark-bg:#0d1117;color:#24292e;--shiki-dark:#e6edf3; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="markdown"><code><span class="line"><span style="color:#005CC5;--shiki-light-font-weight:bold;--shiki-dark:#79C0FF;--shiki-dark-font-weight:bold">---</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E6EDF3">name: webp-conversion</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E6EDF3">description: Convert PNG/JPG to WebP with quality optimization. Triggers when user asks to compress/optimize images.</span></span>
+<span class="line"><span style="color:#005CC5;--shiki-light-font-weight:bold;--shiki-dark:#79C0FF;--shiki-dark-font-weight:bold">---</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E6EDF3">When user wants to convert images to WebP:</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E36209;--shiki-dark:#FFA657">1.</span><span style="color:#24292E;--shiki-dark:#E6EDF3"> Use </span><span style="color:#005CC5;--shiki-dark:#79C0FF">`cwebp`</span><span style="color:#24292E;--shiki-dark:#E6EDF3"> (from libwebp-tools) with quality 85 by default</span></span>
+<span class="line"><span style="color:#E36209;--shiki-dark:#FFA657">2.</span><span style="color:#24292E;--shiki-dark:#E6EDF3"> For batch: parallelize with xargs</span></span>
+<span class="line"><span style="color:#E36209;--shiki-dark:#FFA657">3.</span><span style="color:#24292E;--shiki-dark:#E6EDF3"> Output to same directory unless told otherwise</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E6EDF3">Script: </span><span style="color:#005CC5;--shiki-dark:#79C0FF">`bash scripts/webp_batch.sh &#x3C;input_dir> [quality]`</span></span></code></pre>
+<p>Skills отличаются от commands тем, что:</p>
+<ul>
+<li>Activate <strong>automatically</strong> по контексту (агент сам решает использовать)</li>
+<li>Могут включать скрипты, доп. файлы, reference-документы</li>
+<li>Подходят для <strong>переиспользуемых капабилитей</strong>, не привязанных к одному проекту</li>
+</ul>
+<blockquote>
+<p><em>Внимание (правило безопасности):</em> установка стороннего skill = чтение SKILL.md целиком до запуска. В SKILL.md могут быть скрытые директивы и транзитивные prompt injection. У меня по этому поводу железное правило в личной памяти: <code>npx skills add</code> всегда без <code>-y</code>. Ручное подтверждение каждой установки — обязательно.</p>
+</blockquote>
+<h2 id="полезные-dev-практики">Полезные dev-практики</h2>
+<h3 id="1-один-проект--один-claude">1. Один проект — один <code>.claude/</code></h3>
+<p>Не пытайтесь сделать «универсальный» <code>.claude/settings.json</code> для всех проектов через user-level. Каждый проект — свой контекст, свои permissions, свои hooks.</p>
+<h3 id="2-claudesettingslocaljson-для-своих-экспериментов">2. <code>.claude/settings.local.json</code> для своих экспериментов</h3>
+<p>Если хотите попробовать новый hook без коммита в команду — кладите его в <code>settings.local.json</code> (gitignored). Понравилось — переносите в <code>settings.json</code> через PR.</p>
+<h3 id="3-claudemd-растёт-постепенно">3. CLAUDE.md растёт постепенно</h3>
+<p>Не пишите его сразу полностью. Запускайте <code>/init</code>, дорабатывайте по факту. Каждый раз когда агент сделал что-то неправильно из-за нехватки контекста — <strong>добавьте этот контекст в CLAUDE.md</strong>. Через 2-3 недели у вас будет идеальный файл.</p>
+<h3 id="4-hooks-для-security-критичных-правил">4. Hooks для security-критичных правил</h3>
+<p>Любое правило вроде «не трогать .env», «не push на main», «не делать rm в этих папках» — <strong>обязательно hook</strong>, никогда не «попросили модель».</p>
+<h3 id="5-subagents-для-побочных-задач">5. Subagents для побочных задач</h3>
+<p>Если основная сессия идёт по большой задаче, а вам внезапно нужен «другой контекст» (например, посмотреть что в соседнем репо) — <strong>subagent</strong>, не главная сессия. Сохраняйте чистоту контекста.</p>
+<h2 id="practice">Practice</h2>
+<p>20-30 минут. По шагам:</p>
+<ol>
+<li><strong>Откройте свой текущий рабочий проект.</strong> Если нет <code>CLAUDE.md</code> — запустите <code>/init</code>, доработайте результат.</li>
+<li><strong>Создайте <code>.claude/settings.json</code></strong> с минимальным <code>allow</code>/<code>deny</code> (см. M4) + хотя бы одним hook (например, prettier на edit).</li>
+<li><strong>Сделайте один slash-command</strong> — что-то, что вы регулярно просите у агента. Сохраните как <code>.claude/commands/&#x3C;name>.md</code>.</li>
+<li><strong>Попробуйте subagent.</strong> Создайте <code>.claude/agents/reviewer.md</code> с минимальным system prompt. Делегируйте ему task через <code>Task</code> tool.</li>
+<li><strong>Закоммитьте <code>.claude/</code> в проектный git</strong> (но добавьте <code>.claude/settings.local.json</code> в <code>.gitignore</code>).</li>
+</ol>
+<h2 id="recap">Recap</h2>
+<ul>
+<li><strong>CLAUDE.md = постоянный контекст проекта.</strong> Главный артефакт, растёт со временем.</li>
+<li><strong><code>.claude/settings.json</code> = permissions + hooks</strong> на уровне проекта. <code>settings.local.json</code> — личное, не в git.</li>
+<li><strong>Hooks — детерминированные скрипты</strong> на агентские события. Безопасность-критичные правила должны быть hooks.</li>
+<li><strong>Slash-commands</strong> — повторяемые задачи. <code>.claude/commands/&#x3C;name>.md</code>.</li>
+<li><strong>Subagents</strong> — изолированные исполнители с собственным prompt. Сохраняют контекст основной сессии.</li>
+<li><strong>Skills</strong> — упакованные капабилити с авто-активацией. Сторонние skills — обязательно ручной аудит SKILL.md.</li>
+</ul>
+<h2 id="дальше">Дальше</h2>
+<p>В <strong>M7 — GPT-5.3 Codex CLI и OpenAI agents</strong> разберём конкурента. Codex CLI в 2026-м — это не «просто другой CLI», а <strong>другая философия</strong> approval modes и sandbox. Я покажу, в каких задачах Codex выгоднее Claude Code, и наоборот. Без флейма, на benchmark-данных и личной практике.</p>
+<p>Если зашло — поделитесь главой с командой, особенно с теми, кто только начинает работать с Claude Code. Если есть свои фишки <code>.claude/</code> сетапа, которые я не упомянул — пишите в комменты, ваша обратная связь реально помогает.</p>
+<p>Всех обнял, всегда ваш — Илья ❤️</p>
+<hr>
+<p><strong>Maps to:</strong> Авторский блок — расширение Part II за рамки GH-600</p>  <nav class="chapter-nav"> <a href="/vibesamurai-site/courses/middle/m5"> <span class="dir">← Назад</span> <span class="title">M5 · MCP deep dive</span> </a> <a href="/vibesamurai-site/courses/middle/m7"> <span class="dir">Дальше →</span> <span class="title">M7 · GPT-5.3 Codex CLI и OpenAI agents</span> </a> </nav> </main> </div> </body></html>

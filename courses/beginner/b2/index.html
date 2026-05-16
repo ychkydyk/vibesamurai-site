@@ -1,0 +1,108 @@
+<!DOCTYPE html><html lang="en"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Установка вашего первого AI-агента — Vibesamurai</title><meta name="description" content="Ставим Claude Code на Windows/Mac/Linux. Регистрация, ключ, первая команда — и кратко об альтернативах."><meta property="og:title" content="Установка вашего первого AI-агента"><meta property="og:type" content="article"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Inter:wght@300..800&family=JetBrains+Mono:wght@400..600&display=swap" rel="stylesheet"><link rel="stylesheet" href="/vibesamurai-site/_astro/_slug_.DpgmObvf.css">
+<style>.reader-sidebar[data-astro-cid-khgtvzrl] .soon[data-astro-cid-khgtvzrl]{display:block;color:var(--text-mute);font-size:var(--size-2);padding:var(--space-1) 0}.reader-sidebar[data-astro-cid-khgtvzrl] .soon[data-astro-cid-khgtvzrl] em[data-astro-cid-khgtvzrl]{font-style:normal;font-family:var(--font-mono);font-size:.85em;color:var(--accent);margin-left:4px;text-transform:uppercase;letter-spacing:.1em}
+</style></head> <body> <div class="reader-app"> <aside class="reader-rail"> <a href="/vibesamurai-site/" class="logo" aria-label="Vibesamurai home">V</a> </aside> <aside class="reader-sidebar" data-astro-cid-khgtvzrl> <div class="breadcrumb" data-astro-cid-khgtvzrl>Vibesamurai · Beginner Path · b2</div> <h4 data-astro-cid-khgtvzrl>В этом курсе</h4> <ul data-astro-cid-khgtvzrl> <li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b1" class data-astro-cid-khgtvzrl>B1 · Что такое AI-агент</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b2" class="current" data-astro-cid-khgtvzrl>B2 · Установка Claude Code</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b3" class data-astro-cid-khgtvzrl>B3 · Первый разговор</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b4" class data-astro-cid-khgtvzrl>B4 · Репозиторий и коммиты</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b5" class data-astro-cid-khgtvzrl>B5 · Первый проект: todo</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b6" class data-astro-cid-khgtvzrl>B6 · Читать код агента</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b7" class data-astro-cid-khgtvzrl>B7 · Безопасность для новичков</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b8" class data-astro-cid-khgtvzrl>B8 · Cursor vs Claude vs Codex</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b9" class data-astro-cid-khgtvzrl>B9 · Деплой первого проекта</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b10" class data-astro-cid-khgtvzrl>B10 · Оценка вывода агента</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b11" class data-astro-cid-khgtvzrl>B11 · Капстоун</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b12" class data-astro-cid-khgtvzrl>B12 · Куда дальше</a> </li> </ul>  </aside> <main class="reader-main"> <div class="chapter-eyebrow">Beginner Path · b2</div> <h1 class="chapter-title">B2 · Установка вашего первого AI-агента</h1> <p class="chapter-subtitle">Ставим Claude Code на Windows/Mac/Linux. Регистрация, ключ, первая команда — и кратко об альтернативах.</p>  <blockquote>
+<p>Черновик B2 в голосе DmitriyM (см. <code>scripts/tg_voice_analysis/_summary.md</code>).</p>
+</blockquote>
+<h2 id="hook">Hook</h2>
+<pre class="astro-code astro-code-themes github-light github-dark-default" style="background-color:#fff;--shiki-dark-bg:#0d1117;color:#24292e;--shiki-dark:#e6edf3; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>ВЫ           +   ТЕРМИНАЛ   +   claude    =    первый рабочий агент</span></span>
+<span class="line"><span>(человек)        (окошко)       (команда)</span></span></code></pre>
+<p>Друзья, всем привет! 👋</p>
+<p>В этой главе мы ставим <strong>Claude Code</strong> — то самое волшебное <code>claude</code> в командной строке, которое потом будет делать всю основную работу в нашем курсе. Двадцать минут, и у вас на компьютере появляется AI-агент. Это совсем не страшно — обещаю.</p>
+<h2 id="концепция-что-такое-cli-и-почему-мы-выбрали-именно-claude-code">Концепция: что такое CLI и почему мы выбрали именно Claude Code</h2>
+<p><strong>CLI</strong> (Command Line Interface) — это просто <strong>окошко терминала</strong>, в которое вы пишете команды и получаете ответы. Не графический интерфейс с кнопками — текстовый.</p>
+<p>Звучит архаично, но в 2026-м это <strong>самый удобный формат</strong> работы с AI-агентом. Почему:</p>
+<ul>
+<li>Агенту удобно «видеть» вашу папку и работать с файлами</li>
+<li>Вам удобно копировать команды из учебных материалов</li>
+<li>Между разными ОС всё работает одинаково</li>
+</ul>
+<p>Среди тулов мы начнём с <strong>Claude Code</strong> по трём причинам:</p>
+<ol>
+<li><strong>Самая дружелюбная установка</strong> для новичка</li>
+<li><strong>Хорошие defaults</strong> — не надо сразу настраивать 30 параметров</li>
+<li><strong>Подробные подсказки</strong> прямо в чате — задаёте вопрос, агент объясняет, <em>как</em> им пользоваться</li>
+</ol>
+<p>В B8 мы посмотрим на альтернативы (Cursor, Codex CLI). Сейчас — Claude Code.</p>
+<h2 id="пример-ставим-за-5-минут">Пример: ставим за 5 минут</h2>
+<h3 id="шаг-1-открыть-терминал">Шаг 1. Открыть терминал</h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Ваша ОС</th><th>Что нажать</th></tr></thead><tbody><tr><td><strong>macOS</strong></td><td>Spotlight (⌘ + пробел) → «Terminal» → Enter</td></tr><tr><td><strong>Windows 11</strong></td><td>Start → «Terminal» (это новый Windows Terminal)</td></tr><tr><td><strong>Linux</strong></td><td>Ctrl + Alt + T</td></tr></tbody></table>
+<p>Откроется чёрное (или белое) окошко с курсором. Это и есть терминал. Не пугайтесь — мы туда введём пару команд.</p>
+<h3 id="шаг-2-поставить-nodejs-если-ещё-нет">Шаг 2. Поставить Node.js (если ещё нет)</h3>
+<p>Claude Code работает поверх <strong>Node.js</strong> — стандартного движка для запуска современных CLI-инструментов. Проверьте, есть ли он:</p>
+<pre class="astro-code astro-code-themes github-light github-dark-default" style="background-color:#fff;--shiki-dark-bg:#0d1117;color:#24292e;--shiki-dark:#e6edf3; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#6F42C1;--shiki-dark:#FFA657">node</span><span style="color:#005CC5;--shiki-dark:#79C0FF"> --version</span></span></code></pre>
+<p>Если выводит что-то вроде <code>v22.x.x</code> — отлично, идём дальше. Если ошибка «command not found» — ставим:</p>
+<ul>
+<li><strong>macOS:</strong> <code>brew install node</code> (если есть Homebrew) или скачать с <a href="https://nodejs.org">nodejs.org</a></li>
+<li><strong>Windows:</strong> скачать установщик с <a href="https://nodejs.org">nodejs.org</a>, запустить, всё «Next, Next, Finish»</li>
+<li><strong>Linux:</strong> <code>sudo apt install nodejs npm</code> (Ubuntu/Debian) или аналог для вашего дистрибутива</li>
+</ul>
+<p>После установки <strong>закройте и снова откройте терминал</strong>, иначе <code>node --version</code> всё равно не увидит.</p>
+<h3 id="шаг-3-поставить-claude-code">Шаг 3. Поставить Claude Code</h3>
+<pre class="astro-code astro-code-themes github-light github-dark-default" style="background-color:#fff;--shiki-dark-bg:#0d1117;color:#24292e;--shiki-dark:#e6edf3; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#6F42C1;--shiki-dark:#FFA657">npm</span><span style="color:#032F62;--shiki-dark:#A5D6FF"> install</span><span style="color:#005CC5;--shiki-dark:#79C0FF"> -g</span><span style="color:#032F62;--shiki-dark:#A5D6FF"> @anthropic-ai/claude-code</span></span></code></pre>
+<p><code>npm</code> — это менеджер пакетов Node.js. Команда говорит «установи глобально (<code>-g</code>) пакет <code>@anthropic-ai/claude-code</code>». Пройдёт пара минут.</p>
+<p>Проверка:</p>
+<pre class="astro-code astro-code-themes github-light github-dark-default" style="background-color:#fff;--shiki-dark-bg:#0d1117;color:#24292e;--shiki-dark:#e6edf3; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#6F42C1;--shiki-dark:#FFA657">claude</span><span style="color:#005CC5;--shiki-dark:#79C0FF"> --version</span></span></code></pre>
+<p>Если выводит версию — установка прошла. <strong>Полный фарш</strong>, поздравляю.</p>
+<h3 id="шаг-4-залогиниться">Шаг 4. Залогиниться</h3>
+<p>Просто наберите в терминале:</p>
+<pre class="astro-code astro-code-themes github-light github-dark-default" style="background-color:#fff;--shiki-dark-bg:#0d1117;color:#24292e;--shiki-dark:#e6edf3; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#6F42C1;--shiki-dark:#FFA657">claude</span></span></code></pre>
+<p>Откроется браузер с предложением залогиниться в Anthropic-аккаунт. Если у вас уже есть подписка Claude Pro/Max — отлично, входите через неё. Если нет — можно начать с pay-per-use API, для обучения хватит <strong>5-10 долларов</strong> на первые недели.</p>
+<blockquote>
+<p><em>Лично у меня</em> — Max-подписка ($100/мес). Для ежедневной работы окупается в первую неделю, но для обучения переплата. Начните с минимума.</p>
+</blockquote>
+<h3 id="шаг-5-первая-команда">Шаг 5. Первая команда</h3>
+<p>После логина вы окажетесь в интерактивном режиме Claude Code. Создайте пустую папку для экспериментов:</p>
+<pre class="astro-code astro-code-themes github-light github-dark-default" style="background-color:#fff;--shiki-dark-bg:#0d1117;color:#24292e;--shiki-dark:#e6edf3; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#6F42C1;--shiki-dark:#FFA657">mkdir</span><span style="color:#032F62;--shiki-dark:#A5D6FF"> my-first-agent</span></span>
+<span class="line"><span style="color:#005CC5;--shiki-dark:#79C0FF">cd</span><span style="color:#032F62;--shiki-dark:#A5D6FF"> my-first-agent</span></span>
+<span class="line"><span style="color:#6F42C1;--shiki-dark:#FFA657">claude</span></span></code></pre>
+<p>И в открывшемся чате напишите:</p>
+<blockquote>
+<p>«Привет! Расскажи коротко о себе и что ты умеешь.»</p>
+</blockquote>
+<p>Агент представится, расскажет о тулах, объяснит правила. Поздравляю — <strong>первый разговор с вашим AI-агентом состоялся</strong>.</p>
+<h2 id="practice-20-30-минут">Practice (20-30 минут)</h2>
+<h3 id="задание-1-10-минут--установка">Задание 1 (10 минут) — установка</h3>
+<p>Пройдите все 5 шагов выше до конца. Если на каком-то споткнулись — гугл / задайте вопрос в комментариях курса. <strong>Не пропускайте.</strong> В следующей главе мы уже работаем в Claude Code на полную.</p>
+<h3 id="задание-2-15-минут--первый-безопасный-запрос">Задание 2 (15 минут) — первый «безопасный» запрос</h3>
+<p>В новой сессии (<code>claude</code> в любой папке) попросите:</p>
+<blockquote>
+<p>«Прочитай все файлы в этой папке и кратко опиши, что тут лежит. Ничего не меняй.»</p>
+</blockquote>
+<p>Если папка пустая — он скажет «пусто». Если в ней что-то есть — опишет. Это <strong>режим «только посмотреть»</strong> из B1. Закрепите привычку открывать сессию с него.</p>
+<h2 id="recap">Recap</h2>
+<ul>
+<li><strong>Claude Code = CLI-агент</strong> от Anthropic. Ставится через <code>npm</code>.</li>
+<li><strong>Pre-requirement: Node.js</strong>. Поставили его — ставите claude.</li>
+<li><strong>Первая сессия — <code>claude</code> в нужной папке + «только посмотреть»</strong>.</li>
+</ul>
+<h2 id="скептик-самурай">Скептик Самурай</h2>
+<aside class="skeptic">
+<p><strong>🥷 Скептик Самурай спрашивает:</strong>
+«А зачем мне всё это, если есть ChatGPT в браузере? Там же тоже можно код просить.»</p>
+<p><strong>Ответ:</strong> ChatGPT в браузере вам <strong>показывает текст</strong>. Дальше вы сами копируете его в файлы, проверяете, запускаете. Каждый раз. Claude Code <strong>сам пишет в ваши файлы, запускает команды и проверяет результат</strong>. Разница не в умности модели — она и там, и там Claude. Разница в <strong>руках</strong>: у Claude Code они есть. Через две недели работы возвращаться к копированию из браузера будет физически больно.</p>
+</aside>
+<h2 id="дальше">Дальше</h2>
+<p>В <strong>B3 — Первый разговор</strong> разбираем, как просить агента так, чтобы он понял вас с первого раза. Структура запроса, типичные ошибки, когда соглашаться, а когда «нет, переделай».</p>
+<p>Если зашло — поделитесь главой с тем, кто давно хочет «потрогать AI», но не знает с чего начать. Если что-то на установке не пошло — пишите в комменты, обычно это решается за две минуты, ваша обратная связь реально помогает шлифовать инструкции.</p>
+<p>Всех обнял, всегда ваш — Илья ❤️</p>  <nav class="chapter-nav"> <a href="/vibesamurai-site/courses/beginner/b1"> <span class="dir">← Назад</span> <span class="title">B1 · Что такое AI-агент</span> </a> <a href="/vibesamurai-site/courses/beginner/b3"> <span class="dir">Дальше →</span> <span class="title">B3 · Первый разговор</span> </a> </nav> </main> </div> </body></html>

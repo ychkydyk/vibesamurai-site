@@ -1,0 +1,81 @@
+<!DOCTYPE html><html lang="en"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Что такое AI-агент — Vibesamurai</title><meta name="description" content="Не автокомплит и не чатбот — работник, который сам делает и показывает что сделал."><meta property="og:title" content="Что такое AI-агент"><meta property="og:type" content="article"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Inter:wght@300..800&family=JetBrains+Mono:wght@400..600&display=swap" rel="stylesheet"><link rel="stylesheet" href="/vibesamurai-site/_astro/_slug_.DpgmObvf.css">
+<style>.reader-sidebar[data-astro-cid-khgtvzrl] .soon[data-astro-cid-khgtvzrl]{display:block;color:var(--text-mute);font-size:var(--size-2);padding:var(--space-1) 0}.reader-sidebar[data-astro-cid-khgtvzrl] .soon[data-astro-cid-khgtvzrl] em[data-astro-cid-khgtvzrl]{font-style:normal;font-family:var(--font-mono);font-size:.85em;color:var(--accent);margin-left:4px;text-transform:uppercase;letter-spacing:.1em}
+</style></head> <body> <div class="reader-app"> <aside class="reader-rail"> <a href="/vibesamurai-site/" class="logo" aria-label="Vibesamurai home">V</a> </aside> <aside class="reader-sidebar" data-astro-cid-khgtvzrl> <div class="breadcrumb" data-astro-cid-khgtvzrl>Vibesamurai · Beginner Path · b1</div> <h4 data-astro-cid-khgtvzrl>В этом курсе</h4> <ul data-astro-cid-khgtvzrl> <li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b1" class="current" data-astro-cid-khgtvzrl>B1 · Что такое AI-агент</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b2" class data-astro-cid-khgtvzrl>B2 · Установка Claude Code</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b3" class data-astro-cid-khgtvzrl>B3 · Первый разговор</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b4" class data-astro-cid-khgtvzrl>B4 · Репозиторий и коммиты</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b5" class data-astro-cid-khgtvzrl>B5 · Первый проект: todo</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b6" class data-astro-cid-khgtvzrl>B6 · Читать код агента</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b7" class data-astro-cid-khgtvzrl>B7 · Безопасность для новичков</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b8" class data-astro-cid-khgtvzrl>B8 · Cursor vs Claude vs Codex</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b9" class data-astro-cid-khgtvzrl>B9 · Деплой первого проекта</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b10" class data-astro-cid-khgtvzrl>B10 · Оценка вывода агента</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b11" class data-astro-cid-khgtvzrl>B11 · Капстоун</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b12" class data-astro-cid-khgtvzrl>B12 · Куда дальше</a> </li> </ul>  </aside> <main class="reader-main"> <div class="chapter-eyebrow">Beginner Path · b1</div> <h1 class="chapter-title">B1 · Что такое AI-агент</h1> <p class="chapter-subtitle">Не автокомплит и не чатбот — работник, который сам делает и показывает что сделал.</p>  <blockquote>
+<p>Это черновик главы B1 на русском, написанный в авторском голосе DmitriyM (см. <code>scripts/tg_voice_analysis/_summary.md</code>). EN-версия будет переводом, не наоборот.</p>
+</blockquote>
+<h2 id="почему-это-первая-глава">Почему это первая глава</h2>
+<p>Друзья, всем привет! 👋</p>
+<p>Если вы зашли в нейросетки в 2026-м и слышите слово <strong>«агент»</strong> — нормально, что в голове каша. Чатбот, ассистент, агент, копайлот, автокомплит — все эти штуки делают что-то с кодом, и со стороны кажется, что разницы нет.</p>
+<p>Разница есть, и она огромная. Если её не словить — ваш первый месяц с инструментами будет проходить в режиме «оно что-то сделало, а я не понял что». Лично меня это в своё время реально выбесило, поэтому начнём с азов.</p>
+<p>К концу главы вы сможете отличить три вещи, которые новички постоянно путают:</p>
+<ol>
+<li><strong>Поисковик</strong> — находит. Вы читаете.</li>
+<li><strong>Чатбот</strong> — отвечает. Вы читаете и сами решаете.</li>
+<li><strong>Агент</strong> — <em>делает</em>. Вы смотрите что он сделал и принимаете или откатываете.</li>
+</ol>
+<p>Вот эта третья штука — это и есть тема всего курса.</p>
+<h2 id="тридцать-секунд-на-разницу">Тридцать секунд на разницу</h2>
+<p>Представьте, что у вас сломалась раковина.</p>
+<ul>
+<li><strong>Поисковик</strong> — это поиск ютуба «как починить раковину». Вы получаете ссылки, дальше сами.</li>
+<li><strong>Чатбот</strong> — это сосед-сантехник, который по голосу объясняет, что и в каком порядке откручивать. Вы держите ключ, он говорит.</li>
+<li><strong>Агент</strong> — это сосед-сантехник, который пришёл с ключом, сам всё открутил, поменял прокладку, прикрутил обратно и говорит: «готово, проверь, не течёт».</li>
+</ul>
+<p>Чувствуете разницу? В первых двух случаях работаете вы. В третьем — он. Ваша задача в третьем случае — <strong>проверить, что он реально починил, а не сделал хуже</strong>.</p>
+<p>С AI-агентом ровно то же самое. Он сам открывает файлы, сам пишет код, сам запускает команды, сам коммитит. Ваша работа — поставить ему задачу, дать границы, и потом проверить результат.</p>
+<h2 id="минимальная-схема-plan--act--evaluate">Минимальная схема: plan → act → evaluate</h2>
+<p>В любом нормальном агенте всегда есть три фазы:</p>
+<pre class="astro-code astro-code-themes github-light github-dark-default" style="background-color:#fff;--shiki-dark-bg:#0d1117;color:#24292e;--shiki-dark:#e6edf3; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>[ПЛАН]   →   [ДЕЙСТВИЕ]   →   [ПРОВЕРКА]</span></span></code></pre>
+<ol>
+<li><strong>План.</strong> Агент описывает, что собирается делать, <strong>до того как</strong> начнёт что-то менять.</li>
+<li><strong>Действие.</strong> Агент выполняет план — в чётко очерченной зоне (папка, ветка, песочница).</li>
+<li><strong>Проверка.</strong> Агент (или вы) сравнивает результат с тем что планировалось.</li>
+</ol>
+<p>Звучит просто. На практике большинство ошибок новичков — это пропуск первой или третьей фазы:</p>
+<ul>
+<li><strong>Пропустили план</strong> — агент сразу побежал делать, через 5 минут у вас 40 изменённых файлов и непонятно, что вообще произошло.</li>
+<li><strong>Пропустили проверку</strong> — агент сказал «готово», вы запушили в репо, через час обнаружили, что он удалил половину тестов.</li>
+</ul>
+<p>В этом курсе мы с первого же дня учимся <strong>никогда не пропускать ни одну из трёх фаз</strong>. Это не паранойя, это вкус и дисциплина — а они, как мы ещё много раз скажем, важнее любого инструмента.</p>
+<aside class="skeptic">
+<p><strong>🥷 Скептик Самурай спрашивает:</strong> «Если агент такой умный, зачем за ним следить?»</p>
+<p><strong>Ответ:</strong> Умный — не значит <strong>с пониманием контекста</strong>. Агент с радостью отрефакторит файл, который был держателем всей логики. Он не злой, он просто не знает, что этот файл — особенный. Проверка — это способ остаться старшим инженером в собственном проекте, даже если вы пока не считаете себя инженером.</p>
+</aside>
+<h2 id="почему-агент--это-работник-а-не-справочник">Почему агент — это «работник», а не «справочник»</h2>
+<p>Если вы привыкли к Stack Overflow или к ChatGPT в браузере — там есть привычный паттерн: вы спросили, оно ответило, вы скопировали и вставили.</p>
+<p>С агентом всё иначе. <strong>Агент не отдаёт текст — он отдаёт изменения.</strong> В файлах. В вашей папке. Прямо сейчас.</p>
+<p>Это значит:</p>
+<ul>
+<li>Если вы дадите ему доступ ко всему — он будет работать со всем.</li>
+<li>Если вы дадите ему ключи от прода — он сможет уронить прод.</li>
+<li>Если вы попросите «удалить лишнее» — он удалит <strong>то, что считает</strong> лишним.</li>
+</ul>
+<p>Это не страшилка, это рабочая реальность. Воспринимайте агента как нового сотрудника на испытательном сроке. Вы бы не дали такому человеку прод-доступы в первый день? Вот и агенту не давайте. Сначала — песочница, маленькая задача, проверка, доверие.</p>
+<h2 id="полный-фарш-современного-агента">Полный фарш современного агента</h2>
+<p>Когда я говорю «современный агент» — я имею в виду такие штуки как <strong>Claude Code</strong>, <strong>Cursor</strong>, <strong>Codex CLI</strong>, <strong>Devin</strong>. У них у всех плюс-минус один набор возможностей:</p>
+<ul>
+<li>Читать файлы в вашей папке</li>
+<li>Писать и редактировать файлы</li>
+<li>Запускать команды (тесты, сборку, git)</li>
+<li>Гуглить и читать веб</li>
+<li>Помнить, что было в этом сеансе (а иногда — и в предыдущих)</li>
+</ul>
+<p>То есть это <strong>не текстовая болталка</strong>. Это полноценный работник, у которого есть руки (файлы, команды), глаза (ваш код, ваши логи), голос (ответы вам в терминал) и память (контекст сессии).</p>
+<p>Из этого следует главное: <strong>граница безопасности — это не сам агент, это вы</strong>. Вы решаете, в какой папке он работает, какие команды ему разрешены, какие файлы он видит, что он точно не трогает.</p>
+<h2 id="ваш-первый-агентский-цикл">Ваш первый агентский цикл</h2>
+<p>Не будем теоретизировать. Откройте терминал и попросите Claude Code (или Cursor, или Codex CLI) сделать <strong>самую безопасную вещь на свете</strong> — прочитать вашу папку и сказать, что он видит:</p>
+<pre class="astro-code astro-code-themes github-light github-dark-default" style="background-color:#fff;--shiki-dark-bg:#0d1117;color:#24292e;--shiki-dark:#e6edf3; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#6F42C1;--shiki-dark:#FFA657">claude</span><span style="color:#032F62;--shiki-dark:#A5D6FF"> "Прочитай все файлы в этой папке и напиши абзац-резюме. Ничего не меняй."</span></span></code></pre>
+<p>Эта команда — ваш режим <strong>«только посмотреть»</strong>. Никаких изменений, никаких команд, только чтение.</p>
+<p>Прочитайте, что агент написал. Если он понял, что у вас за проект — отлично, можно двигаться дальше. Если он понял неправильно — тоже отлично, теперь вы видите, <strong>где у него слепые зоны</strong>, и сможете дать ему контекст в следующий раз.</p>
+<p>Эта привычка — открывать сессию с «посмотри, не трогай» — будет с вами весь курс. Не идеально, но реально работает.</p>
+<h2 id="recap-что-унесли-с-собой">Recap (что унесли с собой)</h2>
+<ul>
+<li><strong>Агент ≠ чатбот.</strong> Он не отдаёт текст, он делает изменения в ваших файлах.</li>
+<li><strong>План → Действие → Проверка</strong> — три фазы, которые нельзя пропускать.</li>
+<li><strong>Граница безопасности — это вы</strong>, а не сам инструмент. Песочница, маленькая задача, проверка.</li>
+<li>Начинайте каждую сессию с <strong>«посмотри, не трогай»</strong> — это ваше тренировочное колесо.</li>
+</ul>
+<h2 id="дальше">Дальше</h2>
+<p>В следующей главе <strong>B2</strong> ставим первый рабочий инструмент — <strong>Claude Code</strong>. Поднимаемся, регистрируемся, получаем ключ, делаем первый запрос — и параллельно я расскажу, чем он отличается от Cursor и Codex CLI и когда удобнее использовать каждый.</p>
+<p>Если зашло — поделитесь главой с теми, кто только думает войти в эту тему. Если есть вопросы, на что обратить внимание в следующей главе — пишите в комментарии к курсу, ваша обратная связь реально помогает шлифовать материал.</p>
+<p>Всех обнял, всегда ваш — Илья ❤️</p>  <nav class="chapter-nav"> <span></span> <span></span> </nav> </main> </div> </body></html>

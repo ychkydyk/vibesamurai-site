@@ -1,0 +1,274 @@
+<!DOCTYPE html><html lang="en"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Продакшн: деплой агентов в боевую среду — Vibesamurai</title><meta name="description" content="От локальной разработки к agent system в проде. Persistence, observability, secret management, что меняется."><meta property="og:title" content="Продакшн: деплой агентов в боевую среду"><meta property="og:type" content="article"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Inter:wght@300..800&family=JetBrains+Mono:wght@400..600&display=swap" rel="stylesheet"><link rel="stylesheet" href="/vibesamurai-site/_astro/_slug_.DpgmObvf.css">
+<style>.reader-sidebar[data-astro-cid-khgtvzrl] .soon[data-astro-cid-khgtvzrl]{display:block;color:var(--text-mute);font-size:var(--size-2);padding:var(--space-1) 0}.reader-sidebar[data-astro-cid-khgtvzrl] .soon[data-astro-cid-khgtvzrl] em[data-astro-cid-khgtvzrl]{font-style:normal;font-family:var(--font-mono);font-size:.85em;color:var(--accent);margin-left:4px;text-transform:uppercase;letter-spacing:.1em}
+</style></head> <body> <div class="reader-app"> <aside class="reader-rail"> <a href="/vibesamurai-site/" class="logo" aria-label="Vibesamurai home">V</a> </aside> <aside class="reader-sidebar" data-astro-cid-khgtvzrl> <div class="breadcrumb" data-astro-cid-khgtvzrl>Vibesamurai · Middle Path · m17</div> <h4 data-astro-cid-khgtvzrl>В этом курсе</h4> <ul data-astro-cid-khgtvzrl> <li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m1" class data-astro-cid-khgtvzrl>M1 · Что такое agentic AI в SDLC</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m2" class data-astro-cid-khgtvzrl>M2 · Границы агента</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m3" class data-astro-cid-khgtvzrl>M3 · Observability &amp; HITL</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m4" class data-astro-cid-khgtvzrl>M4 · Tool inventory &amp; permissions</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m5" class data-astro-cid-khgtvzrl>M5 · MCP deep dive</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m6" class data-astro-cid-khgtvzrl>M6 · Claude Code mastery</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m7" class data-astro-cid-khgtvzrl>M7 · Codex CLI &amp; OpenAI Agents</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m8" class data-astro-cid-khgtvzrl>M8 · Cursor + IDE-агенты</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m9" class data-astro-cid-khgtvzrl>M9 · Memory strategies</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m10" class data-astro-cid-khgtvzrl>M10 · State, drift, continuity</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m11" class data-astro-cid-khgtvzrl>M11 · Метрики оценки</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m12" class data-astro-cid-khgtvzrl>M12 · Regression testing</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m13" class data-astro-cid-khgtvzrl>M13 · Tuning, когда метрики стоят</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m14" class data-astro-cid-khgtvzrl>M14 · Pipelines &amp; orchestration</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m15" class data-astro-cid-khgtvzrl>M15 · Multi-agent роли</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m16" class data-astro-cid-khgtvzrl>M16 · Когда multi-agent — overkill</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m17" class="current" data-astro-cid-khgtvzrl>M17 · Деплой агентов в прод</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m18" class data-astro-cid-khgtvzrl>M18 · Production security</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m19" class data-astro-cid-khgtvzrl>M19 · Incidents &amp; post-mortems</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m20" class data-astro-cid-khgtvzrl>M20 · Финал Middle</a> </li> </ul>  </aside> <main class="reader-main"> <div class="chapter-eyebrow">Middle Path · m17</div> <h1 class="chapter-title">M17 · Продакшн: деплой агентов в боевую среду</h1> <p class="chapter-subtitle">От локальной разработки к agent system в проде. Persistence, observability, secret management, что меняется.</p>  <blockquote>
+<p>Черновик M17 в голосе DmitriyM. Открывает <strong>Часть VI — Production</strong>.</p>
+</blockquote>
+<h2 id="hook">Hook</h2>
+<pre class="astro-code astro-code-themes github-light github-dark-default" style="background-color:#fff;--shiki-dark-bg:#0d1117;color:#24292e;--shiki-dark:#e6edf3; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>LOCAL DEV:                       PRODUCTION:</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>claude в терминале      →        контейнер на сервере</span></span>
+<span class="line"><span>↓                                ↓</span></span>
+<span class="line"><span>читает ваши файлы                читает чужие задачи</span></span>
+<span class="line"><span>вы видите все шаги               логи в централизованной шине</span></span>
+<span class="line"><span>ошибся → откатил                 ошибся → инцидент → on-call</span></span>
+<span class="line"><span>$5/день вашего ключа             $1000/день ключа компании</span></span></code></pre>
+<p>Друзья, всем привет! 👋</p>
+<p>Эта глава открывает <strong>Часть VI — Production</strong>. Финальная часть Middle-трека. Мы уже знаем, <strong>как</strong> проектировать агентов (Part I), какие <strong>инструменты</strong> есть (Part II), как <strong>управлять памятью</strong> (Part III), как <strong>измерять</strong> (Part IV), и <strong>когда</strong> не делать multi-agent (Part V). Теперь — <strong>финальный</strong> шаг: <strong>как</strong> всё это попадает в продакшен.</p>
+<p>Час, плотно. После главы у вас будет <strong>архитектурная карта</strong> того, что нужно для deploy агента <strong>в боевой режим</strong>.</p>
+<h2 id="концепция-продакшн--это-не-то-же-самое-но-на-сервере">Концепция: продакшн — это не «то же самое, но на сервере»</h2>
+<p>Самый частый промах: «у меня в Claude Code работает — давайте перенесём на сервер». Не так.</p>
+<pre class="astro-code astro-code-themes github-light github-dark-default" style="background-color:#fff;--shiki-dark-bg:#0d1117;color:#24292e;--shiki-dark:#e6edf3; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>┌─────────────────────────────────────────────────────┐</span></span>
+<span class="line"><span>│  В локалке у вас есть:                              │</span></span>
+<span class="line"><span>│  - Вы как человек (HITL by default)                 │</span></span>
+<span class="line"><span>│  - Свободный terminal с подтверждениями              │</span></span>
+<span class="line"><span>│  - Доступ к своим файлам                            │</span></span>
+<span class="line"><span>│  - Низкий volume (1-10 задач/день)                  │</span></span>
+<span class="line"><span>│                                                     │</span></span>
+<span class="line"><span>│  В проде нет ничего из этого:                       │</span></span>
+<span class="line"><span>│  - Заявок от пользователей много                    │</span></span>
+<span class="line"><span>│  - Подтверждать каждое действие нельзя              │</span></span>
+<span class="line"><span>│  - Доступ к данным компании, не вашим               │</span></span>
+<span class="line"><span>│  - 1000+ задач/день, может, параллельно             │</span></span>
+<span class="line"><span>└─────────────────────────────────────────────────────┘</span></span></code></pre>
+<p>Поэтому <strong>архитектура</strong> в проде <strong>отличается</strong>. Не «то же + сервер», а <strong>другая</strong> архитектура с <strong>другими</strong> правилами.</p>
+<h2 id="слои-продакшн-агента">Слои продакшн-агента</h2>
+<pre class="astro-code astro-code-themes github-light github-dark-default" style="background-color:#fff;--shiki-dark-bg:#0d1117;color:#24292e;--shiki-dark:#e6edf3; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>┌─────────────────────────────────────────────────────┐</span></span>
+<span class="line"><span>│  6. Observability       (логи, метрики, алёрты)     │</span></span>
+<span class="line"><span>│  5. Cost &#x26; rate limiting (бюджеты, throttling)      │</span></span>
+<span class="line"><span>│  4. Persistence         (state, history, audit)     │</span></span>
+<span class="line"><span>│  3. Security            (secrets, sandbox, ACL)     │</span></span>
+<span class="line"><span>│  2. Orchestration       (queue, retry, error)       │</span></span>
+<span class="line"><span>│  1. Agent runtime       (LLM-вызовы, tool calls)    │</span></span>
+<span class="line"><span>└─────────────────────────────────────────────────────┘</span></span></code></pre>
+<p>Локально у вас обычно <strong>только</strong> слой 1 (и частично 2). В проде <strong>все шесть</strong> обязательны.</p>
+<h2 id="слой-1-agent-runtime-в-проде">Слой 1. Agent runtime в проде</h2>
+<p>В локалке вы запускаете <code>claude</code> интерактивно. В проде нужно:</p>
+<h3 id="headless-mode">Headless mode</h3>
+<p>Claude Code, Codex CLI и большинство современных агентов поддерживают <strong>non-interactive</strong> режим:</p>
+<pre class="astro-code astro-code-themes github-light github-dark-default" style="background-color:#fff;--shiki-dark-bg:#0d1117;color:#24292e;--shiki-dark:#e6edf3; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#6F42C1;--shiki-dark:#FFA657">claude</span><span style="color:#005CC5;--shiki-dark:#79C0FF"> --print</span><span style="color:#005CC5;--shiki-dark:#79C0FF"> --json-mode</span><span style="color:#005CC5;--shiki-dark:#FF7B72"> \</span></span>
+<span class="line"><span style="color:#005CC5;--shiki-dark:#79C0FF">       --system-prompt-file</span><span style="color:#032F62;--shiki-dark:#A5D6FF"> system.md</span><span style="color:#005CC5;--shiki-dark:#FF7B72"> \</span></span>
+<span class="line"><span style="color:#005CC5;--shiki-dark:#79C0FF">       --max-iterations</span><span style="color:#005CC5;--shiki-dark:#79C0FF"> 10</span><span style="color:#005CC5;--shiki-dark:#FF7B72"> \</span></span>
+<span class="line"><span style="color:#005CC5;--shiki-dark:#79C0FF">       --timeout</span><span style="color:#005CC5;--shiki-dark:#79C0FF"> 600</span><span style="color:#005CC5;--shiki-dark:#FF7B72"> \</span></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#FF7B72">       &#x3C;</span><span style="color:#032F62;--shiki-dark:#A5D6FF"> task.json</span><span style="color:#D73A49;--shiki-dark:#FF7B72"> ></span><span style="color:#032F62;--shiki-dark:#A5D6FF"> result.json</span></span></code></pre>
+<p>Никакой интерактивности — задача на вход, результат на выход.</p>
+<h3 id="container-based">Container-based</h3>
+<p>Деплоим в Docker / Podman / Kubernetes. Преимущества:</p>
+<ul>
+<li><strong>Изоляция</strong> — каждая задача в своём контейнере, не пересекается с другими</li>
+<li><strong>Versioning</strong> — фиксируем версию агента вместе с его контекстом</li>
+<li><strong>Resource limits</strong> — память, CPU, время</li>
+</ul>
+<p><code>Dockerfile</code>:</p>
+<pre class="astro-code astro-code-themes github-light github-dark-default" style="background-color:#fff;--shiki-dark-bg:#0d1117;color:#24292e;--shiki-dark:#e6edf3; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="dockerfile"><code><span class="line"><span style="color:#D73A49;--shiki-dark:#FF7B72">FROM</span><span style="color:#24292E;--shiki-dark:#E6EDF3"> node:22-slim</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D;--shiki-dark:#8B949E"># Установка Claude Code</span></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#FF7B72">RUN</span><span style="color:#24292E;--shiki-dark:#E6EDF3"> npm install -g @anthropic-ai/claude-code</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D;--shiki-dark:#8B949E"># Контекст агента</span></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#FF7B72">COPY</span><span style="color:#24292E;--shiki-dark:#E6EDF3"> CLAUDE.md /workspace/</span></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#FF7B72">COPY</span><span style="color:#24292E;--shiki-dark:#E6EDF3"> .claude/ /workspace/.claude/</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D;--shiki-dark:#8B949E"># Запуск</span></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#FF7B72">WORKDIR</span><span style="color:#24292E;--shiki-dark:#E6EDF3"> /workspace</span></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#FF7B72">ENTRYPOINT</span><span style="color:#24292E;--shiki-dark:#E6EDF3"> [</span><span style="color:#032F62;--shiki-dark:#A5D6FF">"claude"</span><span style="color:#24292E;--shiki-dark:#E6EDF3">, </span><span style="color:#032F62;--shiki-dark:#A5D6FF">"--print"</span><span style="color:#24292E;--shiki-dark:#E6EDF3">, </span><span style="color:#032F62;--shiki-dark:#A5D6FF">"--json-mode"</span><span style="color:#24292E;--shiki-dark:#E6EDF3">]</span></span></code></pre>
+<p>В реальности — <strong>более сложно</strong> (зависимости, многоступенчатый билд, security scan), но <strong>скелет</strong> такой.</p>
+<h3 id="managed-agents">Managed Agents</h3>
+<p>Альтернатива своей инфре — <strong>Managed Agents</strong> от провайдеров (Anthropic, …). Anthropic держит <strong>per-session</strong> контейнер, агент работает с <strong>mounted</strong> файлами, <strong>SSE</strong> event stream возвращается клиенту.</p>
+<p><strong>Плюсы:</strong> не своя инфра, файрвол/sandbox от провайдера, готовый event stream.
+<strong>Минусы:</strong> vendor lock-in, дороже на единицу, ограничения по compute.</p>
+<p>В B Anthropic Managed Agents — <strong>рабочий</strong> способ для команд, которые <strong>не хотят</strong> держать DevOps-команду под agent infra.</p>
+<h2 id="слой-2-orchestration">Слой 2. Orchestration</h2>
+<p>В проде задачи приходят <strong>из очереди</strong>, не из терминала.</p>
+<pre class="astro-code astro-code-themes github-light github-dark-default" style="background-color:#fff;--shiki-dark-bg:#0d1117;color:#24292e;--shiki-dark:#e6edf3; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>User request → API gateway → Queue → Agent runner → Result store → Notification</span></span>
+<span class="line"><span>                              ↑              ↓</span></span>
+<span class="line"><span>                              └──── retry ───┘</span></span></code></pre>
+<p>Минимальный стек:</p>
+<ul>
+<li><strong>Queue</strong> — Redis, RabbitMQ, AWS SQS, или просто Postgres с advisory locks</li>
+<li><strong>Runner</strong> — поднимает контейнер с агентом на задачу</li>
+<li><strong>Result store</strong> — куда складывается итог (S3, БД)</li>
+<li><strong>Notification</strong> — webhook / Slack / e-mail клиенту</li>
+</ul>
+<p><strong>Правила orchestration:</strong></p>
+<ol>
+<li><strong>Idempotency</strong> — задача может прийти дважды (retry), результат должен быть <strong>одинаковым</strong></li>
+<li><strong>Timeout per task</strong> — жёсткий верхний предел (15-30 минут)</li>
+<li><strong>Retry policy</strong> — exponential backoff, max 3 попытки</li>
+<li><strong>Dead letter queue</strong> — задачи, упавшие после retry, отдельно для разбора</li>
+</ol>
+<h2 id="слой-3-security">Слой 3. Security</h2>
+<p>Тема следующей главы (M18) целиком, здесь — <strong>карта</strong> на уровне «что есть»:</p>
+<ul>
+<li><strong>Secrets</strong> — никогда в коде/конфиге, только через secret manager (AWS Secrets Manager, HashiCorp Vault, K8s Secrets)</li>
+<li><strong>Sandbox</strong> — контейнер с <strong>минимальными</strong> правами; <strong>отдельная</strong> файловая система; <strong>whitelisted</strong> network</li>
+<li><strong>ACL</strong> — какие задачи <strong>можно</strong> дать <strong>какому</strong> агенту; multi-tenant изоляция</li>
+<li><strong>Audit log</strong> — <strong>каждый</strong> tool call, <strong>каждое</strong> изменение файла — в централизованную шину</li>
+</ul>
+<h2 id="слой-4-persistence">Слой 4. Persistence</h2>
+<p>В локалке state — в <code>.agent/journals/</code>, файлы (M10). В проде — <strong>БД</strong>.</p>
+<h3 id="что-хранить">Что хранить</h3>
+<ul>
+<li><strong>Sessions</strong> — каждая «сессия» агента: id, user, start/end time, status</li>
+<li><strong>Messages</strong> — все сообщения user/assistant/tool</li>
+<li><strong>Tool calls</strong> — что вызвал, с какими параметрами, что вернул, длительность</li>
+<li><strong>Artifacts</strong> — файлы, созданные/изменённые агентом (или ссылки в S3)</li>
+<li><strong>Costs</strong> — токены, $ на каждую сессию</li>
+</ul>
+<h3 id="зачем">Зачем</h3>
+<ul>
+<li><strong>Audit</strong> — кто что когда, для compliance</li>
+<li><strong>Replay</strong> — воспроизвести инцидент шаг за шагом</li>
+<li><strong>Analytics</strong> — какие задачи дороже, где агент чаще ошибается</li>
+<li><strong>HITL handoff</strong> — если agent застрял, человек <strong>видит</strong> контекст и продолжает</li>
+</ul>
+<p><code>sessions</code> table (упрощённо):</p>
+<pre class="astro-code astro-code-themes github-light github-dark-default" style="background-color:#fff;--shiki-dark-bg:#0d1117;color:#24292e;--shiki-dark:#e6edf3; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="sql"><code><span class="line"><span style="color:#D73A49;--shiki-dark:#FF7B72">CREATE</span><span style="color:#D73A49;--shiki-dark:#FF7B72"> TABLE</span><span style="color:#6F42C1;--shiki-dark:#D2A8FF"> agent_sessions</span><span style="color:#24292E;--shiki-dark:#E6EDF3"> (</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E6EDF3">  id            UUID </span><span style="color:#D73A49;--shiki-dark:#FF7B72">PRIMARY KEY</span><span style="color:#24292E;--shiki-dark:#E6EDF3">,</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E6EDF3">  user_id       UUID </span><span style="color:#D73A49;--shiki-dark:#FF7B72">NOT NULL</span><span style="color:#24292E;--shiki-dark:#E6EDF3">,</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E6EDF3">  agent_version </span><span style="color:#D73A49;--shiki-dark:#FF7B72">VARCHAR</span><span style="color:#24292E;--shiki-dark:#E6EDF3">(</span><span style="color:#005CC5;--shiki-dark:#79C0FF">50</span><span style="color:#24292E;--shiki-dark:#E6EDF3">) </span><span style="color:#D73A49;--shiki-dark:#FF7B72">NOT NULL</span><span style="color:#24292E;--shiki-dark:#E6EDF3">,</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E6EDF3">  model_id      </span><span style="color:#D73A49;--shiki-dark:#FF7B72">VARCHAR</span><span style="color:#24292E;--shiki-dark:#E6EDF3">(</span><span style="color:#005CC5;--shiki-dark:#79C0FF">50</span><span style="color:#24292E;--shiki-dark:#E6EDF3">) </span><span style="color:#D73A49;--shiki-dark:#FF7B72">NOT NULL</span><span style="color:#24292E;--shiki-dark:#E6EDF3">,</span></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#FF7B72">  status</span><span style="color:#D73A49;--shiki-dark:#FF7B72">        VARCHAR</span><span style="color:#24292E;--shiki-dark:#E6EDF3">(</span><span style="color:#005CC5;--shiki-dark:#79C0FF">20</span><span style="color:#24292E;--shiki-dark:#E6EDF3">) </span><span style="color:#D73A49;--shiki-dark:#FF7B72">NOT NULL</span><span style="color:#24292E;--shiki-dark:#E6EDF3">,  </span><span style="color:#6A737D;--shiki-dark:#8B949E">-- pending/running/done/failed</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E6EDF3">  started_at    </span><span style="color:#D73A49;--shiki-dark:#FF7B72">TIMESTAMP</span><span style="color:#D73A49;--shiki-dark:#FF7B72"> NOT NULL</span><span style="color:#24292E;--shiki-dark:#E6EDF3">,</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E6EDF3">  finished_at   </span><span style="color:#D73A49;--shiki-dark:#FF7B72">TIMESTAMP</span><span style="color:#24292E;--shiki-dark:#E6EDF3">,</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E6EDF3">  input_tokens  </span><span style="color:#D73A49;--shiki-dark:#FF7B72">INT</span><span style="color:#24292E;--shiki-dark:#E6EDF3">,</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E6EDF3">  output_tokens </span><span style="color:#D73A49;--shiki-dark:#FF7B72">INT</span><span style="color:#24292E;--shiki-dark:#E6EDF3">,</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E6EDF3">  cost_usd      </span><span style="color:#D73A49;--shiki-dark:#FF7B72">DECIMAL</span><span style="color:#24292E;--shiki-dark:#E6EDF3">(</span><span style="color:#005CC5;--shiki-dark:#79C0FF">10</span><span style="color:#24292E;--shiki-dark:#E6EDF3">, </span><span style="color:#005CC5;--shiki-dark:#79C0FF">4</span><span style="color:#24292E;--shiki-dark:#E6EDF3">),</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E6EDF3">  result_url    </span><span style="color:#D73A49;--shiki-dark:#FF7B72">TEXT</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E6EDF3">);</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#FF7B72">CREATE</span><span style="color:#D73A49;--shiki-dark:#FF7B72"> INDEX</span><span style="color:#6F42C1;--shiki-dark:#D2A8FF"> idx_sessions_user_started</span><span style="color:#24292E;--shiki-dark:#E6EDF3"> </span></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#FF7B72">  ON</span><span style="color:#24292E;--shiki-dark:#E6EDF3"> agent_sessions (user_id, started_at </span><span style="color:#D73A49;--shiki-dark:#FF7B72">DESC</span><span style="color:#24292E;--shiki-dark:#E6EDF3">);</span></span></code></pre>
+<h2 id="слой-5-cost--rate-limiting">Слой 5. Cost &#x26; rate limiting</h2>
+<p>Самый <strong>недооценённый</strong> слой. Без него ваш агент <strong>тихо</strong> может сгенерировать $5000/день на API.</p>
+<h3 id="бюджеты">Бюджеты</h3>
+<p>На <strong>трёх</strong> уровнях:</p>
+<ol>
+<li><strong>Per-task</strong> — задача не больше <strong>N</strong> токенов / <strong>$X</strong></li>
+<li><strong>Per-user/tenant</strong> — пользователь не больше <strong>N</strong> задач в день / <strong>$X</strong> в месяц</li>
+<li><strong>Per-system</strong> — глобальный потолок на день / месяц</li>
+</ol>
+<p>Превышение → <strong>stop</strong>, не «degrade gracefully». Лучше <strong>отказ</strong>, чем <strong>разорение</strong>.</p>
+<h3 id="throttling">Throttling</h3>
+<p>Запросы к LLM-провайдеру ограничены (rate limit per minute / TPM). При превышении — <strong>очередь</strong>, не <strong>retry forever</strong>.</p>
+<h3 id="cost-guardrails">Cost guardrails</h3>
+<p>Hooks (см. M4), которые <strong>до</strong> дорогого tool call (большой prompt, длинный run) <strong>показывают</strong> оценку и требуют подтверждения <strong>выше</strong> определённого порога.</p>
+<p>Например:</p>
+<pre class="astro-code astro-code-themes github-light github-dark-default" style="background-color:#fff;--shiki-dark-bg:#0d1117;color:#24292e;--shiki-dark:#e6edf3; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="python"><code><span class="line"><span style="color:#6A737D;--shiki-dark:#8B949E"># pre-tool hook</span></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#FF7B72">if</span><span style="color:#24292E;--shiki-dark:#E6EDF3"> estimated_cost(tool_call) </span><span style="color:#D73A49;--shiki-dark:#FF7B72">></span><span style="color:#005CC5;--shiki-dark:#79C0FF"> 0.50</span><span style="color:#24292E;--shiki-dark:#E6EDF3">:  </span><span style="color:#6A737D;--shiki-dark:#8B949E"># 50 центов</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E6EDF3">    require_approval(</span><span style="color:#005CC5;--shiki-dark:#79C0FF">...</span><span style="color:#24292E;--shiki-dark:#E6EDF3">)</span></span></code></pre>
+<p>Это <strong>спасает</strong> от runaway loops, где агент <strong>сам себя</strong> прогоняет 100 раз.</p>
+<h2 id="слой-6-observability">Слой 6. Observability</h2>
+<p>«В проде вы <strong>не видите</strong>, что делает агент» — <strong>главная</strong> разница с локалкой. Поэтому:</p>
+<h3 id="логи">Логи</h3>
+<ul>
+<li><strong>Structured logs</strong> (JSON) на каждый шаг</li>
+<li><strong>Trace ID</strong> связывающий все шаги одной сессии</li>
+<li>Централизованная агрегация (ELK, Loki, Datadog)</li>
+</ul>
+<h3 id="метрики">Метрики</h3>
+<ul>
+<li>Sessions/min (RPS)</li>
+<li>Pass rate (если у вас есть автомат-валидация)</li>
+<li>p50/p95/p99 latency</li>
+<li>Cost per session</li>
+<li>Error rate</li>
+</ul>
+<h3 id="tracing">Tracing</h3>
+<p>OpenTelemetry-style traces — <strong>каждый</strong> tool call как span, видна <strong>иерархия</strong> вызовов. Особенно ценно для multi-agent (хотя multi-agent у вас, надеюсь, нет — см. M16).</p>
+<h3 id="алёрты">Алёрты</h3>
+<p>Триггеры:</p>
+<ul>
+<li>Error rate > 5% → page on-call</li>
+<li>Cost rate > 2× от baseline → page on-call</li>
+<li>P99 latency > 30 минут → warning</li>
+<li>No sessions in last 10 minutes (если ожидался поток) → warning</li>
+</ul>
+<h2 id="пример-минимальный-prod-стек">Пример: минимальный prod-стек</h2>
+<p>Для <strong>маленького</strong> проекта (один агент, до 100 задач/день):</p>
+<pre class="astro-code astro-code-themes github-light github-dark-default" style="background-color:#fff;--shiki-dark-bg:#0d1117;color:#24292e;--shiki-dark:#e6edf3; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>1. K8s deployment:</span></span>
+<span class="line"><span>   - Replica 2 (для HA)</span></span>
+<span class="line"><span>   - Resource limits: 1 CPU, 2 GB RAM</span></span>
+<span class="line"><span>   - Init container: pulls latest CLAUDE.md from git</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>2. PostgreSQL:</span></span>
+<span class="line"><span>   - tables: sessions, messages, tool_calls, costs</span></span>
+<span class="line"><span>   - daily backup → S3</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>3. Redis:</span></span>
+<span class="line"><span>   - task queue</span></span>
+<span class="line"><span>   - rate limiting counters</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>4. Monitoring:</span></span>
+<span class="line"><span>   - Loki for logs</span></span>
+<span class="line"><span>   - Prometheus + Grafana for metrics</span></span>
+<span class="line"><span>   - PagerDuty/OpsGenie for alerts</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>5. Secrets:</span></span>
+<span class="line"><span>   - ANTHROPIC_API_KEY in K8s Secret</span></span>
+<span class="line"><span>   - injected as env var</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>6. Cost guardrails:</span></span>
+<span class="line"><span>   - per-task: 100K tokens / $1</span></span>
+<span class="line"><span>   - per-tenant: 1000 tasks / day</span></span>
+<span class="line"><span>   - global: $100 / day initially</span></span></code></pre>
+<p>Это <strong>уже</strong> complete. Дальше — масштабирование (multi-region, blue-green deploys, etc.).</p>
+<h2 id="pre-prod-чек-лист">Pre-prod чек-лист</h2>
+<p>Перед deploy первого агента в <strong>боевой</strong> трафик:</p>
+<ul class="contains-task-list">
+<li class="task-list-item"><input type="checkbox" disabled> <strong>Headless mode</strong> работает на 95%+ задач локально</li>
+<li class="task-list-item"><input type="checkbox" disabled> <strong>Все секреты</strong> — в secret manager, не в репо</li>
+<li class="task-list-item"><input type="checkbox" disabled> <strong>Sandbox</strong> — контейнер не имеет доступа за пределы рабочей директории</li>
+<li class="task-list-item"><input type="checkbox" disabled> <strong>Бюджеты</strong> на трёх уровнях (task, user, system)</li>
+<li class="task-list-item"><input type="checkbox" disabled> <strong>Idempotency keys</strong> на каждой задаче из API</li>
+<li class="task-list-item"><input type="checkbox" disabled> <strong>Timeout</strong> на задаче (макс 30 минут wall-clock)</li>
+<li class="task-list-item"><input type="checkbox" disabled> <strong>Logs structured</strong> + централизованы</li>
+<li class="task-list-item"><input type="checkbox" disabled> <strong>Алёрты</strong> на error rate, cost, latency</li>
+<li class="task-list-item"><input type="checkbox" disabled> <strong>Runbook</strong> на типичные инциденты</li>
+<li class="task-list-item"><input type="checkbox" disabled> <strong>Kill switch</strong> — возможность <strong>выключить агента</strong> за секунду (env var / feature flag)</li>
+<li class="task-list-item"><input type="checkbox" disabled> <strong>Harness прогнан</strong> на staging-окружении</li>
+<li class="task-list-item"><input type="checkbox" disabled> <strong>On-call rotation</strong> определён</li>
+</ul>
+<p>Без <strong>всех</strong> галок — не deploy. Это <strong>минимум</strong>.</p>
+<h2 id="антипаттерны-продакшн-агентов">Антипаттерны продакшн-агентов</h2>
+<h3 id="1-запустим--потом-будем-смотреть">1. «Запустим — потом будем смотреть»</h3>
+<p>Без observability — <strong>слепо</strong>. Первый инцидент будет в <strong>проде</strong>, не на staging.</p>
+<p><strong>Лекарство:</strong> observability <strong>до</strong> запуска.</p>
+<h3 id="2-один-контейнер-много-задач">2. «Один контейнер, много задач»</h3>
+<p>Один pod обрабатывает 100 задач параллельно. Контекст утекает, state пересекается.</p>
+<p><strong>Лекарство:</strong> <strong>один контейнер = одна сессия</strong>. Дороже по compute, но <strong>изолированно</strong>.</p>
+<h3 id="3-hard-coded-api-key">3. Hard-coded API key</h3>
+<p>Ключ в env-файле в репо. Через неделю — на GitHub.</p>
+<p><strong>Лекарство:</strong> <strong>secret manager</strong>, всегда, без исключений (см. M18).</p>
+<h3 id="4-retry-until-success">4. «Retry until success»</h3>
+<p>Задача упала → retry → упала → retry. Бесконечно.</p>
+<p><strong>Лекарство:</strong> max 3 retry, exponential backoff, dead letter queue.</p>
+<h3 id="5-без-kill-switch">5. «Без kill switch»</h3>
+<p>Когда что-то идёт не так — нет способа быстро <strong>отключить</strong> агента, кроме «удалить deployment».</p>
+<p><strong>Лекарство:</strong> feature flag (LaunchDarkly, ConfigCat, или просто env var). Включил false → агент не берёт <strong>новые</strong> задачи.</p>
+<h2 id="practice-60-90-минут">Practice (60-90 минут)</h2>
+<h3 id="задание-1-30-минут--headless-mode-локально">Задание 1 (30 минут) — headless mode локально</h3>
+<p>Возьмите один из ваших агентских workflows. Переведите в <code>claude --print --json-mode</code>. Прогоните 5 задач. Замерьте:</p>
+<ul>
+<li>Какие задачи <strong>сломались</strong> без интерактивности?</li>
+<li>Что нужно дополнительно (input schema, exit codes, output schema)?</li>
+</ul>
+<h3 id="задание-2-30-минут--minimal-dockerfile">Задание 2 (30 минут) — minimal Dockerfile</h3>
+<p>Соберите <code>Dockerfile</code> для headless агента. Запустите в локальном Docker. Проверьте, что задача от-до проходит <strong>в контейнере</strong>.</p>
+<h3 id="задание-3-30-минут--observability-skeleton">Задание 3 (30 минут) — observability skeleton</h3>
+<p>Распишите минимальный набор логов и метрик для <strong>своего</strong> будущего prod-агента. Что <strong>критично</strong> видеть в проде? Что — nice-to-have?</p>
+<h2 id="recap">Recap</h2>
+<ul>
+<li><strong>Продакшн = другая архитектура.</strong> Не «то же + сервер».</li>
+<li><strong>Шесть слоёв:</strong> runtime → orchestration → security → persistence → cost → observability. <strong>Все обязательны.</strong></li>
+<li><strong>Pre-prod чек-лист.</strong> Без всех галок — не deploy.</li>
+</ul>
+<h2 id="скептик-самурай">Скептик Самурай</h2>
+<aside class="skeptic">
+<p><strong>🥷 Скептик Самурай спрашивает:</strong>
+«У меня pet-проект на 10 пользователей. Мне всё это <strong>точно</strong> надо?»</p>
+<p><strong>Ответ:</strong> На 10 пользователей — <strong>не всё</strong>. <strong>Минимум</strong>: headless mode + secrets в env-var + бюджет на API ($5/день) + базовый лог. <strong>Это</strong> хватает, чтобы <strong>не разориться</strong> и <strong>видеть</strong>, что происходит. <strong>Полный</strong> prod-стек начинает окупаться, когда: вы за <strong>деньги</strong> оказываете услугу, или у вас <strong>>100 пользователей</strong>, или <strong>ответственный</strong> домен (финансы, медицина). Иначе — minimum viable observability. <strong>Правило:</strong> ставите столько инфры, сколько <strong>окупается</strong> масштабом. <strong>Не идеально, но реально работает.</strong></p>
+</aside>
+<h2 id="дальше">Дальше</h2>
+<p>В <strong>M18 — Security в проде: secrets, sandbox, audit</strong> углубимся в <strong>security</strong> слой. <strong>Самая</strong> ответственная глава курса. Secret managers, container sandbox правильно, audit logging, prompt injection защита, multi-tenant isolation. Если M17 был <strong>архитектура</strong>, M18 — <strong>детали</strong>, без которых архитектура не безопасна.</p>
+<p>Если зашло — поделитесь главой с тем, кто <strong>готовится</strong> к деплою своего первого агента. Если у вас уже есть prod-агент — расскажите в комменты, что было самым <strong>неожиданным</strong> при переходе локалка → прод. Ваша обратная связь реально помогает шлифовать материал.</p>
+<p>Всех обнял, всегда ваш — Илья ❤️</p>  <nav class="chapter-nav"> <a href="/vibesamurai-site/courses/middle/m16"> <span class="dir">← Назад</span> <span class="title">M16 · Когда multi-agent избыточен. Антипаттерны</span> </a> <a href="/vibesamurai-site/courses/middle/m18"> <span class="dir">Дальше →</span> <span class="title">M18 · Security в проде: secrets, sandbox, audit</span> </a> </nav> </main> </div> </body></html>

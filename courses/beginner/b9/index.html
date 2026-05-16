@@ -1,0 +1,139 @@
+<!DOCTYPE html><html lang="en"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Деплой первого проекта — Vibesamurai</title><meta name="description" content="От локальной папки до публичной ссылки. GitHub Pages, Cloudflare Pages — бесплатно, 15 минут, без серверов."><meta property="og:title" content="Деплой первого проекта"><meta property="og:type" content="article"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Inter:wght@300..800&family=JetBrains+Mono:wght@400..600&display=swap" rel="stylesheet"><link rel="stylesheet" href="/vibesamurai-site/_astro/_slug_.DpgmObvf.css">
+<style>.reader-sidebar[data-astro-cid-khgtvzrl] .soon[data-astro-cid-khgtvzrl]{display:block;color:var(--text-mute);font-size:var(--size-2);padding:var(--space-1) 0}.reader-sidebar[data-astro-cid-khgtvzrl] .soon[data-astro-cid-khgtvzrl] em[data-astro-cid-khgtvzrl]{font-style:normal;font-family:var(--font-mono);font-size:.85em;color:var(--accent);margin-left:4px;text-transform:uppercase;letter-spacing:.1em}
+</style></head> <body> <div class="reader-app"> <aside class="reader-rail"> <a href="/vibesamurai-site/" class="logo" aria-label="Vibesamurai home">V</a> </aside> <aside class="reader-sidebar" data-astro-cid-khgtvzrl> <div class="breadcrumb" data-astro-cid-khgtvzrl>Vibesamurai · Beginner Path · b9</div> <h4 data-astro-cid-khgtvzrl>В этом курсе</h4> <ul data-astro-cid-khgtvzrl> <li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b1" class data-astro-cid-khgtvzrl>B1 · Что такое AI-агент</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b2" class data-astro-cid-khgtvzrl>B2 · Установка Claude Code</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b3" class data-astro-cid-khgtvzrl>B3 · Первый разговор</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b4" class data-astro-cid-khgtvzrl>B4 · Репозиторий и коммиты</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b5" class data-astro-cid-khgtvzrl>B5 · Первый проект: todo</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b6" class data-astro-cid-khgtvzrl>B6 · Читать код агента</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b7" class data-astro-cid-khgtvzrl>B7 · Безопасность для новичков</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b8" class data-astro-cid-khgtvzrl>B8 · Cursor vs Claude vs Codex</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b9" class="current" data-astro-cid-khgtvzrl>B9 · Деплой первого проекта</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b10" class data-astro-cid-khgtvzrl>B10 · Оценка вывода агента</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b11" class data-astro-cid-khgtvzrl>B11 · Капстоун</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b12" class data-astro-cid-khgtvzrl>B12 · Куда дальше</a> </li> </ul>  </aside> <main class="reader-main"> <div class="chapter-eyebrow">Beginner Path · b9</div> <h1 class="chapter-title">B9 · Деплой первого проекта</h1> <p class="chapter-subtitle">От локальной папки до публичной ссылки. GitHub Pages, Cloudflare Pages — бесплатно, 15 минут, без серверов.</p>  <blockquote>
+<p>Черновик B9 в голосе DmitriyM (см. <code>scripts/tg_voice_analysis/_summary.md</code>).</p>
+</blockquote>
+<h2 id="hook">Hook</h2>
+<pre class="astro-code astro-code-themes github-light github-dark-default" style="background-color:#fff;--shiki-dark-bg:#0d1117;color:#24292e;--shiki-dark:#e6edf3; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>ДО:                              ПОСЛЕ:</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>«У меня есть проект,    →       «Вот ссылка:</span></span>
+<span class="line"><span> но он только у меня             https://ваше-имя.github.io/my-todo</span></span>
+<span class="line"><span> на компе»                       — открой, потыкай»</span></span></code></pre>
+<p>Друзья, всем привет! 👋</p>
+<p>Эта глава — про <strong>тот самый момент</strong>, когда ваш todo-приложение из B5 перестаёт быть «локальной папкой на компе» и становится <strong>публичной ссылкой</strong>, которой можно поделиться. Это <strong>момент, когда вы реально что-то сделали</strong> — потому что есть <strong>URL</strong>, и его можно отправить.</p>
+<p>Пятнадцать минут. Без серверов, без админки, без денег. Через <strong>GitHub Pages</strong>.</p>
+<h2 id="концепция-статика--это-просто-файлы">Концепция: статика — это просто файлы</h2>
+<p>Ваш todo (из B5) — это <strong>статический сайт</strong>. Три файла:</p>
+<pre class="astro-code astro-code-themes github-light github-dark-default" style="background-color:#fff;--shiki-dark-bg:#0d1117;color:#24292e;--shiki-dark:#e6edf3; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>my-todo/</span></span>
+<span class="line"><span>├── index.html</span></span>
+<span class="line"><span>├── style.css</span></span>
+<span class="line"><span>└── app.js</span></span></code></pre>
+<p>Никакой базы данных, никакого бэкенда — всё работает <strong>в браузере</strong> пользователя. Это означает, что <strong>разместить</strong> такой сайт — это <strong>скопировать файлы на любой сервер</strong>, который умеет их отдавать.</p>
+<p>Бесплатных сервисов, которые умеют это <strong>из коробки</strong>, навалом:</p>
+<pre class="astro-code astro-code-themes github-light github-dark-default" style="background-color:#fff;--shiki-dark-bg:#0d1117;color:#24292e;--shiki-dark:#e6edf3; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>┌─────────────────────────────────────────────────────┐</span></span>
+<span class="line"><span>│  GitHub Pages       — самый простой, бесплатно      │</span></span>
+<span class="line"><span>│  Cloudflare Pages   — быстрее, чуть сложнее         │</span></span>
+<span class="line"><span>│  Vercel             — для следующего шага           │</span></span>
+<span class="line"><span>│  Netlify            — для следующего шага           │</span></span>
+<span class="line"><span>└─────────────────────────────────────────────────────┘</span></span></code></pre>
+<p>В этой главе берём <strong>GitHub Pages</strong>, потому что у вас уже есть git (B4) и репозиторий, и второй шаг — просто включить настройку.</p>
+<h2 id="пример-деплоим-todo-на-github-pages">Пример: деплоим todo на GitHub Pages</h2>
+<h3 id="шаг-1-создаём-аккаунт-github-если-нет">Шаг 1. Создаём аккаунт GitHub (если нет)</h3>
+<p>Идите на <a href="https://github.com">github.com</a> → Sign up. Имя выберите осознанно — оно будет <strong>в URL</strong> вашего сайта (<code>https://ВАШЕ-ИМЯ.github.io/проект</code>).</p>
+<h3 id="шаг-2-создаём-репозиторий-на-github">Шаг 2. Создаём репозиторий на GitHub</h3>
+<p>В правом верхнем углу GitHub: <strong>+</strong> → <strong>New repository</strong>.</p>
+<ul>
+<li><strong>Repository name:</strong> <code>my-todo</code></li>
+<li><strong>Description:</strong> «Мой первый todo-лист»</li>
+<li><strong>Public</strong> — обязательно. GitHub Pages для приватных репо доступен только на платных тарифах.</li>
+<li><strong>НЕ ставьте</strong> «Add README», «Add .gitignore», «Add license» — у нас уже есть свои файлы.</li>
+<li>Жмём <strong>Create repository</strong>.</li>
+</ul>
+<p>GitHub покажет инструкцию «как залить существующий проект». Берём оттуда команды.</p>
+<h3 id="шаг-3-заливаем-локальный-репозиторий-на-github">Шаг 3. Заливаем локальный репозиторий на GitHub</h3>
+<p>В терминале, в папке <code>my-todo</code>:</p>
+<pre class="astro-code astro-code-themes github-light github-dark-default" style="background-color:#fff;--shiki-dark-bg:#0d1117;color:#24292e;--shiki-dark:#e6edf3; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#6F42C1;--shiki-dark:#FFA657">git</span><span style="color:#032F62;--shiki-dark:#A5D6FF"> remote</span><span style="color:#032F62;--shiki-dark:#A5D6FF"> add</span><span style="color:#032F62;--shiki-dark:#A5D6FF"> origin</span><span style="color:#032F62;--shiki-dark:#A5D6FF"> https://github.com/ВАШЕ-ИМЯ/my-todo.git</span></span>
+<span class="line"><span style="color:#6F42C1;--shiki-dark:#FFA657">git</span><span style="color:#032F62;--shiki-dark:#A5D6FF"> branch</span><span style="color:#005CC5;--shiki-dark:#79C0FF"> -M</span><span style="color:#032F62;--shiki-dark:#A5D6FF"> main</span></span>
+<span class="line"><span style="color:#6F42C1;--shiki-dark:#FFA657">git</span><span style="color:#032F62;--shiki-dark:#A5D6FF"> push</span><span style="color:#005CC5;--shiki-dark:#79C0FF"> -u</span><span style="color:#032F62;--shiki-dark:#A5D6FF"> origin</span><span style="color:#032F62;--shiki-dark:#A5D6FF"> main</span></span></code></pre>
+<p>При первом пуше GitHub попросит авторизоваться. Дальше работают <strong>personal access tokens</strong> (PAT) — гайд по их получению есть в самой GitHub-документации, или попросите вашего агента провести через шаги.</p>
+<p>После пуша зайдите в репозиторий на GitHub в браузере — увидите свои файлы.</p>
+<h3 id="шаг-4-включаем-github-pages">Шаг 4. Включаем GitHub Pages</h3>
+<p>В репозитории на сайте GitHub:</p>
+<ol>
+<li><strong>Settings</strong> (вверху справа)</li>
+<li>Слева — <strong>Pages</strong></li>
+<li><strong>Source:</strong> Deploy from a branch</li>
+<li><strong>Branch:</strong> <code>main</code>, папка <code>/ (root)</code></li>
+<li><strong>Save</strong></li>
+</ol>
+<p>Через 30-60 секунд GitHub соберёт сайт. Сверху появится зелёная плашка с <strong>URL</strong> — обычно <code>https://ВАШЕ-ИМЯ.github.io/my-todo/</code>.</p>
+<h3 id="шаг-5-открываем-ссылку">Шаг 5. Открываем ссылку</h3>
+<p>Откройте URL в браузере. Видите <strong>тот же</strong> todo, что у себя на компе. <strong>Теперь он в интернете.</strong></p>
+<p>Поделитесь ссылкой с кем-нибудь. Это <strong>полный фарш</strong> — ваш первый публичный продукт.</p>
+<h2 id="если-что-то-не-работает">Если что-то не работает</h2>
+<h3 id="случай-1-по-ссылке-404">Случай 1. По ссылке 404</h3>
+<ul>
+<li>Проверьте в <strong>Settings → Pages</strong>, что статус «Your site is live at …»</li>
+<li>Подождите минуту-две — иногда первая сборка медленная</li>
+<li>Убедитесь, что <code>index.html</code> лежит <strong>в корне</strong> репозитория (не в подпапке)</li>
+</ul>
+<h3 id="случай-2-сайт-открывается-но-нет-стилейбез-логики">Случай 2. Сайт открывается, но нет стилей/без логики</h3>
+<p>Это значит — <strong>пути к файлам сломаны</strong>. В <code>index.html</code> пути должны быть <strong>относительными</strong>, без <code>/</code> в начале:</p>
+<pre class="astro-code astro-code-themes github-light github-dark-default" style="background-color:#fff;--shiki-dark-bg:#0d1117;color:#24292e;--shiki-dark:#e6edf3; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="html"><code><span class="line"><span style="color:#6A737D;--shiki-dark:#8B949E">&#x3C;!-- ХОРОШО --></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E6EDF3">&#x3C;</span><span style="color:#22863A;--shiki-dark:#7EE787">link</span><span style="color:#6F42C1;--shiki-dark:#79C0FF"> rel</span><span style="color:#24292E;--shiki-dark:#E6EDF3">=</span><span style="color:#032F62;--shiki-dark:#A5D6FF">"stylesheet"</span><span style="color:#6F42C1;--shiki-dark:#79C0FF"> href</span><span style="color:#24292E;--shiki-dark:#E6EDF3">=</span><span style="color:#032F62;--shiki-dark:#A5D6FF">"style.css"</span><span style="color:#24292E;--shiki-dark:#E6EDF3">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E6EDF3">&#x3C;</span><span style="color:#22863A;--shiki-dark:#7EE787">script</span><span style="color:#6F42C1;--shiki-dark:#79C0FF"> src</span><span style="color:#24292E;--shiki-dark:#E6EDF3">=</span><span style="color:#032F62;--shiki-dark:#A5D6FF">"app.js"</span><span style="color:#24292E;--shiki-dark:#E6EDF3">>&#x3C;/</span><span style="color:#22863A;--shiki-dark:#7EE787">script</span><span style="color:#24292E;--shiki-dark:#E6EDF3">></span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D;--shiki-dark:#8B949E">&#x3C;!-- ПЛОХО — на GitHub Pages подкаталога это сломает --></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E6EDF3">&#x3C;</span><span style="color:#22863A;--shiki-dark:#7EE787">link</span><span style="color:#6F42C1;--shiki-dark:#79C0FF"> rel</span><span style="color:#24292E;--shiki-dark:#E6EDF3">=</span><span style="color:#032F62;--shiki-dark:#A5D6FF">"stylesheet"</span><span style="color:#6F42C1;--shiki-dark:#79C0FF"> href</span><span style="color:#24292E;--shiki-dark:#E6EDF3">=</span><span style="color:#032F62;--shiki-dark:#A5D6FF">"/style.css"</span><span style="color:#24292E;--shiki-dark:#E6EDF3">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E6EDF3">&#x3C;</span><span style="color:#22863A;--shiki-dark:#7EE787">script</span><span style="color:#6F42C1;--shiki-dark:#79C0FF"> src</span><span style="color:#24292E;--shiki-dark:#E6EDF3">=</span><span style="color:#032F62;--shiki-dark:#A5D6FF">"/app.js"</span><span style="color:#24292E;--shiki-dark:#E6EDF3">>&#x3C;/</span><span style="color:#22863A;--shiki-dark:#7EE787">script</span><span style="color:#24292E;--shiki-dark:#E6EDF3">></span></span></code></pre>
+<p>Если у вас плохие пути — попросите агента: «Поправь пути к ассетам в <code>index.html</code>, чтобы работало и локально, и на GitHub Pages в подкаталоге.»</p>
+<h3 id="случай-3-изменил-файлы-локально--на-сайте-по-прежнему-старое">Случай 3. Изменил файлы локально — на сайте по-прежнему старое</h3>
+<p>GitHub Pages обновляется <strong>только</strong> при push. После изменений:</p>
+<pre class="astro-code astro-code-themes github-light github-dark-default" style="background-color:#fff;--shiki-dark-bg:#0d1117;color:#24292e;--shiki-dark:#e6edf3; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#6F42C1;--shiki-dark:#FFA657">git</span><span style="color:#032F62;--shiki-dark:#A5D6FF"> add</span><span style="color:#032F62;--shiki-dark:#A5D6FF"> .</span></span>
+<span class="line"><span style="color:#6F42C1;--shiki-dark:#FFA657">git</span><span style="color:#032F62;--shiki-dark:#A5D6FF"> commit</span><span style="color:#005CC5;--shiki-dark:#79C0FF"> -m</span><span style="color:#032F62;--shiki-dark:#A5D6FF"> "правки"</span></span>
+<span class="line"><span style="color:#6F42C1;--shiki-dark:#FFA657">git</span><span style="color:#032F62;--shiki-dark:#A5D6FF"> push</span></span></code></pre>
+<p>Через 30 секунд сайт обновится.</p>
+<h3 id="случай-4-personal-access-token--что-это-вообще">Случай 4. «Personal access token» — что это вообще</h3>
+<p>Это <strong>пароль для git</strong>, который работает вместо обычного пароля. Создаётся в GitHub: Settings → Developer settings → Personal access tokens → Tokens (classic) → Generate new token.</p>
+<p>Дайте ему доступ только к <code>repo</code>, поставьте срок жизни 90 дней. Сохраните в надёжное место (или используйте менеджер паролей).</p>
+<blockquote>
+<p><em>Не коммитьте PAT в код.</em> Помните из B7 — секреты не в репозиторий. Если случайно закоммитили — <strong>сразу отзовите</strong> (revoke), потом разбирайтесь.</p>
+</blockquote>
+<h2 id="cloudflare-pages--альтернатива-на-следующий-шаг">Cloudflare Pages — альтернатива на следующий шаг</h2>
+<p>Когда освоитесь с GitHub Pages, можно попробовать <strong>Cloudflare Pages</strong> (<code>pages.dev</code>). Плюсы:</p>
+<ul>
+<li><strong>Быстрее</strong> в большинстве регионов (CDN-сеть)</li>
+<li><strong>Не требует публичного репо</strong> — приватный тоже работает на бесплатном тарифе</li>
+<li><strong>Кастомные домены</strong> ставятся в один клик</li>
+</ul>
+<p>Минусы — на старте чуть больше настройки. Если вам <strong>уже</strong> хватает GitHub Pages — не меняйте, <strong>не плодите сущности</strong>. На опыте — переезжать туда стоит, когда хочется свой домен или есть конкретная скорость-проблема.</p>
+<h2 id="чек-лист-продукт-готов-поделиться">Чек-лист «продукт готов поделиться»</h2>
+<p>Прежде чем кидать ссылку другу, пройдитесь:</p>
+<ul class="contains-task-list">
+<li class="task-list-item"><input type="checkbox" disabled> <strong>Открывается с телефона</strong> (не только с десктопа) — откройте ссылку с мобилы, проверьте</li>
+<li class="task-list-item"><input type="checkbox" disabled> <strong>Работают все фичи</strong> — не только «добавить», но и «удалить», «сохранить»</li>
+<li class="task-list-item"><input type="checkbox" disabled> <strong>Нет ошибок в консоли</strong> — F12 → Console, должно быть пусто или близко к этому</li>
+<li class="task-list-item"><input type="checkbox" disabled> <strong>Понятно, что это</strong> — есть заголовок, понятно, как пользоваться</li>
+<li class="task-list-item"><input type="checkbox" disabled> <strong>Не утекли секреты</strong> — посмотрите файлы в репозитории на GitHub, нет ли там <code>.env</code>, ключей, паролей</li>
+</ul>
+<p>Если все галочки — <strong>отправляйте</strong>. <strong>Не идеально, но реально работает.</strong></p>
+<h2 id="practice-30-минут">Practice (30 минут)</h2>
+<h3 id="задание-1-20-минут--задеплойте-свой-todo">Задание 1 (20 минут) — задеплойте свой todo</h3>
+<p>Пройдите все 5 шагов выше. Получите URL. <strong>Откройте его с телефона</strong> — это важный финальный тест.</p>
+<p>Если на каком-то шаге застряли — <strong>спросите агента в Claude Code</strong>:</p>
+<blockquote>
+<p>«Я делаю деплой на GitHub Pages, у меня шаг N не получается, ошибка: &#x3C;вставить>. Что не так?»</p>
+</blockquote>
+<p>Агент знает GitHub Pages <strong>хорошо</strong>, проведёт через любой ступор.</p>
+<h3 id="задание-2-10-минут--поделитесь-ссылкой">Задание 2 (10 минут) — поделитесь ссылкой</h3>
+<p>Отправьте URL <strong>минимум одному человеку</strong>, у которого спросите обратную связь:</p>
+<blockquote>
+<p>«Открой со своего телефона, попробуй добавить пару задач, скажи, что не так.»</p>
+</blockquote>
+<p>Это <strong>первое реальное использование</strong> вашего проекта другим человеком. Запишите фидбек — это <strong>точка роста</strong> на следующие итерации.</p>
+<h2 id="recap">Recap</h2>
+<ul>
+<li><strong>Статика = просто файлы.</strong> Любой статический сайт можно задеплоить за минуты, бесплатно.</li>
+<li><strong>GitHub Pages</strong> — самый простой первый деплой. Создал репо → залил → включил Pages → готово.</li>
+<li><strong>Чек-лист перед шерингом:</strong> мобила, фичи, консоль, понятность, утечки секретов.</li>
+</ul>
+<h2 id="скептик-самурай">Скептик Самурай</h2>
+<aside class="skeptic">
+<p><strong>🥷 Скептик Самурай спрашивает:</strong>
+«А зачем мне деплой? Я же только учусь, кому нужен мой кривой todo в интернете?»</p>
+<p><strong>Ответ:</strong> Дело не в <strong>этом конкретном</strong> todo. Дело в <strong>петле</strong>: вы что-то сделали → вышло <strong>в мир</strong> → кто-то посмотрел → вы получили реакцию → улучшили. Если ваши проекты годами лежат в локальной папке — вы <strong>не получаете обратной связи</strong> и <strong>не учитесь</strong> на реальном использовании. У всех, кого я знаю в индустрии — даже у нулевых новичков — есть <strong>публичный портфель</strong>. Не потому что «надо для работы», а потому что <strong>видимый результат мотивирует</strong>. Один URL — это <strong>полный фарш</strong> мотивации на следующий проект. <strong>Не идеально, но реально работает.</strong></p>
+</aside>
+<h2 id="дальше">Дальше</h2>
+<p>В <strong>B10 — Как оценивать, что агент сделал хорошо</strong> разберём, <strong>как понять</strong>, что результат агента — это «хорошо», а не «выглядит хорошо». Чек-листы, скептические проверки, типичные «дыры», в которые провалится новичок. Без этой главы вы будете принимать <strong>первое, что красиво выглядит</strong> — а это половина агентских факапов.</p>
+<p>Если зашло — поделитесь главой с тем, у кого «всё на компе и никто не видит». Если задеплоили — <strong>киньте ссылку в комменты</strong>, реально хочется посмотреть, что у вас получилось. <strong>За лайк и комментарий — отдельная благодарность</strong>, ваша обратная связь реально помогает шлифовать материал.</p>
+<p>Всех обнял, всегда ваш — Илья ❤️</p>  <nav class="chapter-nav"> <a href="/vibesamurai-site/courses/beginner/b8"> <span class="dir">← Назад</span> <span class="title">B8 · Cursor vs Claude Code vs Codex CLI</span> </a> <a href="/vibesamurai-site/courses/beginner/b10"> <span class="dir">Дальше →</span> <span class="title">B10 · Как оценивать, что агент сделал хорошо</span> </a> </nav> </main> </div> </body></html>

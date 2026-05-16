@@ -1,0 +1,144 @@
+<!DOCTYPE html><html lang="en"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Запускаем первый проект (todo-приложение) — Vibesamurai</title><meta name="description" content="End-to-end: чистая папка → агент пишет → запускаем → правим. Что делать когда не работает."><meta property="og:title" content="Запускаем первый проект (todo-приложение)"><meta property="og:type" content="article"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Inter:wght@300..800&family=JetBrains+Mono:wght@400..600&display=swap" rel="stylesheet"><link rel="stylesheet" href="/vibesamurai-site/_astro/_slug_.DpgmObvf.css">
+<style>.reader-sidebar[data-astro-cid-khgtvzrl] .soon[data-astro-cid-khgtvzrl]{display:block;color:var(--text-mute);font-size:var(--size-2);padding:var(--space-1) 0}.reader-sidebar[data-astro-cid-khgtvzrl] .soon[data-astro-cid-khgtvzrl] em[data-astro-cid-khgtvzrl]{font-style:normal;font-family:var(--font-mono);font-size:.85em;color:var(--accent);margin-left:4px;text-transform:uppercase;letter-spacing:.1em}
+</style></head> <body> <div class="reader-app"> <aside class="reader-rail"> <a href="/vibesamurai-site/" class="logo" aria-label="Vibesamurai home">V</a> </aside> <aside class="reader-sidebar" data-astro-cid-khgtvzrl> <div class="breadcrumb" data-astro-cid-khgtvzrl>Vibesamurai · Beginner Path · b5</div> <h4 data-astro-cid-khgtvzrl>В этом курсе</h4> <ul data-astro-cid-khgtvzrl> <li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b1" class data-astro-cid-khgtvzrl>B1 · Что такое AI-агент</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b2" class data-astro-cid-khgtvzrl>B2 · Установка Claude Code</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b3" class data-astro-cid-khgtvzrl>B3 · Первый разговор</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b4" class data-astro-cid-khgtvzrl>B4 · Репозиторий и коммиты</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b5" class="current" data-astro-cid-khgtvzrl>B5 · Первый проект: todo</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b6" class data-astro-cid-khgtvzrl>B6 · Читать код агента</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b7" class data-astro-cid-khgtvzrl>B7 · Безопасность для новичков</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b8" class data-astro-cid-khgtvzrl>B8 · Cursor vs Claude vs Codex</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b9" class data-astro-cid-khgtvzrl>B9 · Деплой первого проекта</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b10" class data-astro-cid-khgtvzrl>B10 · Оценка вывода агента</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b11" class data-astro-cid-khgtvzrl>B11 · Капстоун</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b12" class data-astro-cid-khgtvzrl>B12 · Куда дальше</a> </li> </ul>  </aside> <main class="reader-main"> <div class="chapter-eyebrow">Beginner Path · b5</div> <h1 class="chapter-title">B5 · Запускаем первый проект (todo-приложение)</h1> <p class="chapter-subtitle">End-to-end: чистая папка → агент пишет → запускаем → правим. Что делать когда не работает.</p>  <blockquote>
+<p>Черновик B5 в голосе DmitriyM (см. <code>scripts/tg_voice_analysis/_summary.md</code>). Главная hands-on глава Beginner-трека.</p>
+</blockquote>
+<h2 id="hook">Hook</h2>
+<pre class="astro-code astro-code-themes github-light github-dark-default" style="background-color:#fff;--shiki-dark-bg:#0d1117;color:#24292e;--shiki-dark:#e6edf3; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>Перед главой:              После главы:</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>Пустая папка     →         my-todo/</span></span>
+<span class="line"><span>                           ├── index.html</span></span>
+<span class="line"><span>                           ├── style.css</span></span>
+<span class="line"><span>                           ├── app.js</span></span>
+<span class="line"><span>                           └── README.md</span></span>
+<span class="line"><span>                           </span></span>
+<span class="line"><span>                           ↓ открываете в браузере ↓</span></span>
+<span class="line"><span>                           </span></span>
+<span class="line"><span>                           ✓ Купить кофе</span></span>
+<span class="line"><span>                           ✓ Допилить курс</span></span>
+<span class="line"><span>                           ✓ Всех обнять</span></span>
+<span class="line"><span>                                                                    </span></span></code></pre>
+<p>Друзья, всем привет! 👋</p>
+<p>Сорок-шестьдесят минут, и у вас в браузере <strong>реальное работающее todo-приложение</strong>, которое вы сделали с агентом, в репозитории, с коммитами. Это первый момент в курсе, когда абстрактные понятия из B1-B4 становятся <strong>полным фаршем</strong> — конкретным проектом, который работает.</p>
+<p>И главное — мы делаем это <strong>не отступая от правил</strong>: режим «только посмотреть» в начале, формула запроса из B3, коммит после каждой принятой правки. Не идеально, но реально работает.</p>
+<h2 id="концепция-end-to-end-agent-flow">Концепция: end-to-end agent flow</h2>
+<p>Любой проект с агентом — независимо от размера — следует одному паттерну:</p>
+<pre class="astro-code astro-code-themes github-light github-dark-default" style="background-color:#fff;--shiki-dark-bg:#0d1117;color:#24292e;--shiki-dark:#e6edf3; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>1. Сетап             — папка + git init</span></span>
+<span class="line"><span>2. Постановка        — что хотим получить, по формуле B3</span></span>
+<span class="line"><span>3. План (не код!)    — попросили агента план, прочитали</span></span>
+<span class="line"><span>4. Первая итерация   — агент делает базовое</span></span>
+<span class="line"><span>5. Запуск            — открыли результат, посмотрели</span></span>
+<span class="line"><span>6. Правки            — что-то надо изменить, говорим агенту</span></span>
+<span class="line"><span>7. Коммит            — после каждой принятой правки</span></span>
+<span class="line"><span>8. Повтор 5-7        — пока не «готово»</span></span></code></pre>
+<p>В этой главе мы пройдём весь паттерн на простом, но <strong>реальном</strong> проекте: todo-приложение в браузере.</p>
+<h2 id="пример-делаем-todo-с-агентом">Пример: делаем todo с агентом</h2>
+<h3 id="шаг-1-сетап">Шаг 1. Сетап</h3>
+<pre class="astro-code astro-code-themes github-light github-dark-default" style="background-color:#fff;--shiki-dark-bg:#0d1117;color:#24292e;--shiki-dark:#e6edf3; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#6F42C1;--shiki-dark:#FFA657">mkdir</span><span style="color:#032F62;--shiki-dark:#A5D6FF"> my-todo</span></span>
+<span class="line"><span style="color:#005CC5;--shiki-dark:#79C0FF">cd</span><span style="color:#032F62;--shiki-dark:#A5D6FF"> my-todo</span></span>
+<span class="line"><span style="color:#6F42C1;--shiki-dark:#FFA657">git</span><span style="color:#032F62;--shiki-dark:#A5D6FF"> init</span></span></code></pre>
+<p>Открываем агента:</p>
+<pre class="astro-code astro-code-themes github-light github-dark-default" style="background-color:#fff;--shiki-dark-bg:#0d1117;color:#24292e;--shiki-dark:#e6edf3; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#6F42C1;--shiki-dark:#FFA657">claude</span></span></code></pre>
+<h3 id="шаг-2-постановка-по-формуле-b3">Шаг 2. Постановка (по формуле B3)</h3>
+<p>В чате Claude:</p>
+<blockquote>
+<p><strong>Что:</strong> Сделать простое todo-приложение в браузере
+<strong>Где:</strong> Текущая пустая папка
+<strong>Как поймём готовым:</strong></p>
+<ul>
+<li>Открыл <code>index.html</code> в браузере → вижу заголовок «Мой todo-лист», поле ввода, кнопку «Добавить», список задач</li>
+<li>Добавил задачу → она появилась в списке</li>
+<li>Нажал на задачу → она зачеркнулась как выполненная</li>
+<li>Перезагрузил страницу → задачи сохранились (localStorage)</li>
+</ul>
+<p><strong>Технологии:</strong> чистый HTML/CSS/JS без библиотек, всё в одной папке, без сборки.
+<strong>Сначала покажи план</strong> перед тем как начнёшь писать код.</p>
+</blockquote>
+<p>Это <strong>типичная постановка</strong> для начального проекта. Заметили — пять чётких критериев готовности. Нет «красиво», нет «удобно». Конкретно.</p>
+<h3 id="шаг-3-план-не-код">Шаг 3. План (не код!)</h3>
+<p>Агент покажет план — обычно три-четыре файла:</p>
+<ul>
+<li><code>index.html</code> — структура страницы</li>
+<li><code>style.css</code> — оформление</li>
+<li><code>app.js</code> — логика</li>
+<li><code>README.md</code> — описание</li>
+</ul>
+<p>И список шагов: создать HTML, добавить стиль, реализовать логику, протестировать. <strong>Прочитайте план.</strong> Если согласны — «Хорошо, делай». Если хочется поправить — поправьте сейчас, а не потом.</p>
+<h3 id="шаг-4-первая-итерация">Шаг 4. Первая итерация</h3>
+<p>Агент создаёт файлы. В терминале можно отслеживать:</p>
+<pre class="astro-code astro-code-themes github-light github-dark-default" style="background-color:#fff;--shiki-dark-bg:#0d1117;color:#24292e;--shiki-dark:#e6edf3; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#6F42C1;--shiki-dark:#FFA657">ls</span><span style="color:#6A737D;--shiki-dark:#8B949E">           # увидеть появившиеся файлы</span></span>
+<span class="line"><span style="color:#6F42C1;--shiki-dark:#FFA657">git</span><span style="color:#032F62;--shiki-dark:#A5D6FF"> status</span><span style="color:#6A737D;--shiki-dark:#8B949E">   # увидеть что нового</span></span></code></pre>
+<h3 id="шаг-5-запуск">Шаг 5. Запуск</h3>
+<p>Откройте <code>index.html</code> в браузере. На macOS:</p>
+<pre class="astro-code astro-code-themes github-light github-dark-default" style="background-color:#fff;--shiki-dark-bg:#0d1117;color:#24292e;--shiki-dark:#e6edf3; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#6F42C1;--shiki-dark:#FFA657">open</span><span style="color:#032F62;--shiki-dark:#A5D6FF"> index.html</span></span></code></pre>
+<p>На Windows:</p>
+<pre class="astro-code astro-code-themes github-light github-dark-default" style="background-color:#fff;--shiki-dark-bg:#0d1117;color:#24292e;--shiki-dark:#e6edf3; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#6F42C1;--shiki-dark:#FFA657">start</span><span style="color:#032F62;--shiki-dark:#A5D6FF"> index.html</span></span></code></pre>
+<p>На Linux:</p>
+<pre class="astro-code astro-code-themes github-light github-dark-default" style="background-color:#fff;--shiki-dark-bg:#0d1117;color:#24292e;--shiki-dark:#e6edf3; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#6F42C1;--shiki-dark:#FFA657">xdg-open</span><span style="color:#032F62;--shiki-dark:#A5D6FF"> index.html</span></span></code></pre>
+<p>Или просто двойной клик в файловом менеджере.</p>
+<p>Появится страница. Попробуйте добавить пару задач, кликнуть, перезагрузить.</p>
+<h3 id="шаг-6-что-то-не-так--правки">Шаг 6. Что-то не так? — правки</h3>
+<p>Допустим, оказалось, что:</p>
+<ul>
+<li>Шрифт мелковат</li>
+<li>Хочется удалять задачи кнопкой ❌</li>
+<li>Кнопка «Добавить» по-английски, а хочется на русском</li>
+</ul>
+<p>Скажите агенту:</p>
+<blockquote>
+<p>Хорошо, работает. Три правки:</p>
+<ol>
+<li>Увеличь шрифт до 18px для списка задач</li>
+<li>Добавь кнопку ❌ возле каждой задачи — клик удаляет задачу</li>
+<li>Замени текст кнопки «Add» на «Добавить»</li>
+</ol>
+<p>После правок я хочу видеть только эти три изменения, остальное не трогай.</p>
+</blockquote>
+<p>Агент применит — посмотрите в браузере (нажмите F5).</p>
+<h3 id="шаг-7-коммит-после-каждой-принятой-правки">Шаг 7. Коммит после <strong>каждой</strong> принятой правки</h3>
+<p>Хороший результат → сохранили в историю:</p>
+<pre class="astro-code astro-code-themes github-light github-dark-default" style="background-color:#fff;--shiki-dark-bg:#0d1117;color:#24292e;--shiki-dark:#e6edf3; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#6F42C1;--shiki-dark:#FFA657">git</span><span style="color:#032F62;--shiki-dark:#A5D6FF"> add</span><span style="color:#032F62;--shiki-dark:#A5D6FF"> .</span></span>
+<span class="line"><span style="color:#6F42C1;--shiki-dark:#FFA657">git</span><span style="color:#032F62;--shiki-dark:#A5D6FF"> commit</span><span style="color:#005CC5;--shiki-dark:#79C0FF"> -m</span><span style="color:#032F62;--shiki-dark:#A5D6FF"> "init todo: add, complete, persist"</span></span></code></pre>
+<p>После следующей пачки правок:</p>
+<pre class="astro-code astro-code-themes github-light github-dark-default" style="background-color:#fff;--shiki-dark-bg:#0d1117;color:#24292e;--shiki-dark:#e6edf3; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#6F42C1;--shiki-dark:#FFA657">git</span><span style="color:#032F62;--shiki-dark:#A5D6FF"> add</span><span style="color:#032F62;--shiki-dark:#A5D6FF"> .</span></span>
+<span class="line"><span style="color:#6F42C1;--shiki-dark:#FFA657">git</span><span style="color:#032F62;--shiki-dark:#A5D6FF"> commit</span><span style="color:#005CC5;--shiki-dark:#79C0FF"> -m</span><span style="color:#032F62;--shiki-dark:#A5D6FF"> "ui polish: font, delete button, ru text"</span></span></code></pre>
+<p>Через пару итераций у вас будет короткая, понятная история. Можно в любой момент откатить на любой из шагов.</p>
+<h3 id="шаг-8-повтор-до-готово">Шаг 8. Повтор до «готово»</h3>
+<p>Что ещё хочется? Сортировка? Категории? Дедлайны? Лично меня обычно тянет залип в детали — на этом этапе <strong>остановитесь</strong>, как только todo решает вашу задачу. Слишком много фич = <strong>непочатый край</strong> и проект не доделается никогда.</p>
+<h2 id="что-делать-когда-не-работает">Что делать когда не работает</h2>
+<h3 id="случай-1-открыли-indexhtml--пустая-страница">Случай 1. Открыли <code>index.html</code> — пустая страница</h3>
+<ul>
+<li>Откройте в браузере <strong>Developer Tools</strong> (Cmd+Option+I / F12) → вкладка Console</li>
+<li>Скопируйте ошибку</li>
+<li>Скажите агенту: «В консоли браузера ошибка <code>&#x3C;…></code>. Исправь.»</li>
+</ul>
+<h3 id="случай-2-задачи-добавляются-но-при-перезагрузке-исчезают">Случай 2. Задачи добавляются, но при перезагрузке исчезают</h3>
+<p>Скажите агенту: «Задачи не сохраняются после перезагрузки. Проверь работу с localStorage в <code>app.js</code>, исправь.»</p>
+<h3 id="случай-3-агент-сделал-какую-то-ересь-всё-стало-хуже">Случай 3. Агент сделал какую-то ересь, всё стало хуже</h3>
+<p>Не пытайтесь починить «починкой поверх починки». Откатывайтесь на последний рабочий коммит:</p>
+<pre class="astro-code astro-code-themes github-light github-dark-default" style="background-color:#fff;--shiki-dark-bg:#0d1117;color:#24292e;--shiki-dark:#e6edf3; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#6F42C1;--shiki-dark:#FFA657">git</span><span style="color:#032F62;--shiki-dark:#A5D6FF"> restore</span><span style="color:#032F62;--shiki-dark:#A5D6FF"> .</span></span></code></pre>
+<p>И заново сформулируйте, что хотели, по формуле.</p>
+<h3 id="случай-4-совсем-ничего-не-понятно">Случай 4. Совсем ничего не понятно</h3>
+<p>Скажите агенту: «Объясни мне в одном абзаце, что делает файл <code>app.js</code>. Без кода, простыми словами».</p>
+<p>Это <strong>не сдача</strong>. Это нормальный шаг — попросить explainer, а не сразу «исправь».</p>
+<h2 id="practice-40-60-минут">Practice (40-60 минут)</h2>
+<h3 id="задание-1-40-минут--пройдите-главу-руками">Задание 1 (40 минут) — пройдите главу руками</h3>
+<p>От начала до конца. Свой <code>my-todo</code>, свои правки, свои коммиты. Не пропускайте <code>git add . + git commit</code> после каждой принятой правки — это самая важная привычка.</p>
+<h3 id="задание-2-20-минут--добавьте-свою-фичу">Задание 2 (20 минут) — добавьте свою фичу</h3>
+<p>Когда базовое todo работает — придумайте <strong>одну</strong> фичу, которая лично вам нужна. Что угодно: цветовые метки, поиск, экспорт в файл. Сформулируйте по формуле B3 и попросите агента. Закоммитьте.</p>
+<h2 id="recap">Recap</h2>
+<ul>
+<li><strong>End-to-end flow одинаков</strong> для любого проекта: сетап → постановка → план → итерация → запуск → правки → коммит.</li>
+<li><strong>Коммит после каждой принятой правки.</strong> Это базовая страховка от агентских косяков.</li>
+<li><strong>Не починка через починку.</strong> Если что-то стало хуже после правки — откат, потом переформулировать.</li>
+</ul>
+<h2 id="скептик-самурай">Скептик Самурай</h2>
+<aside class="skeptic">
+<p><strong>🥷 Скептик Самурай спрашивает:</strong>
+«Я мог бы сам написать todo-лист за час. В чём смысл делать это через агента?»</p>
+<p><strong>Ответ:</strong> Смысл не в <strong>этом конкретном</strong> todo. Смысл — в том, что вы <strong>тренируете workflow</strong>, который потом применяете к проектам, которые <strong>сами</strong> не могли бы сделать. Через две недели по этой схеме вы сможете попросить агента сделать ваш личный helper для каких-то задач, которые до этого вы делали руками часами. Todo-приложение — это «велосипед без втулок» из автошколы. Никто на нём не ездит, на нём учатся <strong>держать руль</strong>. <strong>Не идеально, но реально работает.</strong></p>
+</aside>
+<h2 id="дальше">Дальше</h2>
+<p>В <strong>B6 — Чтение кода, который написал агент</strong> разберём, как <strong>смотреть</strong> в код, который агент создал, и хотя бы примерно понимать что там происходит — даже если вы не программист. Это не про «научиться кодить», это про базовую <strong>ориентацию</strong>, чтобы не быть слепым в своём же проекте.</p>
+<p>Если зашло — поделитесь главой с тем, кто давно хочет «попробовать собрать своё приложение, но не знает с чего начать». Если ваш todo получился — закиньте скрин в комменты, <strong>за лайк и комментарий — отдельная благодарность</strong>, ваша обратная связь реально помогает шлифовать материал.</p>
+<p>Всех обнял, всегда ваш — Илья ❤️</p>  <nav class="chapter-nav"> <a href="/vibesamurai-site/courses/beginner/b4"> <span class="dir">← Назад</span> <span class="title">B4 · Что такое репозиторий и зачем коммитить</span> </a> <a href="/vibesamurai-site/courses/beginner/b6"> <span class="dir">Дальше →</span> <span class="title">B6 · Чтение кода, который написал агент</span> </a> </nav> </main> </div> </body></html>

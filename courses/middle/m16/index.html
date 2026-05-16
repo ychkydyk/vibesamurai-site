@@ -1,0 +1,226 @@
+<!DOCTYPE html><html lang="en"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Когда multi-agent избыточен. Антипаттерны — Vibesamurai</title><meta name="description" content="Обратная сторона M15: где multi-agent не нужен, как доказать себе/команде, что строить не надо."><meta property="og:title" content="Когда multi-agent избыточен. Антипаттерны"><meta property="og:type" content="article"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Inter:wght@300..800&family=JetBrains+Mono:wght@400..600&display=swap" rel="stylesheet"><link rel="stylesheet" href="/vibesamurai-site/_astro/_slug_.DpgmObvf.css">
+<style>.reader-sidebar[data-astro-cid-khgtvzrl] .soon[data-astro-cid-khgtvzrl]{display:block;color:var(--text-mute);font-size:var(--size-2);padding:var(--space-1) 0}.reader-sidebar[data-astro-cid-khgtvzrl] .soon[data-astro-cid-khgtvzrl] em[data-astro-cid-khgtvzrl]{font-style:normal;font-family:var(--font-mono);font-size:.85em;color:var(--accent);margin-left:4px;text-transform:uppercase;letter-spacing:.1em}
+</style></head> <body> <div class="reader-app"> <aside class="reader-rail"> <a href="/vibesamurai-site/" class="logo" aria-label="Vibesamurai home">V</a> </aside> <aside class="reader-sidebar" data-astro-cid-khgtvzrl> <div class="breadcrumb" data-astro-cid-khgtvzrl>Vibesamurai · Middle Path · m16</div> <h4 data-astro-cid-khgtvzrl>В этом курсе</h4> <ul data-astro-cid-khgtvzrl> <li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m1" class data-astro-cid-khgtvzrl>M1 · Что такое agentic AI в SDLC</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m2" class data-astro-cid-khgtvzrl>M2 · Границы агента</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m3" class data-astro-cid-khgtvzrl>M3 · Observability &amp; HITL</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m4" class data-astro-cid-khgtvzrl>M4 · Tool inventory &amp; permissions</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m5" class data-astro-cid-khgtvzrl>M5 · MCP deep dive</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m6" class data-astro-cid-khgtvzrl>M6 · Claude Code mastery</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m7" class data-astro-cid-khgtvzrl>M7 · Codex CLI &amp; OpenAI Agents</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m8" class data-astro-cid-khgtvzrl>M8 · Cursor + IDE-агенты</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m9" class data-astro-cid-khgtvzrl>M9 · Memory strategies</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m10" class data-astro-cid-khgtvzrl>M10 · State, drift, continuity</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m11" class data-astro-cid-khgtvzrl>M11 · Метрики оценки</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m12" class data-astro-cid-khgtvzrl>M12 · Regression testing</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m13" class data-astro-cid-khgtvzrl>M13 · Tuning, когда метрики стоят</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m14" class data-astro-cid-khgtvzrl>M14 · Pipelines &amp; orchestration</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m15" class data-astro-cid-khgtvzrl>M15 · Multi-agent роли</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m16" class="current" data-astro-cid-khgtvzrl>M16 · Когда multi-agent — overkill</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m17" class data-astro-cid-khgtvzrl>M17 · Деплой агентов в прод</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m18" class data-astro-cid-khgtvzrl>M18 · Production security</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m19" class data-astro-cid-khgtvzrl>M19 · Incidents &amp; post-mortems</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m20" class data-astro-cid-khgtvzrl>M20 · Финал Middle</a> </li> </ul>  </aside> <main class="reader-main"> <div class="chapter-eyebrow">Middle Path · m16</div> <h1 class="chapter-title">M16 · Когда multi-agent избыточен. Антипаттерны</h1> <p class="chapter-subtitle">Обратная сторона M15: где multi-agent не нужен, как доказать себе/команде, что строить не надо.</p>  <blockquote>
+<p>Черновик M16 в голосе DmitriyM. Закрывает <strong>Часть V — Multi-Agent</strong>.</p>
+</blockquote>
+<h2 id="hook">Hook</h2>
+<pre class="astro-code astro-code-themes github-light github-dark-default" style="background-color:#fff;--shiki-dark-bg:#0d1117;color:#24292e;--shiki-dark:#e6edf3; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>ТО, ЧТО ХОТЯТ:                 ТО, ЧТО ПОЛУЧАЕТСЯ:</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>"Multi-agent система      →    7 субагентов, 4 шины, 3 prompt'а</span></span>
+<span class="line"><span> будет умнее одного"            на каждого, никто ничего не делает,</span></span>
+<span class="line"><span>                                $200 в день на API,</span></span>
+<span class="line"><span>                                команда устала отлаживать</span></span></code></pre>
+<p>Друзья, всем привет! 👋</p>
+<p>Эта глава — <strong>обратная сторона</strong> M15. M15 был <strong>«как делать»</strong>, M16 — <strong>«когда не делать»</strong>. И — спойлер — это <strong>большинство</strong> случаев.</p>
+<p>Я лично видел <strong>десятки</strong> проектов, где люди начинали с multi-agent из эстетических соображений («звучит круто»), и <strong>половина</strong> из них потом приходила за консультацией со словами «помоги это разобрать, я уже не понимаю, что у меня где». Эта глава — <strong>прививка</strong> против такого.</p>
+<p>Час. Это <strong>сильная</strong> глава, и она <strong>закрывает</strong> Часть V.</p>
+<h2 id="концепция-multi-agent--распределённая-система">Концепция: multi-agent = распределённая система</h2>
+<p>Все, кто работал с <strong>распределёнными системами</strong> в обычной разработке — знают эту цитату:</p>
+<blockquote>
+<p><em>«Микросервисы — это решение, которое создаёт больше проблем, чем решает, <strong>кроме как</strong> в специфичных случаях.»</em></p>
+</blockquote>
+<p>С multi-agent <strong>то же самое</strong>. Multi-agent — это <strong>распределённая система</strong> агентов. И <strong>все</strong> проблемы распределённых систем тут возрастают <strong>в кубе</strong>:</p>
+<pre class="astro-code astro-code-themes github-light github-dark-default" style="background-color:#fff;--shiki-dark-bg:#0d1117;color:#24292e;--shiki-dark:#e6edf3; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>┌─────────────────────────────────────────────────────┐</span></span>
+<span class="line"><span>│  Обычные проблемы distributed systems:              │</span></span>
+<span class="line"><span>│  - Network failures                                 │</span></span>
+<span class="line"><span>│  - Eventual consistency                             │</span></span>
+<span class="line"><span>│  - Partial failures                                 │</span></span>
+<span class="line"><span>│  - Debugging complexity                             │</span></span>
+<span class="line"><span>│                                                     │</span></span>
+<span class="line"><span>│  + multi-agent добавляет:                           │</span></span>
+<span class="line"><span>│  - Non-determinism each agent                       │</span></span>
+<span class="line"><span>│  - LLM-cost amplification                           │</span></span>
+<span class="line"><span>│  - Coordination overhead                            │</span></span>
+<span class="line"><span>│  - "Whose context is correct?" — постоянно          │</span></span>
+<span class="line"><span>└─────────────────────────────────────────────────────┘</span></span></code></pre>
+<p>Поэтому: <strong>сначала pipeline (M14)</strong>. Multi-agent — <strong>только</strong> когда pipeline <strong>доказательно</strong> не справляется.</p>
+<h2 id="сигналы-что-multi-agent-не-нужен">Сигналы, что multi-agent <strong>НЕ</strong> нужен</h2>
+<p>Чек-лист «можно ли обойтись без multi-agent». Если <strong>хоть один</strong> ответ — да, <strong>не стройте</strong>.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Сигнал</th><th>Что значит</th></tr></thead><tbody><tr><td><strong>Задача одного человека</strong></td><td>Если вы один и работа уйдёт максимум за день — pipeline хватит</td></tr><tr><td><strong>Контекст помещается в 200K токенов</strong></td><td>Никто <strong>не вынужден</strong> разделять контексты</td></tr><tr><td><strong>Нет реального параллелизма</strong></td><td>Если шаги <strong>последовательные</strong> по смыслу — pipeline</td></tr><tr><td><strong>Все «роли» хорошо делает одна модель</strong></td><td>Разные модели — частый аргумент для multi-agent. Если все ок на одной — не разделяй</td></tr><tr><td><strong>Нет требования автономности</strong></td><td>Если человек просматривает результат после каждого крупного шага — pipeline хватит</td></tr><tr><td><strong>Бюджет ограничен</strong></td><td>Multi-agent стоит <strong>в разы</strong> дороже на API</td></tr><tr><td><strong>Команда &#x3C; 3 людей</strong></td><td>Поддержка multi-agent — это <strong>работа</strong> для отдельного человека-инженера</td></tr><tr><td><strong>MVP стадия</strong></td><td>На MVP-стадии <strong>никогда</strong> не нужен multi-agent — слишком ранний оверинжиниринг</td></tr></tbody></table>
+<p>В реальности — это <strong>80% случаев</strong>. Если задача попадает в <strong>большинство</strong> этих категорий — <strong>строго pipeline</strong>.</p>
+<h2 id="главные-антипаттерны">Главные антипаттерны</h2>
+<h3 id="антипаттерн-1-cargo-cult-multi-agent">Антипаттерн 1. «Cargo cult multi-agent»</h3>
+<p>Прочитали статью «как мы автоматизировали SRE на 7 агентах». Решили — «нам тоже надо». Не разобрались, <strong>зачем</strong> в той статье именно 7.</p>
+<p><strong>Признаки:</strong></p>
+<ul>
+<li>Не можете коротко объяснить, <strong>почему именно</strong> 5 (или 7) агентов, а не 2</li>
+<li>Не можете показать <strong>число</strong>, которое улучшится от multi-agent vs pipeline</li>
+<li>Архитектура «выглядит** как** успешные кейсы»</li>
+</ul>
+<p><strong>Лекарство:</strong> правило <strong>«один-в-один»</strong> — назовите <strong>один</strong> конкретный workflow, на котором <strong>multi-agent объективно</strong> быстрее/качественнее pipeline. Не можете назвать — не строите.</p>
+<h3 id="антипаттерн-2-каждой-роли--свой-агент">Антипаттерн 2. «Каждой роли — свой агент»</h3>
+<p>Соблазн: «у нас есть planner, coder, tester, reviewer, doc-writer, release-manager — пусть каждый будет своим агентом». <strong>Не пусть.</strong></p>
+<p><strong>Признаки:</strong></p>
+<ul>
+<li>5+ subagents, каждый делает <strong>узкую</strong> функцию (одна-две команды)</li>
+<li>80% времени их работы — <strong>ожидание</strong> друг друга</li>
+<li>На задачу уходит <strong>в 3 раза</strong> больше токенов, чем при one-shot</li>
+</ul>
+<p><strong>Лекарство:</strong> <strong>слияние ролей</strong>. planner+architect = одна роль (одинаковый контекст). coder+formatter = одна роль (одинаковые tools). Если нет <strong>реальной</strong> причины разделять — <strong>не разделяйте</strong>.</p>
+<h3 id="антипаттерн-3-agent-должен-иметь-полную-автономию">Антипаттерн 3. «Agent должен иметь полную автономию»</h3>
+<p>«Мы хотим, чтобы система <strong>сама</strong> разруливала всё, без человека». <strong>Звучит</strong> красиво, <strong>в реальности</strong> — путь к проблемам.</p>
+<p><strong>Признаки:</strong></p>
+<ul>
+<li>Нет точек интеграции с человеком в pipeline</li>
+<li>«Supervisor сам решает, когда escalate»</li>
+<li>Бюджеты на «время / итерации / токены» <strong>не определены</strong> жёстко</li>
+</ul>
+<p><strong>Лекарство:</strong> см. M3 — <strong>HITL обязателен</strong> на критичных шагах. Даже самые продвинутые продакшн-агенты в 2026 <strong>всё ещё</strong> требуют человека на:</p>
+<ul>
+<li>merge в main</li>
+<li>deploy в prod</li>
+<li>changes to permissions / billing</li>
+<li>decisions с <strong>необратимыми</strong> последствиями</li>
+</ul>
+<h3 id="антипаттерн-4-несколько-supervisorов">Антипаттерн 4. «Несколько supervisor’ов»</h3>
+<p>«Главный supervisor управляет под-supervisor’ами, которые управляют workers». <strong>Иерархия из иерархий.</strong></p>
+<p><strong>Признаки:</strong></p>
+<ul>
+<li>Глубина > 3</li>
+<li>Один supervisor дёргает другого supervisor’а</li>
+<li>В диагностике не понятно, <strong>чья</strong> вина в финальном результате</li>
+</ul>
+<p><strong>Лекарство:</strong> <strong>flat hierarchy</strong>. Один supervisor, до 5 workers. Если <strong>реально</strong> не помещается — это <strong>не multi-agent</strong>, это <strong>отдельные продукты</strong>, которые надо разрабатывать <strong>отдельно</strong> и связывать через API/queue.</p>
+<h3 id="антипаттерн-5-свободная-коммуникация--пусть-сами-договариваются">Антипаттерн 5. «Свободная коммуникация — пусть сами договариваются»</h3>
+<p>«Я дам им общую память, пусть пишут друг другу как хотят». Кончится <strong>бесконечным</strong> диалогом без результата.</p>
+<p><strong>Признаки:</strong></p>
+<ul>
+<li>Нет формата сообщений</li>
+<li>Нет правил, <strong>когда</strong> агент должен <strong>закончить</strong> говорить</li>
+<li>В логе видно «agents talked about it for 47 messages, no conclusion»</li>
+</ul>
+<p><strong>Лекарство:</strong> <strong>жёсткий протокол</strong> (JSON Schema), <strong>жёсткие лимиты</strong> (макс N сообщений в дискуссии), <strong>обязательный супервайзер</strong>, принимающий финальное решение.</p>
+<h3 id="антипаттерн-6-сначала-строим-потом-измеряем">Антипаттерн 6. «Сначала строим, потом измеряем»</h3>
+<p>Полгода работы, многоэтапная система — и <strong>никто</strong> не сравнил с <strong>простым</strong> pipeline.</p>
+<p><strong>Признаки:</strong></p>
+<ul>
+<li>Нет A/B бенчмарка vs single-agent / pipeline</li>
+<li>Метрики «прироста» — субъективные («команда довольна»)</li>
+<li>При вопросе «зачем» — общие слова о «масштабируемости»</li>
+</ul>
+<p><strong>Лекарство:</strong> <strong>до</strong> начала проекта — <strong>harness</strong> (M12) на <strong>3 представительных</strong> задачах. Прогон на single-agent, pipeline, multi-agent. <strong>Сравните</strong>. Если multi-agent не <strong>значимо</strong> лучше — <strong>не делайте</strong>.</p>
+<h3 id="антипаттерн-7-multi-agent-для-economy-of-scale">Антипаттерн 7. «Multi-agent для economy of scale»</h3>
+<p>«Если у нас 1000 задач в день — multi-agent окупится». <strong>Не факт.</strong></p>
+<p><strong>Признаки:</strong></p>
+<ul>
+<li>Аргумент звучит «масштабом»</li>
+<li>1000 задач в день = 1 задача каждые 1.4 минуты</li>
+<li>Multi-agent на одну задачу — 15-30 минут wall-clock из-за coordination overhead</li>
+</ul>
+<p><strong>Лекарство:</strong> для <strong>массовых</strong> задач часто выгоднее <strong>параллельный пайплайн</strong> (запускать N pipeline’ов одновременно), чем multi-agent. Это <strong>проще</strong> и <strong>дешевле</strong>.</p>
+<h2 id="большая-вставка-b--про-реальный-кейс">Большая вставка B — про реальный кейс</h2>
+<p>История из моей жизни. У одного заказчика была идея фабрики PR: «давайте сделаем supervisor, который раздаёт задачи из Linear на 5 worker-агентов, и они <strong>сами</strong> делают PR’ы, проходят review, мерджат». На бумаге — <strong>красиво</strong>. На презентации — <strong>впечатляюще</strong>.</p>
+<p>Стали строить. <strong>Три месяца</strong> работы команды из 4 человек:</p>
+<ul>
+<li>supervisor — Opus 4.6, специальный prompt</li>
+<li>coder-worker — Sonnet 4.6, доступ к репо</li>
+<li>test-worker — Sonnet 4.6, sandbox</li>
+<li>reviewer-worker — Opus 4.6, read-only + comments</li>
+<li>release-worker — Haiku 4.5, только мержит approved</li>
+<li>общая шина — Redis + Postgres для state</li>
+<li>мониторинг — Grafana, дашборды по агентам</li>
+</ul>
+<p><strong>Стоимость инфраструктуры разработки:</strong> 4 человеко-месяца. <strong>Стоимость API в продакшене (первая неделя):</strong> $1200.</p>
+<p><strong>Что работало:</strong> simple фичи (CRUD-endpoint, мелкие баг-фиксы) — да, делало само.</p>
+<p><strong>Что не работало:</strong></p>
+<ul>
+<li>Любая нетривиальная задача (миграция, security-чувствительное, рефакторинг) — <strong>уезжало в deadlock</strong> между coder и reviewer</li>
+<li>$200-300/день на «обсуждения» агентов</li>
+<li>Команда <strong>постоянно</strong> мониторила «не зависло ли»</li>
+<li>На каждый сложный случай — <strong>всё равно</strong> звали человека</li>
+<li>Через 2 месяца <strong>выяснилось</strong>, что pipeline (planner→coder→tester, без reviewer-agent, ревью человеком) делает то же самое за <strong>четверть</strong> стоимости</li>
+</ul>
+<p><strong>Что осталось:</strong> упрощённый pipeline + один subagent для тестов. Multi-agent инфраструктура — выпилена.</p>
+<p><strong>Полный фарш</strong> урока: мы построили <strong>сложный</strong> инструмент, потому что <strong>звучало круто</strong>. Без harness’а <strong>до</strong> проекта. Без A/B сравнения. С верой, что «мы делаем будущее».</p>
+<p>Я <strong>не против</strong> multi-agent в принципе. Я против multi-agent <strong>до того</strong>, как pipeline исчерпан. И против multi-agent <strong>без бенчмарка</strong>, доказывающего выгоду.</p>
+<h2 id="когда-multi-agent-реально-окупается">Когда multi-agent <strong>РЕАЛЬНО</strong> окупается</h2>
+<p>Чтобы не выглядело, что я <strong>в принципе</strong> против. Случаи, <strong>в которых</strong> multi-agent <strong>оправдан</strong>:</p>
+<h3 id="1-длительные-автономные-процессы-247">1. Длительные автономные процессы (24/7)</h3>
+<p>Например, <strong>on-call assistant</strong> — отвечает на алёрты, диагностирует, эскалирует. Здесь <strong>реально</strong> нужно:</p>
+<ul>
+<li>Параллельные процессы (несколько алёртов одновременно)</li>
+<li>Разные роли (triage, investigator, communicator с человеком)</li>
+<li>Длительный uptime</li>
+</ul>
+<h3 id="2-adversarial-workflows-генерация--критика">2. Adversarial workflows (генерация + критика)</h3>
+<p>Например, <strong>content review</strong> — один агент генерит, второй <strong>независимо</strong> критикует. Если у них <strong>общий</strong> контекст и <strong>общая</strong> модель, у критика тот же blind spot, что у генератора.</p>
+<h3 id="3-реальная-специализация-моделей">3. Реальная специализация моделей</h3>
+<p>Например, текст пишет одна модель (Claude), код — другая (Codex), картинки — третья (Midjourney via API). Здесь multi-agent <strong>по природе</strong> — нельзя их объединить в одного.</p>
+<h3 id="4-высокий-параллелизм-с-независимыми-задачами">4. Высокий параллелизм с независимыми задачами</h3>
+<p>Например, обработка 10000 PDF — 10 worker’ов параллельно на dispatched task. <strong>Чистый</strong> parallelism, без координации между worker’ами.</p>
+<p>В этих случаях multi-agent — <strong>естественное</strong> решение. В остальных — <strong>избыточное</strong>.</p>
+<h2 id="чек-лист-принимаем-решение-строить-multi-agent">Чек-лист «принимаем решение строить multi-agent»</h2>
+<p>Перед стартом — пройдитесь:</p>
+<ul class="contains-task-list">
+<li class="task-list-item"><input type="checkbox" disabled> Pipeline (M14) <strong>доказательно</strong> не справляется — есть <strong>бенчмарк</strong></li>
+<li class="task-list-item"><input type="checkbox" disabled> Я могу <strong>в одном предложении</strong> объяснить, <strong>почему</strong> именно multi-agent (не «масштабируется», а <strong>конкретно</strong>)</li>
+<li class="task-list-item"><input type="checkbox" disabled> У меня есть <strong>дисциплина бюджетов</strong> — итерации, время, токены</li>
+<li class="task-list-item"><input type="checkbox" disabled> У меня есть <strong>harness</strong> (M12), на котором буду измерять прогресс</li>
+<li class="task-list-item"><input type="checkbox" disabled> У меня есть <strong>формат коммуникации</strong> (JSON Schema)</li>
+<li class="task-list-item"><input type="checkbox" disabled> У меня есть <strong>точки HITL</strong> на критичных шагах</li>
+<li class="task-list-item"><input type="checkbox" disabled> Я знаю, <strong>кто</strong> в команде будет owner’ом multi-agent инфры</li>
+<li class="task-list-item"><input type="checkbox" disabled> Я <strong>готов</strong> свернуть всё это, если бенчмарк не покажет выигрыш</li>
+</ul>
+<p><strong>Все чекбоксы — да</strong> → стройте. <strong>Хоть один — нет</strong> → не время.</p>
+<h2 id="финал--регистр-c">Финал — регистр C</h2>
+<p>Часть V в целом — про <strong>то, что вы можете не строить</strong>. Это <strong>неочевидно</strong>: курс должен «учить технологиям», а здесь я <strong>учу не строить</strong>. Но честная позиция такая: 80% индустрии в 2026 году <strong>переинвестирует</strong> в multi-agent. Тратятся месяцы команд, миллионы долларов, и в итоге <strong>возвращаются к простому</strong>.</p>
+<p>Это не значит, что multi-agent <strong>бесполезен</strong>. Это значит, что у него <strong>узкая</strong> зона применения, и <strong>порог входа</strong> в неё — <strong>высокий</strong>. Если вы туда <strong>попали</strong> — значит, у вас <strong>большой бюджет</strong>, <strong>большая команда</strong>, <strong>большая боль</strong>. Это <strong>редко</strong>.</p>
+<p>Принцип, который я применяю <strong>везде</strong>, не только к multi-agent — <strong>YAGNI</strong> (You Aren’t Gonna Need It). Если вы <strong>не уверены</strong>, что вам <strong>нужна</strong> сложная штука — <strong>скорее всего не нужна</strong>. Через полгода работы выяснится, что без неё <strong>отлично</strong> обходились — и <strong>благодарность</strong> к себе за то, что <strong>не построили</strong>.</p>
+<p>Это и есть <strong>зрелость</strong> инженера: <strong>не</strong> что он может построить, а что он <strong>выбрал</strong> не строить. <strong>Полный фарш</strong> — это <strong>уметь</strong> делать сложное и <strong>не делать</strong>, когда не надо. <strong>Не идеально, но реально работает.</strong></p>
+<h2 id="recap">Recap</h2>
+<ul>
+<li><strong>Multi-agent = распределённая система.</strong> Все её проблемы + non-determinism LLM.</li>
+<li><strong>80% случаев — pipeline хватит.</strong> Сигналы «не нужен multi-agent» — один-в-один.</li>
+<li><strong>Антипаттерны:</strong> cargo cult, тонкое разбиение, полная автономия, свободная коммуникация, без бюджетов, без бенчмарка.</li>
+</ul>
+<h2 id="скептик-самурай">Скептик Самурай</h2>
+<aside class="skeptic">
+<p><strong>🥷 Скептик Самурай спрашивает:</strong>
+«Так зачем мне <strong>в принципе</strong> Часть V? Если в большинстве случаев не строить multi-agent — может, и читать её не надо было?»</p>
+<p><strong>Ответ:</strong> Затем, что <strong>прививка работает только</strong>, если знаете, <strong>от чего</strong> прививаетесь. M15 я написал, чтобы вы <strong>понимали</strong>, как устроен multi-agent — иначе <strong>скажут вам</strong> на работе «давайте сделаем», а вы <strong>не сможете</strong> возразить <strong>технично</strong>. M16 — это <strong>щит</strong>: знаете, <strong>где</strong> ловушки, и <strong>умеете доказать</strong>, что простое решение лучше. На моём опыте — <strong>самое ценное</strong> в Middle-треке это <strong>уметь сказать нет</strong> сложности, когда команда <strong>хочет</strong> сложности. <strong>Не идеально, но реально работает.</strong></p>
+</aside>
+<h2 id="дальше">Дальше</h2>
+<p>Открываем <strong>Часть VI</strong> — финальную в Middle-треке. <strong>M17 — Продакшн: деплой агентов в боевую среду</strong> — про то, как agent system, написанная локально, <strong>попадает в продакшн</strong>, и что это меняет. Persistence, observability, security в проде, blameless post-mortems.</p>
+<p>Если зашло — поделитесь главой с тем, кто <strong>сейчас</strong> уговаривает команду строить multi-agent. Если у вас <strong>был</strong> такой кейс «строили, не окупилось» — расскажите в комменты, очень нужны живые истории. Ваша обратная связь реально помогает шлифовать материал.</p>
+<p>Всех обнял, всегда ваш — Илья ❤️</p>  <nav class="chapter-nav"> <a href="/vibesamurai-site/courses/middle/m15"> <span class="dir">← Назад</span> <span class="title">M15 · Multi-agent: роли, коммуникация, supervisor</span> </a> <a href="/vibesamurai-site/courses/middle/m17"> <span class="dir">Дальше →</span> <span class="title">M17 · Продакшн: деплой агентов в боевую среду</span> </a> </nav> </main> </div> </body></html>

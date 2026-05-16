@@ -1,0 +1,249 @@
+<!DOCTYPE html><html lang="en"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Cursor Composer + IDE-agents (Cline, Aider, Windsurf) — Vibesamurai</title><meta name="description" content="Composer-1 patterns, .cursorrules, когда IDE-агент vs CLI-агент, сравнительная таблица четырёх IDE-агентов."><meta property="og:title" content="Cursor Composer + IDE-agents (Cline, Aider, Windsurf)"><meta property="og:type" content="article"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Inter:wght@300..800&family=JetBrains+Mono:wght@400..600&display=swap" rel="stylesheet"><link rel="stylesheet" href="/vibesamurai-site/_astro/_slug_.DpgmObvf.css">
+<style>.reader-sidebar[data-astro-cid-khgtvzrl] .soon[data-astro-cid-khgtvzrl]{display:block;color:var(--text-mute);font-size:var(--size-2);padding:var(--space-1) 0}.reader-sidebar[data-astro-cid-khgtvzrl] .soon[data-astro-cid-khgtvzrl] em[data-astro-cid-khgtvzrl]{font-style:normal;font-family:var(--font-mono);font-size:.85em;color:var(--accent);margin-left:4px;text-transform:uppercase;letter-spacing:.1em}
+</style></head> <body> <div class="reader-app"> <aside class="reader-rail"> <a href="/vibesamurai-site/" class="logo" aria-label="Vibesamurai home">V</a> </aside> <aside class="reader-sidebar" data-astro-cid-khgtvzrl> <div class="breadcrumb" data-astro-cid-khgtvzrl>Vibesamurai · Middle Path · m8</div> <h4 data-astro-cid-khgtvzrl>В этом курсе</h4> <ul data-astro-cid-khgtvzrl> <li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m1" class data-astro-cid-khgtvzrl>M1 · Что такое agentic AI в SDLC</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m2" class data-astro-cid-khgtvzrl>M2 · Границы агента</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m3" class data-astro-cid-khgtvzrl>M3 · Observability &amp; HITL</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m4" class data-astro-cid-khgtvzrl>M4 · Tool inventory &amp; permissions</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m5" class data-astro-cid-khgtvzrl>M5 · MCP deep dive</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m6" class data-astro-cid-khgtvzrl>M6 · Claude Code mastery</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m7" class data-astro-cid-khgtvzrl>M7 · Codex CLI &amp; OpenAI Agents</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m8" class="current" data-astro-cid-khgtvzrl>M8 · Cursor + IDE-агенты</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m9" class data-astro-cid-khgtvzrl>M9 · Memory strategies</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m10" class data-astro-cid-khgtvzrl>M10 · State, drift, continuity</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m11" class data-astro-cid-khgtvzrl>M11 · Метрики оценки</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m12" class data-astro-cid-khgtvzrl>M12 · Regression testing</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m13" class data-astro-cid-khgtvzrl>M13 · Tuning, когда метрики стоят</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m14" class data-astro-cid-khgtvzrl>M14 · Pipelines &amp; orchestration</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m15" class data-astro-cid-khgtvzrl>M15 · Multi-agent роли</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m16" class data-astro-cid-khgtvzrl>M16 · Когда multi-agent — overkill</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m17" class data-astro-cid-khgtvzrl>M17 · Деплой агентов в прод</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m18" class data-astro-cid-khgtvzrl>M18 · Production security</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m19" class data-astro-cid-khgtvzrl>M19 · Incidents &amp; post-mortems</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m20" class data-astro-cid-khgtvzrl>M20 · Финал Middle</a> </li> </ul>  </aside> <main class="reader-main"> <div class="chapter-eyebrow">Middle Path · m8</div> <h1 class="chapter-title">M8 · Cursor Composer + IDE-агенты</h1> <p class="chapter-subtitle">Composer-1 patterns, .cursorrules, когда IDE-агент vs CLI-агент, сравнительная таблица четырёх IDE-агентов.</p>  <blockquote>
+<p>Черновик M8 в голосе DmitriyM (см. <code>scripts/tg_voice_analysis/_summary.md</code>). Закрывает Part II — Tools &#x26; Environment.</p>
+</blockquote>
+<h2 id="о-чём-эта-глава">О чём эта глава</h2>
+<p>Друзья, всем привет! 👋</p>
+<p>Закрываем Part II четвёртым лагерем агентских инструментов — <strong>IDE-агентами</strong>. До этого мы разбирали CLI-агенты (Claude Code, Codex CLI), которые живут в терминале и работают с проектом «снаружи». IDE-агенты живут <strong>внутри</strong> редактора, и это совсем другая философия работы.</p>
+<p>В этой главе:</p>
+<ol>
+<li>Чем IDE-agent принципиально отличается от CLI-agent</li>
+<li><strong>Cursor Composer</strong> — флагман IDE-агентов, разбираем подробно</li>
+<li><strong>Cline / Aider / Windsurf</strong> — основные альтернативы, кратко</li>
+<li>Когда удобнее IDE-agent, когда — CLI-agent</li>
+<li>Сравнительная таблица четырёх IDE-агентов</li>
+</ol>
+<h2 id="ide-agent-vs-cli-agent-разница-не-только-в-интерфейсе">IDE-agent vs CLI-agent: разница не только в интерфейсе</h2>
+<p>Очевидное отличие: один в редакторе, другой в терминале. Но за этим стоит <strong>три неочевидных</strong> архитектурных различия.</p>
+<h3 id="1-контекст">1. Контекст</h3>
+<p><strong>CLI-agent</strong> видит проект через <strong>тулы</strong> — read_file, glob, grep. Он каждый раз «выясняет», что в проекте.</p>
+<p><strong>IDE-agent</strong> видит проект <strong>через API редактора</strong> — открытые табы, текущая позиция курсора, выделенный фрагмент, симвoль под курсором, недавние правки. Это даёт ему <strong>контекст вашего внимания</strong>, который CLI получить не может.</p>
+<p>То есть когда вы кликнули мышкой на функцию <code>parseDate</code> и сказали «оптимизируй её» — IDE-agent сразу знает, о чём речь. CLI-agent потребует «оптимизируй функцию parseDate в файле src/utils/date.ts».</p>
+<h3 id="2-apply-flow">2. Apply-flow</h3>
+<p><strong>CLI-agent</strong> правит файлы напрямую через тул <code>Edit</code> / <code>Write</code>. После правки — это уже изменённый файл, вы видите его в git diff.</p>
+<p><strong>IDE-agent</strong> обычно сначала <strong>показывает превью</strong> правок прямо в редакторе (inline diff), и вы принимаете или отклоняете каждое изменение. Это даёт более мелкую гранулярность контроля.</p>
+<h3 id="3-embedding-в-dev-flow">3. Embedding в dev-flow</h3>
+<p><strong>CLI-agent</strong> — это отдельный процесс. Вы переключаетесь между терминалом и редактором.</p>
+<p><strong>IDE-agent</strong> — это часть редактора. Не надо переключаться, не надо копировать пути файлов, не надо устанавливать «контекст руками».</p>
+<p>Это <strong>существенно</strong> для UX, но не для архитектуры — на самом деле под капотом у IDE-agent тот же loop, те же тулы, та же модель.</p>
+<h2 id="cursor-composer--что-это">Cursor Composer — что это</h2>
+<p>Cursor — это <strong>fork VS Code</strong> с встроенным AI-агентом. Существует уже несколько лет, активно развивается. В 2026 году ключевая фича — <strong>Composer</strong>, агентский режим (раньше был отдельным от обычного chat, сейчас интегрирован).</p>
+<p>Что Composer умеет:</p>
+<ul>
+<li>Читать и редактировать <strong>множество файлов</strong> в одной задаче (не один файл, как раньше)</li>
+<li>Запускать <strong>bash-команды</strong> (тесты, линтеры, сборка) — с approval</li>
+<li>Использовать <strong>MCP-серверы</strong> (как Claude Code и Codex)</li>
+<li>Применять <strong>inline-diff</strong> превью с приёмом каждого изменения</li>
+<li>Работать в режиме <strong>plan-first</strong> или <strong>agent-mode</strong> (автономно)</li>
+</ul>
+<p>Под капотом — модель на выбор: Claude Sonnet 4.6 / Opus 4.7, GPT-5.3, Gemini 3.1 Pro, либо «cursor-small» (собственная быстрая модель Cursor для лёгких задач).</p>
+<h3 id="cursorrules-и-cursorrules"><code>.cursorrules</code> и <code>.cursor/rules/</code></h3>
+<p>Аналог CLAUDE.md / AGENTS.md. Хранится в корне проекта:</p>
+<pre class="astro-code astro-code-themes github-light github-dark-default" style="background-color:#fff;--shiki-dark-bg:#0d1117;color:#24292e;--shiki-dark:#e6edf3; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>project/</span></span>
+<span class="line"><span>├── .cursorrules                  # старый формат, single file</span></span>
+<span class="line"><span>└── .cursor/</span></span>
+<span class="line"><span>    └── rules/                     # новый формат, директория с rule-файлами</span></span>
+<span class="line"><span>        ├── conventions.md</span></span>
+<span class="line"><span>        ├── do-not-touch.md</span></span>
+<span class="line"><span>        └── commit-style.md</span></span></code></pre>
+<p>Содержимое идентично по смыслу CLAUDE.md. Cursor читает эти файлы при старте сессии.</p>
+<blockquote>
+<p><em>Лайфхак:</em> <code>.cursor/rules/</code> можно структурировать так, чтобы файлы автоматически применялись только в нужном контексте. Например, <code>auth-conventions.md</code> с meta-тегом <code>apply_when: "path matches src/auth/**"</code>. Это сильно экономит контекст.</p>
+</blockquote>
+<h3 id="composer-как-multi-file-editor">Composer как multi-file editor</h3>
+<p>Главная сила Composer — <strong>много файлов в одной задаче</strong>. Пример типового запроса:</p>
+<blockquote>
+<p>«Добавь rate limiting на endpoint /api/login. Учти что у нас уже есть Redis в <code>src/lib/redis.ts</code>. Добавь middleware, конфиг в <code>.env.example</code>, и unit test.»</p>
+</blockquote>
+<p>Composer соберёт план, покажет, какие файлы будут изменены, выдаст inline-diff на каждый, и вы можете <strong>принять конкретные diff-ы</strong>, отклонив другие. То есть микро-гранулярность.</p>
+<p>Это удобнее, чем в Claude Code, где вы видите изменения уже после применения. Но менее автоматизируемо: для long-running автономных задач Composer не так хорош.</p>
+<h2 id="cline-бывший-claude-dev--vs-code-extension">Cline (бывший Claude Dev) — VS Code extension</h2>
+<p><strong>Cline</strong> — extension для оригинального VS Code (не fork). Open-source, активно развивается. Работает с моделями Anthropic, OpenAI, Gemini, Ollama (локальные модели).</p>
+<p>Сильные стороны:</p>
+<ul>
+<li><strong>Open-source</strong> — можете смотреть код, контрибьютить, форкать</li>
+<li><strong>Подключение локальных моделей через Ollama</strong> — для тех кому критичен on-prem</li>
+<li><strong>Multi-file edits с approval каждого</strong> — похоже на Composer</li>
+<li><strong>MCP support</strong></li>
+</ul>
+<p>Слабые стороны:</p>
+<ul>
+<li>Менее «product-grade» UX по сравнению с Cursor</li>
+<li>Меньше готовых интеграций</li>
+<li>Документация местами догоняет development</li>
+</ul>
+<p>Использую периодически, когда нужен open-source и/или локальные модели. Для повседневной работы — Cursor удобнее.</p>
+<h2 id="aider--терминальный-pair-programmer">Aider — терминальный pair-programmer</h2>
+<p><strong>Aider</strong> — формально CLI, но философски ближе к IDE-агентам, потому что <strong>продолжает редактировать тот файл, на котором вы сосредоточены</strong>. Работает через git: каждая правка — отдельный commit.</p>
+<p>Сильные стороны:</p>
+<ul>
+<li><strong>Маленький, простой, понятный.</strong> Open-source, активная разработка.</li>
+<li><strong>Git-first.</strong> Каждая агентская правка — commit, легко откатить.</li>
+<li><strong>Работает с любой моделью.</strong> Anthropic, OpenAI, Gemini, locals.</li>
+<li><strong>Хорошо для focused pair-programming</strong> одного файла / небольшой фичи.</li>
+</ul>
+<p>Слабые стороны:</p>
+<ul>
+<li>Хуже для длинных автономных задач (нет полноценного agent loop)</li>
+<li>Нет sandbox для исполнения</li>
+<li>Не подходит для агрессивного refactoring через многие файлы</li>
+</ul>
+<p>Использую когда хочется «парного программирования» — он сидит сбоку и помогает по конкретному файлу.</p>
+<h2 id="windsurf--codeium-ide-агент">Windsurf — Codeium IDE-агент</h2>
+<p><strong>Windsurf</strong> — IDE от Codeium (тот же, что делает Codeium-плагин для VSCode). Тоже fork VS Code, как Cursor.</p>
+<p>Сильные стороны:</p>
+<ul>
+<li><strong>«Cascade»</strong> — мощный multi-step режим, иногда лучше Composer на длинных задачах</li>
+<li><strong>Сильная free-тарифка</strong> для одиночных разработчиков</li>
+<li><strong>Хорошая «обратная связь»</strong> — показывает, что именно агент сейчас делает на каждом шаге</li>
+</ul>
+<p>Слабые стороны:</p>
+<ul>
+<li>Меньше community, чем у Cursor</li>
+<li>Меньше готовых правил/best-practices</li>
+<li>UI местами тяжеловатый</li>
+</ul>
+<p>Я попробовал — нормально, но в повседневный workflow не вошёл. На вкус и цвет.</p>
+<h2 id="сравнительная-таблица">Сравнительная таблица</h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Параметр</th><th>Cursor</th><th>Cline</th><th>Aider</th><th>Windsurf</th></tr></thead><tbody><tr><td><strong>Тип</strong></td><td>IDE (fork VSCode)</td><td>VSCode extension</td><td>CLI с git-flow</td><td>IDE (fork VSCode)</td></tr><tr><td><strong>Open-source</strong></td><td>Нет</td><td>Да</td><td>Да</td><td>Нет</td></tr><tr><td><strong>Auto-completion</strong></td><td>Tab + custom модель</td><td>Через extension</td><td>Нет</td><td>Tab + Codeium</td></tr><tr><td><strong>Composer-style multi-file</strong></td><td>✅</td><td>✅</td><td>Ограничено</td><td>✅ (Cascade)</td></tr><tr><td><strong>MCP support</strong></td><td>✅</td><td>✅</td><td>Нет</td><td>✅</td></tr><tr><td><strong>Plan-first mode</strong></td><td>✅</td><td>✅</td><td>Через флаг</td><td>✅</td></tr><tr><td><strong>Local models (Ollama)</strong></td><td>Через API</td><td>✅</td><td>✅</td><td>Через API</td></tr><tr><td><strong>Sandbox для bash</strong></td><td>Через approval</td><td>Через approval</td><td>Минимально</td><td>Через approval</td></tr><tr><td><strong>Free tier</strong></td><td>Ограниченный</td><td>Зависит от модели</td><td>Зависит от модели</td><td>Хороший</td></tr><tr><td><strong>Best for</strong></td><td>Daily product work</td><td>OSS / local models</td><td>Pair-programming</td><td>Cascade-style tasks</td></tr></tbody></table>
+<blockquote>
+<p>Это таблица на <strong>май 2026</strong>. В этой нише всё меняется каждый месяц, проверяйте перед серьёзным выбором.</p>
+</blockquote>
+<h2 id="когда-ide-agent-выгоднее-cli-agent">Когда IDE-agent выгоднее CLI-agent</h2>
+<h3 id="ide-agent-выигрывает-на">IDE-agent выигрывает на:</h3>
+<ol>
+<li><strong>Активная работа с одним проектом</strong> — вы сидите в IDE целыми днями, агент рядом, не надо переключаться.</li>
+<li><strong>Точечные правки конкретного файла</strong> — выделил фрагмент, попросил, посмотрел inline diff, принял или отклонил.</li>
+<li><strong>Onboarding новой кодовой базы</strong> — IDE показывает контекст естественнее.</li>
+<li><strong>UI / verstka / небольшие исправления</strong> — высокая частота мелких задач.</li>
+</ol>
+<h3 id="cli-agent-выигрывает-на">CLI-agent выигрывает на:</h3>
+<ol>
+<li><strong>Длинные автономные циклы</strong> — full-auto с sandbox, без вашего внимания.</li>
+<li><strong>Cross-repo задачи</strong> — когда работаем сразу с несколькими репозиториями.</li>
+<li><strong>CI / automation</strong> — агент в pipeline, без интерактива.</li>
+<li><strong>Hooks-driven workflows</strong> — детерминированные правила (M6).</li>
+<li><strong>Subagents и параллельная декомпозиция</strong> — отдельные изолированные процессы (M6).</li>
+</ol>
+<h3 id="когда-использовать-вместе">Когда использовать вместе</h3>
+<p>Лично у меня типичный setup на средний рабочий день:</p>
+<ul>
+<li><strong>Cursor открыт</strong> — основная среда работы, daily product work, мелкие правки.</li>
+<li><strong>Claude Code в терминале</strong> — для длинных задач, ресёрча, subagents-декомпозиции.</li>
+<li><strong>Codex CLI рядом</strong> — для одной-двух специфичных задач (массовые миграции, autonomous test-fixing).</li>
+</ul>
+<p>Они <strong>не конкурируют</strong>, они <strong>дополняют</strong>. Один проект, один CLAUDE.md (через симлинк AGENTS.md и <code>.cursor/rules/</code>), три тула — это нормальный рабочий setup.</p>
+<h2 id="practice">Practice</h2>
+<p>15-20 минут:</p>
+<ol>
+<li><strong>Установите один из IDE-агентов</strong>, который ещё не пробовали. Если уже сидите в Cursor — попробуйте Windsurf, или наоборот.</li>
+<li><strong>Сделайте маленькую задачу в новом тулу</strong> — что-то, что вы обычно делаете в своём основном. Сравните UX.</li>
+<li><strong>Запишите для себя три точки</strong>, в которых новый тул выиграл или проиграл вашему обычному. Это и есть «насмотренность» в действии.</li>
+<li><strong>Если у вас уже есть <code>CLAUDE.md</code> / <code>AGENTS.md</code> / <code>.cursor/rules/</code></strong> — попробуйте через симлинк свести их в один источник истины.</li>
+</ol>
+<h2 id="закрытие-part-ii">Закрытие Part II</h2>
+<p>Друзья. Закрываем Part II — Tools &#x26; Environment.</p>
+<p>Если суммировать всё, что мы прошли в M4-M8 одной формулой:</p>
+<blockquote>
+<p>Тулы — это набор сменных рабочих инструментов с разными сильными сторонами. Грамотный middle-разработчик 2026 года <strong>знает несколько</strong>, выбирает по задаче, не привязан эмоционально ни к одному.</p>
+</blockquote>
+<p>Зоопарк моделей и тулзов будет расти. Каждый квартал будет «новый король». Не цепляйтесь за бренды — <strong>цепляйтесь за паттерны</strong> (plan→act→evaluate, structured plan, sandbox, hooks, MCP). Они переживают конкретные продукты.</p>
+<p>Тренируйте насмотренность, а не пальцы. Ваша голова важнее чем ИИ — особенно в момент выбора тула под задачу.</p>
+<h2 id="recap">Recap</h2>
+<ul>
+<li><strong>IDE-agent vs CLI-agent — три отличия:</strong> контекст внимания, apply-flow с inline diff, embedding в редактор.</li>
+<li><strong>Cursor Composer</strong> — флагман IDE-агентов. <code>.cursor/rules/</code> как аналог CLAUDE.md.</li>
+<li><strong>Cline, Aider, Windsurf</strong> — три альтернативы со своими сильными сторонами.</li>
+<li><strong>IDE для daily product work, CLI для автономных циклов</strong> и cross-repo задач.</li>
+<li><strong>Лучший setup — комбинация</strong>, не выбор одного. Симлинк CLAUDE.md/AGENTS.md/cursorrules — единый source of truth.</li>
+</ul>
+<h2 id="дальше">Дальше</h2>
+<p>Part III — <strong>Memory &#x26; State</strong>. В <strong>M9 — Memory strategies</strong> разберём short-term, long-term и external memory: как агент помнит между сессиями, как чистить, что хранить, что не хранить. Это закрывает целое семейство ошибок «агент забыл что мы решили вчера / агент путает контексты».</p>
+<p>Если зашло — поделитесь Part II с теми, кто только выбирает тулы или собирается серьёзно работать с агентом. Если у вас есть свои наблюдения про IDE-агенты, которые я не упомянул — пишите в комменты, ваша обратная связь реально помогает шлифовать материал.</p>
+<p>Всегда ваш — Илья ❤️</p>
+<hr>
+<p><strong>Maps to:</strong> Авторский блок — IDE-agents survey вне GH-600
+<strong>Closes:</strong> Part II — Tools &#x26; Environment (M4 + M5 + M6 + M7 + M8)</p>  <nav class="chapter-nav"> <a href="/vibesamurai-site/courses/middle/m7"> <span class="dir">← Назад</span> <span class="title">M7 · GPT-5.3 Codex CLI и OpenAI agents</span> </a> <a href="/vibesamurai-site/courses/middle/m9"> <span class="dir">Дальше →</span> <span class="title">M9 · Memory strategies</span> </a> </nav> </main> </div> </body></html>

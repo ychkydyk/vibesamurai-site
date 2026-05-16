@@ -1,0 +1,202 @@
+<!DOCTYPE html><html lang="en"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Оценка агентов: метрики вместо ощущений — Vibesamurai</title><meta name="description" content="Что вообще значит «агент хорошо работает». Метрики, дашборды, evals. Как уйти от «я почувствовал, стало хуже»."><meta property="og:title" content="Оценка агентов: метрики вместо ощущений"><meta property="og:type" content="article"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Inter:wght@300..800&family=JetBrains+Mono:wght@400..600&display=swap" rel="stylesheet"><link rel="stylesheet" href="/vibesamurai-site/_astro/_slug_.DpgmObvf.css">
+<style>.reader-sidebar[data-astro-cid-khgtvzrl] .soon[data-astro-cid-khgtvzrl]{display:block;color:var(--text-mute);font-size:var(--size-2);padding:var(--space-1) 0}.reader-sidebar[data-astro-cid-khgtvzrl] .soon[data-astro-cid-khgtvzrl] em[data-astro-cid-khgtvzrl]{font-style:normal;font-family:var(--font-mono);font-size:.85em;color:var(--accent);margin-left:4px;text-transform:uppercase;letter-spacing:.1em}
+</style></head> <body> <div class="reader-app"> <aside class="reader-rail"> <a href="/vibesamurai-site/" class="logo" aria-label="Vibesamurai home">V</a> </aside> <aside class="reader-sidebar" data-astro-cid-khgtvzrl> <div class="breadcrumb" data-astro-cid-khgtvzrl>Vibesamurai · Middle Path · m11</div> <h4 data-astro-cid-khgtvzrl>В этом курсе</h4> <ul data-astro-cid-khgtvzrl> <li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m1" class data-astro-cid-khgtvzrl>M1 · Что такое agentic AI в SDLC</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m2" class data-astro-cid-khgtvzrl>M2 · Границы агента</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m3" class data-astro-cid-khgtvzrl>M3 · Observability &amp; HITL</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m4" class data-astro-cid-khgtvzrl>M4 · Tool inventory &amp; permissions</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m5" class data-astro-cid-khgtvzrl>M5 · MCP deep dive</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m6" class data-astro-cid-khgtvzrl>M6 · Claude Code mastery</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m7" class data-astro-cid-khgtvzrl>M7 · Codex CLI &amp; OpenAI Agents</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m8" class data-astro-cid-khgtvzrl>M8 · Cursor + IDE-агенты</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m9" class data-astro-cid-khgtvzrl>M9 · Memory strategies</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m10" class data-astro-cid-khgtvzrl>M10 · State, drift, continuity</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m11" class="current" data-astro-cid-khgtvzrl>M11 · Метрики оценки</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m12" class data-astro-cid-khgtvzrl>M12 · Regression testing</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m13" class data-astro-cid-khgtvzrl>M13 · Tuning, когда метрики стоят</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m14" class data-astro-cid-khgtvzrl>M14 · Pipelines &amp; orchestration</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m15" class data-astro-cid-khgtvzrl>M15 · Multi-agent роли</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m16" class data-astro-cid-khgtvzrl>M16 · Когда multi-agent — overkill</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m17" class data-astro-cid-khgtvzrl>M17 · Деплой агентов в прод</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m18" class data-astro-cid-khgtvzrl>M18 · Production security</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m19" class data-astro-cid-khgtvzrl>M19 · Incidents &amp; post-mortems</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m20" class data-astro-cid-khgtvzrl>M20 · Финал Middle</a> </li> </ul>  </aside> <main class="reader-main"> <div class="chapter-eyebrow">Middle Path · m11</div> <h1 class="chapter-title">M11 · Оценка агентов: метрики вместо ощущений</h1> <p class="chapter-subtitle">Что вообще значит «агент хорошо работает». Метрики, дашборды, evals. Как уйти от «я почувствовал, стало хуже».</p>  <blockquote>
+<p>Черновик M11 в голосе DmitriyM. Открывает <strong>Часть IV — Evaluation &#x26; Tuning</strong>.</p>
+</blockquote>
+<h2 id="hook">Hook</h2>
+<pre class="astro-code astro-code-themes github-light github-dark-default" style="background-color:#fff;--shiki-dark-bg:#0d1117;color:#24292e;--shiki-dark:#e6edf3; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>БЕЗ метрик:                          С метриками:</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>«Кажется, на этой неделе    →        Прогон на 50 эталонных</span></span>
+<span class="line"><span> агент стал тупить»                  кейсов: 42/50 → 38/50</span></span>
+<span class="line"><span>                                     На 4 шаге чаще ломается</span></span>
+<span class="line"><span>ноль данных, одни эмоции             конкретный сигнал, есть что чинить</span></span></code></pre>
+<p>Друзья, всем привет! 👋</p>
+<p>Эта глава открывает <strong>Часть IV — Evaluation &#x26; Tuning</strong>. Самая тонкая часть курса. В первых трёх частях мы строили <strong>архитектуру</strong> агентов: рамки, инструменты, память. Теперь — как <strong>измерять</strong> их работу так, чтобы <strong>знать</strong>, что они работают хорошо, а не «казаться».</p>
+<p>Эта тема <strong>душная</strong> для большинства. Я сам долго на неё забивал — типа, «и так чувствую, когда плохо». А потом случилось два разряда подряд, когда модель <strong>тихо</strong> регрессировала, я <strong>тихо</strong> потерял время, и <strong>громко</strong> проклинал себя за отсутствие метрик.</p>
+<p>Час, может полтора. Это <strong>гигиена</strong>, без которой Middle-уровень не Middle.</p>
+<h2 id="концепция-работает--это-субъективное-пока-вы-не-оцифровали">Концепция: «работает» — это субъективное, пока вы не оцифровали</h2>
+<p>Когда мы говорим <strong>«агент хорошо работает»</strong>, мы обычно имеем в виду что-то такое:</p>
+<ul>
+<li>«Понимает мои запросы»</li>
+<li>«Не врёт»</li>
+<li>«Делает быстро»</li>
+<li>«Не делает лишнего»</li>
+</ul>
+<p>Это всё <strong>ощущения</strong>. И в команде они <strong>не работают</strong> — у каждого свои. И <strong>во времени</strong> не работают — на прошлой неделе «казалось ок», сегодня «кажется хуже», а данных нет.</p>
+<pre class="astro-code astro-code-themes github-light github-dark-default" style="background-color:#fff;--shiki-dark-bg:#0d1117;color:#24292e;--shiki-dark:#e6edf3; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>┌─────────────────────────────────────────────────────┐</span></span>
+<span class="line"><span>│  Без метрики: «вроде работает»                      │</span></span>
+<span class="line"><span>│  С метрикой:  «pass rate 87% (±3%)                  │</span></span>
+<span class="line"><span>│                на 50 reference cases»               │</span></span>
+<span class="line"><span>└─────────────────────────────────────────────────────┘</span></span></code></pre>
+<p>Уже разница. Можно <strong>сравнивать</strong> недели, билды моделей, конфигурации.</p>
+<h2 id="три-уровня-измерения">Три уровня измерения</h2>
+<p>Не нужно сразу строить «production eval pipeline». Начните с того, что вам <strong>доступно</strong>.</p>
+<h3 id="уровень-1-качественный-лог-zero-setup">Уровень 1. Качественный лог (zero setup)</h3>
+<p>В CLAUDE.md / в личной заметке держите файл <code>evals/log.md</code>. После каждой значимой сессии записывайте:</p>
+<pre class="astro-code astro-code-themes github-light github-dark-default" style="background-color:#fff;--shiki-dark-bg:#0d1117;color:#24292e;--shiki-dark:#e6edf3; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="markdown"><code><span class="line"><span style="color:#005CC5;--shiki-light-font-weight:bold;--shiki-dark:#79C0FF;--shiki-dark-font-weight:bold">## 2026-05-15</span></span>
+<span class="line"><span style="color:#E36209;--shiki-dark:#FFA657">-</span><span style="color:#24292E;--shiki-dark:#E6EDF3"> Задача: миграция БД с Postgres 15 → 17, 4 микросервиса</span></span>
+<span class="line"><span style="color:#E36209;--shiki-dark:#FFA657">-</span><span style="color:#24292E;--shiki-dark:#E6EDF3"> Модель: Opus 4.6</span></span>
+<span class="line"><span style="color:#E36209;--shiki-dark:#FFA657">-</span><span style="color:#24292E;--shiki-dark:#E6EDF3"> Что сделал хорошо: правильные миграции, понял зависимости</span></span>
+<span class="line"><span style="color:#E36209;--shiki-dark:#FFA657">-</span><span style="color:#24292E;--shiki-dark:#E6EDF3"> Что плохо: тратил 30 минут на форматирование таблиц вместо логики</span></span>
+<span class="line"><span style="color:#E36209;--shiki-dark:#FFA657">-</span><span style="color:#24292E;--shiki-dark:#E6EDF3"> Откатывались?: 1 раз — auth-service неверная сторона JOIN</span></span>
+<span class="line"><span style="color:#E36209;--shiki-dark:#FFA657">-</span><span style="color:#24292E;--shiki-dark:#E6EDF3"> Время: 2.5 часа (плановое 2.0)</span></span></code></pre>
+<p><strong>Цена</strong> — 2 минуты после сессии. <strong>Польза</strong> — через месяц видно паттерны: «на JOIN-ах постоянно тупит», «после конкретного обновления модели стал лучше с миграциями».</p>
+<h3 id="уровень-2-passfail-на-reference-cases-полчаса-setup">Уровень 2. Pass/fail на reference cases (полчаса setup)</h3>
+<p>Соберите <strong>5-20 типичных задач</strong>, на которых вы регулярно проверяете. Например:</p>
+<ul>
+<li>«Refactor auth.py — вынеси session-handling в отдельный модуль»</li>
+<li>«Add pagination to /api/posts endpoint»</li>
+<li>«Find why test_user_login is flaky»</li>
+</ul>
+<p>Каждая задача имеет <strong>критерий приёмки</strong> (как в B3, но более жёсткий — программно проверяемый или чек-листом).</p>
+<p>Раз в <strong>2-4 недели</strong> прогоните <strong>все</strong> на текущей конфигурации. Запишите <strong>pass rate</strong>. Это <strong>ваш бенчмарк</strong>.</p>
+<pre class="astro-code astro-code-themes github-light github-dark-default" style="background-color:#fff;--shiki-dark-bg:#0d1117;color:#24292e;--shiki-dark:#e6edf3; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="markdown"><code><span class="line"><span style="color:#005CC5;--shiki-light-font-weight:bold;--shiki-dark:#79C0FF;--shiki-dark-font-weight:bold">## Reference Suite 2026-05-01</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E6EDF3">| # | Задача | Pass? | Замечания |</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E6EDF3">|---|---|---|---|</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E6EDF3">| 1 | auth.py refactor | ✓ | OK |</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E6EDF3">| 2 | pagination | ✓ | + edge: при page=0 не проверил |</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E6EDF3">| 3 | flaky test fix | ✗ | предложил retry вместо root-cause |</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E6EDF3">...</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E6EDF3">Pass rate: 14/20 = 70%</span></span></code></pre>
+<p>Через месяц прогон → <strong>76%</strong>. Прогресс <strong>виден</strong>.</p>
+<h3 id="уровень-3-автоматизированный-eval-часы-setup-окупается-на-масштабе">Уровень 3. Автоматизированный eval (часы setup, окупается на масштабе)</h3>
+<p>Полноценный pipeline:</p>
+<ul>
+<li>Reference задачи в YAML/JSON</li>
+<li>Скрипт запускает агента на каждой</li>
+<li>Программно проверяется output (regex, AST diff, юнит-тесты)</li>
+<li>Результат в CSV/dashboard</li>
+</ul>
+<p>Это нужно, когда:</p>
+<ul>
+<li>У вас <strong>много</strong> разработчиков на агентах и нужна <strong>общая метрика</strong></li>
+<li>Вы делаете <strong>собственный SaaS</strong> на агентах и нужна <strong>продакшен-метрика</strong></li>
+<li>Вы <strong>настраиваете</strong> агенты под клиентов и нужно <strong>доказать</strong> прогресс</li>
+</ul>
+<p>Для <strong>одного человека</strong> — обычно достаточно уровня 1-2.</p>
+<h2 id="какие-метрики-измерять">Какие метрики измерять</h2>
+<h3 id="качественные-бинарные--шкальные">Качественные (бинарные / шкальные)</h3>
+<ul>
+<li><strong>Pass rate</strong> на reference suite — %задач, которые agent сделал правильно</li>
+<li><strong>Revert rate</strong> — % принятых правок, которые потом пришлось откатывать</li>
+<li><strong>Bypass rate</strong> — сколько раз пришлось обходить permissions (см. M3 — это <strong>антиметрика</strong>, должна быть <strong>низкая</strong>)</li>
+<li><strong>Approval friction</strong> — сколько approval-запросов на 1 задачу (см. M3)</li>
+</ul>
+<h3 id="эффективностные-числовые">Эффективностные (числовые)</h3>
+<ul>
+<li><strong>Time-to-PR</strong> — от формулировки до готового результата</li>
+<li><strong>Iteration count</strong> — сколько раз пришлось переформулировать</li>
+<li><strong>Token usage per task</strong> — экономика, особенно на пайщеных API</li>
+<li><strong>Tool call distribution</strong> — какие тулы агент использует чаще всего</li>
+</ul>
+<h3 id="доверие-мета">Доверие (мета)</h3>
+<ul>
+<li><strong>Inspectability score</strong> — на сколько % шагов агента <strong>вы</strong> видели и понимали (см. M3 — 5 артефактов)</li>
+<li><strong>Post-mortem count</strong> — сколько раз пришлось разбираться «почему агент это сделал»</li>
+</ul>
+<h2 id="антипаттерны-измерения">Антипаттерны измерения</h2>
+<h3 id="1-хорошее-число-вместо-правильное-число">1. «Хорошее число» вместо «правильное число»</h3>
+<p>Самый частый промах. Вы выбрали метрику «количество строк кода в день» — агент стал писать <strong>больше</strong>, но <strong>хуже</strong>. Метрика выросла, реальность ухудшилась.</p>
+<p><strong>Лекарство:</strong> метрика должна отражать <strong>то, что вы реально хотите</strong> — не суррогат. Pass rate на reference suite — это <strong>результат</strong>. Lines of code — это <strong>активность</strong>, не результат.</p>
+<h3 id="2-один-прогон--метрика">2. Один прогон ≠ метрика</h3>
+<p>Запустили reference suite, получили <strong>78%</strong>. Радуетесь. Запустили ещё раз — <strong>65%</strong>. Что произошло?</p>
+<p><strong>Ничего не произошло.</strong> Просто <strong>дисперсия модели</strong> велика. Один прогон — это <strong>точка</strong>, не <strong>сигнал</strong>.</p>
+<p><strong>Лекарство:</strong> для серьёзных решений — <strong>3+ прогонов</strong>, средние ± стандартное отклонение. Для трекинга — фикс <strong>сид</strong> для случайных компонентов.</p>
+<h3 id="3-метрика-прошла--значит-работает">3. «Метрика прошла — значит, работает»</h3>
+<p>Самый коварный антипаттерн (см. B10). Вы добились <strong>94%</strong> на reference suite. Думаете — «отлично, агент <strong>работает</strong>».</p>
+<p>А reference suite — <strong>30 кейсов</strong>. В реальности у вас <strong>300 типов</strong> задач. Suite <strong>не покрывает</strong> 90% реальности.</p>
+<p><strong>Лекарство:</strong> периодически <strong>обновляйте</strong> suite — добавляйте кейсы из <strong>реальных факапов</strong>. Каждый раз, как агент серьёзно облажался — этот кейс <strong>в suite</strong>. Через год suite становится <strong>репрезентативным</strong>.</p>
+<h3 id="4-метрика--давление--манипуляция">4. Метрика → давление → манипуляция</h3>
+<p>В команде объявляете «pass rate должен быть >85%». Команда начинает <strong>подгонять</strong> suite, чтобы был 85%. Кейсы, на которых агент стабильно падает — <strong>удаляются</strong>.</p>
+<p><strong>Лекарство:</strong> <strong>разделять</strong> трекинг от давления. Метрика — для <strong>информации</strong>, не для «KPI». Это та же дискуссия, что про метрики продуктивности разработчиков (commits/day и пр.) — <strong>превращаются в говно</strong>, как только становятся целью.</p>
+<h2 id="короткая-вставка">Короткая вставка ⚡</h2>
+<p>История из живого. Один из ребят, у кого работает агентский pipeline, в начале мерил <strong>«token cost per task»</strong>. Метрика была удобная: дёшево = хорошо.</p>
+<p>Через два месяца agent <strong>разучился</strong> делать сложные задачи — потому что <strong>тренировали</strong> его минимизировать токены, а не выдавать <strong>результат</strong>. Делал <strong>дёшево</strong>, и <strong>плохо</strong>.</p>
+<p>Поменяли метрику на <strong>«pass rate × (1 − cost-relative-to-baseline)»</strong> — компромисс «результат и стоимость». Стало лучше.</p>
+<p>Я об этом думаю каждый раз, когда кто-то предлагает «давайте просто будем мерить X». <strong>X не существует</strong> в вакууме. Каждая метрика — это <strong>давление</strong>, и <strong>давление искажает</strong> систему.</p>
+<h2 id="пример-вводим-reference-suite-за-час">Пример: вводим reference suite за час</h2>
+<p>Возьмём типичный проект разработки (CRUD-веб-приложение).</p>
+<h3 id="шаг-1-соберите-10-типичных-задач-15-минут">Шаг 1. Соберите 10 типичных задач (15 минут)</h3>
+<p>В файле <code>evals/cases.md</code>:</p>
+<pre class="astro-code astro-code-themes github-light github-dark-default" style="background-color:#fff;--shiki-dark-bg:#0d1117;color:#24292e;--shiki-dark:#e6edf3; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="markdown"><code><span class="line"><span style="color:#005CC5;--shiki-light-font-weight:bold;--shiki-dark:#79C0FF;--shiki-dark-font-weight:bold"># Reference Suite v1</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#005CC5;--shiki-light-font-weight:bold;--shiki-dark:#79C0FF;--shiki-dark-font-weight:bold">## Case 01 — refactor controller</span></span>
+<span class="line"><span style="color:#24292E;--shiki-light-font-weight:bold;--shiki-dark:#E6EDF3;--shiki-dark-font-weight:bold">**Input:**</span><span style="color:#24292E;--shiki-dark:#E6EDF3"> В </span><span style="color:#005CC5;--shiki-dark:#79C0FF">`src/api/users.ts`</span><span style="color:#24292E;--shiki-dark:#E6EDF3"> метод </span><span style="color:#005CC5;--shiki-dark:#79C0FF">`createUser`</span><span style="color:#24292E;--shiki-dark:#E6EDF3"> смешивает валидацию, бизнес-логику и DB-доступ. Вынеси валидацию в отдельный модуль </span><span style="color:#005CC5;--shiki-dark:#79C0FF">`validators/userValidator.ts`</span><span style="color:#24292E;--shiki-dark:#E6EDF3">.</span></span>
+<span class="line"><span style="color:#24292E;--shiki-light-font-weight:bold;--shiki-dark:#E6EDF3;--shiki-dark-font-weight:bold">**Expected:**</span></span>
+<span class="line"><span style="color:#E36209;--shiki-dark:#FFA657">-</span><span style="color:#24292E;--shiki-dark:#E6EDF3"> Файл </span><span style="color:#005CC5;--shiki-dark:#79C0FF">`src/validators/userValidator.ts`</span><span style="color:#24292E;--shiki-dark:#E6EDF3"> существует</span></span>
+<span class="line"><span style="color:#E36209;--shiki-dark:#FFA657">-</span><span style="color:#24292E;--shiki-dark:#E6EDF3"> В </span><span style="color:#005CC5;--shiki-dark:#79C0FF">`createUser`</span><span style="color:#24292E;--shiki-dark:#E6EDF3"> импорт из нового модуля</span></span>
+<span class="line"><span style="color:#E36209;--shiki-dark:#FFA657">-</span><span style="color:#24292E;--shiki-dark:#E6EDF3"> Все существующие тесты </span><span style="color:#005CC5;--shiki-dark:#79C0FF">`users.test.ts`</span><span style="color:#24292E;--shiki-dark:#E6EDF3"> проходят</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#005CC5;--shiki-light-font-weight:bold;--shiki-dark:#79C0FF;--shiki-dark-font-weight:bold">## Case 02 — bug fix</span></span>
+<span class="line"><span style="color:#24292E;--shiki-light-font-weight:bold;--shiki-dark:#E6EDF3;--shiki-dark-font-weight:bold">**Input:**</span><span style="color:#24292E;--shiki-dark:#E6EDF3"> Тест </span><span style="color:#005CC5;--shiki-dark:#79C0FF">`cart.test.ts → calculates discount`</span><span style="color:#24292E;--shiki-dark:#E6EDF3"> падает. Симптом: при coupon='WELCOME10' возвращает 0 вместо 10%. Найди причину и исправь.</span></span>
+<span class="line"><span style="color:#24292E;--shiki-light-font-weight:bold;--shiki-dark:#E6EDF3;--shiki-dark-font-weight:bold">**Expected:**</span></span>
+<span class="line"><span style="color:#E36209;--shiki-dark:#FFA657">-</span><span style="color:#24292E;--shiki-dark:#E6EDF3"> Тест зелёный</span></span>
+<span class="line"><span style="color:#E36209;--shiki-dark:#FFA657">-</span><span style="color:#24292E;--shiki-dark:#E6EDF3"> Изменения только в </span><span style="color:#005CC5;--shiki-dark:#79C0FF">`cart.ts`</span><span style="color:#24292E;--shiki-dark:#E6EDF3"> или </span><span style="color:#005CC5;--shiki-dark:#79C0FF">`discount.ts`</span></span>
+<span class="line"><span style="color:#E36209;--shiki-dark:#FFA657">-</span><span style="color:#24292E;--shiki-dark:#E6EDF3"> Нет hardcoded бранчей под конкретный coupon</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#005CC5;--shiki-light-font-weight:bold;--shiki-dark:#79C0FF;--shiki-dark-font-weight:bold">## Case 03 — feature add</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E6EDF3">...</span></span></code></pre>
+<p>10 кейсов покрывают: рефакторинги, баг-фиксы, новые фичи, доки, тесты, security.</p>
+<h3 id="шаг-2-прогон-вручную-30-минут">Шаг 2. Прогон вручную (30 минут)</h3>
+<p>Для каждого кейса:</p>
+<ol>
+<li>Чистая ветка</li>
+<li>Скармливаете input агенту</li>
+<li>Засекаете время, observe-режим</li>
+<li>По завершении — проверяете expected руками</li>
+<li>Записываете pass/fail + замечание</li>
+</ol>
+<pre class="astro-code astro-code-themes github-light github-dark-default" style="background-color:#fff;--shiki-dark-bg:#0d1117;color:#24292e;--shiki-dark:#e6edf3; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="markdown"><code><span class="line"><span style="color:#005CC5;--shiki-light-font-weight:bold;--shiki-dark:#79C0FF;--shiki-dark-font-weight:bold">## Run 2026-05-15</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E6EDF3">| # | Pass | Time | Notes |</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E6EDF3">|---|---|---|---|</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E6EDF3">| 01 | ✓ | 8m | OK |</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E6EDF3">| 02 | ✗ | 12m | предложил workaround, не root-cause |</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E6EDF3">| 03 | ✓ | 6m | OK, лишнее изменение в comments |</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E6EDF3">...</span></span></code></pre>
+<h3 id="шаг-3-анализ-15-минут">Шаг 3. Анализ (15 минут)</h3>
+<ul>
+<li><strong>Pass rate:</strong> 7/10 = 70%</li>
+<li><strong>Где падает?</strong> Сложные debug-задачи (02), security (08)</li>
+<li><strong>Тренд?</strong> Прошлый месяц был 6/10 — есть прогресс</li>
+</ul>
+<p>Дальше через месяц <strong>повторяете</strong>. Это и есть <strong>измерение</strong>.</p>
+<h2 id="eval-как-командная-практика">Eval как командная практика</h2>
+<p>Если в команде > 1 разработчика на агентах — общий suite <strong>обязателен</strong>. Иначе:</p>
+<ul>
+<li>Каждый «настраивает» агент под себя</li>
+<li>Конфиги расходятся</li>
+<li>Никто не знает, <strong>общий</strong> ли стал лучше или хуже</li>
+</ul>
+<p>Правила командного suite:</p>
+<ol>
+<li><strong>Common suite в репо</strong> — <code>evals/cases.yaml</code> в той же ветке, что код</li>
+<li><strong>Owned by maintainer</strong> — у suite <strong>есть владелец</strong>, иначе разваливается</li>
+<li><strong>Update on incident</strong> — каждый прод-инцидент → новый кейс</li>
+<li><strong>Quarterly review</strong> — раз в квартал смотрим, что устарело</li>
+<li><strong>No blame on numbers</strong> — числа = для информации, не KPI</li>
+</ol>
+<h2 id="practice-60-90-минут">Practice (60-90 минут)</h2>
+<h3 id="задание-1-30-минут--собрать-свой-reference-suite">Задание 1 (30 минут) — собрать свой reference suite</h3>
+<p>Найдите 5 <strong>реальных</strong> задач, которые вы давали агенту в последний месяц — успешных и провальных. Запишите их в <code>evals/cases.md</code> по шаблону выше: input + expected.</p>
+<p>Это ваша <strong>первая baseline</strong>. Через 2 недели — прогон. Через месяц — ещё.</p>
+<h3 id="задание-2-15-30-минут--формальный-лог">Задание 2 (15-30 минут) — формальный лог</h3>
+<p>Заведите <code>evals/log.md</code>. Запишите <strong>последние 5</strong> значимых сессий <strong>постфактум</strong>: задача, что хорошо, что плохо, время, откаты.</p>
+<p>Это <strong>минимальный</strong> уровень измерения, и он <strong>окупается</strong> через 2-3 недели — становятся видны <strong>паттерны</strong>.</p>
+<h3 id="задание-3-15-минут--выбрать-не-свою-метрику">Задание 3 (15 минут) — выбрать «не свою» метрику</h3>
+<p>Подумайте, какую метрику <strong>могли бы</strong> ввести в команде, и <strong>почему она бы исказила</strong> систему. Это полезное упражнение <strong>до</strong> того, как ввести метрику — заранее увидеть <strong>антипаттерн</strong>.</p>
+<h2 id="recap">Recap</h2>
+<ul>
+<li><strong>Без оцифровки качества — никакого Middle-уровня.</strong> «Кажется, стало хуже» — это <strong>не сигнал</strong>, это <strong>шум</strong>.</li>
+<li><strong>Три уровня измерения:</strong> лог сессий (5 мин/неделя) → reference suite (час setup) → автоматизированный pipeline.</li>
+<li><strong>Антипаттерны:</strong> «хорошее число вместо правильного», «один прогон = метрика», «прошёл suite — значит, ок», «метрика как KPI».</li>
+</ul>
+<h2 id="скептик-самурай">Скептик Самурай</h2>
+<aside class="skeptic">
+<p><strong>🥷 Скептик Самурай спрашивает:</strong>
+«Это же бюрократия! Я работаю один, мне-то зачем reference suite?»</p>
+<p><strong>Ответ:</strong> Suite — не «бюрократия», это <strong>ваша внешняя память о качестве</strong>. Через 3 месяца вы <strong>не вспомните</strong>, на каких задачах агент был хорош в марте. Без suite вы будете <strong>гадать</strong>. С suite — посмотрите числа и <strong>знаете</strong>. Это та же история, что и с git: «зачем коммитить, я один работаю» → <strong>затем</strong>, что без коммитов вы быстро теряете контроль. Suite — это <strong>коммиты для качества</strong>. Минимальный уровень — <strong>5 минут/неделя</strong>, и он окупается <strong>первым же</strong> случаем «кажется, агент стал тупить, но это просто я неправильно сформулировал». <strong>Не идеально, но реально работает.</strong></p>
+</aside>
+<h2 id="дальше">Дальше</h2>
+<p>В <strong>M12 — Регрессионные тесты для агентов</strong> разберём, как из reference suite сделать <strong>автоматизированный</strong> регрессионный harness. Golden examples, snapshot testing, hooks для CI. После M12 вы сможете <strong>ловить регрессии</strong> сразу — без двух недель «ой, что-то стало хуже».</p>
+<p>Если зашло — поделитесь главой с тем, кто работает с агентами и говорит «вроде ок, но иногда фигня». Если у вас есть <strong>своя</strong> метрика, которая хорошо работает — расскажите в комменты, разберём. Ваша обратная связь реально помогает шлифовать материал.</p>
+<p>Всех обнял, всегда ваш — Илья ❤️</p>  <nav class="chapter-nav"> <a href="/vibesamurai-site/courses/middle/m10"> <span class="dir">← Назад</span> <span class="title">M10 · State, drift, continuity</span> </a> <a href="/vibesamurai-site/courses/middle/m12"> <span class="dir">Дальше →</span> <span class="title">M12 · Регрессионные тесты для агентов</span> </a> </nav> </main> </div> </body></html>

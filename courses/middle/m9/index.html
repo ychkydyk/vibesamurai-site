@@ -1,0 +1,209 @@
+<!DOCTYPE html><html lang="en"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Memory strategies — Vibesamurai</title><meta name="description" content="Short-term, long-term и external memory. Scoping, pruning, Copilot Memory model."><meta property="og:title" content="Memory strategies"><meta property="og:type" content="article"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Inter:wght@300..800&family=JetBrains+Mono:wght@400..600&display=swap" rel="stylesheet"><link rel="stylesheet" href="/vibesamurai-site/_astro/_slug_.DpgmObvf.css">
+<style>.reader-sidebar[data-astro-cid-khgtvzrl] .soon[data-astro-cid-khgtvzrl]{display:block;color:var(--text-mute);font-size:var(--size-2);padding:var(--space-1) 0}.reader-sidebar[data-astro-cid-khgtvzrl] .soon[data-astro-cid-khgtvzrl] em[data-astro-cid-khgtvzrl]{font-style:normal;font-family:var(--font-mono);font-size:.85em;color:var(--accent);margin-left:4px;text-transform:uppercase;letter-spacing:.1em}
+</style></head> <body> <div class="reader-app"> <aside class="reader-rail"> <a href="/vibesamurai-site/" class="logo" aria-label="Vibesamurai home">V</a> </aside> <aside class="reader-sidebar" data-astro-cid-khgtvzrl> <div class="breadcrumb" data-astro-cid-khgtvzrl>Vibesamurai · Middle Path · m9</div> <h4 data-astro-cid-khgtvzrl>В этом курсе</h4> <ul data-astro-cid-khgtvzrl> <li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m1" class data-astro-cid-khgtvzrl>M1 · Что такое agentic AI в SDLC</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m2" class data-astro-cid-khgtvzrl>M2 · Границы агента</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m3" class data-astro-cid-khgtvzrl>M3 · Observability &amp; HITL</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m4" class data-astro-cid-khgtvzrl>M4 · Tool inventory &amp; permissions</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m5" class data-astro-cid-khgtvzrl>M5 · MCP deep dive</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m6" class data-astro-cid-khgtvzrl>M6 · Claude Code mastery</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m7" class data-astro-cid-khgtvzrl>M7 · Codex CLI &amp; OpenAI Agents</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m8" class data-astro-cid-khgtvzrl>M8 · Cursor + IDE-агенты</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m9" class="current" data-astro-cid-khgtvzrl>M9 · Memory strategies</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m10" class data-astro-cid-khgtvzrl>M10 · State, drift, continuity</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m11" class data-astro-cid-khgtvzrl>M11 · Метрики оценки</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m12" class data-astro-cid-khgtvzrl>M12 · Regression testing</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m13" class data-astro-cid-khgtvzrl>M13 · Tuning, когда метрики стоят</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m14" class data-astro-cid-khgtvzrl>M14 · Pipelines &amp; orchestration</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m15" class data-astro-cid-khgtvzrl>M15 · Multi-agent роли</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m16" class data-astro-cid-khgtvzrl>M16 · Когда multi-agent — overkill</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m17" class data-astro-cid-khgtvzrl>M17 · Деплой агентов в прод</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m18" class data-astro-cid-khgtvzrl>M18 · Production security</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m19" class data-astro-cid-khgtvzrl>M19 · Incidents &amp; post-mortems</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m20" class data-astro-cid-khgtvzrl>M20 · Финал Middle</a> </li> </ul>  </aside> <main class="reader-main"> <div class="chapter-eyebrow">Middle Path · m9</div> <h1 class="chapter-title">M9 · Memory strategies</h1> <p class="chapter-subtitle">Short-term, long-term и external memory. Scoping, pruning, Copilot Memory model.</p>  <blockquote>
+<p>Черновик M9 в голосе DmitriyM (см. <code>scripts/tg_voice_analysis/_summary.md</code>). Открывает Part III — Memory &#x26; State.</p>
+</blockquote>
+<h2 id="о-чём-эта-глава">О чём эта глава</h2>
+<p>Друзья, всем привет! 👋</p>
+<p>В Part I и Part II мы говорили про <strong>одну сессию</strong>: вы открыли агента, дали задачу, он сделал, вы закрыли. А что происходит <strong>между сессиями</strong>? Что агент помнит, что забывает, какой контекст у него есть «по умолчанию» при следующем старте?</p>
+<p>Это и есть <strong>тема памяти</strong>. И — спойлер — там целое семейство ошибок, которые ловят middle-разработчиков впервые, кто переходит на агентный flow всерьёз. Самая частая жалоба новых пользователей агентов:</p>
+<blockquote>
+<p>«Я вчера ему всё это объяснил! А сегодня он опять не помнит!»</p>
+</blockquote>
+<p>Не помнит. Потому что <strong>по умолчанию агент не помнит ничего за пределами текущей сессии</strong>. И это нормально — это архитектурное решение, а не баг. В этой главе разберём:</p>
+<ol>
+<li>Три типа памяти агента: short-term, long-term, external</li>
+<li>Конкретные механизмы памяти в Claude Code, Codex CLI, Cursor, Copilot</li>
+<li><strong>Scoping</strong> — что класть в память, что не класть</li>
+<li><strong>Pruning</strong> — как и когда чистить</li>
+<li>Copilot Memory model — отдельно, потому что это эталонная реализация для GH-600</li>
+</ol>
+<h2 id="три-типа-памяти">Три типа памяти</h2>
+<h3 id="short-term-memory-рабочий-контекст-сессии">Short-term memory (рабочий контекст сессии)</h3>
+<p>Это то, что <strong>в контекстном окне модели прямо сейчас</strong>: ваши сообщения, ответы агента, прочитанные файлы, результаты тулов. Живёт <strong>только пока открыта сессия</strong>.</p>
+<p>Размер: ограничен контекстом модели. На май 2026 — Opus 4.7 даёт 1М токенов, Sonnet 4.6 даёт 1М, Haiku 4.5 — 200K. На практике эффективная работа идёт с 50-150К токенов; дальше начинается «context dilution» — модель хуже фокусируется на конкретике.</p>
+<p>Управление:</p>
+<ul>
+<li><strong>Размер сессии</strong> — короткие фокусированные > длинные «всё подряд»</li>
+<li><strong>Compaction</strong> — в современных тулзах модель сама суммаризирует старый контекст</li>
+<li><strong>Subagents</strong> (M6) — выгружают побочные задачи из основного контекста</li>
+</ul>
+<p>Самый частый антипаттерн: <strong>«одна гигантская сессия на день»</strong>. Через 4 часа агент уже не помнит, что было утром, путается в собственных решениях. Лучше: <strong>много фокусированных сессий</strong>, каждая под одну задачу.</p>
+<h3 id="long-term-memory-между-сессиями-в-проекте">Long-term memory (между сессиями, в проекте)</h3>
+<p>Это то, что <strong>переживает закрытие сессии и читается при старте следующей</strong>. Реализуется через файлы:</p>
+<ul>
+<li><code>CLAUDE.md</code> / <code>AGENTS.md</code> / <code>.cursor/rules/</code> — главный артефакт памяти</li>
+<li><code>.claude/memory/</code> (опционально, через hook или skill)</li>
+<li>ADR-файлы (Architecture Decision Records) в репо</li>
+<li>Project README</li>
+</ul>
+<p>Это <strong>то что должно быть в git</strong>, под версионированием, для всей команды.</p>
+<p>Сильная сторона: <strong>deterministic</strong>. Файл существует — агент его прочитает. Файл удалили — агент забыл.</p>
+<p>Слабая сторона: <strong>не автоматическое накопление</strong>. Если вы хотите чтобы агент «запомнил» решение из сегодняшней сессии — вы (или агент по вашему запросу) должны его записать в <code>CLAUDE.md</code>. Само не появится.</p>
+<blockquote>
+<p><em>Лайфхак:</em> можно в конце сессии попросить агента сформулировать «что мы решили / что нужно зафиксировать в CLAUDE.md» и предложить diff. Принимаете — закоммитили. Отклоняете — не зафиксировалось.</p>
+</blockquote>
+<h3 id="external-memory-между-сессиями-и-между-тулами">External memory (между сессиями и между тулами)</h3>
+<p>Это память <strong>более широкого scope</strong> — между сессиями, между тулами, между членами команды. Реализуется через:</p>
+<ul>
+<li><strong>Системы заметок / wiki</strong> (Notion, Confluence, Obsidian)</li>
+<li><strong>Issue tracker</strong> — Jira, Linear, GitHub issues</li>
+<li><strong>Personal memory systems</strong> (например, <code>~/.claude/memory/</code> с user-level индексом — это паттерн, который Anthropic ввели в стандартных «auto-memory» сетапах)</li>
+<li><strong>MCP-серверы для памяти</strong> — например, <code>mem0</code>, <code>memori</code> и подобные</li>
+</ul>
+<p>Сильная сторона: <strong>универсальность</strong>. Один источник — много потребителей.</p>
+<p>Слабая сторона: <strong>затраты на поддержание</strong>. Если вы кладёте всё подряд — через месяц это болото, в котором ничего не найти.</p>
+<h2 id="конкретные-механизмы-по-тулзам">Конкретные механизмы по тулзам</h2>
+<h3 id="claude-code-auto-memory">Claude Code: auto-memory</h3>
+<p>В Claude Code (от 2025-Q4) есть встроенная <strong>auto-memory</strong>: папка <code>~/.claude/memory/</code> с индексным файлом <code>MEMORY.md</code> и отдельными memory-файлами.</p>
+<p>Структура:</p>
+<pre class="astro-code astro-code-themes github-light github-dark-default" style="background-color:#fff;--shiki-dark-bg:#0d1117;color:#24292e;--shiki-dark:#e6edf3; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>~/.claude/memory/</span></span>
+<span class="line"><span>├── MEMORY.md                       # индекс, всегда в контексте</span></span>
+<span class="line"><span>├── user_role.md                    # auto: запись о роли пользователя</span></span>
+<span class="line"><span>├── feedback_no_userbot.md          # auto: feedback-запись</span></span>
+<span class="line"><span>├── project_x.md                    # auto: проектный контекст</span></span>
+<span class="line"><span>└── reference_y.md                  # auto: ссылка на внешний ресурс</span></span></code></pre>
+<p>Агент сам решает, когда записать в память (по триггерам типа «пользователь дал указание не делать X», «пользователь подтвердил подход Y»). При следующем старте Claude Code читает <code>MEMORY.md</code> и пробрасывает релевантные записи в контекст.</p>
+<p>Типы memory:</p>
+<ul>
+<li><strong>user</strong> — о пользователе (роль, опыт, специализация)</li>
+<li><strong>feedback</strong> — что пользователь корректировал или подтверждал</li>
+<li><strong>project</strong> — состояние проектов</li>
+<li><strong>reference</strong> — ссылки на внешние системы</li>
+</ul>
+<p>Это <strong>личная, не проектная</strong> память. Хранится у вас локально, не уходит в git.</p>
+<h3 id="cursor-chat-history">Cursor: chat history</h3>
+<p>Cursor хранит <strong>историю чатов</strong> в локальном файле, и в новой сессии может «вспомнить» предыдущие разговоры. Менее формальный механизм, чем у Claude — скорее «история», чем «структурированная память».</p>
+<p><code>.cursor/rules/</code> — это long-term project memory (см. M8).</p>
+<h3 id="codex-cli-history">Codex CLI: history</h3>
+<p>Codex CLI хранит историю сессий в <code>~/.codex/history/</code>. Структурно проще, формально не отличается от Claude project memory.</p>
+<p><code>AGENTS.md</code> — long-term project memory (см. M7).</p>
+<h3 id="github-copilot-copilot-memory">GitHub Copilot: Copilot Memory</h3>
+<p>Это отдельный, более <strong>enterprise-ориентированный</strong> механизм, который у нас в GH-600 покрывается отдельным subdomain. Разберём его особо.</p>
+<h2 id="copilot-memory-model-для-gh-600">Copilot Memory model (для GH-600)</h2>
+<p>GitHub Copilot (особенно в варианте Copilot Workspace / Copilot Coding Agent) использует <strong>Copilot Memory</strong> — структурированную систему памяти, у которой есть конкретная модель:</p>
+<h3 id="scopes">Scopes</h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Scope</th><th>Кто видит</th><th>Что хранится</th></tr></thead><tbody><tr><td><strong>User</strong></td><td>Только один пользователь</td><td>Личные предпочтения, паттерны работы</td></tr><tr><td><strong>Repository</strong></td><td>Все коллабораторы репо</td><td>Проектные конвенции, do-not-touch</td></tr><tr><td><strong>Organization</strong></td><td>Вся организация</td><td>Корпоративные стандарты</td></tr><tr><td><strong>Enterprise</strong></td><td>Все в энтерпрайзе</td><td>Compliance-правила</td></tr></tbody></table>
+<h3 id="lifecycle">Lifecycle</h3>
+<ul>
+<li><strong>Capture</strong> — момент записи. Может быть автоматическим (триггер на «пользователь сказал не делать X») или ручным (commit-style «remember this»).</li>
+<li><strong>Storage</strong> — где хранится. Repository scope — в самом репозитории (как <code>.github/copilot-memory.yml</code>), user scope — у GitHub-аккаунта, и так далее.</li>
+<li><strong>Retrieval</strong> — когда читается. По умолчанию — всегда при старте сессии. Опционально — semantic retrieval по контексту.</li>
+<li><strong>Decay / pruning</strong> — устаревание. Memory может «угаснуть» по времени или по явному <code>delete</code>.</li>
+<li><strong>Conflict resolution</strong> — что если user-scope конфликтует с repository-scope. Default: более узкий scope побеждает (user перебивает org, project перебивает user).</li>
+</ul>
+<h3 id="принципиальные-паттерны">Принципиальные паттерны</h3>
+<ul>
+<li><strong>Не дублируйте memory между scopes.</strong> Если правило «не редактируй legacy/» — это repository-scope. Не нужно дублировать в user-scope.</li>
+<li><strong>User scope — personal-preferences only.</strong> Не кладите туда проектное.</li>
+<li><strong>Org-scope — compliance and policy.</strong> Не кладите туда «как мы предпочитаем именовать переменные».</li>
+<li><strong>Conflict — это сигнал</strong>, что архитектура памяти течёт. Пересмотрите scoping.</li>
+</ul>
+<h2 id="scoping-что-класть-в-память-что-не-класть">Scoping: что класть в память, что не класть</h2>
+<h3 id="класть-в-long-termexternal">Класть в long-term/external:</h3>
+<p>✅ Архитектурные решения и почему они были приняты
+✅ Конвенции, которые не очевидны из кода
+✅ Команды для запуска (тесты, линтер, сборка)
+✅ Список путей, которые не трогать
+✅ Tribal knowledge, появившееся из инцидентов
+✅ Личные паттерны работы (для user-scope)
+✅ Решённые архитектурные вопросы (ADR)</p>
+<h3 id="не-класть-в-long-termexternal">НЕ класть в long-term/external:</h3>
+<p>❌ То, что можно прочитать из кода (структура папок, имена функций)
+❌ Что меняется быстро (текущие задачи, ad-hoc решения)
+❌ Секреты (любого вида — pwds, tokens, ключи)
+❌ Подробности фейлов «как мы вчера баг чинили» (это для commit message)
+❌ Обещания, которые могут не выполниться (lien-style)
+❌ Эмоциональные комментарии («этот код написал стажёр, ну тупой»)</p>
+<p>Это <strong>аналог git</strong> — что-то стоит коммитить, что-то не стоит. С памятью та же логика.</p>
+<h2 id="pruning-как-чистить">Pruning: как чистить</h2>
+<p>Память без чистки превращается в свалку. Через 6 месяцев у вас 500 записей, 200 из них устарели, 50 противоречат друг другу, агент не знает что слушать.</p>
+<h3 id="минимум-pruning-routine">Минимум pruning routine</h3>
+<p><strong>Раз в месяц</strong> (или в спринт-ритме команды):</p>
+<ol>
+<li><strong>Прочитайте MEMORY.md / индекс целиком.</strong> Если за минуту не пробежать — слишком большой.</li>
+<li><strong>По каждой записи спросите:</strong>
+<ul>
+<li>Это ещё актуально? (если нет — удалить)</li>
+<li>Это противоречит чему-то другому? (если да — разобрать конфликт)</li>
+<li>Это можно сгруппировать с похожими? (если да — объединить)</li>
+</ul>
+</li>
+<li><strong>Удалите устаревшее.</strong> Не «пометьте как deprecated», а <strong>удалите</strong>. Если оно ещё нужно — оно в коде или в commit history.</li>
+<li><strong>Перепишите громоздкие записи</strong> в одну короткую формулировку с «why» и «how to apply».</li>
+</ol>
+<h3 id="сигналы-что-pruning-нужен-срочно">Сигналы что pruning нужен срочно</h3>
+<ul>
+<li>Memory-индекс не помещается в один экран — pruning нужен</li>
+<li>Агент применяет устаревшее правило — pruning нужен</li>
+<li>В команде «никто не понимает что в memory» — pruning + redocumentation</li>
+<li>Bypass-события «потому что memory мешает» — pruning нужен ещё вчера</li>
+</ul>
+<blockquote>
+<p><em>Аналогия:</em> пробег у машины не бесконечный. Память без чистки — это та же машина, у которой не меняли масло. Работает, но всё хуже.</p>
+</blockquote>
+<h2 id="антипаттерны-памяти">Антипаттерны памяти</h2>
+<h3 id="1-memory-как-лог">1. «Memory как лог»</h3>
+<p>Каждый чих агента записывается в память. Через месяц — 1000 записей, 95% мусор. <strong>Memory — это структурированный отбор, не лог</strong>.</p>
+<h3 id="2-memory-как-замена-документации">2. «Memory как замена документации»</h3>
+<p>Команда пишет всё в Copilot Memory, README пустеет. Когда приходит новый человек — он не может прочитать README, он не имеет доступа к memory. <strong>Memory дополняет, не заменяет</strong>.</p>
+<h3 id="3-stale-memory-как-закон">3. «Stale memory как закон»</h3>
+<p>В memory записали правило 6 месяцев назад. С тех пор стек изменился — а правило в memory. Агент ему слепо следует. <strong>Memory должна проверяться, не догматизироваться</strong>.</p>
+<h3 id="4-memory-одна-на-всех">4. «Memory одна на всех»</h3>
+<p>Project-scope правила в user-scope. Или org-policy в project-scope. <strong>Каждое правило — в свой scope</strong>.</p>
+<h3 id="5-memory-без-owner-а">5. «Memory без owner-а»</h3>
+<p>В команде memory есть, но никто не следит. Через год — болото. <strong>Память должна иметь owner-а</strong>, как код имеет maintainer-а.</p>
+<h2 id="practice">Practice</h2>
+<p>30 минут:</p>
+<ol>
+<li><strong>Откройте свой <code>MEMORY.md</code> или эквивалент.</strong> Если у вас не настроена память — настройте минимальную (Claude Code auto-memory или ручной MEMORY.md в <code>~/.claude/</code>).</li>
+<li><strong>Прочитайте индекс целиком.</strong> Если занимает > 1 экрана — pruning candidate.</li>
+<li><strong>Удалите 3-5 самых очевидных stale записей.</strong> «Это уже не актуально».</li>
+<li><strong>Сгруппируйте 2-3 похожих записи в одну.</strong> Если памяти много, она дробится — собирайте.</li>
+<li><strong>Откройте проектный <code>CLAUDE.md</code> / <code>AGENTS.md</code></strong> одного из ваших проектов. Сравните: то что в нём есть — это сейчас актуально? Что-то стоит удалить? Что-то добавить?</li>
+</ol>
+<h2 id="recap">Recap</h2>
+<ul>
+<li><strong>Три типа памяти:</strong> short-term (контекст сессии), long-term (project files), external (wiki/notes/MCP).</li>
+<li><strong>Auto-memory в Claude Code:</strong> <code>~/.claude/memory/</code> с типизированными записями (user/feedback/project/reference).</li>
+<li><strong>Copilot Memory model:</strong> scopes (user/repo/org/ent), lifecycle (capture→storage→retrieval→pruning), conflict-resolution «узкий scope побеждает».</li>
+<li><strong>Scoping:</strong> в память — конвенции, решения, tribal knowledge. НЕ в память — секреты, lien-обещания, быстро меняющееся.</li>
+<li><strong>Pruning раз в месяц обязателен.</strong> Без чистки — болото за 6 месяцев.</li>
+<li><strong>5 антипаттернов:</strong> memory-как-лог, memory-вместо-документации, stale-as-law, без scope-разделения, без owner-а.</li>
+</ul>
+<h2 id="дальше">Дальше</h2>
+<p>В <strong>M10 — State, drift, continuity</strong> — закрываем Part III: resumable agents, durable artifacts, как ловить и исправлять drift между сессиями, как делить state между тулами и средами. Это самая «инженерная» глава Part III.</p>
+<p>Если зашло — поделитесь с теми, кто настраивает агентский setup в команде, особенно с теми кто внедряет Copilot Memory. Если у вас есть конкретные истории memory-инцидентов — пишите в комменты, ваша обратная связь реально помогает шлифовать материал.</p>
+<p>Всех обнял, всегда ваш — Илья ❤️</p>
+<hr>
+<p><strong>Maps to:</strong> GH-600 §3.1 — <em>Memory architecture and lifecycle</em></p>  <nav class="chapter-nav"> <a href="/vibesamurai-site/courses/middle/m8"> <span class="dir">← Назад</span> <span class="title">M8 · Cursor Composer + IDE-агенты</span> </a> <a href="/vibesamurai-site/courses/middle/m10"> <span class="dir">Дальше →</span> <span class="title">M10 · State, drift, continuity</span> </a> </nav> </main> </div> </body></html>

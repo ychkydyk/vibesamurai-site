@@ -1,0 +1,162 @@
+<!DOCTYPE html><html lang="en"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>State, drift, continuity — Vibesamurai</title><meta name="description" content="Resumable agents, durable artifacts. Как ловить и исправлять drift. Cross-tool / cross-env state sharing."><meta property="og:title" content="State, drift, continuity"><meta property="og:type" content="article"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Inter:wght@300..800&family=JetBrains+Mono:wght@400..600&display=swap" rel="stylesheet"><link rel="stylesheet" href="/vibesamurai-site/_astro/_slug_.DpgmObvf.css">
+<style>.reader-sidebar[data-astro-cid-khgtvzrl] .soon[data-astro-cid-khgtvzrl]{display:block;color:var(--text-mute);font-size:var(--size-2);padding:var(--space-1) 0}.reader-sidebar[data-astro-cid-khgtvzrl] .soon[data-astro-cid-khgtvzrl] em[data-astro-cid-khgtvzrl]{font-style:normal;font-family:var(--font-mono);font-size:.85em;color:var(--accent);margin-left:4px;text-transform:uppercase;letter-spacing:.1em}
+</style></head> <body> <div class="reader-app"> <aside class="reader-rail"> <a href="/vibesamurai-site/" class="logo" aria-label="Vibesamurai home">V</a> </aside> <aside class="reader-sidebar" data-astro-cid-khgtvzrl> <div class="breadcrumb" data-astro-cid-khgtvzrl>Vibesamurai · Middle Path · m10</div> <h4 data-astro-cid-khgtvzrl>В этом курсе</h4> <ul data-astro-cid-khgtvzrl> <li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m1" class data-astro-cid-khgtvzrl>M1 · Что такое agentic AI в SDLC</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m2" class data-astro-cid-khgtvzrl>M2 · Границы агента</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m3" class data-astro-cid-khgtvzrl>M3 · Observability &amp; HITL</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m4" class data-astro-cid-khgtvzrl>M4 · Tool inventory &amp; permissions</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m5" class data-astro-cid-khgtvzrl>M5 · MCP deep dive</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m6" class data-astro-cid-khgtvzrl>M6 · Claude Code mastery</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m7" class data-astro-cid-khgtvzrl>M7 · Codex CLI &amp; OpenAI Agents</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m8" class data-astro-cid-khgtvzrl>M8 · Cursor + IDE-агенты</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m9" class data-astro-cid-khgtvzrl>M9 · Memory strategies</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m10" class="current" data-astro-cid-khgtvzrl>M10 · State, drift, continuity</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m11" class data-astro-cid-khgtvzrl>M11 · Метрики оценки</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m12" class data-astro-cid-khgtvzrl>M12 · Regression testing</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m13" class data-astro-cid-khgtvzrl>M13 · Tuning, когда метрики стоят</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m14" class data-astro-cid-khgtvzrl>M14 · Pipelines &amp; orchestration</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m15" class data-astro-cid-khgtvzrl>M15 · Multi-agent роли</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m16" class data-astro-cid-khgtvzrl>M16 · Когда multi-agent — overkill</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m17" class data-astro-cid-khgtvzrl>M17 · Деплой агентов в прод</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m18" class data-astro-cid-khgtvzrl>M18 · Production security</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m19" class data-astro-cid-khgtvzrl>M19 · Incidents &amp; post-mortems</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m20" class data-astro-cid-khgtvzrl>M20 · Финал Middle</a> </li> </ul>  </aside> <main class="reader-main"> <div class="chapter-eyebrow">Middle Path · m10</div> <h1 class="chapter-title">M10 · State, drift, continuity</h1> <p class="chapter-subtitle">Resumable agents, durable artifacts. Как ловить и исправлять drift. Cross-tool / cross-env state sharing.</p>  <blockquote>
+<p>Черновик M10 в голосе DmitriyM (см. <code>scripts/tg_voice_analysis/_summary.md</code>). Закрывает Part III — Memory &#x26; State.</p>
+</blockquote>
+<h2 id="о-чём-эта-глава">О чём эта глава</h2>
+<p>Друзья, всем привет! 👋</p>
+<p>В M9 мы про память — что агент помнит и как мы этим управляем. Сейчас про <strong>состояние</strong> — это более широкое понятие. Память — это часть состояния. Но кроме памяти есть:</p>
+<ul>
+<li><strong>Что агент сейчас делает</strong> (текущая задача, текущий шаг плана)</li>
+<li><strong>Что у него на руках</strong> (открытые файлы, прогруженный контекст, активные тулы)</li>
+<li><strong>Где он остановился</strong> (если сессия прервалась — где продолжить)</li>
+<li><strong>Какой он в принципе</strong> (версия, конфиг, набор разрешений)</li>
+</ul>
+<p>Управление этим всем — это и есть <strong>state management</strong> в агентских системах. И именно тут middle-разработчики ловят самые подлые баги: «работало вчера — сегодня не работает», «продолжил с того же места — получил мусор», «два агента сделали взаимоисключающие изменения». Это всё про state.</p>
+<p>В этой главе:</p>
+<ol>
+<li><strong>Resumable agents</strong> — как продолжать прерванную сессию без потерь</li>
+<li><strong>Durable artifacts</strong> — что должно остаться, чтобы продолжение было возможно</li>
+<li><strong>Drift</strong> — когда состояние агента расходится с реальностью, как это ловить</li>
+<li><strong>Cross-tool state sharing</strong> — когда Claude Code, Cursor и Codex работают над одним проектом</li>
+</ol>
+<h2 id="resumable-agents-что-значит-прерванная-сессия">Resumable agents: что значит «прерванная сессия»</h2>
+<p>Сессия агента может прерваться по куче причин:</p>
+<ul>
+<li>Вы закрыли терминал</li>
+<li>Истёк лимит токенов / провайдер дал rate-limit</li>
+<li>Сетевой сбой</li>
+<li>Краш тула (бывает)</li>
+<li>Нужно срочно переключиться на другое</li>
+<li>Дневной лимит на подписке</li>
+</ul>
+<p>Что происходит с состоянием в этот момент? Зависит от тула. Современные нормальные агенты делают <strong>autosave session state</strong>:</p>
+<ul>
+<li><strong>Claude Code</strong> — каждая сессия сохраняется в <code>~/.claude/projects/&#x3C;repo>/&#x3C;session-id>.jsonl</code> целиком.</li>
+<li><strong>Codex CLI</strong> — <code>~/.codex/history/&#x3C;session-id>/</code></li>
+<li><strong>Cursor Composer</strong> — в IDE-state по проекту.</li>
+</ul>
+<p>Это значит — можно <strong>resume</strong>. Команда обычно <code>claude --resume</code> / <code>codex --resume</code>.</p>
+<h3 id="что-resume-восстанавливает">Что resume восстанавливает</h3>
+<ul>
+<li><strong>Контекст сессии</strong> — все сообщения, прочитанные файлы, результаты тулов</li>
+<li><strong>Активный план</strong>, если он был structured</li>
+<li><strong>Незавершённые тул-вызовы</strong></li>
+</ul>
+<h3 id="что-resume-не-восстанавливает">Что resume НЕ восстанавливает</h3>
+<ul>
+<li><strong>Изменения в файлах</strong>, которые сделал агент — они уже в файловой системе (или нет, если откатили)</li>
+<li><strong>Запущенные процессы</strong> (dev servers, watchers, side effects)</li>
+<li><strong>MCP-серверные state-ы</strong> (если они были stateful, что бывает редко)</li>
+<li><strong>Локальные изменения, не вошедшие в сессионный лог</strong> (то что вы вручную сделали между прерыванием и resume)</li>
+</ul>
+<p>То есть resume — это «вернуть <strong>диалог</strong>», не «вернуть <strong>мир</strong>». Это важно понимать.</p>
+<h2 id="durable-artifacts-что-должно-остаться-даже-без-resume">Durable artifacts: что должно остаться даже без resume</h2>
+<p>Если вы хотите, чтобы работа агента <strong>переживала любые сбои</strong> — не полагайтесь только на session state. Сохраняйте <strong>durable artifacts</strong> в репо.</p>
+<h3 id="минимальный-набор-durable">Минимальный набор durable</h3>
+<ol>
+<li><strong>Plan-артефакт</strong> — YAML/markdown, в <code>.agent/plans/</code> (M2).</li>
+<li><strong>Progress journal</strong> — список выполненных шагов с отметками. <code>.agent/journals/2026-05-16-task-x.md</code>.</li>
+<li><strong>Commits после каждого <code>risk: high</code> шага.</strong> Не одним большим коммитом в конце, а маленькими атомарными — чтобы каждый можно было отдельно откатить.</li>
+<li><strong>CI runs.</strong> Если шаги связаны с тестами/сборкой — CI run-ы как artifact.</li>
+</ol>
+<p>Если вся эта инфраструктура есть — даже <strong>без</strong> resume вы можете прочитать <code>.agent/plans/x.yaml</code> + <code>.agent/journals/x.md</code> и понять, на каком вы шаге, что сделано, что осталось.</p>
+<blockquote>
+<p><em>Аналогия:</em> представьте что в команду пришёл новый человек, никто из «старых» недоступен. По вашим артефактам он должен суметь продолжить. Если может — система durable. Если нет — состояние держится только в головах живых людей (и в session state агента), и это <strong>fragile</strong>.</p>
+</blockquote>
+<h2 id="drift-когда-мир-разошёлся-с-представлением">Drift: когда мир разошёлся с представлением</h2>
+<p><strong>Drift</strong> — это когда <strong>представление агента о состоянии не совпадает с реальностью</strong>. Самые частые виды:</p>
+<h3 id="1-file-drift">1. File drift</h3>
+<p>Агент думает, что файл <code>src/auth.ts</code> содержит функцию <code>verifyToken</code>, потому что прочитал его в начале сессии. Но вы (или другой агент) с тех пор поменяли файл. Агент работает по <strong>устаревшему контексту</strong>.</p>
+<p><strong>Как ловить:</strong> перед каждой серьёзной правкой агент должен <strong>перечитать</strong> файл, не работать по кешу. В Claude Code это поведение встроено (Read перед Edit). В других — проверяйте.</p>
+<p><strong>Как избегать:</strong> не работайте параллельно с одним файлом из разных сессий. Если приходится — <code>git status</code> / <code>git diff</code> перед каждым серьёзным шагом.</p>
+<h3 id="2-schema-drift">2. Schema drift</h3>
+<p>Агент закешировал что в БД таблица <code>users</code> имеет колонки X, Y, Z. Реально там уже X, Y, Z, W — добавили миграцию. Агент пишет код по старой схеме.</p>
+<p><strong>Как ловить:</strong> периодически давайте агенту команду «перечитай актуальную схему БД». Не полагайтесь на запомненное.</p>
+<h3 id="3-api-drift">3. API drift</h3>
+<p>Агент закешировал что endpoint <code>/api/users</code> возвращает поле <code>email</code>. Реально оно теперь <code>contact_email</code>. Все запросы агента ломаются.</p>
+<p><strong>Как ловить:</strong> для критичных интеграций — версионирование схем и проверка соответствия.</p>
+<h3 id="4-config-drift">4. Config drift</h3>
+<p>Агент работал по конфигу A. Вы изменили на B. Агент продолжает по A (не перечитал).</p>
+<p><strong>Как ловить:</strong> конфиг — это <strong>stateful resource</strong>, перечитывайте при существенных переходах.</p>
+<h3 id="5-process-drift">5. Process drift</h3>
+<p>Самый болезненный. Раньше вы делали X перед Y. Команда договорилась: теперь надо делать X1 → Y. Агент следует старой памяти, делает X → Y.</p>
+<p><strong>Как ловить:</strong> см. M9 — pruning. Память должна обновляться, иначе она и есть источник drift.</p>
+<h2 id="detecting-drift-автоматически-и-руками">Detecting drift: автоматически и руками</h2>
+<h3 id="автоматически">Автоматически</h3>
+<ul>
+<li><strong>Pre-flight checks.</strong> В начале серьёзного шага агент вызывает скрипт, который верифицирует базовые инварианты («тесты до моих правок зелёные? Схема БД соответствует ожидаемой? Версия зависимости такая?»).</li>
+<li><strong>Hooks</strong> (M6) — <code>PreToolUse</code> hook может проверить что mtime файла не изменилось с момента последнего read.</li>
+<li><strong>CI</strong> — каждый PR прогоняет тесты; если они падают на «не моих» причинах, это drift.</li>
+</ul>
+<h3 id="руками">Руками</h3>
+<ul>
+<li>Регулярные <strong>«ситуационные брифинги»</strong> в начале сессии. Прежде чем дать задачу — спросите агента «прочитай актуальное состояние X, Y, Z и сделай резюме». Если резюме отличается от ваших ожиданий — drift.</li>
+<li><strong>Diff session memory vs reality</strong> — иногда полезно явно спросить «что ты сейчас думаешь о состоянии Z?» и сравнить с git/db/конфигом.</li>
+</ul>
+<h2 id="correcting-drift">Correcting drift</h2>
+<p>Когда drift обнаружен:</p>
+<ol>
+<li><strong>Стоп.</strong> Не продолжайте работу с этим контекстом.</li>
+<li><strong>Сбросьте closed/cached state</strong> — закройте сессию, начните новую с чистого листа.</li>
+<li><strong>Перечитайте всё актуальное</strong> — файлы, конфиги, схемы, что относится к задаче.</li>
+<li><strong>Update memory.</strong> Если drift возник из устаревшей записи в long-term memory — обновите её <strong>до</strong> возврата к задаче, не после.</li>
+<li><strong>Только тогда</strong> — продолжайте работу.</li>
+</ol>
+<p>Это <strong>разрушительно</strong> для скорости — каждый drift-incident отбрасывает на 10-30 минут. Поэтому <strong>предотвращение</strong> (durable artifacts + регулярная сверка) дешевле, чем коррекция.</p>
+<h2 id="cross-tool--cross-env-state-sharing">Cross-tool / cross-env state sharing</h2>
+<p>Современная реальность: над одним репо работают <strong>несколько разных агентов</strong> в <strong>разных средах</strong>. Один разработчик в Claude Code на macOS, второй в Cursor на Windows, CI-pipeline запускает Codex CLI в Docker. И все они «помнят» проект по-своему.</p>
+<h3 id="что-обязательно-должно-быть-общим-через-git">Что обязательно должно быть общим (через git)</h3>
+<p>✅ <code>CLAUDE.md</code> + симлинк <code>AGENTS.md</code> + <code>.cursor/rules/</code>
+✅ <code>.claude/settings.json</code> (project-level) — для тех кто на Claude Code
+✅ <code>.codex/config.toml</code> (project, если применимо)
+✅ <code>.mcp.json</code> — список подключённых MCP-серверов
+✅ <code>.agent/plans/</code> и <code>.agent/journals/</code> (durable artifacts)
+✅ Hooks-скрипты в <code>.claude/scripts/</code> или <code>.cursor/hooks/</code>
+✅ ADR-файлы в <code>docs/adr/</code></p>
+<h3 id="что-не-должно-ходить-в-git">Что НЕ должно ходить в git</h3>
+<p>❌ <code>.claude/settings.local.json</code> — личная отсебятина
+❌ <code>~/.claude/memory/</code> — user-scope memory, личное
+❌ Session history (<code>~/.claude/projects/</code>, <code>~/.codex/history/</code>)
+❌ Локальные секреты / <code>.env</code></p>
+<h3 id="проблема-cross-tool-semantic-gap">Проблема: cross-tool semantic gap</h3>
+<p>Cursor может не понимать <code>.claude/settings.json</code>, а Claude Code — не читать <code>.cursor/rules/</code> по умолчанию. Что делать?</p>
+<p><strong>Минимальный подход:</strong> один <strong><code>AGENTS.md</code></strong> (или <code>CLAUDE.md</code>) в корне как <strong>single source of truth</strong>. Симлинки на нужные имена. <code>.cursor/rules/</code> может содержать одну строчку <code>apply_from: ../../CLAUDE.md</code> (в новых версиях Cursor поддерживается).</p>
+<p><strong>Расширенный подход:</strong> скрипт <code>.agent/sync.sh</code>, который пере-генерирует tool-specific конфиги из общего источника. Запускается в pre-commit hook.</p>
+<h2 id="antipattern-у-каждого-разработчика-свой-агент">Antipattern: «у каждого разработчика свой агент»</h2>
+<p>Самый тяжёлый из всех. Каждый член команды настроил агента «под себя», все правила в user-scope memory, в проектном репо — ничего.</p>
+<p>Что произойдёт:</p>
+<ul>
+<li>Новый человек приходит — ничего не работает «как надо», правила не знает.</li>
+<li>Один человек уходит в отпуск — его «знание» уходит с ним.</li>
+<li>Code review агентских PR непредсказуемо: один агент пишет так, другой иначе, неясно «правильно» это или нет.</li>
+</ul>
+<p>Решение: <strong>проектная память — в репо, проектные настройки — в репо, проектные hooks — в репо</strong>. User-scope — только для <strong>личных предпочтений</strong>, которые не касаются проекта (например, ваш стиль коммитов).</p>
+<h2 id="programmatic-финал-регистр-c">Programmatic финал (Регистр C)</h2>
+<p>Друзья.</p>
+<p>Закрываем Part III — Memory &#x26; State.</p>
+<p>Если коротко по всем десяти модулям Part I-III:</p>
+<blockquote>
+<p>Агент = контрибьютор, работающий по контракту, под наблюдением, с явными границами, с памятью под версионированием и со state, который переживает любые сбои.</p>
+</blockquote>
+<p>Это <strong>архитектурная формула</strong>, не «как настроить тул». Конкретные настройки Claude Code 2026 года устареют. Конкретные имена файлов поменяются. Сами модели будут другими.</p>
+<p>Формула — нет. Контракт, наблюдение, границы, память, state — это <strong>дисциплинарные элементы</strong>, которые лежат в основе любой нормальной системы с агентами, человеческими или machine.</p>
+<p>В Part IV мы будем заниматься тем, <strong>как оценивать что агент сделал хорошо или плохо</strong> (success criteria и evaluation). Это та же тема, ровно один уровень глубже.</p>
+<p>Тренируйте насмотренность, а не пальцы. Ваша голова важнее чем ИИ — особенно при оценке «работает или нет».</p>
+<h2 id="recap">Recap</h2>
+<ul>
+<li><strong>Resume восстанавливает диалог, не мир.</strong> Полагайтесь на durable artifacts, не только session state.</li>
+<li><strong>Durable artifacts:</strong> plans, journals, atomic commits после high-risk шагов, CI runs.</li>
+<li><strong>5 видов drift:</strong> file, schema, API, config, process. Каждый ловится по-своему.</li>
+<li><strong>Detection:</strong> pre-flight checks + hooks + регулярные «брифинги».</li>
+<li><strong>Correction:</strong> стоп → reset → reread → update memory → продолжать.</li>
+<li><strong>Cross-tool sharing:</strong> в git — конвенции, конфиги, MCP, hooks, ADR. Не в git — личная отсебятина, secrets, session history.</li>
+<li><strong>Антипаттерн:</strong> «у каждого свой агент» — проектные правила должны быть в репо.</li>
+</ul>
+<h2 id="дальше">Дальше</h2>
+<p>Part IV — <strong>Evaluation &#x26; Tuning</strong>. В <strong>M11 — Success criteria и evaluation signals</strong> разберём, как формализовать «хорошо/плохо» в проверяемые сигналы: qualitative + quantitative, automated scanning (CodeQL, secret scanning, advisory DB), evaluation pipelines.</p>
+<p>Если зашло — поделитесь Part III с теми, кто настраивает агентский setup для команды или борется с «непредсказуемым поведением» агента между сессиями. Если есть конкретные drift-инциденты из вашей практики — пишите в комменты, ваша обратная связь реально помогает шлифовать материал.</p>
+<p>Всегда ваш — Илья ❤️</p>
+<hr>
+<p><strong>Maps to:</strong> GH-600 §3.2 — <em>State management and resumability</em> + §3.3 — <em>Cross-environment continuity</em>
+<strong>Closes:</strong> Part III — Memory &#x26; State (M9 + M10)</p>  <nav class="chapter-nav"> <a href="/vibesamurai-site/courses/middle/m9"> <span class="dir">← Назад</span> <span class="title">M9 · Memory strategies</span> </a> <a href="/vibesamurai-site/courses/middle/m11"> <span class="dir">Дальше →</span> <span class="title">M11 · Success criteria и evaluation signals</span> </a> </nav> </main> </div> </body></html>

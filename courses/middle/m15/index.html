@@ -1,0 +1,263 @@
+<!DOCTYPE html><html lang="en"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Multi-agent: роли, коммуникация, supervisor — Vibesamurai</title><meta name="description" content="Несколько независимых агентов, общающихся между собой. Когда supervisor, когда плоская сеть, как избежать хаоса."><meta property="og:title" content="Multi-agent: роли, коммуникация, supervisor"><meta property="og:type" content="article"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Inter:wght@300..800&family=JetBrains+Mono:wght@400..600&display=swap" rel="stylesheet"><link rel="stylesheet" href="/vibesamurai-site/_astro/_slug_.DpgmObvf.css">
+<style>.reader-sidebar[data-astro-cid-khgtvzrl] .soon[data-astro-cid-khgtvzrl]{display:block;color:var(--text-mute);font-size:var(--size-2);padding:var(--space-1) 0}.reader-sidebar[data-astro-cid-khgtvzrl] .soon[data-astro-cid-khgtvzrl] em[data-astro-cid-khgtvzrl]{font-style:normal;font-family:var(--font-mono);font-size:.85em;color:var(--accent);margin-left:4px;text-transform:uppercase;letter-spacing:.1em}
+</style></head> <body> <div class="reader-app"> <aside class="reader-rail"> <a href="/vibesamurai-site/" class="logo" aria-label="Vibesamurai home">V</a> </aside> <aside class="reader-sidebar" data-astro-cid-khgtvzrl> <div class="breadcrumb" data-astro-cid-khgtvzrl>Vibesamurai · Middle Path · m15</div> <h4 data-astro-cid-khgtvzrl>В этом курсе</h4> <ul data-astro-cid-khgtvzrl> <li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m1" class data-astro-cid-khgtvzrl>M1 · Что такое agentic AI в SDLC</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m2" class data-astro-cid-khgtvzrl>M2 · Границы агента</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m3" class data-astro-cid-khgtvzrl>M3 · Observability &amp; HITL</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m4" class data-astro-cid-khgtvzrl>M4 · Tool inventory &amp; permissions</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m5" class data-astro-cid-khgtvzrl>M5 · MCP deep dive</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m6" class data-astro-cid-khgtvzrl>M6 · Claude Code mastery</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m7" class data-astro-cid-khgtvzrl>M7 · Codex CLI &amp; OpenAI Agents</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m8" class data-astro-cid-khgtvzrl>M8 · Cursor + IDE-агенты</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m9" class data-astro-cid-khgtvzrl>M9 · Memory strategies</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m10" class data-astro-cid-khgtvzrl>M10 · State, drift, continuity</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m11" class data-astro-cid-khgtvzrl>M11 · Метрики оценки</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m12" class data-astro-cid-khgtvzrl>M12 · Regression testing</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m13" class data-astro-cid-khgtvzrl>M13 · Tuning, когда метрики стоят</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m14" class data-astro-cid-khgtvzrl>M14 · Pipelines &amp; orchestration</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m15" class="current" data-astro-cid-khgtvzrl>M15 · Multi-agent роли</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m16" class data-astro-cid-khgtvzrl>M16 · Когда multi-agent — overkill</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m17" class data-astro-cid-khgtvzrl>M17 · Деплой агентов в прод</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m18" class data-astro-cid-khgtvzrl>M18 · Production security</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m19" class data-astro-cid-khgtvzrl>M19 · Incidents &amp; post-mortems</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m20" class data-astro-cid-khgtvzrl>M20 · Финал Middle</a> </li> </ul>  </aside> <main class="reader-main"> <div class="chapter-eyebrow">Middle Path · m15</div> <h1 class="chapter-title">M15 · Multi-agent: роли, коммуникация, supervisor</h1> <p class="chapter-subtitle">Несколько независимых агентов, общающихся между собой. Когда supervisor, когда плоская сеть, как избежать хаоса.</p>  <blockquote>
+<p>Черновик M15 в голосе DmitriyM.</p>
+</blockquote>
+<h2 id="hook">Hook</h2>
+<pre class="astro-code astro-code-themes github-light github-dark-default" style="background-color:#fff;--shiki-dark-bg:#0d1117;color:#24292e;--shiki-dark:#e6edf3; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>PIPELINE (M14):              MULTI-AGENT (M15):</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>planner → impl → tests       supervisor</span></span>
+<span class="line"><span>                                 ↓</span></span>
+<span class="line"><span>один агент                  ┌────┴────┬─────────┐</span></span>
+<span class="line"><span>несколько ролей           coder    reviewer   ops</span></span>
+<span class="line"><span>                          ↑↓        ↑↓        ↑↓</span></span>
+<span class="line"><span>                          ════════ event bus ════════</span></span>
+<span class="line"><span>                          </span></span>
+<span class="line"><span>                          разные процессы, общая шина</span></span></code></pre>
+<p>Друзья, всем привет! 👋</p>
+<p>Эта глава — про <strong>настоящий</strong> multi-agent. Не «один агент в нескольких шляпах» (это был M14), а <strong>несколько независимых</strong> процессов, <strong>общающихся между собой</strong>.</p>
+<p><strong>Сразу честно:</strong> в реальности это <strong>редко</strong> нужно. Большинство задач закрывается одним агентом или pipeline. Multi-agent окупается на <strong>конкретных</strong> сценариях — длительных автономных циклах, параллельной работе, специализации с <strong>сильным</strong> конфликтом интересов между ролями. Если <strong>не уверены, что нужно</strong> — <strong>скорее всего не нужно</strong>. M16 будет полностью посвящена антипаттернам — но эту главу проходим для понимания, <strong>что вообще</strong> доступно.</p>
+<p>Час-полтора.</p>
+<h2 id="концепция-когда-несколько-ролей-становится-несколько-агентов">Концепция: когда «несколько ролей» становится «несколько агентов»</h2>
+<p>В M14 у нас был <strong>один</strong> Claude, играющий <strong>разные роли</strong> через subagents. Это работает, пока:</p>
+<ul>
+<li>Роли <strong>сменяют</strong> друг друга (не параллельно)</li>
+<li>Контекст между ролями <strong>переносится</strong> через файлы</li>
+<li>Один источник истины (один CLAUDE.md)</li>
+</ul>
+<p><strong>Сигналы</strong>, что pipeline <strong>уже мал</strong>:</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Признак</th><th>Сигнал</th></tr></thead><tbody><tr><td>Роли должны работать <strong>параллельно</strong></td><td>да</td></tr><tr><td>У ролей <strong>разные</strong> базовые модели (Opus для архитекта, Haiku для тестов)</td><td>да</td></tr><tr><td>У ролей <strong>разные</strong> контексты (разные репо, разные доки)</td><td>да</td></tr><tr><td>Роли должны <strong>спорить</strong> между собой (review, adversarial)</td><td>да</td></tr><tr><td>Цикл — <strong>долгий</strong> (часы-дни) с автономными решениями</td><td>да</td></tr><tr><td>Контекст одного агента <strong>не вмещает</strong> все роли</td><td>да</td></tr></tbody></table>
+<p>Если 2-3 из этого — да — пора multi-agent.</p>
+<h2 id="архитектуры-multi-agent">Архитектуры multi-agent</h2>
+<h3 id="a-supervisor--workers-иерархия">A. Supervisor + workers (иерархия)</h3>
+<pre class="astro-code astro-code-themes github-light github-dark-default" style="background-color:#fff;--shiki-dark-bg:#0d1117;color:#24292e;--shiki-dark:#e6edf3; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>        ┌────────────────┐</span></span>
+<span class="line"><span>        │   Supervisor    │</span></span>
+<span class="line"><span>        │  (orchestrator) │</span></span>
+<span class="line"><span>        └────────┬────────┘</span></span>
+<span class="line"><span>                 │ task dispatch</span></span>
+<span class="line"><span>       ┌─────────┼─────────┐</span></span>
+<span class="line"><span>       ↓         ↓         ↓</span></span>
+<span class="line"><span>   ┌────────┐ ┌────────┐ ┌────────┐</span></span>
+<span class="line"><span>   │ Coder  │ │ Tester │ │Reviewer│</span></span>
+<span class="line"><span>   └────────┘ └────────┘ └────────┘</span></span></code></pre>
+<p>Supervisor:</p>
+<ul>
+<li>Разбивает большую задачу на подзадачи</li>
+<li>Раздаёт workers</li>
+<li>Собирает результаты</li>
+<li>Решает финальное «готово/переделать»</li>
+</ul>
+<p>Workers — узко специализированы, минимум прав.</p>
+<p><strong>Когда подходит:</strong> структурированные задачи с <strong>очевидной</strong> декомпозицией (фича = код + тесты + ревью).</p>
+<h3 id="b-peer-to-peer-плоская-сеть">B. Peer-to-peer (плоская сеть)</h3>
+<pre class="astro-code astro-code-themes github-light github-dark-default" style="background-color:#fff;--shiki-dark-bg:#0d1117;color:#24292e;--shiki-dark:#e6edf3; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>   ┌────────┐ ←─────→ ┌────────┐</span></span>
+<span class="line"><span>   │Agent A │         │Agent B │</span></span>
+<span class="line"><span>   └────────┘ ←─────→ └────────┘</span></span>
+<span class="line"><span>       ↕                 ↕</span></span>
+<span class="line"><span>   ┌────────┐ ←─────→ ┌────────┐</span></span>
+<span class="line"><span>   │Agent C │         │Agent D │</span></span>
+<span class="line"><span>   └────────┘         └────────┘</span></span></code></pre>
+<p>Все агенты <strong>равны</strong>, общаются напрямую. Решения принимаются <strong>локально</strong> или <strong>голосованием</strong>.</p>
+<p><strong>Когда подходит:</strong> креативные/исследовательские задачи (brainstorm, debate). <strong>Редко</strong> нужно в разработке.</p>
+<p><strong>Опасность:</strong> <strong>легко</strong> уйти в бесконечный диалог без результата. Нужны <strong>жёсткие правила завершения</strong> («после 5 раундов — supervisor решает»).</p>
+<h3 id="c-event-driven-через-шину">C. Event-driven (через шину)</h3>
+<pre class="astro-code astro-code-themes github-light github-dark-default" style="background-color:#fff;--shiki-dark-bg:#0d1117;color:#24292e;--shiki-dark:#e6edf3; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>   Agent A ──→ ┌─────────────────┐ ──→ Agent C</span></span>
+<span class="line"><span>              │   Event Bus     │</span></span>
+<span class="line"><span>   Agent B ──→ │  (queue/pub-sub) │ ──→ Agent D</span></span>
+<span class="line"><span>              └─────────────────┘</span></span></code></pre>
+<p>Агенты <strong>не знают</strong> друг о друге. Каждый слушает <strong>типы событий</strong>, реагирует, публикует свои.</p>
+<p><strong>Когда подходит:</strong> длинные процессы, частично-человеческие workflow (CI/CD-like).</p>
+<p><strong>Технологии:</strong> Redis pub/sub, RabbitMQ, GitHub webhooks, <strong>или</strong> просто файловая очередь (<code>tasks/inbox/</code> → <code>tasks/done/</code>).</p>
+<h2 id="коммуникация-формат-сообщений">Коммуникация: формат сообщений</h2>
+<p>Главное правило — <strong>общий формат</strong>, без которого Agent B <strong>не поймёт</strong> Agent A.</p>
+<h3 id="минимальный-пакет">Минимальный пакет</h3>
+<pre class="astro-code astro-code-themes github-light github-dark-default" style="background-color:#fff;--shiki-dark-bg:#0d1117;color:#24292e;--shiki-dark:#e6edf3; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="json"><code><span class="line"><span style="color:#24292E;--shiki-dark:#E6EDF3">{</span></span>
+<span class="line"><span style="color:#005CC5;--shiki-dark:#7EE787">  "from"</span><span style="color:#24292E;--shiki-dark:#E6EDF3">: </span><span style="color:#032F62;--shiki-dark:#A5D6FF">"coder-agent-01"</span><span style="color:#24292E;--shiki-dark:#E6EDF3">,</span></span>
+<span class="line"><span style="color:#005CC5;--shiki-dark:#7EE787">  "to"</span><span style="color:#24292E;--shiki-dark:#E6EDF3">: </span><span style="color:#032F62;--shiki-dark:#A5D6FF">"tester-agent-01"</span><span style="color:#24292E;--shiki-dark:#E6EDF3">,</span></span>
+<span class="line"><span style="color:#005CC5;--shiki-dark:#7EE787">  "task_id"</span><span style="color:#24292E;--shiki-dark:#E6EDF3">: </span><span style="color:#032F62;--shiki-dark:#A5D6FF">"feature-y-2026-05-15"</span><span style="color:#24292E;--shiki-dark:#E6EDF3">,</span></span>
+<span class="line"><span style="color:#005CC5;--shiki-dark:#7EE787">  "type"</span><span style="color:#24292E;--shiki-dark:#E6EDF3">: </span><span style="color:#032F62;--shiki-dark:#A5D6FF">"request_test"</span><span style="color:#24292E;--shiki-dark:#E6EDF3">,</span></span>
+<span class="line"><span style="color:#005CC5;--shiki-dark:#7EE787">  "payload"</span><span style="color:#24292E;--shiki-dark:#E6EDF3">: {</span></span>
+<span class="line"><span style="color:#005CC5;--shiki-dark:#7EE787">    "files"</span><span style="color:#24292E;--shiki-dark:#E6EDF3">: [</span><span style="color:#032F62;--shiki-dark:#A5D6FF">"src/api/users.ts"</span><span style="color:#24292E;--shiki-dark:#E6EDF3">],</span></span>
+<span class="line"><span style="color:#005CC5;--shiki-dark:#7EE787">    "context"</span><span style="color:#24292E;--shiki-dark:#E6EDF3">: </span><span style="color:#032F62;--shiki-dark:#A5D6FF">"Implemented GET /api/users/me. See PR #142 for diff."</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E6EDF3">  },</span></span>
+<span class="line"><span style="color:#005CC5;--shiki-dark:#7EE787">  "timestamp"</span><span style="color:#24292E;--shiki-dark:#E6EDF3">: </span><span style="color:#032F62;--shiki-dark:#A5D6FF">"2026-05-15T14:32:00Z"</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E6EDF3">}</span></span></code></pre>
+<p>Этот формат — <strong>протокол</strong>. Все агенты его знают (через CLAUDE.md или системный prompt). Без формата — у вас не <strong>multi-agent</strong>, а <strong>хаос</strong>.</p>
+<h3 id="уровни-типизации">Уровни типизации</h3>
+<p><strong>Слабый</strong> (free-form в JSON-блок): «делай как чувствуешь, главное JSON».
+<strong>Средний</strong> (схема + примеры): «вот JSON Schema, валидируй».
+<strong>Сильный</strong> (типизированный bus): protocol buffers, FlatBuffers и проч.</p>
+<p>Для <strong>большинства</strong> случаев — средний уровень. JSON Schema + парсер на входе каждого агента.</p>
+<h2 id="supervisor-как-работает">Supervisor: как работает</h2>
+<p>Supervisor — <strong>отдельный</strong> prompt (или agent), с <strong>отличной</strong> от workers ролью. Его задачи:</p>
+<ol>
+<li><strong>Декомпозиция:</strong> разбить задачу на под-таски</li>
+<li><strong>Dispatch:</strong> какой worker какую под-таску</li>
+<li><strong>Synthesis:</strong> собрать результаты, проверить consistency</li>
+<li><strong>Decision:</strong> завершить, итерировать, эскалировать к человеку</li>
+</ol>
+<p><code>supervisor.md</code>:</p>
+<pre class="astro-code astro-code-themes github-light github-dark-default" style="background-color:#fff;--shiki-dark-bg:#0d1117;color:#24292e;--shiki-dark:#e6edf3; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="markdown"><code><span class="line"><span style="color:#24292E;--shiki-dark:#E6EDF3">You are a supervisor agent. You do NOT write code.</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E6EDF3">You orchestrate workers (coder, tester, reviewer).</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E6EDF3">For each incoming task:</span></span>
+<span class="line"><span style="color:#E36209;--shiki-dark:#FFA657">1.</span><span style="color:#24292E;--shiki-dark:#E6EDF3"> Decompose into 1-5 worker tasks.</span></span>
+<span class="line"><span style="color:#E36209;--shiki-dark:#FFA657">2.</span><span style="color:#24292E;--shiki-dark:#E6EDF3"> Dispatch via .agent/queue/&#x3C;worker>/&#x3C;task-id>.json</span></span>
+<span class="line"><span style="color:#E36209;--shiki-dark:#FFA657">3.</span><span style="color:#24292E;--shiki-dark:#E6EDF3"> Poll .agent/queue/&#x3C;worker>/done/ for results.</span></span>
+<span class="line"><span style="color:#E36209;--shiki-dark:#FFA657">4.</span><span style="color:#24292E;--shiki-dark:#E6EDF3"> On all-done: synthesize result, return.</span></span>
+<span class="line"><span style="color:#E36209;--shiki-dark:#FFA657">5.</span><span style="color:#24292E;--shiki-dark:#E6EDF3"> On worker error: retry once, then escalate.</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E6EDF3">Hard rules:</span></span>
+<span class="line"><span style="color:#E36209;--shiki-dark:#FFA657">-</span><span style="color:#24292E;--shiki-dark:#E6EDF3"> Max 5 iterations per task.</span></span>
+<span class="line"><span style="color:#E36209;--shiki-dark:#FFA657">-</span><span style="color:#24292E;--shiki-dark:#E6EDF3"> Total budget: 30 minutes wall-clock.</span></span>
+<span class="line"><span style="color:#E36209;--shiki-dark:#FFA657">-</span><span style="color:#24292E;--shiki-dark:#E6EDF3"> On budget exhaustion: stop, return what we have, flag for human.</span></span></code></pre>
+<p>Это <strong>тонкая</strong> настройка. Supervisor — <strong>самая</strong> сложная роль в multi-agent, потому что <strong>ему</strong> надо принимать решения о других агентах. Часто это первое место, где <strong>что-то идёт не так</strong>.</p>
+<h2 id="короткая-вставка">Короткая вставка ⚡</h2>
+<p>В чате ребят встречается история — собрали супервайзер + 4 worker’а для авто-PR-фабрики. Запустили на одной задаче. Через 6 часов:</p>
+<ul>
+<li>47 коммитов в feature-ветке</li>
+<li>supervisor три раза «отменил» свои же решения</li>
+<li>coder и reviewer ушли в <strong>бесконечный</strong> спор о наименовании одной переменной</li>
+<li>$80 на API за ночь</li>
+</ul>
+<p>Что было сделано <strong>не так</strong>: не было <strong>жёстких лимитов</strong> (число итераций, бюджет $, время). Supervisor работал на <strong>«агент знает лучше»</strong>. Не знает.</p>
+<p><strong>Multi-agent без бюджетов — это deadlock-машина.</strong> Всегда верхний предел: итераций, времени, токенов. Превышен — <strong>stop</strong>, <strong>эскалация</strong> к человеку.</p>
+<h2 id="когда-выбирать-какую-архитектуру">Когда выбирать какую архитектуру</h2>
+<h3 id="supervisor--workers--самый-частый">Supervisor + workers — самый частый</h3>
+<p>Подходит почти везде, где задача <strong>очевидно декомпозируется</strong>:</p>
+<ul>
+<li>Разработка фичи: planner + coder + tester + doc-writer</li>
+<li>Анализ кодовой базы: разделение по подсистемам, sub-агенты на каждую</li>
+<li>Подготовка PR: коды-ревью-тесты-описание-merge</li>
+</ul>
+<p><strong>Лимиты:</strong> макс. 5 workers (больше — сложно отлаживать), макс. 3 уровня глубины.</p>
+<h3 id="peer-to-peer--редко">Peer-to-peer — редко</h3>
+<p>Только когда <strong>специально</strong> нужна <strong>диалоговая</strong> динамика (brainstorm, debate, generation+critique loops).</p>
+<p><strong>Обязательно:</strong> жёсткое правило завершения (N раундов или supervisor-judge сверху).</p>
+<h3 id="event-driven--для-длинных-процессов">Event-driven — для длинных процессов</h3>
+<p>Когда между шагами <strong>могут</strong> быть часы-дни. CI/CD, заявки клиентов, on-call rotation с агентом-первой-линии.</p>
+<p><strong>Не используйте</strong>, когда задача укладывается в один час wall-clock — overhead не окупится.</p>
+<h2 id="пример-supervisor--3-workers-минимальная-реализация">Пример: supervisor + 3 workers (минимальная реализация)</h2>
+<p><code>.agent/queue/</code> структура:</p>
+<pre class="astro-code astro-code-themes github-light github-dark-default" style="background-color:#fff;--shiki-dark-bg:#0d1117;color:#24292e;--shiki-dark:#e6edf3; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>.agent/queue/</span></span>
+<span class="line"><span>├── inbox/                    # supervisor читает отсюда</span></span>
+<span class="line"><span>│   └── task-001.json</span></span>
+<span class="line"><span>├── coder/</span></span>
+<span class="line"><span>│   ├── todo/</span></span>
+<span class="line"><span>│   ├── doing/</span></span>
+<span class="line"><span>│   └── done/</span></span>
+<span class="line"><span>├── tester/</span></span>
+<span class="line"><span>│   ├── todo/</span></span>
+<span class="line"><span>│   ├── doing/</span></span>
+<span class="line"><span>│   └── done/</span></span>
+<span class="line"><span>└── reviewer/</span></span>
+<span class="line"><span>    ├── todo/</span></span>
+<span class="line"><span>    ├── doing/</span></span>
+<span class="line"><span>    └── done/</span></span></code></pre>
+<p><code>runner.sh</code>:</p>
+<pre class="astro-code astro-code-themes github-light github-dark-default" style="background-color:#fff;--shiki-dark-bg:#0d1117;color:#24292e;--shiki-dark:#e6edf3; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#6A737D;--shiki-dark:#8B949E">#!/usr/bin/env bash</span></span>
+<span class="line"><span style="color:#005CC5;--shiki-dark:#79C0FF">set</span><span style="color:#005CC5;--shiki-dark:#79C0FF"> -e</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D;--shiki-dark:#8B949E"># Один цикл supervisor</span></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#FF7B72">while</span><span style="color:#24292E;--shiki-dark:#E6EDF3"> [ </span><span style="color:#D73A49;--shiki-dark:#FF7B72">-f</span><span style="color:#24292E;--shiki-dark:#E6EDF3"> .agent/queue/inbox/</span><span style="color:#D73A49;--shiki-dark:#FF7B72">*</span><span style="color:#24292E;--shiki-dark:#E6EDF3">.json ]; </span><span style="color:#D73A49;--shiki-dark:#FF7B72">do</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E6EDF3">    TASK</span><span style="color:#D73A49;--shiki-dark:#FF7B72">=</span><span style="color:#24292E;--shiki-dark:#E6EDF3">$(</span><span style="color:#6F42C1;--shiki-dark:#FFA657">ls</span><span style="color:#032F62;--shiki-dark:#A5D6FF"> .agent/queue/inbox/</span><span style="color:#005CC5;--shiki-dark:#79C0FF">*</span><span style="color:#032F62;--shiki-dark:#A5D6FF">.json</span><span style="color:#D73A49;--shiki-dark:#FF7B72"> |</span><span style="color:#6F42C1;--shiki-dark:#FFA657"> head</span><span style="color:#005CC5;--shiki-dark:#79C0FF"> -1</span><span style="color:#24292E;--shiki-dark:#E6EDF3">)</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E6EDF3">    TASK_ID</span><span style="color:#D73A49;--shiki-dark:#FF7B72">=</span><span style="color:#24292E;--shiki-dark:#E6EDF3">$(</span><span style="color:#6F42C1;--shiki-dark:#FFA657">basename</span><span style="color:#032F62;--shiki-dark:#A5D6FF"> "</span><span style="color:#24292E;--shiki-dark:#E6EDF3">$TASK</span><span style="color:#032F62;--shiki-dark:#A5D6FF">"</span><span style="color:#032F62;--shiki-dark:#A5D6FF"> .json</span><span style="color:#24292E;--shiki-dark:#E6EDF3">)</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E6EDF3">    </span></span>
+<span class="line"><span style="color:#6A737D;--shiki-dark:#8B949E">    # 1. Supervisor decomposes</span></span>
+<span class="line"><span style="color:#6F42C1;--shiki-dark:#FFA657">    claude</span><span style="color:#005CC5;--shiki-dark:#79C0FF"> --print</span><span style="color:#005CC5;--shiki-dark:#79C0FF"> --system-prompt-file</span><span style="color:#032F62;--shiki-dark:#A5D6FF"> supervisor.md</span><span style="color:#005CC5;--shiki-dark:#FF7B72"> \</span></span>
+<span class="line"><span style="color:#032F62;--shiki-dark:#A5D6FF">        "Decompose task in </span><span style="color:#24292E;--shiki-dark:#E6EDF3">$TASK</span><span style="color:#032F62;--shiki-dark:#A5D6FF">. Output subtasks to .agent/queue/{worker}/todo/</span><span style="color:#24292E;--shiki-dark:#E6EDF3">$TASK_ID</span><span style="color:#032F62;--shiki-dark:#A5D6FF">-{n}.json"</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E6EDF3">    </span></span>
+<span class="line"><span style="color:#6F42C1;--shiki-dark:#FFA657">    mv</span><span style="color:#032F62;--shiki-dark:#A5D6FF"> "</span><span style="color:#24292E;--shiki-dark:#E6EDF3">$TASK</span><span style="color:#032F62;--shiki-dark:#A5D6FF">"</span><span style="color:#032F62;--shiki-dark:#A5D6FF"> .agent/queue/processing/</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E6EDF3">    </span></span>
+<span class="line"><span style="color:#6A737D;--shiki-dark:#8B949E">    # 2. Workers process in parallel</span></span>
+<span class="line"><span style="color:#6F42C1;--shiki-dark:#FFA657">    parallel</span><span style="color:#005CC5;--shiki-dark:#79C0FF"> -j</span><span style="color:#005CC5;--shiki-dark:#79C0FF"> 3</span><span style="color:#032F62;--shiki-dark:#A5D6FF"> :::</span><span style="color:#005CC5;--shiki-dark:#FF7B72"> \</span></span>
+<span class="line"><span style="color:#032F62;--shiki-dark:#A5D6FF">        "claude --print --system-prompt-file coder.md --json-mode"</span><span style="color:#005CC5;--shiki-dark:#FF7B72"> \</span></span>
+<span class="line"><span style="color:#032F62;--shiki-dark:#A5D6FF">        "claude --print --system-prompt-file tester.md --json-mode"</span><span style="color:#005CC5;--shiki-dark:#FF7B72"> \</span></span>
+<span class="line"><span style="color:#032F62;--shiki-dark:#A5D6FF">        "claude --print --system-prompt-file reviewer.md --json-mode"</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E6EDF3">    </span></span>
+<span class="line"><span style="color:#6A737D;--shiki-dark:#8B949E">    # 3. Supervisor synthesizes</span></span>
+<span class="line"><span style="color:#6F42C1;--shiki-dark:#FFA657">    claude</span><span style="color:#005CC5;--shiki-dark:#79C0FF"> --print</span><span style="color:#005CC5;--shiki-dark:#79C0FF"> --system-prompt-file</span><span style="color:#032F62;--shiki-dark:#A5D6FF"> supervisor.md</span><span style="color:#005CC5;--shiki-dark:#FF7B72"> \</span></span>
+<span class="line"><span style="color:#032F62;--shiki-dark:#A5D6FF">        "Tasks done. Synthesize result for </span><span style="color:#24292E;--shiki-dark:#E6EDF3">$TASK_ID</span><span style="color:#032F62;--shiki-dark:#A5D6FF">."</span></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#FF7B72">done</span></span></code></pre>
+<p><strong>Это упрощение.</strong> В реальности нужны: timeout per worker, retry policy, error handling, deduplication, persistent state. Но <strong>скелет</strong> именно такой.</p>
+<h2 id="антипаттерны-multi-agent">Антипаттерны multi-agent</h2>
+<h3 id="1-слишком-тонкое-разбиение">1. «Слишком тонкое разбиение»</h3>
+<p>Supervisor + 8 узкоспециализированных workers. Каждый делает <strong>одну функцию</strong>. Overhead на координацию <strong>больше</strong>, чем выигрыш от специализации.</p>
+<p><strong>Лекарство:</strong> <strong>2-4</strong> worker’а. Больше — только если <strong>реально</strong> нужны разные модели или права.</p>
+<h3 id="2-workers-без-жёстких-прав">2. Workers без жёстких прав</h3>
+<p>«Reviewer» имеет полный write-доступ к репо. Зачем? Он <strong>только</strong> читает и пишет коммент.</p>
+<p><strong>Лекарство:</strong> минимум прав на роль. Reviewer — read-only + write только в <code>.agent/reviews/</code>.</p>
+<h3 id="3-свободная-коммуникация-без-формата">3. Свободная коммуникация без формата</h3>
+<p>Workers пишут «как чувствуют». Supervisor парсит <strong>наугад</strong>. <strong>Хаос.</strong></p>
+<p><strong>Лекарство:</strong> <strong>JSON Schema</strong> на каждый тип сообщения. Парсер на входе. Невалидное — <strong>отбросить</strong> и <strong>переспросить</strong>.</p>
+<h3 id="4-без-лимитов">4. Без лимитов</h3>
+<p>«Пусть супервайзер сам решит, когда хватит». <strong>Не решит.</strong> Гоняйте до <strong>бюджета</strong>, дальше <strong>stop</strong>.</p>
+<p><strong>Лекарство:</strong> жёсткие верхние границы по итерациям, времени, токенам. Любое превышение — <strong>эскалация к человеку</strong>, не autonomous decision.</p>
+<h3 id="5-все-агенты-на-одной-модели">5. Все агенты на одной модели</h3>
+<p>Можно. Но <strong>дорого</strong> и <strong>избыточно</strong> для простых ролей.</p>
+<p><strong>Лекарство:</strong> Supervisor / planner — Opus. Coder — Sonnet или Opus. Tester / formatter — Haiku или Sonnet (быстрее, дешевле). Reviewer — Opus (для качества).</p>
+<h3 id="6-multi-agent-для-задачи-которая-не-нужна-multi-agent">6. Multi-agent для задачи, которая не нужна multi-agent</h3>
+<p>Самый частый. «Звучит круто, давайте сделаем». Овеководство, hype-driven design.</p>
+<p><strong>Лекарство:</strong> см. M16, целиком про это.</p>
+<h2 id="practice-90-120-минут">Practice (90-120 минут)</h2>
+<h3 id="задание-1-60-минут--собрать-минимальный-supervisor--2-workers">Задание 1 (60 минут) — собрать минимальный supervisor + 2 workers</h3>
+<p>Не на боевом проекте, а на <strong>песочнице</strong>. Скрипт + JSON-queue + два subagent. Прогон на одной простой задаче (например, «refactor function X, добавь тест»).</p>
+<p>Запишите:</p>
+<ul>
+<li>Сколько времени <strong>отвалидировать</strong> результат?</li>
+<li>Что сломалось первым (если сломалось)?</li>
+<li>Стоило ли оно того <strong>vs</strong> просто pipeline?</li>
+</ul>
+<h3 id="задание-2-30-минут--формат-сообщений">Задание 2 (30 минут) — формат сообщений</h3>
+<p>Опишите <strong>JSON Schema</strong> для одного типа сообщения в вашем pipeline. Загляните, какие поля <strong>обязательно</strong> нужны, какие — опциональны. Это упражнение <strong>критично</strong>, до того как пробовать настоящий multi-agent.</p>
+<h3 id="опционально-60-минут--параллельный-pipeline">Опционально (60+ минут) — параллельный pipeline</h3>
+<p>Если в практической работе есть задача с <strong>параллельными</strong> ветвями (например, миграция двух независимых модулей), запустите 2 workers одновременно через <code>parallel</code>. Сравните wall-clock vs sequential.</p>
+<h2 id="recap">Recap</h2>
+<ul>
+<li><strong>Multi-agent окупается</strong> на параллелизме, разных моделях/контекстах, adversarial сценариях. В <strong>большинстве</strong> случаев — pipeline хватает.</li>
+<li><strong>Архитектуры:</strong> supervisor+workers (самая частая), peer-to-peer (редко), event-driven (для долгих процессов).</li>
+<li><strong>Жёсткий формат коммуникации + жёсткие лимиты</strong> — без них multi-agent превращается в deadlock-машину.</li>
+</ul>
+<h2 id="скептик-самурай">Скептик Самурай</h2>
+<aside class="skeptic">
+<p><strong>🥷 Скептик Самурай спрашивает:</strong>
+«Это всё круто, но <strong>мне-то</strong> зачем? У меня pet-project, я один. Я к multi-agent <strong>за всю жизнь</strong> не подойду.»</p>
+<p><strong>Ответ:</strong> И <strong>правильно сделаете</strong>. Multi-agent — это <strong>архитектурная</strong> территория, окупающаяся на <strong>больших</strong> проектах с командами и продакшеном. Я в эту главу включил <strong>именно</strong>, чтобы вы <strong>понимали</strong>, что multi-agent <strong>существует</strong> и <strong>как устроен</strong> — на случай, если попадёте в проект, где это <strong>реально</strong> нужно (или <strong>кажется</strong>, что нужно — половина случаев). Но <strong>строить</strong> multi-agent для себя — overhead. Pipeline (M14) — да, всем рекомендую. Multi-agent — только когда <strong>боль</strong> от его отсутствия начнёт <strong>дороже</strong> боли от его наличия. <strong>Не идеально, но реально работает.</strong></p>
+</aside>
+<h2 id="дальше">Дальше</h2>
+<p>В <strong>M16 — Когда multi-agent избыточен. Антипаттерны</strong> закроем Часть V. Полностью обратная сторона этой главы — <strong>где</strong> и <strong>почему</strong> multi-agent <strong>не нужен</strong>, какие типовые ошибки в дизайне, и <strong>как</strong> доказать себе или команде, что «не надо строить». Самая полезная глава трека для <strong>избежания</strong> дорогих ошибок.</p>
+<p>Если зашло — поделитесь главой с тем, кто <strong>сразу хочет</strong> строить multi-agent, не освоив pipeline. Если у вас есть <strong>рабочая</strong> multi-agent система — расскажите в комменты, разберём архитектуру. Ваша обратная связь реально помогает шлифовать материал.</p>
+<p>Всех обнял, всегда ваш — Илья ❤️</p>  <nav class="chapter-nav"> <a href="/vibesamurai-site/courses/middle/m14"> <span class="dir">← Назад</span> <span class="title">M14 · Один агент, много шагов: пайплайны и оркестрация</span> </a> <a href="/vibesamurai-site/courses/middle/m16"> <span class="dir">Дальше →</span> <span class="title">M16 · Когда multi-agent избыточен. Антипаттерны</span> </a> </nav> </main> </div> </body></html>

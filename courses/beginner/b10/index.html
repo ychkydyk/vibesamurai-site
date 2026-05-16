@@ -1,0 +1,160 @@
+<!DOCTYPE html><html lang="en"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Как оценивать, что агент сделал хорошо — Vibesamurai</title><meta name="description" content="Чек-лист и скептические проверки. Отличаем «реально работает» от «выглядит работающим». Половина агентских факапов — здесь."><meta property="og:title" content="Как оценивать, что агент сделал хорошо"><meta property="og:type" content="article"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Inter:wght@300..800&family=JetBrains+Mono:wght@400..600&display=swap" rel="stylesheet"><link rel="stylesheet" href="/vibesamurai-site/_astro/_slug_.DpgmObvf.css">
+<style>.reader-sidebar[data-astro-cid-khgtvzrl] .soon[data-astro-cid-khgtvzrl]{display:block;color:var(--text-mute);font-size:var(--size-2);padding:var(--space-1) 0}.reader-sidebar[data-astro-cid-khgtvzrl] .soon[data-astro-cid-khgtvzrl] em[data-astro-cid-khgtvzrl]{font-style:normal;font-family:var(--font-mono);font-size:.85em;color:var(--accent);margin-left:4px;text-transform:uppercase;letter-spacing:.1em}
+</style></head> <body> <div class="reader-app"> <aside class="reader-rail"> <a href="/vibesamurai-site/" class="logo" aria-label="Vibesamurai home">V</a> </aside> <aside class="reader-sidebar" data-astro-cid-khgtvzrl> <div class="breadcrumb" data-astro-cid-khgtvzrl>Vibesamurai · Beginner Path · b10</div> <h4 data-astro-cid-khgtvzrl>В этом курсе</h4> <ul data-astro-cid-khgtvzrl> <li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b1" class data-astro-cid-khgtvzrl>B1 · Что такое AI-агент</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b2" class data-astro-cid-khgtvzrl>B2 · Установка Claude Code</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b3" class data-astro-cid-khgtvzrl>B3 · Первый разговор</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b4" class data-astro-cid-khgtvzrl>B4 · Репозиторий и коммиты</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b5" class data-astro-cid-khgtvzrl>B5 · Первый проект: todo</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b6" class data-astro-cid-khgtvzrl>B6 · Читать код агента</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b7" class data-astro-cid-khgtvzrl>B7 · Безопасность для новичков</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b8" class data-astro-cid-khgtvzrl>B8 · Cursor vs Claude vs Codex</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b9" class data-astro-cid-khgtvzrl>B9 · Деплой первого проекта</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b10" class="current" data-astro-cid-khgtvzrl>B10 · Оценка вывода агента</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b11" class data-astro-cid-khgtvzrl>B11 · Капстоун</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b12" class data-astro-cid-khgtvzrl>B12 · Куда дальше</a> </li> </ul>  </aside> <main class="reader-main"> <div class="chapter-eyebrow">Beginner Path · b10</div> <h1 class="chapter-title">B10 · Как оценивать, что агент сделал хорошо</h1> <p class="chapter-subtitle">Чек-лист и скептические проверки. Отличаем «реально работает» от «выглядит работающим». Половина агентских факапов — здесь.</p>  <blockquote>
+<p>Черновик B10 в голосе DmitriyM (см. <code>scripts/tg_voice_analysis/_summary.md</code>).</p>
+</blockquote>
+<h2 id="hook">Hook</h2>
+<pre class="astro-code astro-code-themes github-light github-dark-default" style="background-color:#fff;--shiki-dark-bg:#0d1117;color:#24292e;--shiki-dark:#e6edf3; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>«ВЫГЛЯДИТ ХОРОШО»             «РЕАЛЬНО РАБОТАЕТ»</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>Открыл — красиво  →           Открыл — красиво</span></span>
+<span class="line"><span>Принял                         Проверил каждую фичу</span></span>
+<span class="line"><span>                               Проверил edge case</span></span>
+<span class="line"><span>                               Проверил консоль</span></span>
+<span class="line"><span>                               Прочитал diff</span></span>
+<span class="line"><span>                               → принял</span></span></code></pre>
+<p>Друзья, всем привет! 👋</p>
+<p>Эта глава — про <strong>тот самый момент</strong>, когда агент написал, всё «<strong>выглядит</strong>» хорошо, и хочется нажать «принять» и идти дальше. Это — <strong>главная ловушка</strong> новичка. Половина агентских факапов вылезает не сразу, а через два дня, когда «выглядящий рабочим» код <strong>в реальности</strong> ломается на втором клике.</p>
+<p>Двадцать-тридцать минут. После главы у вас будет <strong>чек-лист проверки</strong>, который займёт 3-5 минут, но <strong>спасёт часы</strong> потом.</p>
+<h2 id="концепция-работает-и-выглядит-работающим--разные-вещи">Концепция: «работает» и «выглядит работающим» — разные вещи</h2>
+<pre class="astro-code astro-code-themes github-light github-dark-default" style="background-color:#fff;--shiki-dark-bg:#0d1117;color:#24292e;--shiki-dark:#e6edf3; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>ВЫГЛЯДИТ ПОТЕНЦИАЛЬНО          РАБОТАЕТ</span></span>
+<span class="line"><span>✓ Открылось без ошибки         ✓ Открылось без ошибки</span></span>
+<span class="line"><span>✓ Картинка на месте            ✓ Все 5 пунктов «как поймём готовым»</span></span>
+<span class="line"><span>                               ✓ Edge case проверены</span></span>
+<span class="line"><span>                               ✓ Консоль чистая</span></span>
+<span class="line"><span>                               ✓ Файлы изменились только нужные</span></span>
+<span class="line"><span>                               ✓ Перезагрузка не ломает</span></span></code></pre>
+<p><strong>Выглядит хорошо</strong> — это <strong>поверхностный</strong> тест. Глаз увидел знакомое, мозг считал «ок».</p>
+<p><strong>Работает</strong> — это <strong>функциональный</strong> тест. Каждая обещанная фича проверена руками.</p>
+<p>Разница в <strong>5-7 минут</strong> проверок. И в количестве ваших нервов через неделю.</p>
+<h2 id="чек-лист-принятия-результата-5-минут">Чек-лист принятия результата (5 минут)</h2>
+<p>Запомните и пройдитесь по нему <strong>после каждой</strong> правки от агента. Это <strong>базовая гигиена</strong>, как <code>git status</code> после изменений.</p>
+<h3 id="1-соответствие-критериям-из-запроса">1. Соответствие критериям из запроса</h3>
+<p>Помните формулу из B3: <strong>ЧТО + ГДЕ + КАК ПОЙМЁМ ГОТОВЫМ</strong>? Возьмите ваш «как поймём готовым» и <strong>проверьте каждый пункт</strong> руками.</p>
+<p>Если в запросе было «<strong>добавил задачу → она появилась в списке</strong>» — добавьте задачу и <strong>посмотрите</strong>. Не «должна появиться» — а <strong>появилась ли</strong>.</p>
+<h3 id="2-edge-caseы">2. Edge case’ы</h3>
+<p>«Edge case» — это <strong>граничные случаи</strong>: пустой ввод, очень длинный текст, спецсимволы, быстрые клики.</p>
+<p>Минимальный список:</p>
+<ul>
+<li>Пустой ввод (нажал «добавить», не введя ничего)</li>
+<li>Очень длинный ввод (300 символов)</li>
+<li>Спецсимволы в тексте (<code>&#x3C;script></code>, кавычки, эмодзи)</li>
+<li>Быстрые повторные клики</li>
+<li>Удаление последнего элемента из списка</li>
+</ul>
+<p>90% багов прячутся именно в edge case’ах.</p>
+<h3 id="3-консоль-браузера">3. Консоль браузера</h3>
+<p>F12 → Console. <strong>Что там?</strong></p>
+<ul>
+<li><strong>Пусто</strong> — отлично</li>
+<li><strong>Жёлтые warnings</strong> — обычно ок, но прочитайте, что значат</li>
+<li><strong>Красные errors</strong> — стоп. Покажите агенту: «В консоли ошибка <code>&#x3C;…></code>. Что это?»</li>
+</ul>
+<h3 id="4-diff-в-git">4. Diff в git</h3>
+<pre class="astro-code astro-code-themes github-light github-dark-default" style="background-color:#fff;--shiki-dark-bg:#0d1117;color:#24292e;--shiki-dark:#e6edf3; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#6F42C1;--shiki-dark:#FFA657">git</span><span style="color:#032F62;--shiki-dark:#A5D6FF"> diff</span></span></code></pre>
+<p>Это покажет, <strong>какие именно строки</strong> изменились. Прокрутите глазами:</p>
+<ul>
+<li>Изменились ли <strong>только</strong> те файлы, которые ожидали?</li>
+<li>Не появились ли <strong>лишние</strong> изменения (например, у вас был один туду, а агент переписал три файла)?</li>
+<li>Нет ли <strong>подозрительных</strong> строк — <code>eval()</code>, <code>localStorage.setItem("token", ...)</code>, новые <code>&#x3C;script src="http://..."></code>?</li>
+</ul>
+<p>Если что-то не так — <code>git restore .</code> (откат) и переформулируйте.</p>
+<h3 id="5-перезагрузка-страницы-если-применимо">5. Перезагрузка страницы (если применимо)</h3>
+<p>Для веб-проектов: после изменений нажмите F5 в браузере. Всё ещё работает? Сохранилось состояние, если должно было?</p>
+<h2 id="расширенный-чек-лист-5-10-минут-перед-деплоемшарингом">Расширенный чек-лист (5-10 минут, перед деплоем/шарингом)</h2>
+<p>Когда хочется <strong>поделиться</strong> результатом — пройдитесь дополнительно:</p>
+<h3 id="6-мобильное-устройство">6. Мобильное устройство</h3>
+<p>Откройте URL (если задеплоили из B9) с <strong>телефона</strong>. Часто на десктопе всё ок, а на мобиле:</p>
+<ul>
+<li>Кнопки слишком маленькие</li>
+<li>Текст уходит за экран</li>
+<li>Не работает свайп / тап</li>
+</ul>
+<h3 id="7-другой-браузер">7. Другой браузер</h3>
+<p>Тестировали в Chrome? Откройте в Firefox/Safari. Бывает, что что-то работает только в Chrome и тихо ломается в других.</p>
+<h3 id="8-чистая-сессия">8. Чистая сессия</h3>
+<p>Откройте в режиме «инкогнито» / «приватное окно». Это очищает localStorage и cookies. Если ваш todo там не запускается «с нуля» — у вас баг на первом запуске, который <strong>на вашем компе</strong> прятался под старыми данными.</p>
+<h3 id="9-что-должно-не-работать--действительно-не-работает">9. Что должно НЕ работать — действительно не работает?</h3>
+<p>Допустим, ваш todo не сохраняет в облако (это локалка). Проверьте — реально ли в облако ничего не уходит? Откройте Network в DevTools и посмотрите, <strong>куда ваш сайт стучится</strong> в фоне. Не должно быть запросов на левые домены.</p>
+<blockquote>
+<p><em>Принципиально:</em> если в сетевых запросах появляется что-то, чего вы <strong>не просили</strong> — это серьёзный сигнал. Спросите агента: «откуда взялся запрос на <code>&#x3C;домен></code>, я этого не просил».</p>
+</blockquote>
+<h2 id="антипаттерны-в-которые-проваливается-новичок">Антипаттерны, в которые проваливается новичок</h2>
+<h3 id="антипаттерн-1-выглядит--значит-работает">Антипаттерн 1. «Выглядит — значит работает»</h3>
+<p>Открыл, увидел — «о, кнопочка, форма, всё на месте» → принял. <strong>Без проверки фич.</strong> Через два дня выясняется, что половина не работает.</p>
+<p><strong>Лекарство:</strong> чек-лист выше. <strong>Всегда</strong>.</p>
+<h3 id="антипаттерн-2-агент-написал--значит-правильно">Антипаттерн 2. «Агент написал — значит правильно»</h3>
+<p>Агент уверенным голосом сообщает «готово, я добавил функцию X». На самом деле он добавил <strong>похожую</strong> функцию, которая на 70% соответствует, а на 30% — нет.</p>
+<p><strong>Лекарство:</strong> <strong>проверять руками</strong> ключевые сценарии. Доверие к агенту — да, но <strong>с проверкой</strong>.</p>
+<h3 id="антипаттерн-3-я-принял--потом-разберусь">Антипаттерн 3. «Я принял — потом разберусь»</h3>
+<p>«Сейчас просто соглашусь, потом проверю». <strong>Никогда не проверяет.</strong> Накапливается <strong>полный фарш</strong> скрытых багов, и через неделю проект не запускается, и <strong>никто не помнит</strong>, что и где.</p>
+<p><strong>Лекарство:</strong> <strong>коммит после каждой принятой правки</strong> (B4). Если потом найдётся баг — <code>git log</code> покажет, <strong>где</strong> появился, и <code>git restore</code> к коммиту откатит безболезненно.</p>
+<h3 id="антипаттерн-4-зелёный-значит-хорошо">Антипаттерн 4. «Зелёный значит хорошо»</h3>
+<p>Тесты прошли → значит, работает. Это <strong>частая ошибка опытных</strong> программистов, кстати. Тесты проверяют только то, что в них <strong>написано</strong>. А вы написали <strong>тот</strong> ли тест?</p>
+<p><strong>Лекарство:</strong> руками <strong>проверять глазами</strong>. Тесты — <strong>дополнение</strong>, не замена.</p>
+<h3 id="антипаттерн-5-если-работает-у-меня--работает-у-всех">Антипаттерн 5. «Если работает у меня — работает у всех»</h3>
+<p>«У меня открывается — значит, ок». А у пользователя:</p>
+<ul>
+<li>Другой браузер</li>
+<li>Другая ОС</li>
+<li>Другой размер экрана</li>
+<li>Старая версия</li>
+</ul>
+<p><strong>Лекарство:</strong> мобила, чистая сессия, другой браузер — пункты 6-8 расширенного чек-листа.</p>
+<h2 id="короткая-вставка">Короткая вставка ⚡</h2>
+<p>Самый частый комментарий от ребят: «вот вчера всё работало, а сегодня — нет, агент <strong>что-то сломал</strong>».</p>
+<p>В 9 случаях из 10 — <strong>никто</strong> ничего не ломал. Просто <strong>вчера не проверили как следует</strong>, а <strong>сегодня</strong> заметили баг, который был и тогда. Это базовая когнитивка: «работает у меня» = «работает в принципе». Не работает.</p>
+<p><strong>Чек-лист — это страховка от самого себя.</strong></p>
+<h2 id="пример-применяем-чек-лист-к-todo">Пример: применяем чек-лист к todo</h2>
+<p>Допустим, вы попросили агента: «Добавь в todo возможность удалить задачу кнопкой ❌».</p>
+<p>Агент сказал «готово».</p>
+<p><strong>Чек-лист (3 минуты):</strong></p>
+<ol>
+<li><strong>Соответствие:</strong> Открыл — рядом с каждой задачей есть ❌? <strong>Да.</strong> Клик удаляет задачу? <strong>Да.</strong></li>
+<li><strong>Edge:</strong>
+<ul>
+<li>Удаляю <strong>последнюю</strong> задачу — лист пустой? Не сломалось?</li>
+<li>Удаляю быстро <strong>подряд</strong> — все удалились?</li>
+<li>А если задачу <strong>выполнил</strong> и потом удаляю — работает?</li>
+</ul>
+</li>
+<li><strong>Консоль:</strong> F12 → Console. <strong>Пусто.</strong></li>
+<li><strong>Diff:</strong> <code>git diff</code> → менялся только <code>app.js</code> и <code>style.css</code> (для кнопки) — <strong>ожидаемо</strong>.</li>
+<li><strong>Перезагрузка:</strong> F5 после удаления — задачи действительно ушли, не «вернулись из localStorage».</li>
+</ol>
+<p>Всё хорошо? <strong>Коммит.</strong> Не всё? <strong>Уточняем у агента или откатываем.</strong></p>
+<h2 id="practice-30-минут">Practice (30 минут)</h2>
+<h3 id="задание-1-15-минут--пройтись-чек-листом-по-todo">Задание 1 (15 минут) — пройтись чек-листом по todo</h3>
+<p>Откройте свой todo из B5 (или любой текущий проект). Пройдитесь по <strong>базовому</strong> чек-листу (пункты 1-5). Найдите хотя бы <strong>один</strong> баг, который вы раньше не замечали.</p>
+<p>Если нашли ноль — отлично, у вас аккуратный проект. Или <strong>плохо проверили</strong>.</p>
+<p>Если нашли что-то — попросите агента поправить, и <strong>снова пройдитесь чек-листом</strong>. Закрепляем привычку.</p>
+<h3 id="задание-2-15-минут--чек-лист--текстовый-файл">Задание 2 (15 минут) — чек-лист → текстовый файл</h3>
+<p>В корне проекта создайте файл <code>CHECKLIST.md</code>:</p>
+<pre class="astro-code astro-code-themes github-light github-dark-default" style="background-color:#fff;--shiki-dark-bg:#0d1117;color:#24292e;--shiki-dark:#e6edf3; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="markdown"><code><span class="line"><span style="color:#005CC5;--shiki-light-font-weight:bold;--shiki-dark:#79C0FF;--shiki-dark-font-weight:bold"># Перед коммитом</span></span>
+<span class="line"><span style="color:#E36209;--shiki-dark:#FFA657">-</span><span style="color:#24292E;--shiki-dark:#E6EDF3"> [ ] Все критерии «как поймём готовым» проверены руками</span></span>
+<span class="line"><span style="color:#E36209;--shiki-dark:#FFA657">-</span><span style="color:#24292E;--shiki-dark:#E6EDF3"> [ ] Edge: пустой ввод, длинный текст, спецсимволы</span></span>
+<span class="line"><span style="color:#E36209;--shiki-dark:#FFA657">-</span><span style="color:#24292E;--shiki-dark:#E6EDF3"> [ ] Консоль F12 — без красных</span></span>
+<span class="line"><span style="color:#E36209;--shiki-dark:#FFA657">-</span><span style="color:#24292E;--shiki-dark:#E6EDF3"> [ ] git diff — изменилось только ожидаемое</span></span>
+<span class="line"><span style="color:#E36209;--shiki-dark:#FFA657">-</span><span style="color:#24292E;--shiki-dark:#E6EDF3"> [ ] F5 — состояние сохранилось как надо</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#005CC5;--shiki-light-font-weight:bold;--shiki-dark:#79C0FF;--shiki-dark-font-weight:bold"># Перед шарингом</span></span>
+<span class="line"><span style="color:#E36209;--shiki-dark:#FFA657">-</span><span style="color:#24292E;--shiki-dark:#E6EDF3"> [ ] Мобила</span></span>
+<span class="line"><span style="color:#E36209;--shiki-dark:#FFA657">-</span><span style="color:#24292E;--shiki-dark:#E6EDF3"> [ ] Другой браузер</span></span>
+<span class="line"><span style="color:#E36209;--shiki-dark:#FFA657">-</span><span style="color:#24292E;--shiki-dark:#E6EDF3"> [ ] Инкогнито (чистая сессия)</span></span>
+<span class="line"><span style="color:#E36209;--shiki-dark:#FFA657">-</span><span style="color:#24292E;--shiki-dark:#E6EDF3"> [ ] Network: нет лишних запросов</span></span></code></pre>
+<p>Заведите привычку <strong>открывать</strong> этот файл перед каждым принятием правки. Через 2 недели он будет в голове, файл можно удалить.</p>
+<h2 id="recap">Recap</h2>
+<ul>
+<li><strong>«Выглядит хорошо» ≠ «работает».</strong> 5 минут чек-листа экономят часы потом.</li>
+<li><strong>Базовый чек-лист:</strong> критерии → edge → консоль → diff → перезагрузка. <strong>После каждой правки.</strong></li>
+<li><strong>Антипаттерны:</strong> «принял потом проверю», «зелёный = хорошо», «у меня работает». Все три — известные ловушки.</li>
+</ul>
+<h2 id="скептик-самурай">Скептик Самурай</h2>
+<aside class="skeptic">
+<p><strong>🥷 Скептик Самурай спрашивает:</strong>
+«Это же тратить полчаса на проверки! Я хочу быстро. И вообще, агент же написал — он сам не проверил, что ли?»</p>
+<p><strong>Ответ:</strong> Агент проверил <strong>по тому, что вы попросили</strong>. Если вы не попросили — он сделал <strong>минимально достаточно</strong>, чтобы выглядело рабочим. Проверка — это <strong>ваша</strong> ответственность, не агента. Звучит несправедливо, но это та же история, что с подрядчиком: вы можете отдать ему задачу, но <strong>принимать работу</strong> обязаны вы. Иначе все «не проверенные» баги остаются вашими — а агент пошёл на следующую задачу. Пять минут проверки vs часы переделки — арифметика простая. <strong>Не идеально, но реально работает.</strong></p>
+</aside>
+<h2 id="дальше">Дальше</h2>
+<p>В <strong>B11 — Капстоун: соберите свой инструмент</strong> мы соберём <strong>всё, что было</strong> в треке — формула запроса, git, чтение кода, безопасность, деплой, чек-лист — в <strong>один реальный проект</strong>, который <strong>лично вам</strong> нужен. Не учебное todo, а штука, которую вы будете <strong>сами использовать</strong>. Это финальная работа Beginner-трека.</p>
+<p>Если зашло — поделитесь главой с тем, кто «принимает агентскую работу не глядя». Если у вас был эпизод «принял — а оно через два дня сломалось» — расскажите в комменты, разберём как избежать. <strong>За лайк и комментарий — отдельная благодарность</strong>, ваша обратная связь реально помогает шлифовать материал.</p>
+<p>Всех обнял, всегда ваш — Илья ❤️</p>  <nav class="chapter-nav"> <a href="/vibesamurai-site/courses/beginner/b9"> <span class="dir">← Назад</span> <span class="title">B9 · Деплой первого проекта</span> </a> <a href="/vibesamurai-site/courses/beginner/b11"> <span class="dir">Дальше →</span> <span class="title">B11 · Капстоун: соберите свой инструмент</span> </a> </nav> </main> </div> </body></html>

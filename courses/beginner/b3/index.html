@@ -1,0 +1,113 @@
+<!DOCTYPE html><html lang="en"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Первый разговор — Vibesamurai</title><meta name="description" content="Как просить агента и что просить. Структура хорошего запроса. Когда соглашаться, когда «нет, переделай»."><meta property="og:title" content="Первый разговор"><meta property="og:type" content="article"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Inter:wght@300..800&family=JetBrains+Mono:wght@400..600&display=swap" rel="stylesheet"><link rel="stylesheet" href="/vibesamurai-site/_astro/_slug_.DpgmObvf.css">
+<style>.reader-sidebar[data-astro-cid-khgtvzrl] .soon[data-astro-cid-khgtvzrl]{display:block;color:var(--text-mute);font-size:var(--size-2);padding:var(--space-1) 0}.reader-sidebar[data-astro-cid-khgtvzrl] .soon[data-astro-cid-khgtvzrl] em[data-astro-cid-khgtvzrl]{font-style:normal;font-family:var(--font-mono);font-size:.85em;color:var(--accent);margin-left:4px;text-transform:uppercase;letter-spacing:.1em}
+</style></head> <body> <div class="reader-app"> <aside class="reader-rail"> <a href="/vibesamurai-site/" class="logo" aria-label="Vibesamurai home">V</a> </aside> <aside class="reader-sidebar" data-astro-cid-khgtvzrl> <div class="breadcrumb" data-astro-cid-khgtvzrl>Vibesamurai · Beginner Path · b3</div> <h4 data-astro-cid-khgtvzrl>В этом курсе</h4> <ul data-astro-cid-khgtvzrl> <li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b1" class data-astro-cid-khgtvzrl>B1 · Что такое AI-агент</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b2" class data-astro-cid-khgtvzrl>B2 · Установка Claude Code</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b3" class="current" data-astro-cid-khgtvzrl>B3 · Первый разговор</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b4" class data-astro-cid-khgtvzrl>B4 · Репозиторий и коммиты</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b5" class data-astro-cid-khgtvzrl>B5 · Первый проект: todo</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b6" class data-astro-cid-khgtvzrl>B6 · Читать код агента</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b7" class data-astro-cid-khgtvzrl>B7 · Безопасность для новичков</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b8" class data-astro-cid-khgtvzrl>B8 · Cursor vs Claude vs Codex</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b9" class data-astro-cid-khgtvzrl>B9 · Деплой первого проекта</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b10" class data-astro-cid-khgtvzrl>B10 · Оценка вывода агента</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b11" class data-astro-cid-khgtvzrl>B11 · Капстоун</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b12" class data-astro-cid-khgtvzrl>B12 · Куда дальше</a> </li> </ul>  </aside> <main class="reader-main"> <div class="chapter-eyebrow">Beginner Path · b3</div> <h1 class="chapter-title">B3 · Первый разговор</h1> <p class="chapter-subtitle">Как просить агента и что просить. Структура хорошего запроса. Когда соглашаться, когда «нет, переделай».</p>  <blockquote>
+<p>Черновик B3 в голосе DmitriyM (см. <code>scripts/tg_voice_analysis/_summary.md</code>).</p>
+</blockquote>
+<h2 id="hook">Hook</h2>
+<pre class="astro-code astro-code-themes github-light github-dark-default" style="background-color:#fff;--shiki-dark-bg:#0d1117;color:#24292e;--shiki-dark:#e6edf3; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>ВАШ ЗАПРОС:                АГЕНТ ПОНИМАЕТ:</span></span>
+<span class="line"><span>"сделай красиво"      →    ??? (что-нибудь, не угадаете)</span></span>
+<span class="line"><span>"измени цвет кнопки   →    конкретная правка</span></span>
+<span class="line"><span> на синий в Login"</span></span></code></pre>
+<p>Друзья, всем привет! 👋</p>
+<p>В этой главе — самый важный навык всего курса: <strong>как просить агента так, чтобы он понял вас с первого раза</strong>. Это не «магические промпты» и не «секреты ChatGPT-инфоцыган». Это простая структура, которая работает всегда. Двадцать минут, и вы сэкономите себе <strong>десятки часов</strong> в следующие месяцы.</p>
+<h2 id="концепция-запрос--маленький-контракт">Концепция: запрос = маленький контракт</h2>
+<p>Думайте о каждом запросе к агенту как о <strong>мини-контракте</strong>. В нём должны быть три вещи:</p>
+<pre class="astro-code astro-code-themes github-light github-dark-default" style="background-color:#fff;--shiki-dark-bg:#0d1117;color:#24292e;--shiki-dark:#e6edf3; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>┌─────────────────────────────────────────────────────┐</span></span>
+<span class="line"><span>│  1. ЧТО СДЕЛАТЬ     — конкретное действие           │</span></span>
+<span class="line"><span>│  2. ГДЕ            — файл / папка / функция         │</span></span>
+<span class="line"><span>│  3. КАК ПОЙМЁМ ЧТО ГОТОВО — критерий «принять»      │</span></span>
+<span class="line"><span>└─────────────────────────────────────────────────────┘</span></span></code></pre>
+<p>Это <strong>базовая формула</strong>. Если в запросе нет хотя бы одного из трёх — агент будет угадывать. Иногда угадает правильно, иногда нет. Лотерея.</p>
+<h3 id="плохо-vs-хорошо">Плохо vs хорошо</h3>
+<p><strong>Плохо:</strong></p>
+<blockquote>
+<p>«Помоги с авторизацией»</p>
+</blockquote>
+<p>Что не так: не понятно <em>что</em> помочь, <em>где</em> код, <em>что</em> считать готовым. Агент придумает свою историю — обычно не вашу.</p>
+<p><strong>Хорошо:</strong></p>
+<blockquote>
+<p>«В файле <code>src/login.js</code> есть форма входа. Добавь проверку, что пароль минимум 8 символов. Считаем готовым, когда: 1) при пароле короче 8 символов появляется сообщение «Пароль слишком короткий», 2) при достаточно длинном — форма отправляется как раньше.»</p>
+</blockquote>
+<p>Что хорошо: понятно <em>что</em> (валидация), <em>где</em> (<code>src/login.js</code>), <em>как поймём</em> (два конкретных поведения).</p>
+<h2 id="структура-хорошего-запроса">Структура хорошего запроса</h2>
+<p>Не обязательно громоздкая. Минимум — <strong>одно предложение по формуле</strong>:</p>
+<blockquote>
+<p>«&#x3C;ЧТО> в &#x3C;ГДЕ>, чтобы &#x3C;КАК ПОЙМЁМ ЧТО ГОТОВО>.»</p>
+</blockquote>
+<p>Расширения — по необходимости:</p>
+<ul>
+<li><strong>«Сначала покажи план»</strong> — если задача побольше, не одним движением</li>
+<li><strong>«Не трогай X»</strong> — если есть зоны, в которые не лезть</li>
+<li><strong>«Используй Y»</strong> — если есть предпочтения по инструментам/библиотекам</li>
+<li><strong>«Спроси, если непонятно»</strong> — даёт право переспросить, а не угадывать</li>
+</ul>
+<h3 id="шаблон-для-копирования">Шаблон для копирования</h3>
+<pre class="astro-code astro-code-themes github-light github-dark-default" style="background-color:#fff;--shiki-dark-bg:#0d1117;color:#24292e;--shiki-dark:#e6edf3; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>Что: ...</span></span>
+<span class="line"><span>Где: ...</span></span>
+<span class="line"><span>Как поймём готовым: ...</span></span>
+<span class="line"><span>Не трогай: ...</span></span>
+<span class="line"><span>Сначала покажи план.</span></span></code></pre>
+<p>Положите этот шаблон под рукой — открытым в текстовом редакторе или закладкой. В первые недели вы будете заглядывать в него часто, потом — рефлекторно.</p>
+<h2 id="типичные-ошибки-новичков">Типичные ошибки новичков</h2>
+<h3 id="1-помоги-мне">1. «Помоги мне»</h3>
+<p>Самая частая. Что значит «помочь» — не определено. Агент сделает что-то на свой вкус. Лекарство: всегда заменяйте «помоги» на конкретный глагол.</p>
+<h3 id="2-сделай-красиво">2. «Сделай красиво»</h3>
+<p>Что значит «красиво»? Шрифт побольше? Цвет другой? Анимация? Не угадаете. Лекарство: показывайте пример («как на этом скриншоте», «как на сайте X»), или давайте конкретные параметры.</p>
+<h3 id="3-исправь-баг">3. «Исправь баг»</h3>
+<p>Какой баг? Где? Как воспроизвести? Что должно быть вместо? Лекарство: <strong>сначала опишите воспроизведение</strong>, потом ожидание.</p>
+<h3 id="4-длинная-стена-текста">4. Длинная стена текста</h3>
+<p>Тоже плохо: 5 абзацев со всеми возможными деталями. Агент потратит контекст на разбор, что важно, а что фон. Лекарство: коротко по формуле + опциональный «не трогай».</p>
+<h3 id="5-сделай-как-тебе-кажется-лучше">5. «Сделай как тебе кажется лучше»</h3>
+<p>Звучит вежливо, на самом деле — отказ от ответственности. Агент сделает «как ему кажется», а это редко совпадает с тем, что хотели вы. Лекарство: формулируйте предпочтения сами, даже если они неуверенные.</p>
+<h2 id="пример-путешествие-плохого-запроса-в-хороший">Пример: путешествие плохого запроса в хороший</h2>
+<p><strong>Раунд 1.</strong> «Сделай мне сайт-визитку».</p>
+<p>— Что должно быть на сайте? Тёмный или светлый? Имя, профессия, контакты? Один файл или папка?</p>
+<p><strong>Раунд 2.</strong> «HTML-страница, тёмная тема, моё имя «Илья Морозов», профессия «AI-разработчик», три контакта: email, telegram, github».</p>
+<p>— Хорошо. Какие предпочтения по шрифту? Картинки/фото нужно?</p>
+<p><strong>Раунд 3.</strong> «Sans-serif, без картинок. Файл <code>index.html</code> в текущей папке. Считаем готовым, когда: открыл файл в браузере → видно имя, профессию, три кликабельных контакта на тёмном фоне. Покажи план до того, как начнёшь.»</p>
+<p>Это <strong>запрос, который не нужно уточнять</strong>. Агент понимает, что делать, <em>где</em> сделать, <em>что</em> считать готовым.</p>
+<p>Можно ли сразу написать так с первого раза? Можно. И через 2-3 недели практики у вас это будет рефлекс.</p>
+<h2 id="когда-соглашаться-когда-нет-переделай">Когда соглашаться, когда «нет, переделай»</h2>
+<p>После того как агент что-то сделал, у вас три кнопки:</p>
+<h3 id="-принять--когда">✅ «Принять» — когда</h3>
+<ul>
+<li>Результат полностью соответствует «как поймём готовым» из запроса</li>
+<li>Никаких дополнительных «бонусных» изменений, которые вы не просили</li>
+<li>Файлы изменились только те, которые ожидались</li>
+</ul>
+<h3 id="-уточнить-и-переделать--когда">🔁 «Уточнить и переделать» — когда</h3>
+<ul>
+<li>Большинство сделано правильно, но что-то отклонилось</li>
+<li>Нужны мелкие поправки (текст, цвет, отступы)</li>
+<li>Уточнение: «Хорошо, но шрифт сделай не Inter, а Geist» — это нормальный workflow</li>
+</ul>
+<h3 id="-откатить-начать-заново--когда">❌ «Откатить, начать заново» — когда</h3>
+<ul>
+<li>Агент сделал «совсем не то», ушёл в сторону</li>
+<li>Затронуты файлы, которые не должны были</li>
+<li>Понятно, что лучше переформулировать задачу с нуля, чем чинить</li>
+</ul>
+<p>Откат — это <strong>нормально</strong>. Это не «неудача» и не «он плохой». Это нормальный рабочий процесс. В git откат — это <code>git restore</code> (или нажать «Reject» в Cursor). В Claude Code — попросите «откати последние изменения».</p>
+<h2 id="practice-30-минут">Practice (30 минут)</h2>
+<h3 id="задание-1-15-минут--переписать-плохой-запрос">Задание 1 (15 минут) — переписать плохой запрос</h3>
+<p>Возьмите <strong>свой</strong> реальный запрос, который вы могли бы захотеть отдать агенту. Например, «сделай мне портфолио-страничку», «помоги с резюме», «напиши Telegram-бота на погоду». <strong>Перепишите по формуле</strong> ЧТО / ГДЕ / КАК ПОЙМЁМ.</p>
+<p>Сравните оба варианта. Какой из них вам <strong>самому понятнее</strong>? Это и есть критерий: если <strong>вы</strong> можете в нём ответить, агент — тем более.</p>
+<h3 id="задание-2-15-минут--запустите-хороший-запрос">Задание 2 (15 минут) — запустите хороший запрос</h3>
+<p>В пустой папке откройте <code>claude</code> и отправьте свой переписанный запрос. Посмотрите результат. <strong>Проверьте по критерию «как поймём готовым»</strong> — соответствует или нет?</p>
+<p>Если да — отлично, формула работает. Если нет — что в формуле не хватило? Запишите для себя. В следующий раз учтёте.</p>
+<h2 id="recap">Recap</h2>
+<ul>
+<li><strong>Запрос = мини-контракт</strong> из трёх частей: ЧТО + ГДЕ + КАК ПОЙМЁМ ГОТОВЫМ.</li>
+<li><strong>Опционально:</strong> «не трогай», «сначала покажи план», «используй X».</li>
+<li><strong>Три кнопки после результата:</strong> принять / уточнить-переделать / откатить-заново. Откат — нормально.</li>
+</ul>
+<h2 id="скептик-самурай">Скептик Самурай</h2>
+<aside class="skeptic">
+<p><strong>🥷 Скептик Самурай спрашивает:</strong>
+«Это же тратить время на формулировку! Я хочу быстро, а не контракты писать.»</p>
+<p><strong>Ответ:</strong> Десять секунд на формулу против 10 минут на «он сделал не то, я переделываю». Кажется быстрее «коротко» — на деле медленнее в разы. Это та же история, что с код-ревью: «лучше не писать тесты, я и так напишу хорошо» — все так думали, потом отлавливали баги в продакшене. Формула — это ваш мини-тест перед запросом. <strong>Не идеально, но реально работает.</strong></p>
+</aside>
+<h2 id="дальше">Дальше</h2>
+<p>В <strong>B4 — Что такое репозиторий и зачем коммитить</strong> разберём git за 20 минут — только то, что нужно для безопасной работы с агентом. Без неё каждая ошибка агента может стать невосстановимой. С ней — любую ошибку можно откатить одной командой.</p>
+<p>Если зашло — поделитесь главой с тем, кто работает с агентом и постоянно жалуется «он опять сделал не то». Если у вас есть свой типичный запрос, который не получается — пишите в комменты, разберём вместе. Ваша обратная связь реально помогает.</p>
+<p>Всех обнял, всегда ваш — Илья ❤️</p>  <nav class="chapter-nav"> <a href="/vibesamurai-site/courses/beginner/b2"> <span class="dir">← Назад</span> <span class="title">B2 · Установка вашего первого AI-агента</span> </a> <a href="/vibesamurai-site/courses/beginner/b4"> <span class="dir">Дальше →</span> <span class="title">B4 · Что такое репозиторий и зачем коммитить</span> </a> </nav> </main> </div> </body></html>

@@ -1,0 +1,166 @@
+<!DOCTYPE html><html lang="en"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Что такое репозиторий и зачем коммитить — Vibesamurai</title><meta name="description" content="Git за 20 минут — только то, что нужно. PR как способ сказать «стоп, посмотри что я сделал»."><meta property="og:title" content="Что такое репозиторий и зачем коммитить"><meta property="og:type" content="article"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Inter:wght@300..800&family=JetBrains+Mono:wght@400..600&display=swap" rel="stylesheet"><link rel="stylesheet" href="/vibesamurai-site/_astro/_slug_.DpgmObvf.css">
+<style>.reader-sidebar[data-astro-cid-khgtvzrl] .soon[data-astro-cid-khgtvzrl]{display:block;color:var(--text-mute);font-size:var(--size-2);padding:var(--space-1) 0}.reader-sidebar[data-astro-cid-khgtvzrl] .soon[data-astro-cid-khgtvzrl] em[data-astro-cid-khgtvzrl]{font-style:normal;font-family:var(--font-mono);font-size:.85em;color:var(--accent);margin-left:4px;text-transform:uppercase;letter-spacing:.1em}
+</style></head> <body> <div class="reader-app"> <aside class="reader-rail"> <a href="/vibesamurai-site/" class="logo" aria-label="Vibesamurai home">V</a> </aside> <aside class="reader-sidebar" data-astro-cid-khgtvzrl> <div class="breadcrumb" data-astro-cid-khgtvzrl>Vibesamurai · Beginner Path · b4</div> <h4 data-astro-cid-khgtvzrl>В этом курсе</h4> <ul data-astro-cid-khgtvzrl> <li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b1" class data-astro-cid-khgtvzrl>B1 · Что такое AI-агент</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b2" class data-astro-cid-khgtvzrl>B2 · Установка Claude Code</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b3" class data-astro-cid-khgtvzrl>B3 · Первый разговор</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b4" class="current" data-astro-cid-khgtvzrl>B4 · Репозиторий и коммиты</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b5" class data-astro-cid-khgtvzrl>B5 · Первый проект: todo</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b6" class data-astro-cid-khgtvzrl>B6 · Читать код агента</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b7" class data-astro-cid-khgtvzrl>B7 · Безопасность для новичков</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b8" class data-astro-cid-khgtvzrl>B8 · Cursor vs Claude vs Codex</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b9" class data-astro-cid-khgtvzrl>B9 · Деплой первого проекта</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b10" class data-astro-cid-khgtvzrl>B10 · Оценка вывода агента</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b11" class data-astro-cid-khgtvzrl>B11 · Капстоун</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b12" class data-astro-cid-khgtvzrl>B12 · Куда дальше</a> </li> </ul>  </aside> <main class="reader-main"> <div class="chapter-eyebrow">Beginner Path · b4</div> <h1 class="chapter-title">B4 · Что такое репозиторий и зачем коммитить</h1> <p class="chapter-subtitle">Git за 20 минут — только то, что нужно. PR как способ сказать «стоп, посмотри что я сделал».</p>  <blockquote>
+<p>Черновик B4 в голосе DmitriyM (см. <code>scripts/tg_voice_analysis/_summary.md</code>).</p>
+</blockquote>
+<h2 id="hook">Hook</h2>
+<pre class="astro-code astro-code-themes github-light github-dark-default" style="background-color:#fff;--shiki-dark-bg:#0d1117;color:#24292e;--shiki-dark:#e6edf3; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>БЕЗ git:                       С git:</span></span>
+<span class="line"><span>Агент что-то сломал.    →     Агент что-то сломал.</span></span>
+<span class="line"><span>Что-то навсегда. 😱           git restore .  ←  всё откатилось 🙂</span></span></code></pre>
+<p>Друзья, всем привет! 👋</p>
+<p>Эта глава — про <strong>главное страховое колесо</strong> работы с агентом. Если до неё вы могли только смотреть, как агент работает, и переживать «вдруг что-то сломает» — то после неё у вас будет <strong>физическая кнопка отката</strong> на любую агентскую ошибку. Это сильно меняет уверенность в работе.</p>
+<p>Git мы возьмём ровно настолько, насколько нужен для безопасности и базовой работы. Не «git mastery». Двадцать минут.</p>
+<h2 id="концепция-репозиторий--папка-с-памятью">Концепция: репозиторий = папка с памятью</h2>
+<p><strong>Репозиторий</strong> (или просто «репо») — это <strong>папка вашего проекта плюс память всех изменений</strong> в ней.</p>
+<pre class="astro-code astro-code-themes github-light github-dark-default" style="background-color:#fff;--shiki-dark-bg:#0d1117;color:#24292e;--shiki-dark:#e6edf3; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>my-project/        ← обычная папка</span></span>
+<span class="line"><span>├── index.html</span></span>
+<span class="line"><span>└── style.css</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>my-project-with-git/    ← репозиторий</span></span>
+<span class="line"><span>├── .git/               ← вот это превращает папку в репо</span></span>
+<span class="line"><span>├── index.html</span></span>
+<span class="line"><span>└── style.css</span></span></code></pre>
+<p>Скрытая папка <code>.git/</code> — это и есть «память». Внутри неё лежит история <strong>каждого изменения</strong> в проекте. Удалили файл — он есть в истории. Поменяли строку — старая версия в истории. Можете в любой момент вернуть как было.</p>
+<h3 id="зачем-это-вам-с-агентом">Зачем это вам с агентом</h3>
+<p>Когда агент пишет код в обычной папке — каждое изменение <strong>необратимо</strong>. Если он удалил нужный файл, переписал важную функцию, добавил баг — у вас нет «машины времени».</p>
+<p>Когда агент пишет код в <strong>репозитории</strong> — каждое изменение можно <strong>откатить одной командой</strong>. Это не теория, это просто рабочий механизм.</p>
+<h2 id="минимум-команд-git-которого-хватит-на-90-задач">Минимум команд git, которого хватит на 90% задач</h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Команда</th><th>Что делает</th><th>Когда</th></tr></thead><tbody><tr><td><code>git init</code></td><td>Превратить папку в репозиторий</td><td>Один раз, в начале нового проекта</td></tr><tr><td><code>git status</code></td><td>Показать какие файлы изменились</td><td>Каждый раз, как «что у меня сейчас»</td></tr><tr><td><code>git add .</code></td><td>Подготовить все изменения к сохранению</td><td>Перед коммитом</td></tr><tr><td><code>git commit -m "..."</code></td><td>Сохранить изменения в историю</td><td>Когда что-то рабочее получилось</td></tr><tr><td><code>git restore .</code></td><td>Откатить <strong>несохранённые</strong> изменения</td><td>Когда что-то сломали и хотите вернуть</td></tr><tr><td><code>git log --oneline</code></td><td>Посмотреть историю коммитов</td><td>Когда хочется понять «что я делал»</td></tr></tbody></table>
+<p>Запомните эти шесть. Остальное — потом.</p>
+<h3 id="цикл-изменил--сохранил-одним-абзацем">Цикл «изменил → сохранил» одним абзацем</h3>
+<ol>
+<li>Меняете файлы (сами или агентом)</li>
+<li><code>git status</code> — проверили что изменилось</li>
+<li><code>git add .</code> — приготовили все изменения</li>
+<li><code>git commit -m "что я сделал"</code> — сохранили в историю</li>
+<li>Снова к шагу 1</li>
+</ol>
+<p>Если на шаге 1 что-то сломалось и хочется вернуть <strong>до последнего коммита</strong> — <code>git restore .</code>. Всё, что было после коммита, исчезает. То что в коммитах — остаётся.</p>
+<h2 id="пример-создаём-репозиторий-и-делаем-первый-коммит">Пример: создаём репозиторий и делаем первый коммит</h2>
+<p>В терминале:</p>
+<pre class="astro-code astro-code-themes github-light github-dark-default" style="background-color:#fff;--shiki-dark-bg:#0d1117;color:#24292e;--shiki-dark:#e6edf3; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#6F42C1;--shiki-dark:#FFA657">mkdir</span><span style="color:#032F62;--shiki-dark:#A5D6FF"> my-first-repo</span></span>
+<span class="line"><span style="color:#005CC5;--shiki-dark:#79C0FF">cd</span><span style="color:#032F62;--shiki-dark:#A5D6FF"> my-first-repo</span></span>
+<span class="line"><span style="color:#6F42C1;--shiki-dark:#FFA657">git</span><span style="color:#032F62;--shiki-dark:#A5D6FF"> init</span></span></code></pre>
+<p>Готово, у вас репозиторий. Создадим простой файл:</p>
+<pre class="astro-code astro-code-themes github-light github-dark-default" style="background-color:#fff;--shiki-dark-bg:#0d1117;color:#24292e;--shiki-dark:#e6edf3; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#005CC5;--shiki-dark:#79C0FF">echo</span><span style="color:#032F62;--shiki-dark:#A5D6FF"> "# Мой первый репо"</span><span style="color:#D73A49;--shiki-dark:#FF7B72"> ></span><span style="color:#032F62;--shiki-dark:#A5D6FF"> README.md</span></span></code></pre>
+<p>Посмотрим состояние:</p>
+<pre class="astro-code astro-code-themes github-light github-dark-default" style="background-color:#fff;--shiki-dark-bg:#0d1117;color:#24292e;--shiki-dark:#e6edf3; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#6F42C1;--shiki-dark:#FFA657">git</span><span style="color:#032F62;--shiki-dark:#A5D6FF"> status</span></span></code></pre>
+<p>Покажет «Untracked files: README.md» — то есть «есть файл, но он пока не под памятью». Добавим в память:</p>
+<pre class="astro-code astro-code-themes github-light github-dark-default" style="background-color:#fff;--shiki-dark-bg:#0d1117;color:#24292e;--shiki-dark:#e6edf3; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#6F42C1;--shiki-dark:#FFA657">git</span><span style="color:#032F62;--shiki-dark:#A5D6FF"> add</span><span style="color:#032F62;--shiki-dark:#A5D6FF"> .</span></span>
+<span class="line"><span style="color:#6F42C1;--shiki-dark:#FFA657">git</span><span style="color:#032F62;--shiki-dark:#A5D6FF"> commit</span><span style="color:#005CC5;--shiki-dark:#79C0FF"> -m</span><span style="color:#032F62;--shiki-dark:#A5D6FF"> "первый файл"</span></span></code></pre>
+<p>Готово. Теперь поломаем — допустим, удалили файл случайно:</p>
+<pre class="astro-code astro-code-themes github-light github-dark-default" style="background-color:#fff;--shiki-dark-bg:#0d1117;color:#24292e;--shiki-dark:#e6edf3; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#6F42C1;--shiki-dark:#FFA657">rm</span><span style="color:#032F62;--shiki-dark:#A5D6FF"> README.md</span></span></code></pre>
+<p>Хотим вернуть:</p>
+<pre class="astro-code astro-code-themes github-light github-dark-default" style="background-color:#fff;--shiki-dark-bg:#0d1117;color:#24292e;--shiki-dark:#e6edf3; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#6F42C1;--shiki-dark:#FFA657">git</span><span style="color:#032F62;--shiki-dark:#A5D6FF"> restore</span><span style="color:#032F62;--shiki-dark:#A5D6FF"> README.md</span></span></code></pre>
+<p>Файл на месте. Это и есть <strong>машина времени</strong> в действии.</p>
+<h2 id="зачем-коммитить-часто">Зачем коммитить часто</h2>
+<p>Каждый коммит — это <strong>точка отката</strong>. Чем чаще коммитите, тем больше точек, тем безопаснее.</p>
+<p>Хороший ритм работы с агентом:</p>
+<pre class="astro-code astro-code-themes github-light github-dark-default" style="background-color:#fff;--shiki-dark-bg:#0d1117;color:#24292e;--shiki-dark:#e6edf3; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>1. Описать задачу агенту по формуле из B3</span></span>
+<span class="line"><span>2. Агент сделал → проверили → работает</span></span>
+<span class="line"><span>3. git add . + git commit -m "коротко что сделали"</span></span>
+<span class="line"><span>4. Следующая задача</span></span></code></pre>
+<p>То есть <strong>каждая принятая правка = коммит</strong>. Десять задач в день — десять коммитов. Это нормально.</p>
+<p>Если в какой-то момент агент сделал что-то странное и <strong>прошлый коммит был час назад</strong> — <code>git restore .</code> откатит на час назад. Час работы потеряли, ну ладно. Если же прошлый коммит был <strong>неделю назад</strong> — неделя работы потеряна. Чувствуете разницу?</p>
+<blockquote>
+<p><em>Принципиально:</em> <strong>коммиты — это бесплатные точки сохранения</strong>. Жадничать на них нельзя. Я даже на «I am sure it’ll work» сначала коммичу — мало ли.</p>
+</blockquote>
+<h2 id="github-gitlab-и-другие--это-просто-хранилища">GitHub, GitLab и другие — это просто хранилища</h2>
+<p><code>git</code> — программа на вашем компьютере. <strong>GitHub</strong> — это сервис в интернете, где можно <strong>хранить копию репозитория</strong>. И — критично — где можно делать <strong>pull request (PR)</strong>.</p>
+<p>PR (или MR — Merge Request на GitLab) — это <strong>способ предложить изменения и получить ревью</strong> до того, как их применят в основную ветку.</p>
+<p>Зачем это вам с агентом:</p>
+<ul>
+<li>Когда агент делает что-то серьёзное — он может сделать это <strong>в отдельной ветке</strong>, открыть PR, и вы смотрите изменения в удобном интерфейсе <strong>до</strong> того, как принять.</li>
+<li>В команде PR — это стандартный способ сказать «коллега, посмотри что я сделал».</li>
+</ul>
+<p>В этом курсе мы не будем глубоко погружаться в PR-flow на этапе Beginner. Достаточно знать: <strong>git — это локально</strong>, <strong>GitHub — это «там, где другие могут увидеть и обсудить»</strong>.</p>
+<h2 id="practice-30-минут">Practice (30 минут)</h2>
+<h3 id="задание-1-15-минут--свой-первый-репозиторий">Задание 1 (15 минут) — свой первый репозиторий</h3>
+<p>Пройдите весь цикл руками:</p>
+<pre class="astro-code astro-code-themes github-light github-dark-default" style="background-color:#fff;--shiki-dark-bg:#0d1117;color:#24292e;--shiki-dark:#e6edf3; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#6F42C1;--shiki-dark:#FFA657">mkdir</span><span style="color:#032F62;--shiki-dark:#A5D6FF"> hello-git</span></span>
+<span class="line"><span style="color:#005CC5;--shiki-dark:#79C0FF">cd</span><span style="color:#032F62;--shiki-dark:#A5D6FF"> hello-git</span></span>
+<span class="line"><span style="color:#6F42C1;--shiki-dark:#FFA657">git</span><span style="color:#032F62;--shiki-dark:#A5D6FF"> init</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D;--shiki-dark:#8B949E"># создайте файл — любым способом</span></span>
+<span class="line"><span style="color:#005CC5;--shiki-dark:#79C0FF">echo</span><span style="color:#032F62;--shiki-dark:#A5D6FF"> "hello world"</span><span style="color:#D73A49;--shiki-dark:#FF7B72"> ></span><span style="color:#032F62;--shiki-dark:#A5D6FF"> hello.txt</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6F42C1;--shiki-dark:#FFA657">git</span><span style="color:#032F62;--shiki-dark:#A5D6FF"> status</span><span style="color:#6A737D;--shiki-dark:#8B949E">         # посмотрите состояние</span></span>
+<span class="line"><span style="color:#6F42C1;--shiki-dark:#FFA657">git</span><span style="color:#032F62;--shiki-dark:#A5D6FF"> add</span><span style="color:#032F62;--shiki-dark:#A5D6FF"> .</span></span>
+<span class="line"><span style="color:#6F42C1;--shiki-dark:#FFA657">git</span><span style="color:#032F62;--shiki-dark:#A5D6FF"> commit</span><span style="color:#005CC5;--shiki-dark:#79C0FF"> -m</span><span style="color:#032F62;--shiki-dark:#A5D6FF"> "first file"</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D;--shiki-dark:#8B949E"># измените файл</span></span>
+<span class="line"><span style="color:#005CC5;--shiki-dark:#79C0FF">echo</span><span style="color:#032F62;--shiki-dark:#A5D6FF"> "hello git"</span><span style="color:#D73A49;--shiki-dark:#FF7B72"> ></span><span style="color:#032F62;--shiki-dark:#A5D6FF"> hello.txt</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6F42C1;--shiki-dark:#FFA657">git</span><span style="color:#032F62;--shiki-dark:#A5D6FF"> status</span><span style="color:#6A737D;--shiki-dark:#8B949E">         # снова посмотрите</span></span>
+<span class="line"><span style="color:#6F42C1;--shiki-dark:#FFA657">git</span><span style="color:#032F62;--shiki-dark:#A5D6FF"> restore</span><span style="color:#032F62;--shiki-dark:#A5D6FF"> hello.txt</span><span style="color:#6A737D;--shiki-dark:#8B949E">    # откатили</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D;--shiki-dark:#8B949E"># проверьте — должно быть как было после коммита</span></span>
+<span class="line"><span style="color:#6F42C1;--shiki-dark:#FFA657">cat</span><span style="color:#032F62;--shiki-dark:#A5D6FF"> hello.txt</span><span style="color:#6A737D;--shiki-dark:#8B949E">      # выведет "hello world"</span></span></code></pre>
+<p>Если последний <code>cat hello.txt</code> показал «hello world», а не «hello git» — <strong>поздравляю, машина времени работает</strong>.</p>
+<h3 id="задание-2-15-минут--соединить-с-агентом">Задание 2 (15 минут) — соединить с агентом</h3>
+<p>В той же папке (или любой новой с <code>git init</code>):</p>
+<pre class="astro-code astro-code-themes github-light github-dark-default" style="background-color:#fff;--shiki-dark-bg:#0d1117;color:#24292e;--shiki-dark:#e6edf3; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#6F42C1;--shiki-dark:#FFA657">claude</span></span></code></pre>
+<p>Скажите агенту:</p>
+<blockquote>
+<p>«Создай файл <code>notes.md</code> с тремя bullet-пунктами про что-нибудь полезное.»</p>
+</blockquote>
+<p>После того как агент сделал — <strong>сами</strong> в терминале:</p>
+<pre class="astro-code astro-code-themes github-light github-dark-default" style="background-color:#fff;--shiki-dark-bg:#0d1117;color:#24292e;--shiki-dark:#e6edf3; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#6F42C1;--shiki-dark:#FFA657">git</span><span style="color:#032F62;--shiki-dark:#A5D6FF"> add</span><span style="color:#032F62;--shiki-dark:#A5D6FF"> .</span></span>
+<span class="line"><span style="color:#6F42C1;--shiki-dark:#FFA657">git</span><span style="color:#032F62;--shiki-dark:#A5D6FF"> commit</span><span style="color:#005CC5;--shiki-dark:#79C0FF"> -m</span><span style="color:#032F62;--shiki-dark:#A5D6FF"> "agent added notes"</span></span></code></pre>
+<p>Готово, вы сохранили <strong>состояние после агентского изменения</strong>. Если следующий раз агент что-то сломает — <code>git restore .</code> вернёт ровно сюда.</p>
+<h2 id="recap">Recap</h2>
+<ul>
+<li><strong>Репозиторий = папка + память изменений</strong> (<code>.git/</code>).</li>
+<li><strong>Шесть команд</strong> покрывают 90% задач: init, status, add, commit, restore, log.</li>
+<li><strong>Коммитьте часто</strong> — каждая принятая агентская правка = коммит. Каждый коммит = точка отката.</li>
+</ul>
+<h2 id="скептик-самурай">Скептик Самурай</h2>
+<aside class="skeptic">
+<p><strong>🥷 Скептик Самурай спрашивает:</strong>
+«Я думал git — это для серьёзных программистов с командой. Я один, мне-то зачем?»</p>
+<p><strong>Ответ:</strong> Git — это не про «командную работу», это про <strong>обратимость</strong>. Один разработчик с git — это разработчик, у которого есть машина времени. Один разработчик без git — это разработчик, у которого есть только текущий момент. Когда вы работаете с агентом, который пишет код в ваши файлы — машина времени <strong>обязательна</strong>, иначе через две недели вы будете бояться нажимать «применить». <strong>Не идеально, но реально работает</strong> — даже у меня в личных проектах есть git, потому что иначе теряются часы работы на ровном месте.</p>
+</aside>
+<h2 id="дальше">Дальше</h2>
+<p>В <strong>B5 — Запускаем первый проект (todo-приложение)</strong> мы соберём всё, что было до этого, в один реальный мини-проект: с нуля, с агентом, в репозитории, с коммитами после каждого шага. Сорок-шестьдесят минут — и у вас рабочее todo-приложение в браузере. Конкретно, не «концептуально».</p>
+<p>Если зашло — поделитесь главой с теми, кто работает с агентом «на голой папке». Если на каких-то командах споткнулись — пишите в комменты, обычно решается за две минуты. Ваша обратная связь реально помогает.</p>
+<p>Всех обнял, всегда ваш — Илья ❤️</p>  <nav class="chapter-nav"> <a href="/vibesamurai-site/courses/beginner/b3"> <span class="dir">← Назад</span> <span class="title">B3 · Первый разговор</span> </a> <a href="/vibesamurai-site/courses/beginner/b5"> <span class="dir">Дальше →</span> <span class="title">B5 · Запускаем первый проект (todo-приложение)</span> </a> </nav> </main> </div> </body></html>

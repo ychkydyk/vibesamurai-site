@@ -1,0 +1,208 @@
+<!DOCTYPE html><html lang="en"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Architecting agent boundaries — Vibesamurai</title><meta name="description" content="Inputs, outputs, success criteria. Как отделить план от действия так, чтобы агент не сломал важное."><meta property="og:title" content="Architecting agent boundaries"><meta property="og:type" content="article"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Inter:wght@300..800&family=JetBrains+Mono:wght@400..600&display=swap" rel="stylesheet"><link rel="stylesheet" href="/vibesamurai-site/_astro/_slug_.DpgmObvf.css">
+<style>.reader-sidebar[data-astro-cid-khgtvzrl] .soon[data-astro-cid-khgtvzrl]{display:block;color:var(--text-mute);font-size:var(--size-2);padding:var(--space-1) 0}.reader-sidebar[data-astro-cid-khgtvzrl] .soon[data-astro-cid-khgtvzrl] em[data-astro-cid-khgtvzrl]{font-style:normal;font-family:var(--font-mono);font-size:.85em;color:var(--accent);margin-left:4px;text-transform:uppercase;letter-spacing:.1em}
+</style></head> <body> <div class="reader-app"> <aside class="reader-rail"> <a href="/vibesamurai-site/" class="logo" aria-label="Vibesamurai home">V</a> </aside> <aside class="reader-sidebar" data-astro-cid-khgtvzrl> <div class="breadcrumb" data-astro-cid-khgtvzrl>Vibesamurai · Middle Path · m2</div> <h4 data-astro-cid-khgtvzrl>В этом курсе</h4> <ul data-astro-cid-khgtvzrl> <li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m1" class data-astro-cid-khgtvzrl>M1 · Что такое agentic AI в SDLC</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m2" class="current" data-astro-cid-khgtvzrl>M2 · Границы агента</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m3" class data-astro-cid-khgtvzrl>M3 · Observability &amp; HITL</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m4" class data-astro-cid-khgtvzrl>M4 · Tool inventory &amp; permissions</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m5" class data-astro-cid-khgtvzrl>M5 · MCP deep dive</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m6" class data-astro-cid-khgtvzrl>M6 · Claude Code mastery</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m7" class data-astro-cid-khgtvzrl>M7 · Codex CLI &amp; OpenAI Agents</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m8" class data-astro-cid-khgtvzrl>M8 · Cursor + IDE-агенты</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m9" class data-astro-cid-khgtvzrl>M9 · Memory strategies</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m10" class data-astro-cid-khgtvzrl>M10 · State, drift, continuity</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m11" class data-astro-cid-khgtvzrl>M11 · Метрики оценки</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m12" class data-astro-cid-khgtvzrl>M12 · Regression testing</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m13" class data-astro-cid-khgtvzrl>M13 · Tuning, когда метрики стоят</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m14" class data-astro-cid-khgtvzrl>M14 · Pipelines &amp; orchestration</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m15" class data-astro-cid-khgtvzrl>M15 · Multi-agent роли</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m16" class data-astro-cid-khgtvzrl>M16 · Когда multi-agent — overkill</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m17" class data-astro-cid-khgtvzrl>M17 · Деплой агентов в прод</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m18" class data-astro-cid-khgtvzrl>M18 · Production security</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m19" class data-astro-cid-khgtvzrl>M19 · Incidents &amp; post-mortems</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m20" class data-astro-cid-khgtvzrl>M20 · Финал Middle</a> </li> </ul>  </aside> <main class="reader-main"> <div class="chapter-eyebrow">Middle Path · m2</div> <h1 class="chapter-title">M2 · Architecting agent boundaries</h1> <p class="chapter-subtitle">Inputs, outputs, success criteria. Как отделить план от действия так, чтобы агент не сломал важное.</p>  <blockquote>
+<p>Черновик M2 в голосе DmitriyM (см. <code>scripts/tg_voice_analysis/_summary.md</code>).</p>
+</blockquote>
+<h2 id="о-чём-эта-глава">О чём эта глава</h2>
+<p>Друзья, всем привет! 👋</p>
+<p>В M1 мы договорились, что агент — это <strong>контрибьютор</strong>, а не справочник, и что в основе его работы лежит цикл <strong>plan → act → evaluate</strong>. Это была ментальная рамка.</p>
+<p>Сейчас спускаемся на один уровень ниже — <strong>инженерный</strong>. Когда вы запускаете агента не «поиграться», а на реальную задачу в реальном репозитории, у вас сразу возникает четыре вопроса:</p>
+<ol>
+<li>Что именно я ему даю на вход?</li>
+<li>Что именно я хочу получить на выходе?</li>
+<li>Как агент должен формулировать свой план, чтобы я мог его проверить <strong>до</strong> действий?</li>
+<li>Где и как я ставлю стоп-кран, если что-то идёт не так?</li>
+</ol>
+<p>Ответы на эти четыре вопроса — это и есть <strong>architecting boundaries</strong>. Если вы их не продумали — не важно, какой у вас «умный» агент, цикл будет рассыпаться.</p>
+<p>В этой главе мы пройдём по каждому из четырёх вопросов с конкретными паттернами, кодом и примерами, как это всё стыкуется в production-flow.</p>
+<h2 id="контракт-inputs-outputs-success-criteria">Контракт: inputs, outputs, success criteria</h2>
+<p>Любая агентская задача — это <strong>контракт</strong>. Не запрос, не «помоги мне», не «давай попробуем» — а контракт с тремя обязательными полями.</p>
+<pre class="astro-code astro-code-themes github-light github-dark-default" style="background-color:#fff;--shiki-dark-bg:#0d1117;color:#24292e;--shiki-dark:#e6edf3; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>TASK CONTRACT</span></span>
+<span class="line"><span>├── INPUTS              — что у агента есть на старте</span></span>
+<span class="line"><span>├── OUTPUTS             — что должно появиться по факту</span></span>
+<span class="line"><span>└── SUCCESS CRITERION   — как мы поймём, что выход валидный</span></span></code></pre>
+<h3 id="inputs">Inputs</h3>
+<p>Это <strong>полный набор того, что агент видит</strong>: репозиторий, конкретные файлы, переменные окружения, доступы к API, конкретные тулы. Принцип — <strong>least context, not most context</strong>: дать минимум, достаточный для задачи. Не «вот весь репо, разберись», а «вот эти три файла, вот этот тикет, вот эта спека».</p>
+<p>Почему минимум:</p>
+<ul>
+<li>Лишний контекст = шум = больше галлюцинаций</li>
+<li>Лишний контекст = больше токенов = больше денег</li>
+<li>Лишний контекст = размытая ответственность («он копался не там»)</li>
+</ul>
+<h3 id="outputs">Outputs</h3>
+<p>Конкретный артефакт. Не «ответ», не «решение», а <strong>физическая штука</strong>: файл, патч, PR, тест-кейс, JSON. Если вы не можете нарисовать структуру выхода — задача не готова к делегированию.</p>
+<p>Плохо: «помоги с авторизацией».
+Хорошо: «выход — патч на <code>auth/oauth.py</code> + новый тест в <code>tests/test_oauth.py</code>, оба коммита в ветку <code>feat/oauth-pkce</code>».</p>
+<h3 id="success-criterion">Success criterion</h3>
+<p>Самое часто пропускаемое поле. Это <strong>проверяемое условие</strong>, по которому вы решаете «принять» или «откатить». Не «работает», не «выглядит ок», а конкретный тест:</p>
+<ul>
+<li>Все unit-тесты в <code>tests/</code> зелёные</li>
+<li>Линтер <code>ruff check</code> не ругается</li>
+<li>В <code>auth/oauth.py</code> появилась функция <code>verify_pkce_challenge</code> с указанной сигнатурой</li>
+<li>Покрытие новой функции тестами ≥ 80%</li>
+</ul>
+<p>Когда у вас явный criterion — у агента появляется <strong>возможность сказать «не получилось»</strong>. Без criterion агент по-умолчанию говорит «готово», даже если результат — мусор. Не потому что врёт, а потому что не знает, чем мерить.</p>
+<h2 id="plan--reasoning--action-отдельные-слои-не-одно-полотно">Plan ↔ Reasoning ↔ Action: отдельные слои, не одно полотно</h2>
+<p>Внутри одной агентской сессии происходит три качественно разные вещи:</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Слой</th><th>Что это</th><th>Кто на что смотрит</th></tr></thead><tbody><tr><td><strong>Reasoning</strong></td><td>Внутренние рассуждения модели, «почему я так думаю»</td><td>В основном для отладки</td></tr><tr><td><strong>Plan</strong></td><td>Структурированный список шагов с проверяемыми пунктами</td><td>Главный артефакт ревью</td></tr><tr><td><strong>Action</strong></td><td>Конкретный вызов тула (write_file, run_bash, etc.)</td><td>Триггер изменений</td></tr></tbody></table>
+<p>Когда новички работают с агентом без разделения этих слоёв — у них всё смешано в один поток сознания: «я подумаю-я-сделаю-я-проверю-я-подумаю-опять». Результат: вы не понимаете, что произошло, и не можете остановить агента на «не делай этого».</p>
+<p>Когда вы разделяете слои — у вас появляются <strong>gates</strong> (ворота), на которых можно остановить:</p>
+<pre class="astro-code astro-code-themes github-light github-dark-default" style="background-color:#fff;--shiki-dark-bg:#0d1117;color:#24292e;--shiki-dark:#e6edf3; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>   reasoning ─→ [GATE 1] ─→ plan ─→ [GATE 2] ─→ action ─→ [GATE 3] ─→ next iteration</span></span></code></pre>
+<ul>
+<li><strong>Gate 1</strong> (после reasoning): нужен ли план или задача тривиальная?</li>
+<li><strong>Gate 2</strong> (после plan): план хороший, можно ли делать?</li>
+<li><strong>Gate 3</strong> (после action): результат соответствует criterion?</li>
+</ul>
+<p>В современных агентских тулзах эти gates реализованы по-разному:</p>
+<ul>
+<li><strong>Claude Code</strong> — <code>--permission-mode plan</code> (физическое отделение plan от action), <code>--ask-before-each-tool-use</code> (gate перед каждым actions)</li>
+<li><strong>Cursor Composer</strong> — отдельные «Plan» и «Edit» режимы; ревью изменений до apply</li>
+<li><strong>Codex CLI</strong> — <code>--approval-mode suggest</code> vs <code>auto-edit</code> vs <code>full-auto</code></li>
+<li><strong>GitHub Copilot Workspace</strong> — отдельные шаги Spec → Plan → Implementation с возможностью править между</li>
+</ul>
+<p>Принципиально: <strong>тул, в котором эти слои не разделены, — это не агентский тул</strong>, это автокомплит на стероидах. Не используйте такие для серьёзных задач.</p>
+<h2 id="structured-plan-output">Structured plan output</h2>
+<p>План должен быть <strong>структурным</strong>, не свободным текстом. Иначе вы не можете его валидировать, и каждый план вы будете «вчитывать», теряя по 10 минут на главу.</p>
+<p>Минимальная структура плана (которую можно потребовать у любого современного агента):</p>
+<pre class="astro-code astro-code-themes github-light github-dark-default" style="background-color:#fff;--shiki-dark-bg:#0d1117;color:#24292e;--shiki-dark:#e6edf3; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="yaml"><code><span class="line"><span style="color:#22863A;--shiki-dark:#7EE787">goal</span><span style="color:#24292E;--shiki-dark:#E6EDF3">: </span><span style="color:#032F62;--shiki-dark:#A5D6FF">"Добавить PKCE в OAuth-флоу"</span></span>
+<span class="line"><span style="color:#22863A;--shiki-dark:#7EE787">context_inputs</span><span style="color:#24292E;--shiki-dark:#E6EDF3">:</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E6EDF3">  - </span><span style="color:#032F62;--shiki-dark:#A5D6FF">auth/oauth.py</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E6EDF3">  - </span><span style="color:#032F62;--shiki-dark:#A5D6FF">docs/spec-auth-v2.md</span></span>
+<span class="line"><span style="color:#22863A;--shiki-dark:#7EE787">steps</span><span style="color:#24292E;--shiki-dark:#E6EDF3">:</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E6EDF3">  - </span><span style="color:#22863A;--shiki-dark:#7EE787">id</span><span style="color:#24292E;--shiki-dark:#E6EDF3">: </span><span style="color:#005CC5;--shiki-dark:#79C0FF">1</span></span>
+<span class="line"><span style="color:#22863A;--shiki-dark:#7EE787">    action</span><span style="color:#24292E;--shiki-dark:#E6EDF3">: </span><span style="color:#032F62;--shiki-dark:#A5D6FF">"edit"</span></span>
+<span class="line"><span style="color:#22863A;--shiki-dark:#7EE787">    target</span><span style="color:#24292E;--shiki-dark:#E6EDF3">: </span><span style="color:#032F62;--shiki-dark:#A5D6FF">"auth/oauth.py"</span></span>
+<span class="line"><span style="color:#22863A;--shiki-dark:#7EE787">    intent</span><span style="color:#24292E;--shiki-dark:#E6EDF3">: </span><span style="color:#032F62;--shiki-dark:#A5D6FF">"Добавить функцию verify_pkce_challenge"</span></span>
+<span class="line"><span style="color:#22863A;--shiki-dark:#7EE787">    risk</span><span style="color:#24292E;--shiki-dark:#E6EDF3">: </span><span style="color:#032F62;--shiki-dark:#A5D6FF">"low"</span></span>
+<span class="line"><span style="color:#22863A;--shiki-dark:#7EE787">    rollback</span><span style="color:#24292E;--shiki-dark:#E6EDF3">: </span><span style="color:#032F62;--shiki-dark:#A5D6FF">"git restore auth/oauth.py"</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E6EDF3">  - </span><span style="color:#22863A;--shiki-dark:#7EE787">id</span><span style="color:#24292E;--shiki-dark:#E6EDF3">: </span><span style="color:#005CC5;--shiki-dark:#79C0FF">2</span></span>
+<span class="line"><span style="color:#22863A;--shiki-dark:#7EE787">    action</span><span style="color:#24292E;--shiki-dark:#E6EDF3">: </span><span style="color:#032F62;--shiki-dark:#A5D6FF">"create"</span></span>
+<span class="line"><span style="color:#22863A;--shiki-dark:#7EE787">    target</span><span style="color:#24292E;--shiki-dark:#E6EDF3">: </span><span style="color:#032F62;--shiki-dark:#A5D6FF">"tests/test_pkce.py"</span></span>
+<span class="line"><span style="color:#22863A;--shiki-dark:#7EE787">    intent</span><span style="color:#24292E;--shiki-dark:#E6EDF3">: </span><span style="color:#032F62;--shiki-dark:#A5D6FF">"Тест на verify_pkce_challenge"</span></span>
+<span class="line"><span style="color:#22863A;--shiki-dark:#7EE787">    risk</span><span style="color:#24292E;--shiki-dark:#E6EDF3">: </span><span style="color:#032F62;--shiki-dark:#A5D6FF">"low"</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E6EDF3">  - </span><span style="color:#22863A;--shiki-dark:#7EE787">id</span><span style="color:#24292E;--shiki-dark:#E6EDF3">: </span><span style="color:#005CC5;--shiki-dark:#79C0FF">3</span></span>
+<span class="line"><span style="color:#22863A;--shiki-dark:#7EE787">    action</span><span style="color:#24292E;--shiki-dark:#E6EDF3">: </span><span style="color:#032F62;--shiki-dark:#A5D6FF">"run"</span></span>
+<span class="line"><span style="color:#22863A;--shiki-dark:#7EE787">    target</span><span style="color:#24292E;--shiki-dark:#E6EDF3">: </span><span style="color:#032F62;--shiki-dark:#A5D6FF">"pytest tests/test_pkce.py"</span></span>
+<span class="line"><span style="color:#22863A;--shiki-dark:#7EE787">    intent</span><span style="color:#24292E;--shiki-dark:#E6EDF3">: </span><span style="color:#032F62;--shiki-dark:#A5D6FF">"Проверка"</span></span>
+<span class="line"><span style="color:#22863A;--shiki-dark:#7EE787">    risk</span><span style="color:#24292E;--shiki-dark:#E6EDF3">: </span><span style="color:#032F62;--shiki-dark:#A5D6FF">"none"</span></span>
+<span class="line"><span style="color:#22863A;--shiki-dark:#7EE787">success_criterion</span><span style="color:#24292E;--shiki-dark:#E6EDF3">:</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E6EDF3">  - </span><span style="color:#032F62;--shiki-dark:#A5D6FF">"pytest -q exit code 0"</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E6EDF3">  - </span><span style="color:#032F62;--shiki-dark:#A5D6FF">"ruff check exit code 0"</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E6EDF3">  - </span><span style="color:#032F62;--shiki-dark:#A5D6FF">"coverage on auth/oauth.py >= 80%"</span></span>
+<span class="line"><span style="color:#22863A;--shiki-dark:#7EE787">risks_and_mitigations</span><span style="color:#24292E;--shiki-dark:#E6EDF3">:</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E6EDF3">  - </span><span style="color:#22863A;--shiki-dark:#7EE787">risk</span><span style="color:#24292E;--shiki-dark:#E6EDF3">: </span><span style="color:#032F62;--shiki-dark:#A5D6FF">"Refresh-token flow может сломаться при изменении сигнатуры"</span></span>
+<span class="line"><span style="color:#22863A;--shiki-dark:#7EE787">    mitigation</span><span style="color:#24292E;--shiki-dark:#E6EDF3">: </span><span style="color:#032F62;--shiki-dark:#A5D6FF">"Перед изменением — прогнать существующие тесты, убедиться что они проходят"</span></span></code></pre>
+<p>Каждый шаг имеет:</p>
+<ul>
+<li><strong>action</strong> — глагол (edit, create, delete, run, search)</li>
+<li><strong>target</strong> — конкретный файл / команда / артефакт</li>
+<li><strong>intent</strong> — <em>зачем</em> этот шаг (это поле для вас, не для агента)</li>
+<li><strong>risk</strong> — оценка риска (low / medium / high)</li>
+<li><strong>rollback</strong> — как откатить (если risk ≥ medium — обязательно)</li>
+</ul>
+<p>Когда у вас такой план в YAML/JSON/markdown с чёткой структурой — вы тратите 30 секунд на проверку плана из 10 шагов. Когда план — это абзац свободного текста — тратите 5 минут и всё равно что-то упускаете.</p>
+<blockquote>
+<p><strong>Запросить такой план легко:</strong> добавьте в промпт фразу «Output the plan as structured YAML with fields: goal, context_inputs, steps (id/action/target/intent/risk/rollback), success_criterion, risks_and_mitigations. Do not execute anything until the plan is approved.»</p>
+</blockquote>
+<h2 id="validation-gates-где-ставить-стоп-кран">Validation gates: где ставить стоп-кран</h2>
+<p>Между фазами должны быть <strong>gates</strong> — точки проверки. Минимальный набор:</p>
+<h3 id="gate-1--после-plan-перед-action">Gate 1 — После plan, перед action</h3>
+<p><strong>Что проверяем:</strong></p>
+<ul>
+<li>Все шаги в плане соответствуют исходной задаче (агент не «расширил скоуп»)</li>
+<li>Нет шагов с <code>risk: high</code> без явного rollback</li>
+<li>Все target-файлы реальные (агент не выдумал путь)</li>
+<li>Success criterion действительно проверяемый (а не «работает хорошо»)</li>
+</ul>
+<p><strong>Кто проверяет:</strong> вы (или старший в команде, если процесс многосторонний).</p>
+<h3 id="gate-2--после-каждого-risk-high-action">Gate 2 — После каждого <code>risk: high</code> action</h3>
+<p><strong>Что проверяем:</strong></p>
+<ul>
+<li>Результат шага соответствует intent</li>
+<li>Тесты ещё зелёные (если они были зелёные до)</li>
+<li>Никакие сторонние файлы не задеты</li>
+</ul>
+<p><strong>Кто проверяет:</strong> вы или CI.</p>
+<h3 id="gate-3--перед-merge">Gate 3 — Перед merge</h3>
+<p><strong>Что проверяем:</strong></p>
+<ul>
+<li>Все success criterion из плана выполнены</li>
+<li>Diff проревьюен (агентский PR — это всё ещё PR)</li>
+<li>Нет «бонусных» изменений, не описанных в плане</li>
+</ul>
+<p><strong>Кто проверяет:</strong> обязательно человек.</p>
+<h3 id="gate-4--после-deploy">Gate 4 — После deploy</h3>
+<p><strong>Что проверяем:</strong> observability показывает ожидаемое поведение.</p>
+<p><strong>Кто проверяет:</strong> на этом уровне — мониторинг. Подробнее в M3.</p>
+<h2 id="антипаттерн-договор-задним-числом">Антипаттерн: «договор задним числом»</h2>
+<p>Самый частый антипаттерн middle-разработчиков, когда они впервые делают серьёзный пайплайн: они <strong>формулируют success criterion после того как агент уже всё сделал</strong>.</p>
+<p>Логика такая: «ну, посмотрим что получится, потом решу хорошо или плохо». Это <strong>не работает</strong>. Когда у вас уже есть результат, вы подсознательно подгоняете criterion под него, потому что переделывать неохота.</p>
+<p>Правило: <strong>success criterion фиксируется до начала action и не меняется по ходу</strong>. Если поняли, что criterion плохой — откатить всё, переформулировать, начать заново. Не править на лету.</p>
+<p>Это та самая дисциплина, без которой Plan → Act → Evaluate превращается в Plan → Improvise → Rationalize.</p>
+<h2 id="practice-соберите-контракт-для-своей-задачи">Practice: соберите контракт для своей задачи</h2>
+<p>Возьмите <strong>реальную</strong> задачу из вашего бэклога, которую вы бы хотели делегировать агенту. Не учебную, а ту, которую вы и так собирались делать на этой неделе.</p>
+<p>Заполните контракт по шаблону:</p>
+<pre class="astro-code astro-code-themes github-light github-dark-default" style="background-color:#fff;--shiki-dark-bg:#0d1117;color:#24292e;--shiki-dark:#e6edf3; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="yaml"><code><span class="line"><span style="color:#22863A;--shiki-dark:#7EE787">inputs</span><span style="color:#24292E;--shiki-dark:#E6EDF3">:</span></span>
+<span class="line"><span style="color:#22863A;--shiki-dark:#7EE787">  files</span><span style="color:#24292E;--shiki-dark:#E6EDF3">: []</span></span>
+<span class="line"><span style="color:#22863A;--shiki-dark:#7EE787">  docs</span><span style="color:#24292E;--shiki-dark:#E6EDF3">: []</span></span>
+<span class="line"><span style="color:#22863A;--shiki-dark:#7EE787">  envs</span><span style="color:#24292E;--shiki-dark:#E6EDF3">: []</span></span>
+<span class="line"><span style="color:#22863A;--shiki-dark:#7EE787">  tools_allowed</span><span style="color:#24292E;--shiki-dark:#E6EDF3">: []</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#22863A;--shiki-dark:#7EE787">outputs</span><span style="color:#24292E;--shiki-dark:#E6EDF3">:</span></span>
+<span class="line"><span style="color:#22863A;--shiki-dark:#7EE787">  artifacts</span><span style="color:#24292E;--shiki-dark:#E6EDF3">: []   </span><span style="color:#6A737D;--shiki-dark:#8B949E"># PR, файлы, тест-кейсы, JSON-отчёт — что-то измеримое</span></span>
+<span class="line"><span style="color:#22863A;--shiki-dark:#7EE787">  branch</span><span style="color:#24292E;--shiki-dark:#E6EDF3">: </span><span style="color:#032F62;--shiki-dark:#A5D6FF">""</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#22863A;--shiki-dark:#7EE787">success_criterion</span><span style="color:#24292E;--shiki-dark:#E6EDF3">:</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E6EDF3">  - </span><span style="color:#032F62;--shiki-dark:#A5D6FF">""</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E6EDF3">  - </span><span style="color:#032F62;--shiki-dark:#A5D6FF">""</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#22863A;--shiki-dark:#7EE787">forbidden</span><span style="color:#24292E;--shiki-dark:#E6EDF3">:</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E6EDF3">  - </span><span style="color:#032F62;--shiki-dark:#A5D6FF">"не трогать файлы вне inputs.files"</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E6EDF3">  - </span><span style="color:#032F62;--shiki-dark:#A5D6FF">"не запускать команды кроме tools_allowed"</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#22863A;--shiki-dark:#7EE787">risks</span><span style="color:#24292E;--shiki-dark:#E6EDF3">:</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E6EDF3">  - </span><span style="color:#22863A;--shiki-dark:#7EE787">risk</span><span style="color:#24292E;--shiki-dark:#E6EDF3">: </span><span style="color:#032F62;--shiki-dark:#A5D6FF">""</span></span>
+<span class="line"><span style="color:#22863A;--shiki-dark:#7EE787">    mitigation</span><span style="color:#24292E;--shiki-dark:#E6EDF3">: </span><span style="color:#032F62;--shiki-dark:#A5D6FF">""</span></span></code></pre>
+<p>Если хотя бы одно поле не заполняется — задача <strong>не готова к делегированию</strong>. Идите её доформулировывать, не пытайтесь «как-нибудь объяснить». Это самая дорогая ошибка на этом уровне.</p>
+<blockquote>
+<p><em>Лайфхак:</em> можно попросить агента <strong>помочь заполнить контракт</strong>, прежде чем что-то делать. То есть первая сессия — это формализация задачи, не выполнение. Звучит странно, но экономит часы.</p>
+</blockquote>
+<h2 id="recap">Recap</h2>
+<ul>
+<li><strong>Контракт = inputs + outputs + success criterion.</strong> Все три поля обязательны, success criterion фиксируется <em>до</em> action.</li>
+<li><strong>Три слоя — reasoning, plan, action — должны быть разделены</strong>, иначе нет точек для остановки.</li>
+<li><strong>Plan structured</strong> (YAML/JSON), не свободный текст. Поля: action, target, intent, risk, rollback.</li>
+<li><strong>Validation gates</strong> ставятся между фазами. Минимум 4: после plan, после high-risk action, перед merge, после deploy.</li>
+<li><strong>Антипаттерн «договор задним числом»</strong> — success criterion после результата всегда подгоняется под результат.</li>
+</ul>
+<h2 id="дальше">Дальше</h2>
+<p>В <strong>M3 — Observability and human-in-the-loop</strong> мы поговорим про степени автономии: где агент действует сам, где он спрашивает разрешения, какие артефакты он обязан оставлять чтобы вы могли разобрать что произошло — без замедления velocity.</p>
+<p>Если зашло — поделитесь с командой, особенно с лидами и теми, кто настраивает CI/agent-пайплайны. Если есть конкретные паттерны из вашей практики, которые я не учёл — пишите в комментарии к курсу, ваша обратная связь реально помогает.</p>
+<p>Всех обнял, всегда ваш — Илья ❤️</p>
+<hr>
+<p><strong>Maps to:</strong> GH-600 §1.2 — <em>Agent boundary architecture and contracts</em></p>  <nav class="chapter-nav"> <a href="/vibesamurai-site/courses/middle/m1"> <span class="dir">← Назад</span> <span class="title">M1 · Что такое агентный AI в SDLC</span> </a> <a href="/vibesamurai-site/courses/middle/m3"> <span class="dir">Дальше →</span> <span class="title">M3 · Наблюдаемость и human-in-the-loop</span> </a> </nav> </main> </div> </body></html>

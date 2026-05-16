@@ -1,0 +1,128 @@
+<!DOCTYPE html><html lang="en"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Что такое агентный AI в SDLC — Vibesamurai</title><meta name="description" content="Plan → Act → Evaluate, контрибьютор-модель и почему агент — не справочник, а коллега."><meta property="og:title" content="Что такое агентный AI в SDLC"><meta property="og:type" content="article"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Inter:wght@300..800&family=JetBrains+Mono:wght@400..600&display=swap" rel="stylesheet"><link rel="stylesheet" href="/vibesamurai-site/_astro/_slug_.DpgmObvf.css">
+<style>.reader-sidebar[data-astro-cid-khgtvzrl] .soon[data-astro-cid-khgtvzrl]{display:block;color:var(--text-mute);font-size:var(--size-2);padding:var(--space-1) 0}.reader-sidebar[data-astro-cid-khgtvzrl] .soon[data-astro-cid-khgtvzrl] em[data-astro-cid-khgtvzrl]{font-style:normal;font-family:var(--font-mono);font-size:.85em;color:var(--accent);margin-left:4px;text-transform:uppercase;letter-spacing:.1em}
+</style></head> <body> <div class="reader-app"> <aside class="reader-rail"> <a href="/vibesamurai-site/" class="logo" aria-label="Vibesamurai home">V</a> </aside> <aside class="reader-sidebar" data-astro-cid-khgtvzrl> <div class="breadcrumb" data-astro-cid-khgtvzrl>Vibesamurai · Middle Path · m1</div> <h4 data-astro-cid-khgtvzrl>В этом курсе</h4> <ul data-astro-cid-khgtvzrl> <li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m1" class="current" data-astro-cid-khgtvzrl>M1 · Что такое agentic AI в SDLC</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m2" class data-astro-cid-khgtvzrl>M2 · Границы агента</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m3" class data-astro-cid-khgtvzrl>M3 · Observability &amp; HITL</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m4" class data-astro-cid-khgtvzrl>M4 · Tool inventory &amp; permissions</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m5" class data-astro-cid-khgtvzrl>M5 · MCP deep dive</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m6" class data-astro-cid-khgtvzrl>M6 · Claude Code mastery</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m7" class data-astro-cid-khgtvzrl>M7 · Codex CLI &amp; OpenAI Agents</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m8" class data-astro-cid-khgtvzrl>M8 · Cursor + IDE-агенты</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m9" class data-astro-cid-khgtvzrl>M9 · Memory strategies</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m10" class data-astro-cid-khgtvzrl>M10 · State, drift, continuity</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m11" class data-astro-cid-khgtvzrl>M11 · Метрики оценки</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m12" class data-astro-cid-khgtvzrl>M12 · Regression testing</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m13" class data-astro-cid-khgtvzrl>M13 · Tuning, когда метрики стоят</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m14" class data-astro-cid-khgtvzrl>M14 · Pipelines &amp; orchestration</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m15" class data-astro-cid-khgtvzrl>M15 · Multi-agent роли</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m16" class data-astro-cid-khgtvzrl>M16 · Когда multi-agent — overkill</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m17" class data-astro-cid-khgtvzrl>M17 · Деплой агентов в прод</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m18" class data-astro-cid-khgtvzrl>M18 · Production security</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m19" class data-astro-cid-khgtvzrl>M19 · Incidents &amp; post-mortems</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m20" class data-astro-cid-khgtvzrl>M20 · Финал Middle</a> </li> </ul>  </aside> <main class="reader-main"> <div class="chapter-eyebrow">Middle Path · m1</div> <h1 class="chapter-title">M1 · Что такое агентный AI в SDLC</h1> <p class="chapter-subtitle">Plan → Act → Evaluate, контрибьютор-модель и почему агент — не справочник, а коллега.</p>  <blockquote>
+<p>Это черновик M1 на русском, написанный в авторском голосе DmitriyM (см. <code>scripts/tg_voice_analysis/_summary.md</code>). EN-версия — перевод этого файла.</p>
+</blockquote>
+<h2 id="зачем-эта-глава-если-вы-и-так-пишете-прод">Зачем эта глава, если вы и так пишете прод</h2>
+<p>Друзья, всем привет! 👋</p>
+<p>Если вы middle-разработчик с двумя годами в продуктивных репозиториях, у меня плохая новость: всё что вы знаете про IDE-ассистентов и автокомплит за последние полгода устарело. Не потому что инструменты стали хуже — а потому что <strong>парадигма сменилась</strong>.</p>
+<p>Раньше ИИ-инструмент был <strong>справочником с рукой</strong> — он подсказывал строчку, дописывал функцию, объяснял API. Принципиально он не мог сам открыть PR, прогнать тесты, отрефакторить три файла подряд, заметить что сломалась сборка и починить.</p>
+<p>Сейчас может. И не один-два экспериментальных инструмента — а <strong>весь зоопарк</strong>: Claude Code, Cursor, Codex CLI, Devin, GitHub Copilot Workspace, Aider, Continue. Каждый из них в 2026-м — это не «ассистент», это <strong>контрибьютор</strong>. Они работают через тот же интерфейс, что и вы: файлы, ветки, PR, ревью.</p>
+<p>Эта глава — про то, как перестать думать категориями «помощь в коде» и начать думать категориями <strong>«как я строю команду из людей и агентов и не теряю контроль над репозиторием»</strong>.</p>
+<h2 id="три-фазы-агента-plan--act--evaluate">Три фазы агента: plan → act → evaluate</h2>
+<p>В любом нормально устроенном агентном пайплайне есть три обязательных фазы:</p>
+<pre class="astro-code astro-code-themes github-light github-dark-default" style="background-color:#fff;--shiki-dark-bg:#0d1117;color:#24292e;--shiki-dark:#e6edf3; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>┌─────────┐    ┌─────────┐    ┌──────────┐</span></span>
+<span class="line"><span>│  PLAN   │ → │   ACT   │ → │ EVALUATE │</span></span>
+<span class="line"><span>└─────────┘    └─────────┘    └──────────┘</span></span>
+<span class="line"><span>   ↑                              │</span></span>
+<span class="line"><span>   └──────────────────────────────┘</span></span>
+<span class="line"><span>        revise / replan</span></span></code></pre>
+<ol>
+<li><strong>Plan.</strong> Агент формулирует <em>что именно</em> собирается сделать, <em>в каком порядке</em>, <em>с какими допущениями</em>, <strong>до того как</strong> он начнёт что-либо менять. Это явный артефакт — markdown-план, JSON, structured output.</li>
+<li><strong>Act.</strong> Агент исполняет план в чётко очерченной области действия: ветка, песочница, набор разрешённых тулов. Каждое действие — отдельный шаг с inputs/outputs.</li>
+<li><strong>Evaluate.</strong> Агент или внешняя система сравнивает результат с success criterion. Если не сошлось — возврат в plan на пересмотр.</li>
+</ol>
+<p>Принципиально важно: <strong>plan — это не побочный продукт, это контракт</strong>. Если вы пропустили план — вы пропустили момент, в котором ещё могли сказать «стоп, давай по-другому». После того как act начался — править дороже на порядок.</p>
+<p>Если у вас сейчас в голове щёлкнуло «это же waterfall с обратной связью» — да, оно. Просто скорость прохождения цикла теперь измеряется минутами, а не неделями. И именно поэтому <strong>дисциплина plan/act/evaluate важнее, чем когда-либо</strong>: без неё цикл вырождается в хаос со скоростью 1000 коммитов в час.</p>
+<h2 id="контрибьютор-а-не-справочник">Контрибьютор, а не справочник</h2>
+<p>Главная ментальная модель этой главы:</p>
+<blockquote>
+<p><strong>Агент — это новый член команды на испытательном сроке.</strong></p>
+</blockquote>
+<p>Из этой модели выводится почти всё, что мы будем делать дальше:</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Что вы делаете с новым джуном</th><th>Что вы делаете с агентом</th></tr></thead><tbody><tr><td>Не даёте прод-доступы в первый день</td><td>Не даёте <code>--dangerously-skip-permissions</code></td></tr><tr><td>Делаете code review</td><td>Читаете план и diff перед merge</td></tr><tr><td>Объясняете контекст и конвенции</td><td>Пишете <code>CLAUDE.md</code> / <code>.cursorrules</code> / <code>AGENTS.md</code></td></tr><tr><td>Даёте маленькую задачу с чётким DoD</td><td>Даёте чёткий success criterion</td></tr><tr><td>Спрашиваете «почему ты так сделал»</td><td>Запрашиваете обоснование в плане</td></tr><tr><td>Учите признавать незнание</td><td>Структурируете тулы так, чтобы он мог сказать «не знаю»</td></tr></tbody></table>
+<p>Это не аналогия для красоты. Это <strong>рабочая модель управления</strong>: переиспользуйте свои навыки управления людьми, и большинство паттернов работы с агентом сразу станут очевидны.</p>
+<h2 id="github-как-system-of-record-и-control-plane">GitHub как system of record и control plane</h2>
+<p>В мире, где у вас в команде есть и люди, и агенты — нужна <strong>общая точка истины</strong>. В 2026-м эта точка — <strong>GitHub</strong> (или GitLab, или Forgejo — для целей курса разница невелика).</p>
+<p>Почему именно GitHub:</p>
+<ul>
+<li><strong>Каждое изменение видимо.</strong> PR — это и есть тот самый артефакт плана и выполнения.</li>
+<li><strong>Каждое изменение обратимо.</strong> Revert работает одинаково и для человека, и для агента.</li>
+<li><strong>Каждое изменение auditable.</strong> Кто что сделал, когда, на основе какого тикета — всё в commit log, PR review, issue tracker.</li>
+<li><strong>Каждое изменение делегируемо.</strong> Agent может открыть PR; человек может его смержить. Или наоборот — человек открывает план, агент дорабатывает.</li>
+</ul>
+<p>Эту мысль в курсе мы будем повторять до тошноты: <strong>GitHub — это не хостинг кода, это control plane вашего гибридного команды человек/агент</strong>. Если ваш агент не работает через PR — вы потеряли половину преимуществ.</p>
+<p>В M3 мы поговорим про <strong>degree-of-autonomy ladder</strong> — лестницу автономии. Внизу — агент только предлагает план, всё мержит человек. Сверху — агент сам открывает PR, гонит тесты, отвечает на ревью-комменты. Где именно вы хотите быть на этой лестнице — решение архитектурное, зависит от риска и от зрелости вашей системы наблюдения.</p>
+<h2 id="антипаттерны-которые-я-вижу-чаще-всего">Антипаттерны, которые я вижу чаще всего</h2>
+<p>Лично меня <strong>реально выбешивают</strong> четыре типа ошибок, которые middle-разработчики делают в первые пару месяцев агентного flow. Давайте проговорим их сразу, чтобы вы их не повторяли.</p>
+<h3 id="1-дайте-агенту-прод-доступы-он-умный">1. «Дайте агенту прод-доступы, он умный»</h3>
+<p>Нет. Он не <strong>умный</strong> — он <em>способный</em>. Это не одно и то же. Способный сотрудник без понимания контекста уронит прод быстрее, чем неспособный, потому что у способного хватает рук. Никаких прод-кредов в агентскую сессию. Никогда. Подробнее — в M4 (least-privilege scoping).</p>
+<h3 id="2-я-ему-написал-в-одну-строчку-дальше-сам-разберётся">2. «Я ему написал в одну строчку, дальше сам разберётся»</h3>
+<p>Агент не телепат. Если в задаче не сформулирован success criterion — он сам решит, что считать «готово». И это <strong>почти всегда</strong> будет не то, что вы имели в виду. Хороший запрос — это spec, а не приказ. В M7 (prompt engineering) мы это разберём в деталях.</p>
+<h3 id="3-зачем-читать-план-я-доверяю-модели">3. «Зачем читать план, я доверяю модели»</h3>
+<p>Доверие — это не отказ от проверки. Это <strong>готовность принять последствия проверки</strong>. Не читая план, вы не доверяете — вы просто закрыли глаза. Это разные вещи.</p>
+<h3 id="4-этот-pr-от-агента-его-проще-принять-чем-разбираться">4. «Этот PR от агента, его проще принять чем разбираться»</h3>
+<p>Самая опасная установка. Агентский PR обязан проходить <strong>тот же ревью</strong>, что и человеческий — а в первые месяцы внедрения часто более строгий. В M11 (review patterns) мы соберём чек-лист агентского code review.</p>
+<h2 id="ваш-первый-осознанный-агентский-цикл">Ваш первый осознанный агентский цикл</h2>
+<p>Возьмём минимальный, безопасный и <strong>показательный</strong> пример. Откройте Claude Code в любом из ваших репозиториев и попросите его построить план <strong>без права что-либо менять</strong>:</p>
+<pre class="astro-code astro-code-themes github-light github-dark-default" style="background-color:#fff;--shiki-dark-bg:#0d1117;color:#24292e;--shiki-dark:#e6edf3; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#6F42C1;--shiki-dark:#FFA657">claude</span><span style="color:#005CC5;--shiki-dark:#79C0FF"> --permission-mode</span><span style="color:#032F62;--shiki-dark:#A5D6FF"> plan</span><span style="color:#005CC5;--shiki-dark:#FF7B72"> \</span></span>
+<span class="line"><span style="color:#032F62;--shiki-dark:#A5D6FF">  "Прочитай репо. Предложи три места, где можно сократить cognitive complexity. </span><span style="color:#005CC5;--shiki-dark:#FF7B72">\</span></span>
+<span class="line"><span style="color:#032F62;--shiki-dark:#A5D6FF">   Каждое предложение — c указанием файла, причины и приблизительной стоимости в строках. </span><span style="color:#005CC5;--shiki-dark:#FF7B72">\</span></span>
+<span class="line"><span style="color:#032F62;--shiki-dark:#A5D6FF">   Никаких изменений в файлах не делать."</span></span></code></pre>
+<p>Что здесь важно:</p>
+<ul>
+<li><code>--permission-mode plan</code> — это <strong>архитектурная граница</strong>, не косметическая. Агент физически не может изменить файл.</li>
+<li>Запрос содержит <strong>success criterion</strong> («три места, c указанием файла, причины, стоимости»).</li>
+<li>Запрос явно ограничивает scope действий («никаких изменений»).</li>
+</ul>
+<p>Прочитайте план. Оцените, насколько он совпадает с вашим собственным представлением о репо. Если совпадает на 80%+ — модель видит ваш код адекватно, можно идти дальше. Если совпадает на 30% — у модели нет нужного контекста, <strong>проблема не в модели, проблема в контексте</strong>, который вы ей дали. Возможно, нужен <code>CLAUDE.md</code> или дополнительные explainer-файлы.</p>
+<p>Это упражнение — основа всего курса. <strong>Прочитать план до того как разрешить действие</strong> — это и есть навык, который отличает middle-разработчика в агентном мире от middle-разработчика в мире без агентов.</p>
+<h2 id="программный-тезис-регистр-c">Программный тезис (Регистр C)</h2>
+<p>Друзья.</p>
+<p>Зоопарк моделей и инструментов будет расти каждый месяц. То, что сегодня — Claude Code, через год может стать Claude Code, или совсем другая штука, или вообще встроенное в IDE. Конкретные кнопки и флаги выучить нельзя — они устаревают быстрее, чем вы успеваете о них прочитать.</p>
+<p>Что <strong>не</strong> устареет:</p>
+<ul>
+<li><strong>Plan → Act → Evaluate</strong> как дисциплина.</li>
+<li><strong>Контрибьютор-модель</strong> как ментальная рамка.</li>
+<li><strong>GitHub-like control plane</strong> как точка истины.</li>
+<li><strong>Вкус, дисциплина, понимание заказчика</strong> как фундамент.</li>
+</ul>
+<p>Тренируйте насмотренность, а не пальцы. Ваша голова важнее чем ИИ.</p>
+<h2 id="recap">Recap</h2>
+<ul>
+<li><strong>Парадигма сменилась</strong>: ИИ-инструмент стал контрибьютором, а не справочником.</li>
+<li><strong>Plan → Act → Evaluate</strong> — обязательные три фазы. План — это контракт, не побочка.</li>
+<li><strong>Агент = новый сотрудник на испытательном сроке.</strong> Управляйте им как джуном.</li>
+<li><strong>GitHub — control plane.</strong> Каждое агентское действие должно быть видимо, обратимо, auditable.</li>
+<li><strong>Четыре антипаттерна:</strong> прод-доступы, нечёткий запрос, нечитаемый план, льготный ревью.</li>
+<li><strong>Базовое упражнение:</strong> <code>--permission-mode plan</code> + явный success criterion + чтение плана перед actions.</li>
+</ul>
+<h2 id="дальше">Дальше</h2>
+<p>В <strong>M2 — Architecting agent boundaries</strong> мы заходим глубже: как формулировать inputs/outputs, как отделять plan от reasoning, как ставить validation gates между фазами. Это уже инженерная задача — мы будем рисовать конкретные диаграммы потоков и писать конкретный код.</p>
+<p>Если зашло — поделитесь главой в командных чатиках, особенно с лидами и архитекторами. Если есть конкретные сценарии, которые вы хотите чтобы я разобрал — пишите в комментарии к курсу, ваша обратная связь реально помогает шлифовать материал.</p>
+<p>Всегда ваш — Илья ❤️</p>
+<hr>
+<p><strong>Maps to:</strong> GH-600 §1.1 — <em>Agentic AI fundamentals</em>, Microsoft Learn — <em>Foundations of agentic AI</em></p>  <nav class="chapter-nav"> <span></span> <span></span> </nav> </main> </div> </body></html>
