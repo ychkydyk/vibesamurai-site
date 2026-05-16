@@ -175,9 +175,9 @@
 <h2 id="slash-commands--повторяемые-задачи">Slash-commands — повторяемые задачи</h2>
 <p>Slash-command — это <strong>именованная задача</strong>, которую вы можете запустить из любой сессии. Хранится в <code>.claude/commands/&#x3C;name>.md</code>.</p>
 <p>Простейший пример <code>.claude/commands/review.md</code>:</p>
-<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="markdown"><code><span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">---</span></span>
-<span class="line"><span style="color:#8BE9FD;--shiki-dark:#8BE9FD">description</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">:</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C"> Review uncommitted changes against project conventions</span></span>
-<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">---</span></span>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="markdown"><code><span class="line"><span style="color:#6272A4;--shiki-dark:#6272A4">---</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">description: Review uncommitted changes against project conventions</span></span>
+<span class="line"><span style="color:#BD93F9;--shiki-light-font-weight:bold;--shiki-dark:#BD93F9;--shiki-dark-font-weight:bold">---</span></span>
 <span class="line"></span>
 <span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">Прочитай git diff текущих uncommitted изменений и проведи code review по чек-листу:</span></span>
 <span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">- Соответствие conventions из CLAUDE.md</span></span>
@@ -189,9 +189,9 @@
 <span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">В конце — итог "ok / needs work / blocking issues".</span></span></code></pre>
 <p>Использование в чате: просто <code>/review</code> — и Claude знает, что делать.</p>
 <p>Командам можно передавать аргументы:</p>
-<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="markdown"><code><span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">---</span></span>
-<span class="line"><span style="color:#8BE9FD;--shiki-dark:#8BE9FD">description</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">:</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C"> Generate test for a specific function</span></span>
-<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">---</span></span>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="markdown"><code><span class="line"><span style="color:#6272A4;--shiki-dark:#6272A4">---</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">description: Generate test for a specific function</span></span>
+<span class="line"><span style="color:#BD93F9;--shiki-light-font-weight:bold;--shiki-dark:#BD93F9;--shiki-dark-font-weight:bold">---</span></span>
 <span class="line"></span>
 <span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">Сгенерируй тест-файл для функции $1 из файла $2.</span></span>
 <span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">Используй vitest. Покрой нормальные кейсы + edge cases + error path.</span></span></code></pre>
@@ -206,11 +206,11 @@
 <li><strong>Параллельная работа</strong> — основной агент может запустить 3 subagent-а параллельно (например, на разные части кодовой базы).</li>
 </ul>
 <p>Пример <code>.claude/agents/code-reviewer.md</code>:</p>
-<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="markdown"><code><span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">---</span></span>
-<span class="line"><span style="color:#8BE9FD;--shiki-dark:#8BE9FD">name</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">:</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C"> code-reviewer</span></span>
-<span class="line"><span style="color:#8BE9FD;--shiki-dark:#8BE9FD">description</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">:</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C"> Strict code reviewer. Use when reviewing diffs against project conventions.</span></span>
-<span class="line"><span style="color:#8BE9FD;--shiki-dark:#8BE9FD">tools</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">:</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C"> Read, Grep, Glob, Bash(git diff:*), Bash(git log:*)</span></span>
-<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">---</span></span>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="markdown"><code><span class="line"><span style="color:#6272A4;--shiki-dark:#6272A4">---</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">name: code-reviewer</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">description: Strict code reviewer. Use when reviewing diffs against project conventions.</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">tools: Read, Grep, Glob, Bash(git diff:</span><span style="color:#F1FA8C;--shiki-light-font-style:italic;--shiki-dark:#F1FA8C;--shiki-dark-font-style:italic">*), Bash(git log:*</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">)</span></span>
+<span class="line"><span style="color:#BD93F9;--shiki-light-font-weight:bold;--shiki-dark:#BD93F9;--shiki-dark-font-weight:bold">---</span></span>
 <span class="line"></span>
 <span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">You are a strict but constructive code reviewer.</span></span>
 <span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">Your job: read the diff, compare it against CLAUDE.md conventions, and produce a structured review.</span></span>
@@ -235,10 +235,10 @@
 <span class="line"><span>├── scripts/                # вспомогательные скрипты</span></span>
 <span class="line"><span>└── reference/              # файлы, которые skill подгружает по требованию</span></span></code></pre>
 <p>Пример <code>SKILL.md</code>:</p>
-<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="markdown"><code><span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">---</span></span>
-<span class="line"><span style="color:#8BE9FD;--shiki-dark:#8BE9FD">name</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">:</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C"> webp-conversion</span></span>
-<span class="line"><span style="color:#8BE9FD;--shiki-dark:#8BE9FD">description</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">:</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C"> Convert PNG/JPG to WebP with quality optimization. Triggers when user asks to compress/optimize images.</span></span>
-<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">---</span></span>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="markdown"><code><span class="line"><span style="color:#6272A4;--shiki-dark:#6272A4">---</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">name: webp-conversion</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">description: Convert PNG/JPG to WebP with quality optimization. Triggers when user asks to compress/optimize images.</span></span>
+<span class="line"><span style="color:#BD93F9;--shiki-light-font-weight:bold;--shiki-dark:#BD93F9;--shiki-dark-font-weight:bold">---</span></span>
 <span class="line"></span>
 <span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">When user wants to convert images to WebP:</span></span>
 <span class="line"></span>
@@ -288,6 +288,22 @@
 <h2 id="дальше">Дальше</h2>
 <p>В <strong>M7 — GPT-5.3 Codex CLI и OpenAI agents</strong> разберём конкурента. Codex CLI в 2026-м — это не «просто другой CLI», а <strong>другая философия</strong> approval modes и sandbox. Я покажу, в каких задачах Codex выгоднее Claude Code, и наоборот. Без флейма, на benchmark-данных и личной практике.</p>
 <p>Если зашло — поделитесь главой с командой, особенно с теми, кто только начинает работать с Claude Code. Если есть свои фишки <code>.claude/</code> сетапа, которые я не упомянул — пишите в комменты, ваша обратная связь реально помогает.</p>
+<h2 id="-дальше-посмотреть-и-почитать">📚 Дальше: посмотреть и почитать</h2>
+<p>Тема плотная — за главой стоит большая документация, которую я конспективно «срезал». Если хочется глубже по конкретным разделам — короткий проверенный список.</p>
+<p><strong>Официальная документация Claude Code</strong></p>
+<ul>
+<li><strong>Best practices for Claude Code</strong> — программная статья Anthropic engineering, на которой стоит вся «школа» работы с CLI: <a href="https://www.anthropic.com/engineering/claude-code-best-practices">anthropic.com/engineering/claude-code-best-practices</a>.</li>
+<li><strong>Sub-agents</strong> — официальный референс по subagents (frontmatter, tools, изоляция контекста): <a href="https://docs.claude.com/en/docs/claude-code/sub-agents">docs.claude.com/en/docs/claude-code/sub-agents</a>.</li>
+<li><strong>Claude Code SDK overview</strong> — точка входа в Agent SDK, если хочется собирать своего агента поверх той же базы: <a href="https://docs.claude.com/en/docs/claude-code/sdk/sdk-overview">docs.claude.com/en/docs/claude-code/sdk/sdk-overview</a>.</li>
+</ul>
+<p><strong>Community и шаблоны</strong></p>
+<ul>
+<li><strong>awesome-claude-code</strong> (hesreallyhim) — куратируемая помойка skills, hooks, slash-commands, CLAUDE.md паттернов: <a href="https://github.com/hesreallyhim/awesome-claude-code">github.com/hesreallyhim/awesome-claude-code</a>.</li>
+<li><strong>How Anthropic teams use Claude Code</strong> — внутренний PDF Anthropic, реальные сценарии разных команд: <a href="https://www-cdn.anthropic.com/58284b19e702b49db9302d5b6f135ad8871e7658.pdf">www-cdn.anthropic.com/58284b19e702b49db9302d5b6f135ad8871e7658.pdf</a>.</li>
+</ul>
+<blockquote>
+<p><strong>Совет:</strong> прежде чем тащить чужой skill из awesome-листа — откройте <code>SKILL.md</code> и прочитайте его целиком. У меня про это отдельное правило в личной памяти, и оно уже несколько раз спасало.</p>
+</blockquote>
 <hr>
 <p><strong>Maps to:</strong> Авторский блок — расширение Part II за рамки GH-600</p>  <nav class="chapter-nav"> <a href="/vibesamurai-site/courses/middle/m5"> <span class="dir">← Назад</span> <span class="title">M5 · MCP deep dive</span> </a> <a href="/vibesamurai-site/courses/middle/m7"> <span class="dir">Дальше →</span> <span class="title">M7 · GPT-5.3 Codex CLI и OpenAI agents</span> </a> </nav> </main> </div> <script type="module">
     import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';

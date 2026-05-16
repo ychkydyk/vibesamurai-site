@@ -62,6 +62,17 @@
 <table><thead><tr><th>Признак</th><th>Сигнал</th></tr></thead><tbody><tr><td>Роли должны работать <strong>параллельно</strong></td><td>да</td></tr><tr><td>У ролей <strong>разные</strong> базовые модели (Opus для архитекта, Haiku для тестов)</td><td>да</td></tr><tr><td>У ролей <strong>разные</strong> контексты (разные репо, разные доки)</td><td>да</td></tr><tr><td>Роли должны <strong>спорить</strong> между собой (review, adversarial)</td><td>да</td></tr><tr><td>Цикл — <strong>долгий</strong> (часы-дни) с автономными решениями</td><td>да</td></tr><tr><td>Контекст одного агента <strong>не вмещает</strong> все роли</td><td>да</td></tr></tbody></table>
 <p>Если 2-3 из этого — да — пора multi-agent.</p>
 <h2 id="архитектуры-multi-agent">Архитектуры multi-agent</h2>
+<p>Самая частая на практике — supervisor + workers. Чтобы было перед глазами:</p>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="mermaid"><code><span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">flowchart TB</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    User([User task]) --> Sup[Supervisor&#x3C;br/>планирование / dispatch]</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    Sup --> Coder[Coder&#x3C;br/>src/*]</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    Sup --> Tester[Tester&#x3C;br/>tests/*]</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    Sup --> Reviewer[Reviewer&#x3C;br/>read-only + review.md]</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    Coder --> Sup</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    Tester --> Sup</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    Reviewer --> Sup</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    Sup --> Result([Synthesized result])</span></span></code></pre>
+<p>Supervisor — единственная роль, которая принимает решение «готово / переделать». Workers возвращают результаты ему, не друг другу. Это убирает половину рисков «бесконечного спора», о которых ниже.</p>
 <h3 id="a-supervisor--workers-иерархия">A. Supervisor + workers (иерархия)</h3>
 <pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>        ┌────────────────┐</span></span>
 <span class="line"><span>        │   Supervisor    │</span></span>
@@ -259,7 +270,25 @@
 </aside>
 <h2 id="дальше">Дальше</h2>
 <p>В <strong>M16 — Когда multi-agent избыточен. Антипаттерны</strong> закроем Часть V. Полностью обратная сторона этой главы — <strong>где</strong> и <strong>почему</strong> multi-agent <strong>не нужен</strong>, какие типовые ошибки в дизайне, и <strong>как</strong> доказать себе или команде, что «не надо строить». Самая полезная глава трека для <strong>избежания</strong> дорогих ошибок.</p>
-<p>Если зашло — поделитесь главой с тем, кто <strong>сразу хочет</strong> строить multi-agent, не освоив pipeline. Если у вас есть <strong>рабочая</strong> multi-agent система — расскажите в комменты, разберём архитектуру. Ваша обратная связь реально помогает шлифовать материал.</p>  <nav class="chapter-nav"> <a href="/vibesamurai-site/courses/middle/m14"> <span class="dir">← Назад</span> <span class="title">M14 · Один агент, много шагов: пайплайны и оркестрация</span> </a> <a href="/vibesamurai-site/courses/middle/m16"> <span class="dir">Дальше →</span> <span class="title">M16 · Когда multi-agent избыточен. Антипаттерны</span> </a> </nav> </main> </div> <script type="module">
+<p>Если зашло — поделитесь главой с тем, кто <strong>сразу хочет</strong> строить multi-agent, не освоив pipeline. Если у вас есть <strong>рабочая</strong> multi-agent система — расскажите в комменты, разберём архитектуру. Ваша обратная связь реально помогает шлифовать материал.</p>
+<h2 id="-дальше-посмотреть-и-почитать">📚 Дальше: посмотреть и почитать</h2>
+<p>Multi-agent — тема, где много hype и мало хорошей литературы. Минимум, на котором стоит ориентироваться:</p>
+<p><strong>Академический референс</strong></p>
+<ul>
+<li><strong>AutoGen — paper (Microsoft, arXiv:2308.08155)</strong> — <a href="https://arxiv.org/abs/2308.08155">arxiv.org/abs/2308.08155</a>. Original paper про conversable agents и multi-agent conversation programming. До сих пор лучшая ментальная модель: «диалог между ролями» как первый класс системы.</li>
+</ul>
+<p><strong>Фреймворки multi-agent</strong></p>
+<ul>
+<li><strong>CrewAI — docs</strong> — <a href="https://docs.crewai.com/">docs.crewai.com</a>. Role-based crews + flows. Хороший способ почувствовать, как выглядит supervisor+workers без своего скелета.</li>
+<li><strong>LangGraph — Overview</strong> — <a href="https://docs.langchain.com/oss/python/langgraph/overview">docs.langchain.com/oss/python/langgraph/overview</a>. Тот же DAG, что и в M14, но удобно показывает, как state делится между несколькими нодами-агентами.</li>
+</ul>
+<p><strong>Anthropic-родное</strong></p>
+<ul>
+<li><strong>Anthropic — Subagents</strong> — <a href="https://docs.anthropic.com/en/docs/claude-code/sub-agents">docs.anthropic.com/en/docs/claude-code/sub-agents</a>. Лимитированный multi-agent внутри одной сессии. Полезно, если хочется ролей <strong>без</strong> межсессионной шины.</li>
+</ul>
+<blockquote>
+<p><strong>Совет:</strong> прочитайте AutoGen-paper до того как ставить любой фреймворк. Половина дизайн-вопросов решается там, и без этого вы будете удивляться «странному» поведению CrewAI/LangGraph.</p>
+</blockquote>  <nav class="chapter-nav"> <a href="/vibesamurai-site/courses/middle/m14"> <span class="dir">← Назад</span> <span class="title">M14 · Один агент, много шагов: пайплайны и оркестрация</span> </a> <a href="/vibesamurai-site/courses/middle/m16"> <span class="dir">Дальше →</span> <span class="title">M16 · Когда multi-agent избыточен. Антипаттерны</span> </a> </nav> </main> </div> <script type="module">
     import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
     const matches = document.querySelectorAll(
       'pre[data-language="mermaid"], pre.language-mermaid, code.language-mermaid'

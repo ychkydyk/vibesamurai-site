@@ -32,6 +32,17 @@
 <span class="line"><span>7. Коммит            — после каждой принятой правки</span></span>
 <span class="line"><span>8. Повтор 5-7        — пока не «готово»</span></span></code></pre>
 <p>В этой главе мы пройдём весь паттерн на простом, но <strong>реальном</strong> проекте: todo-приложение в браузере.</p>
+<p>Если рисовать на салфетке, цикл выглядит так:</p>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="mermaid"><code><span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">flowchart LR</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    S([Сетап&#x3C;br/>папка + git]) --> T[Постановка&#x3C;br/>ЧТО / ГДЕ / КАК ПОЙМЁМ]</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    T --> P[Агент пишет план&#x3C;br/>вы читаете]</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    P --> D[Агент делает&#x3C;br/>diff файлов]</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    D --> R[Запуск&#x3C;br/>проверка в браузере]</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    R -->|ок| C([Коммит])</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    R -->|правки| E[Маленькая правка&#x3C;br/>к агенту]</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    E --> D</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    C -.-> E</span></span></code></pre>
+<p>Внутри одной итерации — три фазы из B1 (план → действие → проверка), а коммит превращает «вроде работает» в точку отката, на которую всегда можно вернуться.</p>
 <h2 id="пример-делаем-todo-с-агентом">Пример: делаем todo с агентом</h2>
 <h3 id="шаг-1-сетап">Шаг 1. Сетап</h3>
 <pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#50FA7B;--shiki-dark:#50FA7B">mkdir</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C"> my-todo</span></span>
@@ -140,7 +151,22 @@
 </aside>
 <h2 id="дальше">Дальше</h2>
 <p>В <strong>B6 — Чтение кода, который написал агент</strong> разберём, как <strong>смотреть</strong> в код, который агент создал, и хотя бы примерно понимать что там происходит — даже если вы не программист. Это не про «научиться кодить», это про базовую <strong>ориентацию</strong>, чтобы не быть слепым в своём же проекте.</p>
-<p>Если зашло — поделитесь главой с тем, кто давно хочет «попробовать собрать своё приложение, но не знает с чего начать». Если ваш todo получился — закиньте скрин в комменты, <strong>за лайк и комментарий — отдельная благодарность</strong>, ваша обратная связь реально помогает шлифовать материал.</p>  <nav class="chapter-nav"> <a href="/vibesamurai-site/courses/beginner/b4"> <span class="dir">← Назад</span> <span class="title">B4 · Что такое репозиторий и зачем коммитить</span> </a> <a href="/vibesamurai-site/courses/beginner/b6"> <span class="dir">Дальше →</span> <span class="title">B6 · Чтение кода, который написал агент</span> </a> </nav> </main> </div> <script type="module">
+<p>Если зашло — поделитесь главой с тем, кто давно хочет «попробовать собрать своё приложение, но не знает с чего начать». Если ваш todo получился — закиньте скрин в комменты, <strong>за лайк и комментарий — отдельная благодарность</strong>, ваша обратная связь реально помогает шлифовать материал.</p>
+<h2 id="-дальше-посмотреть-и-почитать">📚 Дальше: посмотреть и почитать</h2>
+<p>Если этот todo показался лёгким и хочется ещё несколько проектов под тот же workflow — вот короткий список первоисточников и подборок, которые я считаю годными.</p>
+<p><strong>Старт с агентом</strong></p>
+<ul>
+<li><strong>Quickstart — Claude Code</strong> — <a href="https://code.claude.com/docs/en/quickstart">code.claude.com/docs/en/quickstart</a>. Официальный путь «от нуля до первой работающей правки», коротко и без воды.</li>
+<li><strong>Best practices for Claude Code</strong> — <a href="https://code.claude.com/docs/en/best-practices">code.claude.com/docs/en/best-practices</a>. Раздел «Explore, plan, code, commit» — это ровно наш цикл из главы, написанный со стороны самого Anthropic.</li>
+</ul>
+<p><strong>Идеи для следующих проектов</strong></p>
+<ul>
+<li><strong>12 Claude Code Project Ideas (Beginner to Advanced)</strong> — <a href="https://codelikeagirl.substack.com/p/claude-code-project-ideas-beginner-to-advanced">codelikeagirl.substack.com/p/claude-code-project-ideas-beginner-to-advanced</a>. Подборка с временными оценками и первыми промптами, удобно выбирать «следующий шаг».</li>
+<li><strong>The Claude Code Handbook (freeCodeCamp)</strong> — <a href="https://www.freecodecamp.org/news/claude-code-handbook/">freecodecamp.org/news/claude-code-handbook</a>. Длинная честная вводная для тех, кто хочет уйти глубже после todo.</li>
+</ul>
+<blockquote>
+<p><strong>Совет:</strong> не бросайтесь сразу на «настоящий» большой проект. Сделайте ещё 1–2 микро-штуки по той же схеме — и workflow станет рефлексом. Не идеально, но реально работает.</p>
+</blockquote>  <nav class="chapter-nav"> <a href="/vibesamurai-site/courses/beginner/b4"> <span class="dir">← Назад</span> <span class="title">B4 · Что такое репозиторий и зачем коммитить</span> </a> <a href="/vibesamurai-site/courses/beginner/b6"> <span class="dir">Дальше →</span> <span class="title">B6 · Чтение кода, который написал агент</span> </a> </nav> </main> </div> <script type="module">
     import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
     const matches = document.querySelectorAll(
       'pre[data-language="mermaid"], pre.language-mermaid, code.language-mermaid'

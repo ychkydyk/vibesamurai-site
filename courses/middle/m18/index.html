@@ -26,7 +26,15 @@
 <span class="line"><span>│  - Data exfiltration  → секреты, PII утекают       │</span></span>
 <span class="line"><span>│  - Multi-tenant leak  → данные клиента A → клиенту B│</span></span>
 <span class="line"><span>└─────────────────────────────────────────────────────┘</span></span></code></pre>
-<p>Каждый из этих рисков — <strong>отдельная</strong> линия обороны. <strong>Layered defense</strong>, не «одна стена».</p>
+<p>Каждый из этих рисков — <strong>отдельная</strong> линия обороны. <strong>Layered defense</strong>, не «одна стена». Слои выстраиваются от секретов внутрь — к аудиту наружу:</p>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="mermaid"><code><span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">flowchart LR</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    Agent[Agent runtime] --> S1[Secrets layer&#x3C;br/>env / Vault]</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    S1 --> S2[Sandbox layer&#x3C;br/>container / VM]</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    S2 --> S3[Network layer&#x3C;br/>egress whitelist]</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    S3 --> S4[Tool / tenant layer&#x3C;br/>ACL + approval gates]</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    S4 --> S5[Audit layer&#x3C;br/>logs / alerts / WORM]</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    S5 --> SIEM[(SIEM /&#x3C;br/>incident response)]</span></span></code></pre>
+<p>Принципиально: каждый слой <strong>самостоятелен</strong>. Если выпала линия secret — спасает sandbox; если обошли sandbox — есть network egress filter; и так далее. Один слой защиты — не защита, а декорация.</p>
 <h2 id="линия-1-secret-management">Линия 1. Secret management</h2>
 <h3 id="никогда--в-репо">Никогда — в репо</h3>
 <p>Самое простое и самое часто нарушаемое. Не <strong>ни в каком</strong> виде:</p>
@@ -277,7 +285,22 @@
 </aside>
 <h2 id="дальше">Дальше</h2>
 <p>В <strong>M19 — Incidents &#x26; post-mortems</strong> разберём, что делать, когда что-то <strong>уже сломалось</strong>. Incident response для agent system, blameless post-mortem, как извлекать <strong>системные</strong> уроки из конкретных факапов. Это <strong>обязательная</strong> часть production-зрелости.</p>
-<p>Если зашло — поделитесь главой с тем, кто <strong>готовит</strong> prod-агента. Если у вас был security-инцидент — расскажите в комменты, разберём анонимно. Ваша обратная связь реально помогает шлифовать материал.</p>  <nav class="chapter-nav"> <a href="/vibesamurai-site/courses/middle/m17"> <span class="dir">← Назад</span> <span class="title">M17 · Продакшн: деплой агентов в боевую среду</span> </a> <a href="/vibesamurai-site/courses/middle/m19"> <span class="dir">Дальше →</span> <span class="title">M19 · Incidents &amp; post-mortems</span> </a> </nav> </main> </div> <script type="module">
+<p>Если зашло — поделитесь главой с тем, кто <strong>готовит</strong> prod-агента. Если у вас был security-инцидент — расскажите в комменты, разберём анонимно. Ваша обратная связь реально помогает шлифовать материал.</p>
+<h2 id="-дальше-посмотреть-и-почитать">📚 Дальше: посмотреть и почитать</h2>
+<p>Security — единственная глава, где «авось» дороже всего. Поэтому источники только официальные / OWASP-уровня.</p>
+<p><strong>OWASP для LLM и агентов</strong></p>
+<ul>
+<li><strong>OWASP Top 10 for LLM Applications (2025)</strong> — <a href="https://owasp.org/www-project-top-10-for-large-language-model-applications/">owasp.org/www-project-top-10-for-large-language-model-applications/</a>. Базовый чек-лист рисков для LLM-приложений: prompt injection, sensitive info disclosure, excessive agency и далее.</li>
+<li><strong>OWASP Top 10 for Agentic Applications (2025)</strong> — <a href="https://genai.owasp.org/2025/12/09/owasp-top-10-for-agentic-applications-the-benchmark-for-agentic-security-in-the-age-of-autonomous-ai/">genai.owasp.org/2025/12/09/owasp-top-10-for-agentic-applications-the-benchmark-for-agentic-security-in-the-age-of-autonomous-ai/</a>. Отдельный Top 10 уже под автономные агентские системы — про tool misuse, multi-tenant leaks, confused deputy.</li>
+</ul>
+<p><strong>Sandbox-инфра</strong></p>
+<ul>
+<li><strong>Anthropic — Claude Code sandboxing</strong> — <a href="https://www.anthropic.com/engineering/claude-code-sandboxing">anthropic.com/engineering/claude-code-sandboxing</a>. Как Anthropic реализует filesystem + network isolation на bubblewrap/seatbelt; реальный референс для своих sandbox-уровней.</li>
+<li><strong>E2B — Docs</strong> — <a href="https://e2b.dev/docs">e2b.dev/docs</a>. Готовые secure sandboxes для исполнения agent-сгенерированного кода. Если самим контейнер-инфру не строить — отсюда.</li>
+</ul>
+<blockquote>
+<p><strong>Совет:</strong> если в команде нет процесса security review для агентов — вынесите OWASP Top 10 for Agentic Applications в <code>docs/SECURITY-AGENT.md</code> и пройдитесь по нему один раз для текущего setup. На пару часов работы — большая часть базы закроется.</p>
+</blockquote>  <nav class="chapter-nav"> <a href="/vibesamurai-site/courses/middle/m17"> <span class="dir">← Назад</span> <span class="title">M17 · Продакшн: деплой агентов в боевую среду</span> </a> <a href="/vibesamurai-site/courses/middle/m19"> <span class="dir">Дальше →</span> <span class="title">M19 · Incidents &amp; post-mortems</span> </a> </nav> </main> </div> <script type="module">
     import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
     const matches = document.querySelectorAll(
       'pre[data-language="mermaid"], pre.language-mermaid, code.language-mermaid'

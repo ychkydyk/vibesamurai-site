@@ -135,7 +135,22 @@
 </aside>
 <h2 id="дальше">Дальше</h2>
 <p>В <strong>B10 — Как оценивать, что агент сделал хорошо</strong> разберём, <strong>как понять</strong>, что результат агента — это «хорошо», а не «выглядит хорошо». Чек-листы, скептические проверки, типичные «дыры», в которые провалится новичок. Без этой главы вы будете принимать <strong>первое, что красиво выглядит</strong> — а это половина агентских факапов.</p>
-<p>Если зашло — поделитесь главой с тем, у кого «всё на компе и никто не видит». Если задеплоили — <strong>киньте ссылку в комменты</strong>, реально хочется посмотреть, что у вас получилось. <strong>За лайк и комментарий — отдельная благодарность</strong>, ваша обратная связь реально помогает шлифовать материал.</p>  <nav class="chapter-nav"> <a href="/vibesamurai-site/courses/beginner/b8"> <span class="dir">← Назад</span> <span class="title">B8 · Cursor vs Claude Code vs Codex CLI</span> </a> <a href="/vibesamurai-site/courses/beginner/b10"> <span class="dir">Дальше →</span> <span class="title">B10 · Как оценивать, что агент сделал хорошо</span> </a> </nav> </main> </div> <script type="module">
+<p>Если зашло — поделитесь главой с тем, у кого «всё на компе и никто не видит». Если задеплоили — <strong>киньте ссылку в комменты</strong>, реально хочется посмотреть, что у вас получилось. <strong>За лайк и комментарий — отдельная благодарность</strong>, ваша обратная связь реально помогает шлифовать материал.</p>
+<h2 id="-дальше-посмотреть-и-почитать">📚 Дальше: посмотреть и почитать</h2>
+<p>Хостингов под статику много, и каждый со своими нюансами. Подборка — официальные доки трёх, которые я сам использую (GitHub Pages для учебного, Cloudflare Pages для прод-проектов с доменом, Vercel — когда подключается фронт-фреймворк).</p>
+<p><strong>Официальные доки</strong></p>
+<ul>
+<li><strong>GitHub Pages — Creating a site</strong> (полный гайд: от создания репо до публикации, с разделом про user/organization сайты): <a href="https://docs.github.com/en/pages/getting-started-with-github-pages/creating-a-github-pages-site">docs.github.com/en/pages/getting-started-with-github-pages/creating-a-github-pages-site</a>.</li>
+<li><strong>Cloudflare Pages — Get started</strong> (раздел про деплой статики «как есть», без сборки): <a href="https://developers.cloudflare.com/pages/get-started/">developers.cloudflare.com/pages/get-started</a>.</li>
+<li><strong>Vercel — Deployments</strong> (на вырост: как залить статику через CLI или git, без серверов): <a href="https://vercel.com/docs/deployments">vercel.com/docs/deployments</a>.</li>
+</ul>
+<p><strong>Безопасность токенов</strong></p>
+<ul>
+<li><strong>GitHub — Managing your personal access tokens</strong> (как создать PAT, какие scopes ставить, как отозвать): <a href="https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens">docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens</a>. Прочитайте раздел про <strong>fine-grained tokens</strong> — это рекомендованный способ в 2026, а не classic-PAT.</li>
+</ul>
+<blockquote>
+<p><strong>Совет:</strong> не торопитесь переезжать с GitHub Pages на Cloudflare/Vercel «потому что круче». Переезд осмыслен, когда есть конкретный повод — свой домен, скорость, динамические функции. Иначе <strong>не плодите сущности</strong>.</p>
+</blockquote>  <nav class="chapter-nav"> <a href="/vibesamurai-site/courses/beginner/b8"> <span class="dir">← Назад</span> <span class="title">B8 · Cursor vs Claude Code vs Codex CLI</span> </a> <a href="/vibesamurai-site/courses/beginner/b10"> <span class="dir">Дальше →</span> <span class="title">B10 · Как оценивать, что агент сделал хорошо</span> </a> </nav> </main> </div> <script type="module">
     import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
     const matches = document.querySelectorAll(
       'pre[data-language="mermaid"], pre.language-mermaid, code.language-mermaid'

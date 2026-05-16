@@ -65,7 +65,16 @@
 <p><em>Аналогия:</em> представьте что в команду пришёл новый человек, никто из «старых» недоступен. По вашим артефактам он должен суметь продолжить. Если может — система durable. Если нет — состояние держится только в головах живых людей (и в session state агента), и это <strong>fragile</strong>.</p>
 </blockquote>
 <h2 id="drift-когда-мир-разошёлся-с-представлением">Drift: когда мир разошёлся с представлением</h2>
-<p><strong>Drift</strong> — это когда <strong>представление агента о состоянии не совпадает с реальностью</strong>. Самые частые виды:</p>
+<p><strong>Drift</strong> — это когда <strong>представление агента о состоянии не совпадает с реальностью</strong>. По мере накопления ходов модель уходит от исходного контекста, и в какой-то момент проще не «дорассуждать», а сделать checkpoint и reset:</p>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="mermaid"><code><span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">flowchart LR</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    Fresh[T0: fresh&#x3C;br/>контекст чистый] --> T1[T+N: lite drift&#x3C;br/>факты ещё свежие]</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    T1 --> T2[T+M: serious drift&#x3C;br/>есть устаревший кеш]</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    T2 --> Check{Checkpoint?}</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    Check -->|durable artifact| Reset[Compact / reset&#x3C;br/>новая сессия]</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    Reset -.-> Fresh</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    Check -->|нет| Bad([silent divergence&#x3C;br/>тихие баги])</span></span></code></pre>
+<p>Ключевая идея: <strong>drift накапливается всегда</strong> — вопрос только в том, заметите ли вы его раньше, чем он успеет навредить. Durable artifacts (plan + journal + atomic commits) — это и есть точки, где можно безопасно сбросить и продолжить.</p>
+<p>Самые частые виды:</p>
 <h3 id="1-file-drift">1. File drift</h3>
 <p>Агент думает, что файл <code>src/auth.ts</code> содержит функцию <code>verifyToken</code>, потому что прочитал его в начале сессии. Но вы (или другой агент) с тех пор поменяли файл. Агент работает по <strong>устаревшему контексту</strong>.</p>
 <p><strong>Как ловить:</strong> перед каждой серьёзной правкой агент должен <strong>перечитать</strong> файл, не работать по кешу. В Claude Code это поведение встроено (Read перед Edit). В других — проверяйте.</p>
@@ -156,6 +165,20 @@
 <h2 id="дальше">Дальше</h2>
 <p>Part IV — <strong>Evaluation &#x26; Tuning</strong>. В <strong>M11 — Success criteria и evaluation signals</strong> разберём, как формализовать «хорошо/плохо» в проверяемые сигналы: qualitative + quantitative, automated scanning (CodeQL, secret scanning, advisory DB), evaluation pipelines.</p>
 <p>Если зашло — поделитесь Part III с теми, кто настраивает агентский setup для команды или борется с «непредсказуемым поведением» агента между сессиями. Если есть конкретные drift-инциденты из вашей практики — пишите в комменты, ваша обратная связь реально помогает шлифовать материал.</p>
+<h2 id="-дальше-посмотреть-и-почитать">📚 Дальше: посмотреть и почитать</h2>
+<p>Drift и continuity — это, по сути, разговор про управление окном контекста. Поэтому короткий список — про кеш/компакцию у Anthropic и про stateful-агентов как референс.</p>
+<p><strong>Контекст и компакция</strong></p>
+<ul>
+<li><strong>Anthropic — Prompt caching</strong> — <a href="https://platform.claude.com/docs/en/build-with-claude/prompt-caching">platform.claude.com/docs/en/build-with-claude/prompt-caching</a>. Что именно кешируется, как компакция переиспользует тот же префикс. Поможет понять, почему «маленькая правка CLAUDE.md» инвалидирует половину кеша.</li>
+<li><strong>OpenTelemetry — Semantic conventions for GenAI</strong> — <a href="https://opentelemetry.io/docs/specs/semconv/gen-ai/">opentelemetry.io/docs/specs/semconv/gen-ai/</a>. Какие метрики и атрибуты класть в трейсы, чтобы drift был <strong>виден</strong> в наблюдалке, а не «всплыл» через PR-инцидент.</li>
+</ul>
+<p><strong>Stateful agents и durable state</strong></p>
+<ul>
+<li><strong>Letta — концепция MemGPT</strong> — <a href="https://docs.letta.com/concepts/memgpt/">docs.letta.com/concepts/memgpt/</a>. Эталон того, как разделить «горячий» контекст и «холодный» archival store, чтобы resume был не «прочитал диалог», а «вспомнил мир».</li>
+</ul>
+<blockquote>
+<p><strong>Совет:</strong> если drift у вас не разовый, а системный — начните не с очередного хука, а с того, чтобы все длинные задачи писали journal в <code>.agent/journals/</code>. Половина drift’ов отпадает.</p>
+</blockquote>
 <hr>
 <p><strong>Maps to:</strong> GH-600 §3.2 — <em>State management and resumability</em> + §3.3 — <em>Cross-environment continuity</em>
 <strong>Closes:</strong> Part III — Memory &#x26; State (M9 + M10)</p>  <nav class="chapter-nav"> <a href="/vibesamurai-site/courses/middle/m9"> <span class="dir">← Назад</span> <span class="title">M9 · Memory strategies</span> </a> <a href="/vibesamurai-site/courses/middle/m11"> <span class="dir">Дальше →</span> <span class="title">M11 · Success criteria и evaluation signals</span> </a> </nav> </main> </div> <script type="module">

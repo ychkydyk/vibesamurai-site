@@ -30,7 +30,17 @@
 <span class="line"><span>│  - Доступ к данным компании, не вашим               │</span></span>
 <span class="line"><span>│  - 1000+ задач/день, может, параллельно             │</span></span>
 <span class="line"><span>└─────────────────────────────────────────────────────┘</span></span></code></pre>
-<p>Поэтому <strong>архитектура</strong> в проде <strong>отличается</strong>. Не «то же + сервер», а <strong>другая</strong> архитектура с <strong>другими</strong> правилами.</p>
+<p>Поэтому <strong>архитектура</strong> в проде <strong>отличается</strong>. Не «то же + сервер», а <strong>другая</strong> архитектура с <strong>другими</strong> правилами. Поток деплоя выглядит примерно так:</p>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="mermaid"><code><span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">flowchart LR</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    Local[Local dev&#x3C;br/>claude в терминале] --> Staging[Staging&#x3C;br/>headless / Docker]</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    Staging --> Eval{Eval harness&#x3C;br/>pass?}</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    Eval -->|fail| Local</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    Eval -->|ok| Canary[Canary&#x3C;br/>1-5% трафика]</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    Canary --> Health{Метрики ок?}</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    Health -->|fail| Rollback([Rollback&#x3C;br/>kill switch])</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    Health -->|ok| Prod[Prod&#x3C;br/>100% трафика]</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    Rollback -.-> Staging</span></span></code></pre>
+<p>Каждый переход — отдельный gate, и для каждого нужны свои сигналы: на staging — eval harness (M11), на canary — error rate / cost / latency, на prod — алёрты и kill switch.</p>
 <h2 id="слои-продакшн-агента">Слои продакшн-агента</h2>
 <pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>┌─────────────────────────────────────────────────────┐</span></span>
 <span class="line"><span>│  6. Observability       (логи, метрики, алёрты)     │</span></span>
@@ -270,7 +280,25 @@
 </aside>
 <h2 id="дальше">Дальше</h2>
 <p>В <strong>M18 — Security в проде: secrets, sandbox, audit</strong> углубимся в <strong>security</strong> слой. <strong>Самая</strong> ответственная глава курса. Secret managers, container sandbox правильно, audit logging, prompt injection защита, multi-tenant isolation. Если M17 был <strong>архитектура</strong>, M18 — <strong>детали</strong>, без которых архитектура не безопасна.</p>
-<p>Если зашло — поделитесь главой с тем, кто <strong>готовится</strong> к деплою своего первого агента. Если у вас уже есть prod-агент — расскажите в комменты, что было самым <strong>неожиданным</strong> при переходе локалка → прод. Ваша обратная связь реально помогает шлифовать материал.</p>  <nav class="chapter-nav"> <a href="/vibesamurai-site/courses/middle/m16"> <span class="dir">← Назад</span> <span class="title">M16 · Когда multi-agent избыточен. Антипаттерны</span> </a> <a href="/vibesamurai-site/courses/middle/m18"> <span class="dir">Дальше →</span> <span class="title">M18 · Security в проде: secrets, sandbox, audit</span> </a> </nav> </main> </div> <script type="module">
+<p>Если зашло — поделитесь главой с тем, кто <strong>готовится</strong> к деплою своего первого агента. Если у вас уже есть prod-агент — расскажите в комменты, что было самым <strong>неожиданным</strong> при переходе локалка → прод. Ваша обратная связь реально помогает шлифовать материал.</p>
+<h2 id="-дальше-посмотреть-и-почитать">📚 Дальше: посмотреть и почитать</h2>
+<p>Деплой агентов — это там, где «общих принципов» мало; быстрее всего поднять, читая официалку конкретных платформ. Три якоря: managed Bedrock, sandbox-инфра под код, и наблюдаемость для прод-агента.</p>
+<p><strong>Managed runtime для агентов</strong></p>
+<ul>
+<li><strong>AWS — Amazon Bedrock AgentCore</strong> — <a href="https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/what-is-bedrock-agentcore.html">docs.aws.amazon.com/bedrock-agentcore/latest/devguide/what-is-bedrock-agentcore.html</a>. Serverless host для агентов: session isolation, VPC, PrivateLink. Хороший референс «как выглядит prod-инфра для агентов от большого вендора».</li>
+<li><strong>AWS — Deploy an Amazon Bedrock agent</strong> — <a href="https://docs.aws.amazon.com/bedrock/latest/userguide/agents-deploy.html">docs.aws.amazon.com/bedrock/latest/userguide/agents-deploy.html</a>. Конкретно про alias/version/InvokeAgent flow — то самое «не меняем версию агента молча в проде».</li>
+</ul>
+<p><strong>Sandbox-инфра для агентского кода</strong></p>
+<ul>
+<li><strong>E2B — Docs</strong> — <a href="https://e2b.dev/docs">e2b.dev/docs</a>. Cloud sandboxes под выполнение agent-сгенерированного кода. Стартуют за ~80мс, режут вам всю infrastructure-yak-shaving.</li>
+</ul>
+<p><strong>Observability в проде</strong></p>
+<ul>
+<li><strong>Langfuse — Observability overview</strong> — <a href="https://langfuse.com/docs/observability/overview">langfuse.com/docs/observability/overview</a>. Готовая платформа под traces / sessions / стоимость; ставится за вечер, видит весь поток сразу.</li>
+</ul>
+<blockquote>
+<p><strong>Совет:</strong> перед первым prod-деплоем выберите ровно одно из этих трёх. «Все сразу» — гарантированный способ зависнуть в инфре на месяц.</p>
+</blockquote>  <nav class="chapter-nav"> <a href="/vibesamurai-site/courses/middle/m16"> <span class="dir">← Назад</span> <span class="title">M16 · Когда multi-agent избыточен. Антипаттерны</span> </a> <a href="/vibesamurai-site/courses/middle/m18"> <span class="dir">Дальше →</span> <span class="title">M18 · Security в проде: secrets, sandbox, audit</span> </a> </nav> </main> </div> <script type="module">
     import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
     const matches = document.querySelectorAll(
       'pre[data-language="mermaid"], pre.language-mermaid, code.language-mermaid'

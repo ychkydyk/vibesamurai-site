@@ -28,6 +28,20 @@
 <p>Разница в <strong>5-7 минут</strong> проверок. И в количестве ваших нервов через неделю.</p>
 <h2 id="чек-лист-принятия-результата-5-минут">Чек-лист принятия результата (5 минут)</h2>
 <p>Запомните и пройдитесь по нему <strong>после каждой</strong> правки от агента. Это <strong>базовая гигиена</strong>, как <code>git status</code> после изменений.</p>
+<p>Если рисовать решение «принимать или нет» в виде блок-схемы — оно такое:</p>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="mermaid"><code><span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">flowchart TB</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    A([Агент сказал&#x3C;br/>«готово»]) --> B{Критерии&#x3C;br/>«как поймём готовым»&#x3C;br/>проверены руками?}</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    B -->|нет| F([Откат&#x3C;br/>git restore .])</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    B -->|да| C{Edge case&#x3C;br/>прошли?}</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    C -->|нет| U([Уточнить&#x3C;br/>и переделать])</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    C -->|да| D{Консоль и&#x3C;br/>git diff чистые?}</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    D -->|нет| U</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    D -->|да| E{Перезагрузка&#x3C;br/>не сломала?}</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    E -->|нет| U</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    E -->|да| OK([Принять&#x3C;br/>+ коммит])</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    U -.-> A</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    F -.-> A</span></span></code></pre>
+<p>Снизу-вверх: пока хоть один чек не зелёный — либо уточняем, либо откатываемся. <strong>Никаких «потом разберусь».</strong></p>
 <h3 id="1-соответствие-критериям-из-запроса">1. Соответствие критериям из запроса</h3>
 <p>Помните формулу из B3: <strong>ЧТО + ГДЕ + КАК ПОЙМЁМ ГОТОВЫМ</strong>? Возьмите ваш «как поймём готовым» и <strong>проверьте каждый пункт</strong> руками.</p>
 <p>Если в запросе было «<strong>добавил задачу → она появилась в списке</strong>» — добавьте задачу и <strong>посмотрите</strong>. Не «должна появиться» — а <strong>появилась ли</strong>.</p>
@@ -156,7 +170,21 @@
 </aside>
 <h2 id="дальше">Дальше</h2>
 <p>В <strong>B11 — Капстоун: соберите свой инструмент</strong> мы соберём <strong>всё, что было</strong> в треке — формула запроса, git, чтение кода, безопасность, деплой, чек-лист — в <strong>один реальный проект</strong>, который <strong>лично вам</strong> нужен. Не учебное todo, а штука, которую вы будете <strong>сами использовать</strong>. Это финальная работа Beginner-трека.</p>
-<p>Если зашло — поделитесь главой с тем, кто «принимает агентскую работу не глядя». Если у вас был эпизод «принял — а оно через два дня сломалось» — расскажите в комменты, разберём как избежать. <strong>За лайк и комментарий — отдельная благодарность</strong>, ваша обратная связь реально помогает шлифовать материал.</p>  <nav class="chapter-nav"> <a href="/vibesamurai-site/courses/beginner/b9"> <span class="dir">← Назад</span> <span class="title">B9 · Деплой первого проекта</span> </a> <a href="/vibesamurai-site/courses/beginner/b11"> <span class="dir">Дальше →</span> <span class="title">B11 · Капстоун: соберите свой инструмент</span> </a> </nav> </main> </div> <script type="module">
+<p>Если зашло — поделитесь главой с тем, кто «принимает агентскую работу не глядя». Если у вас был эпизод «принял — а оно через два дня сломалось» — расскажите в комменты, разберём как избежать. <strong>За лайк и комментарий — отдельная благодарность</strong>, ваша обратная связь реально помогает шлифовать материал.</p>
+<h2 id="-дальше-посмотреть-и-почитать">📚 Дальше: посмотреть и почитать</h2>
+<p>Оценка результата — это половина всей работы с агентом. Вот ресурсы, которые я считаю полезными именно на этой стадии — когда «уже принял или ещё нет».</p>
+<p><strong>Как ревьюить агентский код</strong></p>
+<ul>
+<li><strong>GitHub Docs — Review AI-generated code</strong> — <a href="https://docs.github.com/en/copilot/tutorials/review-ai-generated-code">docs.github.com/en/copilot/tutorials/review-ai-generated-code</a>. Официальный гайд от GitHub: что проверять в первую очередь, на чём чаще всего ловится «выглядит хорошо, а внутри мусор».</li>
+<li><strong>Bright Security — 5 Best Practices for Reviewing AI-Generated Code</strong> — <a href="https://brightsec.com/blog/5-best-practices-for-reviewing-and-approving-ai-generated-code/">brightsec.com/blog/5-best-practices-for-reviewing-and-approving-ai-generated-code</a>. Короткий чек-лист с фокусом на безопасность и edge case — рядом с нашим, но другими словами.</li>
+</ul>
+<p><strong>Инструменты для проверки</strong></p>
+<ul>
+<li><strong>Anthropic Console — Evaluation tool</strong> — <a href="https://docs.anthropic.com/en/docs/test-and-evaluate/eval-tool">docs.anthropic.com/en/docs/test-and-evaluate/eval-tool</a>. Когда дорастёте до того, чтобы прогонять не одну правку, а целые наборы тест-кейсов — это нативный для Claude способ делать это аккуратно.</li>
+</ul>
+<blockquote>
+<p><strong>Совет:</strong> если выбирать одну привычку из этой главы — это <strong><code>git diff</code> и взгляд глазами</strong> после каждой правки. Всё остальное — производное. Не идеально, но реально работает.</p>
+</blockquote>  <nav class="chapter-nav"> <a href="/vibesamurai-site/courses/beginner/b9"> <span class="dir">← Назад</span> <span class="title">B9 · Деплой первого проекта</span> </a> <a href="/vibesamurai-site/courses/beginner/b11"> <span class="dir">Дальше →</span> <span class="title">B11 · Капстоун: соберите свой инструмент</span> </a> </nav> </main> </div> <script type="module">
     import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
     const matches = document.querySelectorAll(
       'pre[data-language="mermaid"], pre.language-mermaid, code.language-mermaid'

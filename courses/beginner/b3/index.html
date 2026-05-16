@@ -68,6 +68,16 @@
 <p>Это <strong>запрос, который не нужно уточнять</strong>. Агент понимает, что делать, <em>где</em> сделать, <em>что</em> считать готовым.</p>
 <p>Можно ли сразу написать так с первого раза? Можно. И через 2-3 недели практики у вас это будет рефлекс.</p>
 <h2 id="когда-соглашаться-когда-нет-переделай">Когда соглашаться, когда «нет, переделай»</h2>
+<p>Если нарисовать один полный «ход» разговора с агентом на салфетке — выглядит так:</p>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="mermaid"><code><span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">flowchart LR</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    U([Ваш запрос&#x3C;br/>по формуле]) --> P[Агент думает&#x3C;br/>и пишет план]</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    P --> A[Агент действует&#x3C;br/>файлы / команды]</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    A --> R[Вы смотрите&#x3C;br/>результат]</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    R -->|ок| OK([Принять&#x3C;br/>+ коммит])</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    R -->|почти| F([Уточнить&#x3C;br/>и переделать])</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    R -->|совсем не то| X([Откатить&#x3C;br/>начать заново])</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    F -.-> U</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    X -.-> U</span></span></code></pre>
 <p>После того как агент что-то сделал, у вас три кнопки:</p>
 <h3 id="-принять--когда">✅ «Принять» — когда</h3>
 <ul>
@@ -109,7 +119,21 @@
 </aside>
 <h2 id="дальше">Дальше</h2>
 <p>В <strong>B4 — Что такое репозиторий и зачем коммитить</strong> разберём git за 20 минут — только то, что нужно для безопасной работы с агентом. Без неё каждая ошибка агента может стать невосстановимой. С ней — любую ошибку можно откатить одной командой.</p>
-<p>Если зашло — поделитесь главой с тем, кто работает с агентом и постоянно жалуется «он опять сделал не то». Если у вас есть свой типичный запрос, который не получается — пишите в комменты, разберём вместе. Ваша обратная связь реально помогает.</p>  <nav class="chapter-nav"> <a href="/vibesamurai-site/courses/beginner/b2"> <span class="dir">← Назад</span> <span class="title">B2 · Установка вашего первого AI-агента</span> </a> <a href="/vibesamurai-site/courses/beginner/b4"> <span class="dir">Дальше →</span> <span class="title">B4 · Что такое репозиторий и зачем коммитить</span> </a> </nav> </main> </div> <script type="module">
+<p>Если зашло — поделитесь главой с тем, кто работает с агентом и постоянно жалуется «он опять сделал не то». Если у вас есть свой типичный запрос, который не получается — пишите в комменты, разберём вместе. Ваша обратная связь реально помогает.</p>
+<h2 id="-дальше-посмотреть-и-почитать">📚 Дальше: посмотреть и почитать</h2>
+<p>Формула ЧТО / ГДЕ / КАК ПОЙМЁМ — это первый кирпич. Если хочется услышать ту же идею другими словами, от людей, которые этим занимаются профессионально — вот короткий проверенный список.</p>
+<p><strong>Документация Anthropic</strong></p>
+<ul>
+<li><strong>Prompting best practices</strong> — <a href="https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/claude-prompting-best-practices">platform.claude.com/docs/en/build-with-claude/prompt-engineering/claude-prompting-best-practices</a>. Официальный гайд по тому, как формулировать запросы к Claude. Многое перекликается с формулой из главы.</li>
+<li><strong>Best practices for Claude Code</strong> — <a href="https://code.claude.com/docs/en/best-practices">code.claude.com/docs/en/best-practices</a>. Про то, как разговаривать с агентом в терминале. Ключевая идея «Explore first, then plan, then code» — это ровно то, что мы делаем в режиме «сначала покажи план».</li>
+</ul>
+<p><strong>Видео</strong></p>
+<ul>
+<li><strong>Prompting 101 — Code w/ Claude</strong> — <a href="https://www.youtube.com/watch?v=ysPbXH0LpIE">youtube.com/watch?v=ysPbXH0LpIE</a>. Короткий вход в тему, можно смотреть с обеда.</li>
+</ul>
+<blockquote>
+<p><strong>Совет:</strong> держите вкладку с <em>Prompting best practices</em> открытой первую неделю. Спорные моменты в формулировках быстрее решать оттуда, чем угадывать.</p>
+</blockquote>  <nav class="chapter-nav"> <a href="/vibesamurai-site/courses/beginner/b2"> <span class="dir">← Назад</span> <span class="title">B2 · Установка вашего первого AI-агента</span> </a> <a href="/vibesamurai-site/courses/beginner/b4"> <span class="dir">Дальше →</span> <span class="title">B4 · Что такое репозиторий и зачем коммитить</span> </a> </nav> </main> </div> <script type="module">
     import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
     const matches = document.querySelectorAll(
       'pre[data-language="mermaid"], pre.language-mermaid, code.language-mermaid'

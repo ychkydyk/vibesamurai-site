@@ -301,7 +301,23 @@
 </aside>
 <h2 id="дальше">Дальше</h2>
 <p>В <strong>M20 — Финал Middle-трека</strong> — что вы умеете сейчас, куда дальше, как <strong>продолжить расти</strong> уже <strong>без</strong> курса. Карта индустрии в 2026-м, направления развития, комьюнити, ресурсы. Это <strong>выход</strong> в самостоятельное движение.</p>
-<p>Если зашло — поделитесь главой с тем, у кого agent в проде, но <strong>без</strong> инцидент-процедур. Если у вас был <strong>обучающий</strong> инцидент — расскажите в комменты, разберём анонимно. Ваша обратная связь реально помогает шлифовать материал.</p>  <nav class="chapter-nav"> <a href="/vibesamurai-site/courses/middle/m18"> <span class="dir">← Назад</span> <span class="title">M18 · Security в проде: secrets, sandbox, audit</span> </a> <a href="/vibesamurai-site/courses/middle/m20"> <span class="dir">Дальше →</span> <span class="title">M20 · Финал: куда дальше после Middle</span> </a> </nav> </main> </div> <script type="module">
+<p>Если зашло — поделитесь главой с тем, у кого agent в проде, но <strong>без</strong> инцидент-процедур. Если у вас был <strong>обучающий</strong> инцидент — расскажите в комменты, разберём анонимно. Ваша обратная связь реально помогает шлифовать материал.</p>
+<h2 id="-дальше-посмотреть-и-почитать">📚 Дальше: посмотреть и почитать</h2>
+<p>Incident management — древняя дисциплина SRE, и LLM-агенты ничего радикально нового сюда не добавили, только усугубили старые проблемы. Поэтому базу берём у тех, кто этим занимается 20 лет.</p>
+<p><strong>Google SRE — фундамент</strong></p>
+<ul>
+<li><strong>Postmortem Culture: Learning from Failure</strong> (SRE Book, гл. 15) — каноническая глава про blameless culture, обязательная к прочтению целиком: <a href="https://sre.google/sre-book/postmortem-culture/">sre.google/sre-book/postmortem-culture</a>.</li>
+<li><strong>Example postmortem</strong> (SRE Book) — пример полного post-mortem-а, на который удобно опираться при первом написании своего: <a href="https://sre.google/sre-book/example-postmortem/">sre.google/sre-book/example-postmortem</a>.</li>
+<li><strong>Postmortem Action Items</strong> (USENIX ;login:, Lunney) — про самую больную часть: что делать с action items после post-mortem: <a href="https://sre.google/static/pdf/login_spring17_09_lunney.pdf">sre.google/static/pdf/login_spring17_09_lunney.pdf</a>.</li>
+</ul>
+<p><strong>Кейс-бэнк публичных инцидентов</strong></p>
+<ul>
+<li><strong>danluu/post-mortems</strong> — куратируемая коллекция публичных post-mortem-ов; читайте по штуке в неделю, накапливается насмотренность: <a href="https://github.com/danluu/post-mortems">github.com/danluu/post-mortems</a>.</li>
+<li><strong>postmortems.app</strong> — более новый агрегатор с тегами и категориями инцидентов: <a href="https://postmortems.app/about">postmortems.app/about</a>.</li>
+</ul>
+<blockquote>
+<p><strong>Совет:</strong> заведите в команде «час чужих post-mortem-ов» раз в две недели — читаете один инцидент из danluu/post-mortems, обсуждаете «у нас бы это сломалось?». Дешёвая профилактика, которая ловит реальные дыры до того, как они стали вашим post-mortem-ом.</p>
+</blockquote>  <nav class="chapter-nav"> <a href="/vibesamurai-site/courses/middle/m18"> <span class="dir">← Назад</span> <span class="title">M18 · Security в проде: secrets, sandbox, audit</span> </a> <a href="/vibesamurai-site/courses/middle/m20"> <span class="dir">Дальше →</span> <span class="title">M20 · Финал: куда дальше после Middle</span> </a> </nav> </main> </div> <script type="module">
     import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
     const matches = document.querySelectorAll(
       'pre[data-language="mermaid"], pre.language-mermaid, code.language-mermaid'

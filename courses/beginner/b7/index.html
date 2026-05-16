@@ -23,6 +23,27 @@
 <span class="line"><span>│  L3 — Внешние действия  «push, deploy, оплата»   │</span></span>
 <span class="line"><span>└──────────────────────────────────────────────────┘</span></span></code></pre>
 <p>Правило: <strong>начинаете каждую сессию с L0</strong>. Повышаете, только когда понятно, что делает агент. Никогда не выдаёте L3 «на всю жизнь».</p>
+<p>Если нарисовать границу доверия на салфетке — кто что видит и куда не может заглянуть — выглядит так:</p>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="mermaid"><code><span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">flowchart LR</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    subgraph WORLD[Внешний мир]</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">        GH[(GitHub /&#x3C;br/>чужие сервисы)]</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">        AI[(LLM-провайдер&#x3C;br/>история чата)]</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    end</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    subgraph MACHINE[Ваша машина]</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">        HOME[~/ дом, фото,&#x3C;br/>документы]</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">        ENV[.env&#x3C;br/>секреты]</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">        subgraph PROJ[Папка проекта]</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">            CODE[код + .gitignore]</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">            AGENT[Агент&#x3C;br/>видит только это]</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">        end</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    end</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    AGENT -.не видит.-> HOME</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    AGENT -.не видит значения.-> ENV</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    ENV -- читается как&#x3C;br/>переменная окружения --> CODE</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    AGENT --> CODE</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    CODE --> GH</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    AGENT -- промпт + контекст --> AI</span></span></code></pre>
+<p>Главное из схемы: агент видит <strong>папку, в которой запущен</strong>, и значения переменных окружения <strong>через ваш код</strong>, но не саму строку секрета. Всё, что лежит выше папки проекта или в <code>.env</code> — для него «темно», если только вы сами не положите это в чат.</p>
 <h2 id="что-нельзя-давать-агенту">Что НЕЛЬЗЯ давать агенту</h2>
 <h3 id="1-секреты-в-чат">1. Секреты в чат</h3>
 <p>Если вы написали агенту в чате:</p>
@@ -193,7 +214,26 @@
 </aside>
 <h2 id="дальше">Дальше</h2>
 <p>В <strong>B8 — Cursor vs Claude Code vs Codex CLI</strong> разберём, <strong>какие ещё агенты есть</strong> кроме Claude Code, и в каких случаях их выбирать. Сравнительная таблица, плюсы-минусы каждого, <strong>на чём я лично работаю</strong> и почему. Не «холивар» про лучший инструмент, а <strong>карта зоопарка</strong>, чтобы вы могли выбрать под свою задачу.</p>
-<p>Если зашло — поделитесь главой с тем, кто работает с агентом «как попало» и пускает ему всё подряд. Если у вас был свой эпизод с утечкой/факапом — расскажите в комментах, без стыда. <strong>За лайк и комментарий — отдельная благодарность</strong>, ваша обратная связь реально помогает шлифовать материал.</p>  <nav class="chapter-nav"> <a href="/vibesamurai-site/courses/beginner/b6"> <span class="dir">← Назад</span> <span class="title">B6 · Чтение кода, который написал агент</span> </a> <a href="/vibesamurai-site/courses/beginner/b8"> <span class="dir">Дальше →</span> <span class="title">B8 · Cursor vs Claude Code vs Codex CLI</span> </a> </nav> </main> </div> <script type="module">
+<p>Если зашло — поделитесь главой с тем, кто работает с агентом «как попало» и пускает ему всё подряд. Если у вас был свой эпизод с утечкой/факапом — расскажите в комментах, без стыда. <strong>За лайк и комментарий — отдельная благодарность</strong>, ваша обратная связь реально помогает шлифовать материал.</p>
+<h2 id="-дальше-посмотреть-и-почитать">📚 Дальше: посмотреть и почитать</h2>
+<p>Безопасность — тема, в которой лучше прочитать первоисточники, а не пересказы. Вот короткий, <strong>проверенный</strong> список того, что я бы дал любому новичку.</p>
+<p><strong>Официальная документация</strong></p>
+<ul>
+<li><strong>Claude Code — Sandboxing</strong> — <a href="https://code.claude.com/docs/en/sandboxing">code.claude.com/docs/en/sandboxing</a>. Как Claude Code сам отделяет «можно» от «нельзя» на уровне ОС. Полезно понимать, что защищает инструмент, а что — ваша задача.</li>
+<li><strong>Anthropic — Claude Code auto mode: a safer way to skip permissions</strong> — <a href="https://www.anthropic.com/engineering/claude-code-auto-mode">anthropic.com/engineering/claude-code-auto-mode</a>. Честный разбор от Anthropic, что происходит, когда вы выключаете подтверждения, и где это допустимо.</li>
+</ul>
+<p><strong>Атаки и угрозы, чтобы понимать, чего бояться</strong></p>
+<ul>
+<li><strong>OWASP Top 10 for Agentic Applications (2026)</strong> — <a href="https://genai.owasp.org/resource/owasp-top-10-for-agentic-applications-for-2026/">genai.owasp.org/resource/owasp-top-10-for-agentic-applications-for-2026</a>. Карта типовых рисков агентных систем. Не страшилка, а структурированный список.</li>
+<li><strong>Simon Willison — prompt injection</strong> (серия) — <a href="https://simonwillison.net/tags/prompt-injection/">simonwillison.net/tags/prompt-injection</a>. Человек, который ввёл сам термин «prompt injection». Лучшее место, чтобы за час понять, как агента можно «уговорить» через подсунутый текст.</li>
+</ul>
+<p><strong>Секреты и git</strong></p>
+<ul>
+<li><strong>GitGuardian — Secure Your Secrets With .env</strong> — <a href="https://blog.gitguardian.com/secure-your-secrets-with-env/">blog.gitguardian.com/secure-your-secrets-with-env</a>. Подробный разбор связки <code>.env</code> + <code>.gitignore</code> и что делать, если ключ всё-таки утёк.</li>
+</ul>
+<blockquote>
+<p><strong>Совет:</strong> если читать времени мало — начните с OWASP Top 10 for Agentic Applications. Это <strong>самый дешёвый</strong> способ перестать наступать на одни и те же грабли, что и все остальные.</p>
+</blockquote>  <nav class="chapter-nav"> <a href="/vibesamurai-site/courses/beginner/b6"> <span class="dir">← Назад</span> <span class="title">B6 · Чтение кода, который написал агент</span> </a> <a href="/vibesamurai-site/courses/beginner/b8"> <span class="dir">Дальше →</span> <span class="title">B8 · Cursor vs Claude Code vs Codex CLI</span> </a> </nav> </main> </div> <script type="module">
     import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
     const matches = document.querySelectorAll(
       'pre[data-language="mermaid"], pre.language-mermaid, code.language-mermaid'

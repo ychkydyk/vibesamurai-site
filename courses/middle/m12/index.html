@@ -268,7 +268,23 @@
 </aside>
 <h2 id="дальше">Дальше</h2>
 <p>В <strong>M13 — Tuning: что менять, когда метрики не растут</strong> разберём, <strong>что делать</strong>, если metrics стабильно ниже желаемого. Промпты, контекст, разбиение задачи, выбор модели, hooks — <strong>в каком порядке</strong> настраивать, и <strong>с чего точно НЕ начинать</strong>. После M13 закрываем Часть IV.</p>
-<p>Если зашло — поделитесь главой с тем, у кого «agent работает, но кажется хуже стал». Если у вас уже свой harness — расскажите в комменты, как устроен, разберём. Ваша обратная связь реально помогает шлифовать материал.</p>  <nav class="chapter-nav"> <a href="/vibesamurai-site/courses/middle/m11"> <span class="dir">← Назад</span> <span class="title">M11 · Оценка агентов: метрики вместо ощущений</span> </a> <a href="/vibesamurai-site/courses/middle/m13"> <span class="dir">Дальше →</span> <span class="title">M13 · Tuning: что менять, когда метрики не растут</span> </a> </nav> </main> </div> <script type="module">
+<p>Если зашло — поделитесь главой с тем, у кого «agent работает, но кажется хуже стал». Если у вас уже свой harness — расскажите в комменты, как устроен, разберём. Ваша обратная связь реально помогает шлифовать материал.</p>
+<h2 id="-дальше-посмотреть-и-почитать">📚 Дальше: посмотреть и почитать</h2>
+<p>Если хочется разобрать тему regression testing для LLM-агентов «по-взрослому», вот несколько практичных источников, которыми я сам пользуюсь.</p>
+<p><strong>Golden datasets и regression-практика</strong></p>
+<ul>
+<li><strong>LLM Regression Testing Pipeline (TestQuality, 2026)</strong> — практический разбор pipeline с RAG triad и gold sets: <a href="https://testquality.com/llm-regression-testing-pipeline/">testquality.com/llm-regression-testing-pipeline</a>.</li>
+<li><strong>7 Proven Strategies for LLM Regression Testing</strong> (Techment) — golden vs random sampling, как готовить gold sets для CI: <a href="https://www.techment.com/blogs/llm-regression-testing/">techment.com/blogs/llm-regression-testing</a>.</li>
+<li><strong>Continuous Evaluation in Production</strong> (dev.to / Lamhot) — patterns для evals-as-CI и living test suite: <a href="https://dev.to/lamhot/continuous-evaluation-in-production-monitoring-regressions-evals-in-cicd-k87">dev.to/lamhot/continuous-evaluation-in-production-monitoring-regressions-evals-in-cicd-k87</a>.</li>
+</ul>
+<p><strong>Eval-фреймворки, на которые можно опереться</strong></p>
+<ul>
+<li><strong>openai/evals</strong> — registry бенчмарков и framework, удобно как «скелет» под свой harness: <a href="https://github.com/openai/evals">github.com/openai/evals</a>.</li>
+<li><strong>Anthropic — Create strong empirical evaluations</strong> — гайд по рубрикам и grading, полезно перед написанием своих golden examples: <a href="https://docs.claude.com/en/docs/test-and-evaluate/develop-tests">docs.claude.com/en/docs/test-and-evaluate/develop-tests</a>.</li>
+</ul>
+<blockquote>
+<p><strong>Совет:</strong> harness должен быть <strong>скучный</strong>. Любой «умный» fancy-стек с кучей абстракций ломается через месяц. Скучный bash + JSON-файлы + одна метрика «pass rate» — переживёт всё.</p>
+</blockquote>  <nav class="chapter-nav"> <a href="/vibesamurai-site/courses/middle/m11"> <span class="dir">← Назад</span> <span class="title">M11 · Оценка агентов: метрики вместо ощущений</span> </a> <a href="/vibesamurai-site/courses/middle/m13"> <span class="dir">Дальше →</span> <span class="title">M13 · Tuning: что менять, когда метрики не растут</span> </a> </nav> </main> </div> <script type="module">
     import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
     const matches = document.querySelectorAll(
       'pre[data-language="mermaid"], pre.language-mermaid, code.language-mermaid'

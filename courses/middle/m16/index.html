@@ -222,7 +222,22 @@
 </aside>
 <h2 id="дальше">Дальше</h2>
 <p>Открываем <strong>Часть VI</strong> — финальную в Middle-треке. <strong>M17 — Продакшн: деплой агентов в боевую среду</strong> — про то, как agent system, написанная локально, <strong>попадает в продакшн</strong>, и что это меняет. Persistence, observability, security в проде, blameless post-mortems.</p>
-<p>Если зашло — поделитесь главой с тем, кто <strong>сейчас</strong> уговаривает команду строить multi-agent. Если у вас <strong>был</strong> такой кейс «строили, не окупилось» — расскажите в комменты, очень нужны живые истории. Ваша обратная связь реально помогает шлифовать материал.</p>  <nav class="chapter-nav"> <a href="/vibesamurai-site/courses/middle/m15"> <span class="dir">← Назад</span> <span class="title">M15 · Multi-agent: роли, коммуникация, supervisor</span> </a> <a href="/vibesamurai-site/courses/middle/m17"> <span class="dir">Дальше →</span> <span class="title">M17 · Продакшн: деплой агентов в боевую среду</span> </a> </nav> </main> </div> <script type="module">
+<p>Если зашло — поделитесь главой с тем, кто <strong>сейчас</strong> уговаривает команду строить multi-agent. Если у вас <strong>был</strong> такой кейс «строили, не окупилось» — расскажите в комменты, очень нужны живые истории. Ваша обратная связь реально помогает шлифовать материал.</p>
+<h2 id="-дальше-посмотреть-и-почитать">📚 Дальше: посмотреть и почитать</h2>
+<p>Глава — авторская, но дискуссия «multi-agent или нет» в индустрии живая и аргументы есть у обеих сторон. Прочитайте обе — будете понимать, кто и о чём спорит.</p>
+<p><strong>«Не стройте multi-agent» — argument A</strong></p>
+<ul>
+<li><strong>Cognition — Don’t Build Multi-Agents</strong> — пост, который и запустил спор; ключевая мысль: context management ломается, когда задачу режут на агентов: <a href="https://cognition.ai/blog/dont-build-multi-agents">cognition.ai/blog/dont-build-multi-agents</a>.</li>
+<li><strong>LangChain — How and when to build multi-agent systems</strong> — более прагматичный взгляд из LangGraph-команды: когда multi-agent <strong>есть</strong> смысл, а когда нет: <a href="https://blog.langchain.com/how-and-when-to-build-multi-agent-systems/">blog.langchain.com/how-and-when-to-build-multi-agent-systems</a>.</li>
+</ul>
+<p><strong>«Стройте, но осторожно» — argument B</strong></p>
+<ul>
+<li><strong>Anthropic — How we built our multi-agent research system</strong> — кейс, где multi-agent дал +90% к single-agent baseline, с честным разбором цены и подводных камней: <a href="https://www.anthropic.com/engineering/multi-agent-research-system">anthropic.com/engineering/multi-agent-research-system</a>.</li>
+<li><strong>Inside the Multi-Agent Debate (Shivanand Roy / Medium)</strong> — компактное сравнение позиций Cognition и Anthropic side-by-side: <a href="https://snrspeaks.medium.com/inside-the-multi-agent-debate-why-cognition-labs-says-dont-and-anthropic-says-do-carefully-7b8a253e0b1e">snrspeaks.medium.com/inside-the-multi-agent-debate-why-cognition-labs-says-dont-and-anthropic-says-do-carefully-7b8a253e0b1e</a>.</li>
+</ul>
+<blockquote>
+<p><strong>Совет:</strong> если вы дочитали обе стороны спора и <strong>всё равно</strong> хочется multi-agent — назовите вслух <strong>цену</strong>, которую готовы платить (latency, debugging, состояние). Если на конкретной цифре стало неуютно — это и есть честный ответ.</p>
+</blockquote>  <nav class="chapter-nav"> <a href="/vibesamurai-site/courses/middle/m15"> <span class="dir">← Назад</span> <span class="title">M15 · Multi-agent: роли, коммуникация, supervisor</span> </a> <a href="/vibesamurai-site/courses/middle/m17"> <span class="dir">Дальше →</span> <span class="title">M17 · Продакшн: деплой агентов в боевую среду</span> </a> </nav> </main> </div> <script type="module">
     import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
     const matches = document.querySelectorAll(
       'pre[data-language="mermaid"], pre.language-mermaid, code.language-mermaid'

@@ -198,7 +198,23 @@
 </aside>
 <h2 id="дальше">Дальше</h2>
 <p>В <strong>M12 — Регрессионные тесты для агентов</strong> разберём, как из reference suite сделать <strong>автоматизированный</strong> регрессионный harness. Golden examples, snapshot testing, hooks для CI. После M12 вы сможете <strong>ловить регрессии</strong> сразу — без двух недель «ой, что-то стало хуже».</p>
-<p>Если зашло — поделитесь главой с тем, кто работает с агентами и говорит «вроде ок, но иногда фигня». Если у вас есть <strong>своя</strong> метрика, которая хорошо работает — расскажите в комменты, разберём. Ваша обратная связь реально помогает шлифовать материал.</p>  <nav class="chapter-nav"> <a href="/vibesamurai-site/courses/middle/m10"> <span class="dir">← Назад</span> <span class="title">M10 · State, drift, continuity</span> </a> <a href="/vibesamurai-site/courses/middle/m12"> <span class="dir">Дальше →</span> <span class="title">M12 · Регрессионные тесты для агентов</span> </a> </nav> </main> </div> <script type="module">
+<p>Если зашло — поделитесь главой с тем, кто работает с агентами и говорит «вроде ок, но иногда фигня». Если у вас есть <strong>своя</strong> метрика, которая хорошо работает — расскажите в комменты, разберём. Ваша обратная связь реально помогает шлифовать материал.</p>
+<h2 id="-дальше-посмотреть-и-почитать">📚 Дальше: посмотреть и почитать</h2>
+<p>Глава намеренно «без хардкорной матстатистики» — но за каждым утверждением стоят конкретные источники. Берём по одному, не пытайтесь освоить всё сразу.</p>
+<p><strong>Anthropic — методология evals</strong></p>
+<ul>
+<li><strong>Create strong empirical evaluations</strong> — официальный гайд Anthropic по построению eval-ов: рубрики, типы grading, типичные ошибки: <a href="https://docs.claude.com/en/docs/test-and-evaluate/develop-tests">docs.claude.com/en/docs/test-and-evaluate/develop-tests</a>.</li>
+<li><strong>A statistical approach to model evaluations</strong> — пост Anthropic Research про paired-difference тесты и почему один прогон ≠ метрика: <a href="https://www.anthropic.com/research/statistical-approach-to-model-evals">anthropic.com/research/statistical-approach-to-model-evals</a>.</li>
+<li><strong>anthropic-cookbook · building_evals.ipynb</strong> — рабочий ноутбук, по которому видно, как evals выглядят «руками»: <a href="https://github.com/anthropics/anthropic-cookbook/blob/main/misc/building_evals.ipynb">github.com/anthropics/anthropic-cookbook/blob/main/misc/building_evals.ipynb</a>.</li>
+</ul>
+<p><strong>OpenAI и community-benchmarks</strong></p>
+<ul>
+<li><strong>openai/evals</strong> — фреймворк OpenAI + open registry бенчмарков, удобный референс по eval-классам и YAML-структуре: <a href="https://github.com/openai/evals">github.com/openai/evals</a>.</li>
+<li><strong>SWE-bench leaderboards</strong> — куда смотреть, чтобы видеть реальный agent-benchmark на коде (Verified / Pro / Lite): <a href="https://www.swebench.com/">swebench.com</a>.</li>
+</ul>
+<blockquote>
+<p><strong>Совет:</strong> не копируйте чужие evals целиком — берите идею (рубрика, формат grading) и пересобирайте под свой домен. Универсальные evals = универсально посредственные.</p>
+</blockquote>  <nav class="chapter-nav"> <a href="/vibesamurai-site/courses/middle/m10"> <span class="dir">← Назад</span> <span class="title">M10 · State, drift, continuity</span> </a> <a href="/vibesamurai-site/courses/middle/m12"> <span class="dir">Дальше →</span> <span class="title">M12 · Регрессионные тесты для агентов</span> </a> </nav> </main> </div> <script type="module">
     import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
     const matches = document.querySelectorAll(
       'pre[data-language="mermaid"], pre.language-mermaid, code.language-mermaid'

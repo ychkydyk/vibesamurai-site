@@ -36,7 +36,17 @@
 <span class="line"><span>→ выход одного = вход другого</span></span>
 <span class="line"><span>→ можно проверять между шагами</span></span>
 <span class="line"><span>→ можно откатить только проблемный шаг</span></span></code></pre>
-<p>Это <strong>тот же</strong> агент, та же модель. Разница — в <strong>структуре workflow</strong>.</p>
+<p>Это <strong>тот же</strong> агент, та же модель. Разница — в <strong>структуре workflow</strong>. Чуть «архитектурнее» pipeline выглядит как DAG с параллельными ветками после общего плана:</p>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="mermaid"><code><span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">flowchart LR</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    Plan[Planner&#x3C;br/>spec / plan.md] --> Impl[Implementer&#x3C;br/>src/]</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    Impl --> Tests[Test engineer&#x3C;br/>tests/]</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    Impl --> Lint[Lint / typecheck]</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    Impl --> Docs[Doc writer&#x3C;br/>docs/]</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    Tests --> Review[Reviewer&#x3C;br/>PR description]</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    Lint --> Review</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    Docs --> Review</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    Review --> Ship([Ship / merge])</span></span></code></pre>
+<p>Часть шагов независимы (tests / lint / docs) и могут гоняться параллельно — это и есть «оркестрация», ради которой строится pipeline.</p>
 <h2 id="когда-пайплайн-нужен">Когда пайплайн нужен</h2>
 <p>Сигналы, что <strong>пора</strong> разбивать на пайплайн:</p>
 
@@ -277,7 +287,25 @@
 </aside>
 <h2 id="дальше">Дальше</h2>
 <p>В <strong>M15 — Multi-agent: роли, коммуникация, supervisor</strong> — следующая ступень. Когда задача такая, что <strong>одного</strong> агента (даже в pipeline) <strong>мало</strong>, и нужно <strong>несколько</strong> параллельных или специализированных. Как организовать коммуникацию, как избежать «у каждого свой агент» из M10, когда supervisor нужен, когда излишен.</p>
-<p>Если зашло — поделитесь главой с тем, кто хочет «multi-agent», но не понимает, чем pipeline отличается. Если у вас есть свой pipeline — расскажите в комменты, разберём структуру. Ваша обратная связь реально помогает шлифовать материал.</p>  <nav class="chapter-nav"> <a href="/vibesamurai-site/courses/middle/m13"> <span class="dir">← Назад</span> <span class="title">M13 · Tuning: что менять, когда метрики не растут</span> </a> <a href="/vibesamurai-site/courses/middle/m15"> <span class="dir">Дальше →</span> <span class="title">M15 · Multi-agent: роли, коммуникация, supervisor</span> </a> </nav> </main> </div> <script type="module">
+<p>Если зашло — поделитесь главой с тем, кто хочет «multi-agent», но не понимает, чем pipeline отличается. Если у вас есть свой pipeline — расскажите в комменты, разберём структуру. Ваша обратная связь реально помогает шлифовать материал.</p>
+<h2 id="-дальше-посмотреть-и-почитать">📚 Дальше: посмотреть и почитать</h2>
+<p>Pipeline-тема — это там, где «слов больше, чем кода». Поэтому держите три источника, на которых стоит реальный софт: LangGraph (DAG-исполнение), DSPy (декларативные пайплайны) и Anthropic-овский разбор паттернов.</p>
+<p><strong>Паттерны pipeline и agent</strong></p>
+<ul>
+<li><strong>Anthropic — «Building effective agents»</strong> — <a href="https://www.anthropic.com/research/building-effective-agents">anthropic.com/research/building-effective-agents</a>. <code>Prompt chaining</code>, <code>routing</code>, <code>parallelization</code>, <code>orchestrator-workers</code> — те самые паттерны, которые мы сегодня крутили. Самое короткое и честное чтение по теме.</li>
+</ul>
+<p><strong>Orchestration-фреймворки</strong></p>
+<ul>
+<li><strong>LangGraph — Overview</strong> — <a href="https://docs.langchain.com/oss/python/langgraph/overview">docs.langchain.com/oss/python/langgraph/overview</a>. DAG-оркестратор от LangChain с durable execution и HITL из коробки. Если строите CI/CD-pipeline вокруг агента — это default-кандидат.</li>
+<li><strong>DSPy (Stanford)</strong> — <a href="https://dspy.ai/">dspy.ai</a>. Декларативные сигнатуры и компиляция программы из модулей; принципиально другой угол на ту же задачу «много шагов, каждый focused».</li>
+</ul>
+<p><strong>Claude Code на месте</strong></p>
+<ul>
+<li><strong>Anthropic — Subagents</strong> — <a href="https://docs.anthropic.com/en/docs/claude-code/sub-agents">docs.anthropic.com/en/docs/claude-code/sub-agents</a>. Способ собрать pipeline внутри Claude Code, без внешнего оркестратора и docker-compose.</li>
+</ul>
+<blockquote>
+<p><strong>Совет:</strong> не лезьте сразу в LangGraph/DSPy, если ваша задача укладывается в <code>.claude/agents/</code>. Pipeline через subagents — самый дешёвый старт; внешний фреймворк добавит сложности больше, чем выигрыша.</p>
+</blockquote>  <nav class="chapter-nav"> <a href="/vibesamurai-site/courses/middle/m13"> <span class="dir">← Назад</span> <span class="title">M13 · Tuning: что менять, когда метрики не растут</span> </a> <a href="/vibesamurai-site/courses/middle/m15"> <span class="dir">Дальше →</span> <span class="title">M15 · Multi-agent: роли, коммуникация, supervisor</span> </a> </nav> </main> </div> <script type="module">
     import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
     const matches = document.querySelectorAll(
       'pre[data-language="mermaid"], pre.language-mermaid, code.language-mermaid'

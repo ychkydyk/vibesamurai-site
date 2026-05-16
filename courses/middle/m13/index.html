@@ -236,7 +236,23 @@
 <h2 id="дальше">Дальше</h2>
 <p>В <strong>Части V (M14-M16)</strong> мы переходим к <strong>multi-agent</strong> — системам, где несколько агентов <strong>работают вместе</strong>. Когда это нужно, когда <strong>избыточно</strong>, как организовать коммуникацию, как <strong>избежать</strong> хаоса.</p>
 <p>В <strong>M14 — Один агент, много шагов: пайплайны и оркестрация</strong> разберём, как из <strong>одного</strong> агента сделать <strong>пайплайн</strong> — последовательность специализированных вызовов, каждый со своей ролью. Это <strong>первая ступень</strong> перед multi-agent.</p>
-<p>Если зашло — поделитесь главой с тем, кто «настраивает агента, но не знает, что трогать». Если у вас есть свой tuning-кейс — расскажите в комменты, разберём порядок. Ваша обратная связь реально помогает шлифовать материал.</p>  <nav class="chapter-nav"> <a href="/vibesamurai-site/courses/middle/m12"> <span class="dir">← Назад</span> <span class="title">M12 · Регрессионные тесты для агентов</span> </a> <a href="/vibesamurai-site/courses/middle/m14"> <span class="dir">Дальше →</span> <span class="title">M14 · Один агент, много шагов: пайплайны и оркестрация</span> </a> </nav> </main> </div> <script type="module">
+<p>Если зашло — поделитесь главой с тем, кто «настраивает агента, но не знает, что трогать». Если у вас есть свой tuning-кейс — расскажите в комменты, разберём порядок. Ваша обратная связь реально помогает шлифовать материал.</p>
+<h2 id="-дальше-посмотреть-и-почитать">📚 Дальше: посмотреть и почитать</h2>
+<p>«Лестница улучшений» — авторская схема, но за каждой ступенью стоят чужие, хорошо написанные тексты. Если конкретная ступень буксует — открывайте соответствующий источник.</p>
+<p><strong>Промпт и контекст — первые ступени</strong></p>
+<ul>
+<li><strong>Anthropic — Prompting best practices</strong> — официальный гайд, который перечитывают каждый квартал: <a href="https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/claude-prompting-best-practices">platform.claude.com/docs/en/build-with-claude/prompt-engineering/claude-prompting-best-practices</a>.</li>
+<li><strong>Effective context engineering for AI agents</strong> — пост Anthropic engineering, прямо про «что класть в контекст и в каком виде»: <a href="https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents">anthropic.com/engineering/effective-context-engineering-for-ai-agents</a>.</li>
+<li><strong>prompt-eng-interactive-tutorial</strong> — интерактивный тренажёр Anthropic, полезен, если давно не «руками» писали промпты: <a href="https://github.com/anthropics/prompt-eng-interactive-tutorial">github.com/anthropics/prompt-eng-interactive-tutorial</a>.</li>
+</ul>
+<p><strong>Тулы, скорость и архитектура — верхние ступени</strong></p>
+<ul>
+<li><strong>Building agents with the Claude Agent SDK</strong> — что менять, когда промпт уже выжат, а нужно лезть в архитектуру тулов и циклов: <a href="https://www.anthropic.com/engineering/building-agents-with-the-claude-agent-sdk">anthropic.com/engineering/building-agents-with-the-claude-agent-sdk</a>.</li>
+<li><strong>SWE-bench leaderboards</strong> — реальный референс, какая модель/архитектура где живёт; полезно, прежде чем «менять модель»: <a href="https://www.swebench.com/">swebench.com</a>.</li>
+</ul>
+<blockquote>
+<p><strong>Совет:</strong> прежде чем читать любой prompt-engineering гайд, <strong>зафиксируйте</strong> ваш текущий промпт в файл с датой. Через месяц это будет ваш самый честный учитель — видно, что менялось, что помогло, что нет.</p>
+</blockquote>  <nav class="chapter-nav"> <a href="/vibesamurai-site/courses/middle/m12"> <span class="dir">← Назад</span> <span class="title">M12 · Регрессионные тесты для агентов</span> </a> <a href="/vibesamurai-site/courses/middle/m14"> <span class="dir">Дальше →</span> <span class="title">M14 · Один агент, много шагов: пайплайны и оркестрация</span> </a> </nav> </main> </div> <script type="module">
     import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
     const matches = document.querySelectorAll(
       'pre[data-language="mermaid"], pre.language-mermaid, code.language-mermaid'

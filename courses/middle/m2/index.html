@@ -71,8 +71,16 @@
 
 <table><thead><tr><th>Слой</th><th>Что это</th><th>Кто на что смотрит</th></tr></thead><tbody><tr><td><strong>Reasoning</strong></td><td>Внутренние рассуждения модели, «почему я так думаю»</td><td>В основном для отладки</td></tr><tr><td><strong>Plan</strong></td><td>Структурированный список шагов с проверяемыми пунктами</td><td>Главный артефакт ревью</td></tr><tr><td><strong>Action</strong></td><td>Конкретный вызов тула (write_file, run_bash, etc.)</td><td>Триггер изменений</td></tr></tbody></table>
 <p>Когда новички работают с агентом без разделения этих слоёв — у них всё смешано в один поток сознания: «я подумаю-я-сделаю-я-проверю-я-подумаю-опять». Результат: вы не понимаете, что произошло, и не можете остановить агента на «не делай этого».</p>
-<p>Когда вы разделяете слои — у вас появляются <strong>gates</strong> (ворота), на которых можно остановить:</p>
-<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>   reasoning ─→ [GATE 1] ─→ plan ─→ [GATE 2] ─→ action ─→ [GATE 3] ─→ next iteration</span></span></code></pre>
+<p>Когда вы разделяете слои — у вас появляются <strong>gates</strong> (ворота), на которых можно остановить. Думайте о них как о концентрических кольцах доверия: от того что внутри (рассуждения модели) к тому, что наружу (файлы, сеть, продакшен) — на каждом кольце стоит явная проверка.</p>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="mermaid"><code><span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">flowchart LR</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    R[Reasoning&#x3C;br/>внутреннее] --> G1{Gate 1&#x3C;br/>нужен план?}</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    G1 -->|да| P[Plan&#x3C;br/>structured]</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    P --> G2{Gate 2&#x3C;br/>план ок?}</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    G2 -->|approve| A[Action&#x3C;br/>file / cmd / net]</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    A --> G3{Gate 3&#x3C;br/>результат&#x3C;br/>соответствует?}</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    G3 -->|ок| Next([Следующая итерация])</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    G3 -.-> P</span></span></code></pre>
+<p>На каждом gate работает простое правило: <strong>чем дальше от центра — тем дороже ошибка</strong>. Reasoning поправить дёшево, action на файле — уже посерьёзнее, action в сеть/прод — самое дорогое. Архитектурно вы расставляете контрольные точки именно от внутреннего кольца к внешним, не наоборот.</p>
 <ul>
 <li><strong>Gate 1</strong> (после reasoning): нужен ли план или задача тривиальная?</li>
 <li><strong>Gate 2</strong> (после plan): план хороший, можно ли делать?</li>
@@ -203,6 +211,20 @@
 <h2 id="дальше">Дальше</h2>
 <p>В <strong>M3 — Observability and human-in-the-loop</strong> мы поговорим про степени автономии: где агент действует сам, где он спрашивает разрешения, какие артефакты он обязан оставлять чтобы вы могли разобрать что произошло — без замедления velocity.</p>
 <p>Если зашло — поделитесь с командой, особенно с лидами и теми, кто настраивает CI/agent-пайплайны. Если есть конкретные паттерны из вашей практики, которые я не учёл — пишите в комментарии к курсу, ваша обратная связь реально помогает.</p>
+<h2 id="-дальше-посмотреть-и-почитать">📚 Дальше: посмотреть и почитать</h2>
+<p>Глава техническая, и многие тезисы спрятаны за чужими паттернами. Чтобы не разводить теорию, держите короткий список первоисточников по границам и sandbox’ам.</p>
+<p><strong>Границы и паттерны агента</strong></p>
+<ul>
+<li><strong>Anthropic — «Building effective agents»</strong> — <a href="https://www.anthropic.com/research/building-effective-agents">anthropic.com/research/building-effective-agents</a>. Разделение workflows vs agents, и почему <code>prompt chaining</code>/<code>routing</code>/<code>gates</code> — отдельные паттерны с разной ценой на ошибку. Прямо в нашу тему.</li>
+<li><strong>Anthropic — «Making Claude Code more secure and autonomous» (sandbox)</strong> — <a href="https://www.anthropic.com/engineering/claude-code-sandboxing">anthropic.com/engineering/claude-code-sandboxing</a>. Как Anthropic режет файловую систему и сеть на отдельные кольца; хороший референс, как boundaries реализованы «у больших».</li>
+</ul>
+<p><strong>Конфиг разрешений на практике</strong></p>
+<ul>
+<li><strong>Claude Code — Configure permissions</strong> — <a href="https://code.claude.com/docs/en/permissions">code.claude.com/docs/en/permissions</a>. Какие поля у <code>permissions</code> (allow/deny/ask), как evaluation order работает; на это ляжет всё, что мы делаем в M4.</li>
+</ul>
+<blockquote>
+<p><strong>Совет:</strong> не читайте все три за один присест. Anthropic-статья — стратегия, sandbox-пост — реализация, Claude Code docs — тактика. Закройте слой за слоем.</p>
+</blockquote>
 <hr>
 <p><strong>Maps to:</strong> GH-600 §1.2 — <em>Agent boundary architecture and contracts</em></p>  <nav class="chapter-nav"> <a href="/vibesamurai-site/courses/middle/m1"> <span class="dir">← Назад</span> <span class="title">M1 · Что такое агентный AI в SDLC</span> </a> <a href="/vibesamurai-site/courses/middle/m3"> <span class="dir">Дальше →</span> <span class="title">M3 · Наблюдаемость и human-in-the-loop</span> </a> </nav> </main> </div> <script type="module">
     import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';

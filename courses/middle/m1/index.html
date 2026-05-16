@@ -10,13 +10,14 @@
 <p>Сейчас может. И не один-два экспериментальных инструмента — а <strong>весь зоопарк</strong>: Claude Code, Cursor, Codex CLI, Devin, GitHub Copilot Workspace, Aider, Continue. Каждый из них в 2026-м — это не «ассистент», это <strong>контрибьютор</strong>. Они работают через тот же интерфейс, что и вы: файлы, ветки, PR, ревью.</p>
 <p>Эта глава — про то, как перестать думать категориями «помощь в коде» и начать думать категориями <strong>«как я строю команду из людей и агентов и не теряю контроль над репозиторием»</strong>.</p>
 <h2 id="три-фазы-агента-plan--act--evaluate">Три фазы агента: plan → act → evaluate</h2>
-<p>В любом нормально устроенном агентном пайплайне есть три обязательных фазы:</p>
-<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>┌─────────┐    ┌─────────┐    ┌──────────┐</span></span>
-<span class="line"><span>│  PLAN   │ → │   ACT   │ → │ EVALUATE │</span></span>
-<span class="line"><span>└─────────┘    └─────────┘    └──────────┘</span></span>
-<span class="line"><span>   ↑                              │</span></span>
-<span class="line"><span>   └──────────────────────────────┘</span></span>
-<span class="line"><span>        revise / replan</span></span></code></pre>
+<p>В любом нормально устроенном агентном пайплайне есть три обязательных фазы, которые ложатся поверх обычного SDLC — агент ассистирует на каждом шаге, но цикл остаётся узнаваемым:</p>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="mermaid"><code><span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">flowchart LR</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    Task([Задача от вас]) --> Plan[PLAN&#x3C;br/>агент описывает&#x3C;br/>что и в каком порядке]</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    Plan -->|вы одобрили| Act[ACT&#x3C;br/>агент меняет&#x3C;br/>код / тесты / PR]</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    Act --> Eval[EVALUATE&#x3C;br/>тесты, линтер,&#x3C;br/>success criterion]</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    Eval -->|ок| Ship([Merge / ship])</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    Eval -->|не сошлось| Replan([Revise / replan])</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    Replan -.-> Plan</span></span></code></pre>
 <ol>
 <li><strong>Plan.</strong> Агент формулирует <em>что именно</em> собирается сделать, <em>в каком порядке</em>, <em>с какими допущениями</em>, <strong>до того как</strong> он начнёт что-либо менять. Это явный артефакт — markdown-план, JSON, structured output.</li>
 <li><strong>Act.</strong> Агент исполняет план в чётко очерченной области действия: ветка, песочница, набор разрешённых тулов. Каждое действие — отдельный шаг с inputs/outputs.</li>
@@ -123,6 +124,21 @@
 <h2 id="дальше">Дальше</h2>
 <p>В <strong>M2 — Architecting agent boundaries</strong> мы заходим глубже: как формулировать inputs/outputs, как отделять plan от reasoning, как ставить validation gates между фазами. Это уже инженерная задача — мы будем рисовать конкретные диаграммы потоков и писать конкретный код.</p>
 <p>Если зашло — поделитесь главой в командных чатиках, особенно с лидами и архитекторами. Если есть конкретные сценарии, которые вы хотите чтобы я разобрал — пишите в комментарии к курсу, ваша обратная связь реально помогает шлифовать материал.</p>
+<h2 id="-дальше-посмотреть-и-почитать">📚 Дальше: посмотреть и почитать</h2>
+<p>Если хочется крепче поймать сдвиг парадигмы — короткий список, по которому я сам сверяюсь. Ничего лишнего, всё в открытом доступе.</p>
+<p><strong>Концепция и парадигма</strong></p>
+<ul>
+<li><strong>Andrej Karpathy — «Software Is Changing (Again)»</strong> — <a href="https://www.youtube.com/watch?v=LCEmiRjPEtQ">youtube.com/watch?v=LCEmiRjPEtQ</a>. Кейноут на AI Startup School (2025-06): почему мы переходим от 1.0/2.0 к Software 3.0 и что это значит для дисциплины кодинга.</li>
+<li><strong>Anthropic — «Building effective agents»</strong> — <a href="https://www.anthropic.com/research/building-effective-agents">anthropic.com/research/building-effective-agents</a>. Системный взгляд от провайдера: какие паттерны (workflows vs agents) реально работают, а какие — оверкилл.</li>
+</ul>
+<p><strong>Сертификация и официальные программы</strong></p>
+<ul>
+<li><strong>Microsoft Learn — Study guide for Exam GH-600</strong> — <a href="https://learn.microsoft.com/en-us/credentials/certifications/resources/study-guides/gh-600">learn.microsoft.com/en-us/credentials/certifications/resources/study-guides/gh-600</a>. Официальный study guide для GitHub Certified: Agentic AI Developer; курс этот ровно сюда и собирается.</li>
+<li><strong>microsoft/ai-agents-for-beginners</strong> — <a href="https://github.com/microsoft/ai-agents-for-beginners">github.com/microsoft/ai-agents-for-beginners</a>. 12 уроков для нулевого старта; пересекается с нашим M1 и хорошо ложится сверху для тех, кому надо «ещё раз, проще».</li>
+</ul>
+<blockquote>
+<p><strong>Совет:</strong> перед M2 пробегитесь хотя бы по Anthropic-статье. Там разделение workflows / agents, к которому мы будем возвращаться весь Part I.</p>
+</blockquote>
 <hr>
 <p><strong>Maps to:</strong> GH-600 §1.1 — <em>Agentic AI fundamentals</em>, Microsoft Learn — <em>Foundations of agentic AI</em></p>  <nav class="chapter-nav"> <span></span> <span></span> </nav> </main> </div> <script type="module">
     import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';

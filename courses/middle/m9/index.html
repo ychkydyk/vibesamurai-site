@@ -19,6 +19,15 @@
 <li>Copilot Memory model — отдельно, потому что это эталонная реализация для GH-600</li>
 </ol>
 <h2 id="три-типа-памяти">Три типа памяти</h2>
+<p>Если рисовать слоями — снизу самое медленное и долгоживущее, сверху самое горячее:</p>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="mermaid"><code><span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">flowchart LR</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    Agent[Agent&#x3C;br/>session] -->|read/write| ST[Short-term&#x3C;br/>context window]</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    Agent -->|read/write| Cache[(Prompt cache&#x3C;br/>5 min / 1h)]</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    Agent -->|read| LT[Long-term&#x3C;br/>CLAUDE.md / AGENTS.md]</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    Agent -->|read/write| Ext[(External memory&#x3C;br/>vector DB / mem0)]</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    Agent -.read.-> Ref[Reference&#x3C;br/>wiki / issues / ADR]</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    LT -.git.-> Repo[(repo)]</span></span></code></pre>
+<p>Каждый слой решает свою задачу: short-term держит «прямо сейчас», cache бьётся по идентичному префиксу, long-term живёт в репо под версионированием, external накапливает между сессиями, reference — это внешняя истина команды.</p>
 <h3 id="short-term-memory-рабочий-контекст-сессии">Short-term memory (рабочий контекст сессии)</h3>
 <p>Это то, что <strong>в контекстном окне модели прямо сейчас</strong>: ваши сообщения, ответы агента, прочитанные файлы, результаты тулов. Живёт <strong>только пока открыта сессия</strong>.</p>
 <p>Размер: ограничен контекстом модели. На май 2026 — Opus 4.7 даёт 1М токенов, Sonnet 4.6 даёт 1М, Haiku 4.5 — 200K. На практике эффективная работа идёт с 50-150К токенов; дальше начинается «context dilution» — модель хуже фокусируется на конкретике.</p>
@@ -204,6 +213,20 @@
 <h2 id="дальше">Дальше</h2>
 <p>В <strong>M10 — State, drift, continuity</strong> — закрываем Part III: resumable agents, durable artifacts, как ловить и исправлять drift между сессиями, как делить state между тулами и средами. Это самая «инженерная» глава Part III.</p>
 <p>Если зашло — поделитесь с теми, кто настраивает агентский setup в команде, особенно с теми кто внедряет Copilot Memory. Если у вас есть конкретные истории memory-инцидентов — пишите в комменты, ваша обратная связь реально помогает шлифовать материал.</p>
+<h2 id="-дальше-посмотреть-и-почитать">📚 Дальше: посмотреть и почитать</h2>
+<p>Тема памяти — где особенно полезно посмотреть, как её делают «у больших». Три якоря: prompt cache от Anthropic, дедушка memory-агентов (Letta/MemGPT) и популярный memory-layer для агентов (mem0).</p>
+<p><strong>Кеш и контекст в LLM</strong></p>
+<ul>
+<li><strong>Anthropic — Prompt caching</strong> — <a href="https://platform.claude.com/docs/en/build-with-claude/prompt-caching">platform.claude.com/docs/en/build-with-claude/prompt-caching</a>. Как кешируется идентичный префикс (system prompt + tools + CLAUDE.md), при чём тут компакция. Прямо в нашу тему «горячих слоёв».</li>
+</ul>
+<p><strong>Stateful agents с памятью</strong></p>
+<ul>
+<li><strong>Letta (formerly MemGPT) — docs</strong> — <a href="https://docs.letta.com/concepts/memgpt/">docs.letta.com/concepts/memgpt/</a>. Архитектурный референс: как агент работает с разделением core memory / archival memory, как переживает рестарты.</li>
+<li><strong>mem0 — docs</strong> — <a href="https://docs.mem0.ai/introduction">docs.mem0.ai/introduction</a>. Memory-layer, который вешается сверху обычного агента; episodic/semantic/procedural memory как отдельные сущности.</li>
+</ul>
+<blockquote>
+<p><strong>Совет:</strong> Letta — для тех, кому интересна архитектура «изнутри», mem0 — для тех, кому нужна готовая прослойка к существующему агенту. Не ставьте оба сразу.</p>
+</blockquote>
 <hr>
 <p><strong>Maps to:</strong> GH-600 §3.1 — <em>Memory architecture and lifecycle</em></p>  <nav class="chapter-nav"> <a href="/vibesamurai-site/courses/middle/m8"> <span class="dir">← Назад</span> <span class="title">M8 · Cursor Composer + IDE-агенты</span> </a> <a href="/vibesamurai-site/courses/middle/m10"> <span class="dir">Дальше →</span> <span class="title">M10 · State, drift, continuity</span> </a> </nav> </main> </div> <script type="module">
     import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
