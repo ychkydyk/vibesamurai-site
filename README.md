@@ -6,6 +6,4 @@ Live: https://ychkydyk.github.io/vibesamurai-site/
 
 This repo only holds the generated static site. The course is authored by **DmitriyM** and built with Astro 5 + MDX.
 
-Status: **DRAFT · v0.1.2 · May 2026** — Beginner (B1–B12) and Middle (M1–M20) tracks are live as drafts. Advanced track, English translation, and video accompaniment are marked Coming Soon on the index page.
-
-This build adds: Dracula syntax theme for code blocks, Mermaid client-side rendering, B1+M5 pilot with diagrams and "Дальше: посмотреть и почитать" sources sections.
+Status: **DRAFT · v0.1.3 · May 2026** — Beginner (B1–B12) and Middle (M1–M20) tracks are live as drafts. Advanced track, English translation, and video accompaniment are marked Coming Soon on the index page.
