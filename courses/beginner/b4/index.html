@@ -1,10 +1,10 @@
-<!DOCTYPE html><html lang="en"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Что такое репозиторий и зачем коммитить — Vibesamurai</title><meta name="description" content="Git за 20 минут — только то, что нужно. PR как способ сказать «стоп, посмотри что я сделал»."><meta property="og:title" content="Что такое репозиторий и зачем коммитить"><meta property="og:type" content="article"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Inter:wght@300..800&family=JetBrains+Mono:wght@400..600&display=swap" rel="stylesheet"><link rel="stylesheet" href="/vibesamurai-site/_astro/_slug_.DpgmObvf.css">
+<!DOCTYPE html><html lang="en"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Что такое репозиторий и зачем коммитить — Vibesamurai</title><meta name="description" content="Git за 20 минут — только то, что нужно. PR как способ сказать «стоп, посмотри что я сделал»."><meta property="og:title" content="Что такое репозиторий и зачем коммитить"><meta property="og:type" content="article"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Inter:wght@300..800&family=JetBrains+Mono:wght@400..600&display=swap" rel="stylesheet"><link rel="stylesheet" href="/vibesamurai-site/_astro/_slug_.Jibc-cA5.css">
 <style>.reader-sidebar[data-astro-cid-khgtvzrl] .soon[data-astro-cid-khgtvzrl]{display:block;color:var(--text-mute);font-size:var(--size-2);padding:var(--space-1) 0}.reader-sidebar[data-astro-cid-khgtvzrl] .soon[data-astro-cid-khgtvzrl] em[data-astro-cid-khgtvzrl]{font-style:normal;font-family:var(--font-mono);font-size:.85em;color:var(--accent);margin-left:4px;text-transform:uppercase;letter-spacing:.1em}
 </style></head> <body> <div class="reader-app"> <aside class="reader-rail"> <a href="/vibesamurai-site/" class="logo" aria-label="Vibesamurai home">V</a> </aside> <aside class="reader-sidebar" data-astro-cid-khgtvzrl> <div class="breadcrumb" data-astro-cid-khgtvzrl>Vibesamurai · Beginner Path · b4</div> <h4 data-astro-cid-khgtvzrl>В этом курсе</h4> <ul data-astro-cid-khgtvzrl> <li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b1" class data-astro-cid-khgtvzrl>B1 · Что такое AI-агент</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b2" class data-astro-cid-khgtvzrl>B2 · Установка Claude Code</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b3" class data-astro-cid-khgtvzrl>B3 · Первый разговор</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b4" class="current" data-astro-cid-khgtvzrl>B4 · Репозиторий и коммиты</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b5" class data-astro-cid-khgtvzrl>B5 · Первый проект: todo</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b6" class data-astro-cid-khgtvzrl>B6 · Читать код агента</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b7" class data-astro-cid-khgtvzrl>B7 · Безопасность для новичков</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b8" class data-astro-cid-khgtvzrl>B8 · Cursor vs Claude vs Codex</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b9" class data-astro-cid-khgtvzrl>B9 · Деплой первого проекта</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b10" class data-astro-cid-khgtvzrl>B10 · Оценка вывода агента</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b11" class data-astro-cid-khgtvzrl>B11 · Капстоун</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b12" class data-astro-cid-khgtvzrl>B12 · Куда дальше</a> </li> </ul>  </aside> <main class="reader-main"> <div class="chapter-eyebrow">Beginner Path · b4</div> <h1 class="chapter-title">B4 · Что такое репозиторий и зачем коммитить</h1> <p class="chapter-subtitle">Git за 20 минут — только то, что нужно. PR как способ сказать «стоп, посмотри что я сделал».</p>  <blockquote>
 <p>Черновик B4 в голосе DmitriyM (см. <code>scripts/tg_voice_analysis/_summary.md</code>).</p>
 </blockquote>
 <h2 id="hook">Hook</h2>
-<pre class="astro-code astro-code-themes github-light github-dark-default" style="background-color:#fff;--shiki-dark-bg:#0d1117;color:#24292e;--shiki-dark:#e6edf3; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>БЕЗ git:                       С git:</span></span>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>БЕЗ git:                       С git:</span></span>
 <span class="line"><span>Агент что-то сломал.    →     Агент что-то сломал.</span></span>
 <span class="line"><span>Что-то навсегда. 😱           git restore .  ←  всё откатилось 🙂</span></span></code></pre>
 <p>Друзья, всем привет! 👋</p>
@@ -12,7 +12,7 @@
 <p>Git мы возьмём ровно настолько, насколько нужен для безопасности и базовой работы. Не «git mastery». Двадцать минут.</p>
 <h2 id="концепция-репозиторий--папка-с-памятью">Концепция: репозиторий = папка с памятью</h2>
 <p><strong>Репозиторий</strong> (или просто «репо») — это <strong>папка вашего проекта плюс память всех изменений</strong> в ней.</p>
-<pre class="astro-code astro-code-themes github-light github-dark-default" style="background-color:#fff;--shiki-dark-bg:#0d1117;color:#24292e;--shiki-dark:#e6edf3; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>my-project/        ← обычная папка</span></span>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>my-project/        ← обычная папка</span></span>
 <span class="line"><span>├── index.html</span></span>
 <span class="line"><span>└── style.css</span></span>
 <span class="line"><span></span></span>
@@ -78,25 +78,25 @@
 <p>Если на шаге 1 что-то сломалось и хочется вернуть <strong>до последнего коммита</strong> — <code>git restore .</code>. Всё, что было после коммита, исчезает. То что в коммитах — остаётся.</p>
 <h2 id="пример-создаём-репозиторий-и-делаем-первый-коммит">Пример: создаём репозиторий и делаем первый коммит</h2>
 <p>В терминале:</p>
-<pre class="astro-code astro-code-themes github-light github-dark-default" style="background-color:#fff;--shiki-dark-bg:#0d1117;color:#24292e;--shiki-dark:#e6edf3; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#6F42C1;--shiki-dark:#FFA657">mkdir</span><span style="color:#032F62;--shiki-dark:#A5D6FF"> my-first-repo</span></span>
-<span class="line"><span style="color:#005CC5;--shiki-dark:#79C0FF">cd</span><span style="color:#032F62;--shiki-dark:#A5D6FF"> my-first-repo</span></span>
-<span class="line"><span style="color:#6F42C1;--shiki-dark:#FFA657">git</span><span style="color:#032F62;--shiki-dark:#A5D6FF"> init</span></span></code></pre>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#50FA7B;--shiki-dark:#50FA7B">mkdir</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C"> my-first-repo</span></span>
+<span class="line"><span style="color:#8BE9FD;--shiki-dark:#8BE9FD">cd</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C"> my-first-repo</span></span>
+<span class="line"><span style="color:#50FA7B;--shiki-dark:#50FA7B">git</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C"> init</span></span></code></pre>
 <p>Готово, у вас репозиторий. Создадим простой файл:</p>
-<pre class="astro-code astro-code-themes github-light github-dark-default" style="background-color:#fff;--shiki-dark-bg:#0d1117;color:#24292e;--shiki-dark:#e6edf3; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#005CC5;--shiki-dark:#79C0FF">echo</span><span style="color:#032F62;--shiki-dark:#A5D6FF"> "# Мой первый репо"</span><span style="color:#D73A49;--shiki-dark:#FF7B72"> ></span><span style="color:#032F62;--shiki-dark:#A5D6FF"> README.md</span></span></code></pre>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#8BE9FD;--shiki-dark:#8BE9FD">echo</span><span style="color:#E9F284;--shiki-dark:#E9F284"> "</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C"># Мой первый репо</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#FF79C6;--shiki-dark:#FF79C6"> ></span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C"> README.md</span></span></code></pre>
 <p>Посмотрим состояние:</p>
-<pre class="astro-code astro-code-themes github-light github-dark-default" style="background-color:#fff;--shiki-dark-bg:#0d1117;color:#24292e;--shiki-dark:#e6edf3; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#6F42C1;--shiki-dark:#FFA657">git</span><span style="color:#032F62;--shiki-dark:#A5D6FF"> status</span></span></code></pre>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#50FA7B;--shiki-dark:#50FA7B">git</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C"> status</span></span></code></pre>
 <p>Покажет «Untracked files: README.md» — то есть «есть файл, но он пока не под памятью». Добавим в память:</p>
-<pre class="astro-code astro-code-themes github-light github-dark-default" style="background-color:#fff;--shiki-dark-bg:#0d1117;color:#24292e;--shiki-dark:#e6edf3; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#6F42C1;--shiki-dark:#FFA657">git</span><span style="color:#032F62;--shiki-dark:#A5D6FF"> add</span><span style="color:#032F62;--shiki-dark:#A5D6FF"> .</span></span>
-<span class="line"><span style="color:#6F42C1;--shiki-dark:#FFA657">git</span><span style="color:#032F62;--shiki-dark:#A5D6FF"> commit</span><span style="color:#005CC5;--shiki-dark:#79C0FF"> -m</span><span style="color:#032F62;--shiki-dark:#A5D6FF"> "первый файл"</span></span></code></pre>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#50FA7B;--shiki-dark:#50FA7B">git</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C"> add</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C"> .</span></span>
+<span class="line"><span style="color:#50FA7B;--shiki-dark:#50FA7B">git</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C"> commit</span><span style="color:#BD93F9;--shiki-dark:#BD93F9"> -m</span><span style="color:#E9F284;--shiki-dark:#E9F284"> "</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">первый файл</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span></span></code></pre>
 <p>Готово. Теперь поломаем — допустим, удалили файл случайно:</p>
-<pre class="astro-code astro-code-themes github-light github-dark-default" style="background-color:#fff;--shiki-dark-bg:#0d1117;color:#24292e;--shiki-dark:#e6edf3; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#6F42C1;--shiki-dark:#FFA657">rm</span><span style="color:#032F62;--shiki-dark:#A5D6FF"> README.md</span></span></code></pre>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#50FA7B;--shiki-dark:#50FA7B">rm</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C"> README.md</span></span></code></pre>
 <p>Хотим вернуть:</p>
-<pre class="astro-code astro-code-themes github-light github-dark-default" style="background-color:#fff;--shiki-dark-bg:#0d1117;color:#24292e;--shiki-dark:#e6edf3; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#6F42C1;--shiki-dark:#FFA657">git</span><span style="color:#032F62;--shiki-dark:#A5D6FF"> restore</span><span style="color:#032F62;--shiki-dark:#A5D6FF"> README.md</span></span></code></pre>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#50FA7B;--shiki-dark:#50FA7B">git</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C"> restore</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C"> README.md</span></span></code></pre>
 <p>Файл на месте. Это и есть <strong>машина времени</strong> в действии.</p>
 <h2 id="зачем-коммитить-часто">Зачем коммитить часто</h2>
 <p>Каждый коммит — это <strong>точка отката</strong>. Чем чаще коммитите, тем больше точек, тем безопаснее.</p>
 <p>Хороший ритм работы с агентом:</p>
-<pre class="astro-code astro-code-themes github-light github-dark-default" style="background-color:#fff;--shiki-dark-bg:#0d1117;color:#24292e;--shiki-dark:#e6edf3; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>1. Описать задачу агенту по формуле из B3</span></span>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>1. Описать задачу агенту по формуле из B3</span></span>
 <span class="line"><span>2. Агент сделал → проверили → работает</span></span>
 <span class="line"><span>3. git add . + git commit -m "коротко что сделали"</span></span>
 <span class="line"><span>4. Следующая задача</span></span></code></pre>
@@ -117,36 +117,36 @@
 <h2 id="practice-30-минут">Practice (30 минут)</h2>
 <h3 id="задание-1-15-минут--свой-первый-репозиторий">Задание 1 (15 минут) — свой первый репозиторий</h3>
 <p>Пройдите весь цикл руками:</p>
-<pre class="astro-code astro-code-themes github-light github-dark-default" style="background-color:#fff;--shiki-dark-bg:#0d1117;color:#24292e;--shiki-dark:#e6edf3; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#6F42C1;--shiki-dark:#FFA657">mkdir</span><span style="color:#032F62;--shiki-dark:#A5D6FF"> hello-git</span></span>
-<span class="line"><span style="color:#005CC5;--shiki-dark:#79C0FF">cd</span><span style="color:#032F62;--shiki-dark:#A5D6FF"> hello-git</span></span>
-<span class="line"><span style="color:#6F42C1;--shiki-dark:#FFA657">git</span><span style="color:#032F62;--shiki-dark:#A5D6FF"> init</span></span>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#50FA7B;--shiki-dark:#50FA7B">mkdir</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C"> hello-git</span></span>
+<span class="line"><span style="color:#8BE9FD;--shiki-dark:#8BE9FD">cd</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C"> hello-git</span></span>
+<span class="line"><span style="color:#50FA7B;--shiki-dark:#50FA7B">git</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C"> init</span></span>
 <span class="line"></span>
-<span class="line"><span style="color:#6A737D;--shiki-dark:#8B949E"># создайте файл — любым способом</span></span>
-<span class="line"><span style="color:#005CC5;--shiki-dark:#79C0FF">echo</span><span style="color:#032F62;--shiki-dark:#A5D6FF"> "hello world"</span><span style="color:#D73A49;--shiki-dark:#FF7B72"> ></span><span style="color:#032F62;--shiki-dark:#A5D6FF"> hello.txt</span></span>
+<span class="line"><span style="color:#6272A4;--shiki-dark:#6272A4"># создайте файл — любым способом</span></span>
+<span class="line"><span style="color:#8BE9FD;--shiki-dark:#8BE9FD">echo</span><span style="color:#E9F284;--shiki-dark:#E9F284"> "</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">hello world</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#FF79C6;--shiki-dark:#FF79C6"> ></span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C"> hello.txt</span></span>
 <span class="line"></span>
-<span class="line"><span style="color:#6F42C1;--shiki-dark:#FFA657">git</span><span style="color:#032F62;--shiki-dark:#A5D6FF"> status</span><span style="color:#6A737D;--shiki-dark:#8B949E">         # посмотрите состояние</span></span>
-<span class="line"><span style="color:#6F42C1;--shiki-dark:#FFA657">git</span><span style="color:#032F62;--shiki-dark:#A5D6FF"> add</span><span style="color:#032F62;--shiki-dark:#A5D6FF"> .</span></span>
-<span class="line"><span style="color:#6F42C1;--shiki-dark:#FFA657">git</span><span style="color:#032F62;--shiki-dark:#A5D6FF"> commit</span><span style="color:#005CC5;--shiki-dark:#79C0FF"> -m</span><span style="color:#032F62;--shiki-dark:#A5D6FF"> "first file"</span></span>
+<span class="line"><span style="color:#50FA7B;--shiki-dark:#50FA7B">git</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C"> status</span><span style="color:#6272A4;--shiki-dark:#6272A4">         # посмотрите состояние</span></span>
+<span class="line"><span style="color:#50FA7B;--shiki-dark:#50FA7B">git</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C"> add</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C"> .</span></span>
+<span class="line"><span style="color:#50FA7B;--shiki-dark:#50FA7B">git</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C"> commit</span><span style="color:#BD93F9;--shiki-dark:#BD93F9"> -m</span><span style="color:#E9F284;--shiki-dark:#E9F284"> "</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">first file</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span></span>
 <span class="line"></span>
-<span class="line"><span style="color:#6A737D;--shiki-dark:#8B949E"># измените файл</span></span>
-<span class="line"><span style="color:#005CC5;--shiki-dark:#79C0FF">echo</span><span style="color:#032F62;--shiki-dark:#A5D6FF"> "hello git"</span><span style="color:#D73A49;--shiki-dark:#FF7B72"> ></span><span style="color:#032F62;--shiki-dark:#A5D6FF"> hello.txt</span></span>
+<span class="line"><span style="color:#6272A4;--shiki-dark:#6272A4"># измените файл</span></span>
+<span class="line"><span style="color:#8BE9FD;--shiki-dark:#8BE9FD">echo</span><span style="color:#E9F284;--shiki-dark:#E9F284"> "</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">hello git</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#FF79C6;--shiki-dark:#FF79C6"> ></span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C"> hello.txt</span></span>
 <span class="line"></span>
-<span class="line"><span style="color:#6F42C1;--shiki-dark:#FFA657">git</span><span style="color:#032F62;--shiki-dark:#A5D6FF"> status</span><span style="color:#6A737D;--shiki-dark:#8B949E">         # снова посмотрите</span></span>
-<span class="line"><span style="color:#6F42C1;--shiki-dark:#FFA657">git</span><span style="color:#032F62;--shiki-dark:#A5D6FF"> restore</span><span style="color:#032F62;--shiki-dark:#A5D6FF"> hello.txt</span><span style="color:#6A737D;--shiki-dark:#8B949E">    # откатили</span></span>
+<span class="line"><span style="color:#50FA7B;--shiki-dark:#50FA7B">git</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C"> status</span><span style="color:#6272A4;--shiki-dark:#6272A4">         # снова посмотрите</span></span>
+<span class="line"><span style="color:#50FA7B;--shiki-dark:#50FA7B">git</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C"> restore</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C"> hello.txt</span><span style="color:#6272A4;--shiki-dark:#6272A4">    # откатили</span></span>
 <span class="line"></span>
-<span class="line"><span style="color:#6A737D;--shiki-dark:#8B949E"># проверьте — должно быть как было после коммита</span></span>
-<span class="line"><span style="color:#6F42C1;--shiki-dark:#FFA657">cat</span><span style="color:#032F62;--shiki-dark:#A5D6FF"> hello.txt</span><span style="color:#6A737D;--shiki-dark:#8B949E">      # выведет "hello world"</span></span></code></pre>
+<span class="line"><span style="color:#6272A4;--shiki-dark:#6272A4"># проверьте — должно быть как было после коммита</span></span>
+<span class="line"><span style="color:#50FA7B;--shiki-dark:#50FA7B">cat</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C"> hello.txt</span><span style="color:#6272A4;--shiki-dark:#6272A4">      # выведет "hello world"</span></span></code></pre>
 <p>Если последний <code>cat hello.txt</code> показал «hello world», а не «hello git» — <strong>поздравляю, машина времени работает</strong>.</p>
 <h3 id="задание-2-15-минут--соединить-с-агентом">Задание 2 (15 минут) — соединить с агентом</h3>
 <p>В той же папке (или любой новой с <code>git init</code>):</p>
-<pre class="astro-code astro-code-themes github-light github-dark-default" style="background-color:#fff;--shiki-dark-bg:#0d1117;color:#24292e;--shiki-dark:#e6edf3; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#6F42C1;--shiki-dark:#FFA657">claude</span></span></code></pre>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#50FA7B;--shiki-dark:#50FA7B">claude</span></span></code></pre>
 <p>Скажите агенту:</p>
 <blockquote>
 <p>«Создай файл <code>notes.md</code> с тремя bullet-пунктами про что-нибудь полезное.»</p>
 </blockquote>
 <p>После того как агент сделал — <strong>сами</strong> в терминале:</p>
-<pre class="astro-code astro-code-themes github-light github-dark-default" style="background-color:#fff;--shiki-dark-bg:#0d1117;color:#24292e;--shiki-dark:#e6edf3; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#6F42C1;--shiki-dark:#FFA657">git</span><span style="color:#032F62;--shiki-dark:#A5D6FF"> add</span><span style="color:#032F62;--shiki-dark:#A5D6FF"> .</span></span>
-<span class="line"><span style="color:#6F42C1;--shiki-dark:#FFA657">git</span><span style="color:#032F62;--shiki-dark:#A5D6FF"> commit</span><span style="color:#005CC5;--shiki-dark:#79C0FF"> -m</span><span style="color:#032F62;--shiki-dark:#A5D6FF"> "agent added notes"</span></span></code></pre>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#50FA7B;--shiki-dark:#50FA7B">git</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C"> add</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C"> .</span></span>
+<span class="line"><span style="color:#50FA7B;--shiki-dark:#50FA7B">git</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C"> commit</span><span style="color:#BD93F9;--shiki-dark:#BD93F9"> -m</span><span style="color:#E9F284;--shiki-dark:#E9F284"> "</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">agent added notes</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span></span></code></pre>
 <p>Готово, вы сохранили <strong>состояние после агентского изменения</strong>. Если следующий раз агент что-то сломает — <code>git restore .</code> вернёт ровно сюда.</p>
 <h2 id="recap">Recap</h2>
 <ul>
@@ -162,4 +162,31 @@
 </aside>
 <h2 id="дальше">Дальше</h2>
 <p>В <strong>B5 — Запускаем первый проект (todo-приложение)</strong> мы соберём всё, что было до этого, в один реальный мини-проект: с нуля, с агентом, в репозитории, с коммитами после каждого шага. Сорок-шестьдесят минут — и у вас рабочее todo-приложение в браузере. Конкретно, не «концептуально».</p>
-<p>Если зашло — поделитесь главой с теми, кто работает с агентом «на голой папке». Если на каких-то командах споткнулись — пишите в комменты, обычно решается за две минуты. Ваша обратная связь реально помогает.</p>  <nav class="chapter-nav"> <a href="/vibesamurai-site/courses/beginner/b3"> <span class="dir">← Назад</span> <span class="title">B3 · Первый разговор</span> </a> <a href="/vibesamurai-site/courses/beginner/b5"> <span class="dir">Дальше →</span> <span class="title">B5 · Запускаем первый проект (todo-приложение)</span> </a> </nav> </main> </div> </body></html>
+<p>Если зашло — поделитесь главой с теми, кто работает с агентом «на голой папке». Если на каких-то командах споткнулись — пишите в комменты, обычно решается за две минуты. Ваша обратная связь реально помогает.</p>  <nav class="chapter-nav"> <a href="/vibesamurai-site/courses/beginner/b3"> <span class="dir">← Назад</span> <span class="title">B3 · Первый разговор</span> </a> <a href="/vibesamurai-site/courses/beginner/b5"> <span class="dir">Дальше →</span> <span class="title">B5 · Запускаем первый проект (todo-приложение)</span> </a> </nav> </main> </div> <script type="module">
+    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
+    const matches = document.querySelectorAll(
+      'pre[data-language="mermaid"], pre.language-mermaid, code.language-mermaid'
+    );
+    matches.forEach((el) => {
+      const block = el.tagName === 'CODE' ? el.closest('pre') || el : el;
+      const codeEl = block.querySelector('code') || block;
+      const source = codeEl.textContent;
+      const wrap = document.createElement('div');
+      wrap.className = 'mermaid';
+      wrap.textContent = source;
+      block.replaceWith(wrap);
+    });
+    mermaid.initialize({
+      startOnLoad: false,
+      theme: 'neutral',
+      themeVariables: {
+        fontFamily: 'JetBrains Mono, ui-monospace, monospace',
+        primaryColor: '#f5f5f5',
+        primaryBorderColor: '#222',
+        primaryTextColor: '#111',
+        lineColor: '#444',
+      },
+      flowchart: { curve: 'basis', padding: 12 },
+    });
+    await mermaid.run();
+  </script> </body> </html>

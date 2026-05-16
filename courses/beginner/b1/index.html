@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Что такое AI-агент — Vibesamurai</title><meta name="description" content="Не автокомплит и не чатбот — работник, который сам делает и показывает что сделал."><meta property="og:title" content="Что такое AI-агент"><meta property="og:type" content="article"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Inter:wght@300..800&family=JetBrains+Mono:wght@400..600&display=swap" rel="stylesheet"><link rel="stylesheet" href="/vibesamurai-site/_astro/_slug_.DpgmObvf.css">
+<!DOCTYPE html><html lang="en"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Что такое AI-агент — Vibesamurai</title><meta name="description" content="Не автокомплит и не чатбот — работник, который сам делает и показывает что сделал."><meta property="og:title" content="Что такое AI-агент"><meta property="og:type" content="article"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Inter:wght@300..800&family=JetBrains+Mono:wght@400..600&display=swap" rel="stylesheet"><link rel="stylesheet" href="/vibesamurai-site/_astro/_slug_.Jibc-cA5.css">
 <style>.reader-sidebar[data-astro-cid-khgtvzrl] .soon[data-astro-cid-khgtvzrl]{display:block;color:var(--text-mute);font-size:var(--size-2);padding:var(--space-1) 0}.reader-sidebar[data-astro-cid-khgtvzrl] .soon[data-astro-cid-khgtvzrl] em[data-astro-cid-khgtvzrl]{font-style:normal;font-family:var(--font-mono);font-size:.85em;color:var(--accent);margin-left:4px;text-transform:uppercase;letter-spacing:.1em}
 </style></head> <body> <div class="reader-app"> <aside class="reader-rail"> <a href="/vibesamurai-site/" class="logo" aria-label="Vibesamurai home">V</a> </aside> <aside class="reader-sidebar" data-astro-cid-khgtvzrl> <div class="breadcrumb" data-astro-cid-khgtvzrl>Vibesamurai · Beginner Path · b1</div> <h4 data-astro-cid-khgtvzrl>В этом курсе</h4> <ul data-astro-cid-khgtvzrl> <li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b1" class="current" data-astro-cid-khgtvzrl>B1 · Что такое AI-агент</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b2" class data-astro-cid-khgtvzrl>B2 · Установка Claude Code</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b3" class data-astro-cid-khgtvzrl>B3 · Первый разговор</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b4" class data-astro-cid-khgtvzrl>B4 · Репозиторий и коммиты</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b5" class data-astro-cid-khgtvzrl>B5 · Первый проект: todo</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b6" class data-astro-cid-khgtvzrl>B6 · Читать код агента</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b7" class data-astro-cid-khgtvzrl>B7 · Безопасность для новичков</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b8" class data-astro-cid-khgtvzrl>B8 · Cursor vs Claude vs Codex</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b9" class data-astro-cid-khgtvzrl>B9 · Деплой первого проекта</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b10" class data-astro-cid-khgtvzrl>B10 · Оценка вывода агента</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b11" class data-astro-cid-khgtvzrl>B11 · Капстоун</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b12" class data-astro-cid-khgtvzrl>B12 · Куда дальше</a> </li> </ul>  </aside> <main class="reader-main"> <div class="chapter-eyebrow">Beginner Path · b1</div> <h1 class="chapter-title">B1 · Что такое AI-агент</h1> <p class="chapter-subtitle">Не автокомплит и не чатбот — работник, который сам делает и показывает что сделал.</p>  <blockquote>
 <p>Это черновик главы B1 на русском, написанный в авторском голосе DmitriyM (см. <code>scripts/tg_voice_analysis/_summary.md</code>). EN-версия будет переводом, не наоборот.</p>
@@ -25,7 +25,14 @@
 <p>С AI-агентом ровно то же самое. Он сам открывает файлы, сам пишет код, сам запускает команды, сам коммитит. Ваша работа — поставить ему задачу, дать границы, и потом проверить результат.</p>
 <h2 id="минимальная-схема-plan--act--evaluate">Минимальная схема: plan → act → evaluate</h2>
 <p>В любом нормальном агенте всегда есть три фазы:</p>
-<pre class="astro-code astro-code-themes github-light github-dark-default" style="background-color:#fff;--shiki-dark-bg:#0d1117;color:#24292e;--shiki-dark:#e6edf3; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>[ПЛАН]   →   [ДЕЙСТВИЕ]   →   [ПРОВЕРКА]</span></span></code></pre>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="mermaid"><code><span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">flowchart LR</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    A([Задача от вас]) --> P[ПЛАН&#x3C;br/>агент описывает&#x3C;br/>что собирается делать]</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    P -->|вы одобряете| D[ДЕЙСТВИЕ&#x3C;br/>агент меняет файлы,&#x3C;br/>запускает команды]</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    D --> C[ПРОВЕРКА&#x3C;br/>сверяем результат&#x3C;br/>с планом]</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    C -->|ок| OK([Принять])</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    C -->|не то| R([Откатить и уточнить])</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    R -.-> P</span></span></code></pre>
+<p>Если вы хотите увидеть это в одной строке: <code>план → действие → проверка</code>.</p>
 <ol>
 <li><strong>План.</strong> Агент описывает, что собирается делать, <strong>до того как</strong> начнёт что-то менять.</li>
 <li><strong>Действие.</strong> Агент выполняет план — в чётко очерченной зоне (папка, ветка, песочница).</li>
@@ -64,7 +71,7 @@
 <p>Из этого следует главное: <strong>граница безопасности — это не сам агент, это вы</strong>. Вы решаете, в какой папке он работает, какие команды ему разрешены, какие файлы он видит, что он точно не трогает.</p>
 <h2 id="ваш-первый-агентский-цикл">Ваш первый агентский цикл</h2>
 <p>Не будем теоретизировать. Откройте терминал и попросите Claude Code (или Cursor, или Codex CLI) сделать <strong>самую безопасную вещь на свете</strong> — прочитать вашу папку и сказать, что он видит:</p>
-<pre class="astro-code astro-code-themes github-light github-dark-default" style="background-color:#fff;--shiki-dark-bg:#0d1117;color:#24292e;--shiki-dark:#e6edf3; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#6F42C1;--shiki-dark:#FFA657">claude</span><span style="color:#032F62;--shiki-dark:#A5D6FF"> "Прочитай все файлы в этой папке и напиши абзац-резюме. Ничего не меняй."</span></span></code></pre>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#50FA7B;--shiki-dark:#50FA7B">claude</span><span style="color:#E9F284;--shiki-dark:#E9F284"> "</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">Прочитай все файлы в этой папке и напиши абзац-резюме. Ничего не меняй.</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span></span></code></pre>
 <p>Эта команда — ваш режим <strong>«только посмотреть»</strong>. Никаких изменений, никаких команд, только чтение.</p>
 <p>Прочитайте, что агент написал. Если он понял, что у вас за проект — отлично, можно двигаться дальше. Если он понял неправильно — тоже отлично, теперь вы видите, <strong>где у него слепые зоны</strong>, и сможете дать ему контекст в следующий раз.</p>
 <p>Эта привычка — открывать сессию с «посмотри, не трогай» — будет с вами весь курс. Не идеально, но реально работает.</p>
@@ -77,4 +84,45 @@
 </ul>
 <h2 id="дальше">Дальше</h2>
 <p>В следующей главе <strong>B2</strong> ставим первый рабочий инструмент — <strong>Claude Code</strong>. Поднимаемся, регистрируемся, получаем ключ, делаем первый запрос — и параллельно я расскажу, чем он отличается от Cursor и Codex CLI и когда удобнее использовать каждый.</p>
-<p>Если зашло — поделитесь главой с теми, кто только думает войти в эту тему. Если есть вопросы, на что обратить внимание в следующей главе — пишите в комментарии к курсу, ваша обратная связь реально помогает шлифовать материал.</p>  <nav class="chapter-nav"> <span></span> <span></span> </nav> </main> </div> </body></html>
+<p>Если зашло — поделитесь главой с теми, кто только думает войти в эту тему. Если есть вопросы, на что обратить внимание в следующей главе — пишите в комментарии к курсу, ваша обратная связь реально помогает шлифовать материал.</p>
+<h2 id="-дальше-посмотреть-и-почитать">📚 Дальше: посмотреть и почитать</h2>
+<p>Если хочется глубже погрузиться в идею AI-агента — вот короткий список первоисточников, который я сам считаю обязательным. Ничего лишнего, всё проверено.</p>
+<p><strong>Видео</strong></p>
+<ul>
+<li><strong>Andrej Karpathy — «Software is Changing (Again)»</strong> — <a href="https://www.youtube.com/watch?v=LCEmiRjPEtQ">youtube.com/watch?v=LCEmiRjPEtQ</a>. Карпатый объясняет, как смещается граница между кодом и моделью. Если посмотреть только одно видео по теме за этот год — это оно.</li>
+</ul>
+<p><strong>Статьи и доки</strong></p>
+<ul>
+<li><strong>Anthropic — Claude Code</strong> (продуктовая страница): <a href="https://www.anthropic.com/product/claude-code">anthropic.com/product/claude-code</a>. Короткий честный обзор, что инструмент умеет и где границы.</li>
+<li><strong>Claude Code Docs — Overview</strong>: <a href="https://code.claude.com/docs/en/overview">code.claude.com/docs/en/overview</a>. Официальная документация, с неё стартуем в B2.</li>
+</ul>
+<blockquote>
+<p><strong>Совет:</strong> перед B2 хотя бы пробегитесь по Overview — будет ощущение, что вы уже немного «в теме», когда пойдём ставить инструмент руками.</p>
+</blockquote>  <nav class="chapter-nav"> <span></span> <span></span> </nav> </main> </div> <script type="module">
+    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
+    const matches = document.querySelectorAll(
+      'pre[data-language="mermaid"], pre.language-mermaid, code.language-mermaid'
+    );
+    matches.forEach((el) => {
+      const block = el.tagName === 'CODE' ? el.closest('pre') || el : el;
+      const codeEl = block.querySelector('code') || block;
+      const source = codeEl.textContent;
+      const wrap = document.createElement('div');
+      wrap.className = 'mermaid';
+      wrap.textContent = source;
+      block.replaceWith(wrap);
+    });
+    mermaid.initialize({
+      startOnLoad: false,
+      theme: 'neutral',
+      themeVariables: {
+        fontFamily: 'JetBrains Mono, ui-monospace, monospace',
+        primaryColor: '#f5f5f5',
+        primaryBorderColor: '#222',
+        primaryTextColor: '#111',
+        lineColor: '#444',
+      },
+      flowchart: { curve: 'basis', padding: 12 },
+    });
+    await mermaid.run();
+  </script> </body> </html>
