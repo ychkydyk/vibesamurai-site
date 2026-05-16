@@ -277,9 +277,9 @@
 <li><strong>Trust the guardrails, not the model.</strong> Модель — может ошибиться, <strong>система</strong> должна не дать.</li>
 <li><strong>Security from day one.</strong> Дороже всего — патчить security после deploy.</li>
 </ul>
-<h2 id="скептик-самурай">Скептик Самурай</h2>
+<h2 id="вайб-самурай">Вайб Самурай</h2>
 <aside class="skeptic">
-<p><strong>🥷 Скептик Самурай спрашивает:</strong>
+<p><strong>🥷 Вайб Самурай спрашивает:</strong>
 «Это всё очень тяжеловесно. У меня один агент на маленьком клиенте, <strong>зачем</strong> мне Vault и K8s NetworkPolicies?»</p>
 <p><strong>Ответ:</strong> Не зачем. <strong>Уровень security соответствует уровню риска.</strong> Маленький pet-проект на 10 пользователей — достаточно: secrets в env-файле <strong>на сервере</strong> (не в репо!), Docker базовый sandbox, без network whitelisting, минимальный audit log. <strong>Большой</strong> проект с PII клиентов / финансами / медициной — <strong>все</strong> линии. <strong>Адаптируйте</strong>. Но: secret manager и audit log — <strong>минимум</strong> на любом уровне. Это та граница, ниже которой опускаться <strong>нельзя</strong>. <strong>Не идеально, но реально работает.</strong></p>
 </aside>
