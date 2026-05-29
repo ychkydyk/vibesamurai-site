@@ -1,0 +1,285 @@
+<!DOCTYPE html><html lang="en" data-astro-cid-a7sruqtr> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Private RAG for an archive — Vibesamurai</title><meta name="description" content="A private archive (TG channels, files, audio) → ASR/OCR/files/links → BGE-M3 + LanceDB → Sonnet 4.6. Idempotent re-ingest. The tg_archive case."><meta property="og:title" content="Private RAG for an archive"><meta property="og:type" content="article"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Inter:wght@300..800&family=JetBrains+Mono:wght@400..600&display=swap" rel="stylesheet"><link rel="stylesheet" href="/vibesamurai-site/_astro/_slug_.Cs4TX1wt.css">
+<style>.account-btn{display:inline-flex;align-items:center;gap:var(--space-2);font-family:var(--font-mono);font-size:var(--size-2);text-transform:uppercase;letter-spacing:.06em;padding:5px 10px;border:1px solid var(--rule);border-radius:999px;color:var(--text-soft);background:var(--surface);transition:border-color var(--d-fast),color var(--d-fast)}.account-btn:hover{border-color:var(--accent);color:var(--text)}.account-ic{width:18px;height:18px;display:grid;place-items:center;border-radius:50%;background:var(--accent);color:var(--accent-ink);font-weight:700;font-size:10px;line-height:1}.reader-rail .account-btn{padding:0;border:none;background:transparent}.reader-rail .account-label{display:none}.reader-rail .account-ic{width:32px;height:32px;font-size:13px}.rail-toggle{width:36px;height:36px;display:grid;place-items:center;background:var(--accent);border:1px solid var(--accent);border-radius:4px;cursor:pointer;transition:filter var(--d-fast),transform var(--d-fast);padding:0}.rail-toggle:hover{filter:brightness(1.08);transform:translateY(-1px)}.rail-toggle:active{transform:translateY(0)}.rail-toggle-icon{width:14px;height:12px;border-left:2px solid var(--accent-ink);border-right:2px solid var(--accent-ink);transition:transform var(--d-normal) var(--ease-standard)}.reader-app.sidebar-open .rail-toggle-icon{transform:rotate(0)}.reader-app:not(.sidebar-open) .rail-toggle-icon{transform:scaleX(.5)}.sidebar-backdrop{display:none;position:fixed;inset:0;background:#0000008c;z-index:140;border:0;padding:0;cursor:pointer}@media(max-width:900px){.reader-app.sidebar-open~.sidebar-backdrop{display:block}}.rail-spacer[data-astro-cid-ofsbkzh7]{flex:1}.reader-sidebar[data-astro-cid-khgtvzrl] .ru-tag[data-astro-cid-khgtvzrl]{font-style:normal;font-family:var(--font-mono);font-size:.7em;color:var(--text-mute);margin-left:4px;padding:1px 4px;border:1px solid var(--rule);border-radius:3px;text-transform:uppercase;vertical-align:middle}.chapter-eyebrow[data-astro-cid-a7sruqtr]{display:flex;justify-content:space-between;align-items:center;gap:var(--space-3)}.lang-toggle[data-astro-cid-a7sruqtr]{font-family:var(--font-mono);font-size:var(--size-2);padding:2px 8px;border:1px solid var(--rule);border-radius:4px;color:var(--text-mute);text-decoration:none;text-transform:uppercase;letter-spacing:.08em}.lang-toggle[data-astro-cid-a7sruqtr]:hover{color:var(--accent);border-color:var(--accent)}.code-tabs[data-astro-cid-hg66rjob]{margin:var(--space-5) 0}.code-tabs-nav[data-astro-cid-hg66rjob]{display:flex;gap:2px;margin-bottom:-1px;position:relative;z-index:1}.ctab[data-astro-cid-hg66rjob]{font-family:var(--font-mono);font-size:11px;text-transform:uppercase;letter-spacing:.07em;padding:5px 14px;border:1px solid #21222c;border-bottom:none;background:#1a1b23;color:#6272a4;cursor:pointer;border-radius:4px 4px 0 0;transition:color .12s,background .12s}.ctab[data-astro-cid-hg66rjob].is-active{background:#282a36;color:#f8f8f2;border-color:#21222c}.ctab[data-astro-cid-hg66rjob]:hover:not(.is-active){color:#cdd6f4}.ctab-panel[data-astro-cid-hg66rjob]{display:none}.ctab-panel[data-astro-cid-hg66rjob].is-active{display:block}.ctab-panel[data-astro-cid-hg66rjob] pre{margin-top:0!important;border-radius:0 6px 6px!important}
+</style></head> <body data-astro-cid-a7sruqtr> <div class="reader-app" data-astro-cid-a7sruqtr> <aside class="reader-rail" data-astro-cid-ofsbkzh7> <a href="/vibesamurai-site/" class="logo" aria-label="Vibesamurai home" data-astro-cid-ofsbkzh7>V</a> <button type="button" class="rail-toggle" id="sidebar-toggle" aria-label="Свернуть/развернуть оглавление" title="Свернуть/развернуть оглавление" data-astro-cid-ofsbkzh7> <span class="rail-toggle-icon" aria-hidden="true" data-astro-cid-ofsbkzh7></span> </button> <div class="rail-spacer" data-astro-cid-ofsbkzh7></div> <a href="/vibesamurai-site/account" class="account-btn" id="account-btn" aria-label="Аккаунт"> <span class="account-ic" id="account-ic">⌂</span> <span class="account-label" id="account-label">Войти</span> </a>  <script type="module" src="/vibesamurai-site/_astro/AccountButton.astro_astro_type_script_index_0_lang.CmD2sdn9.js"></script> </aside>  <button type="button" class="sidebar-backdrop" id="sidebar-backdrop" aria-label="Закрыть оглавление" tabindex="-1" data-astro-cid-ofsbkzh7></button>  <script type="module">const d="vs-sidebar-open",a="(max-width: 900px)";function t(e){const n=document.querySelector(".reader-app");n&&n.classList.toggle("sidebar-open",e)}function r(){return!window.matchMedia(a).matches}function s(){const e=localStorage.getItem(d),i=window.matchMedia(a).matches?!1:e!==null?e==="1":r();t(i),document.getElementById("sidebar-toggle")?.addEventListener("click",()=>{const c=!document.querySelector(".reader-app")?.classList.contains("sidebar-open");window.matchMedia(a).matches||localStorage.setItem(d,c?"1":"0"),t(c)}),document.getElementById("sidebar-backdrop")?.addEventListener("click",()=>t(!1)),document.querySelectorAll(".reader-sidebar a").forEach(o=>{o.addEventListener("click",()=>{window.matchMedia(a).matches&&t(!1)})})}document.readyState==="loading"?document.addEventListener("DOMContentLoaded",s):s();</script> <aside class="reader-sidebar" data-astro-cid-khgtvzrl> <div class="breadcrumb" data-astro-cid-khgtvzrl>Vibesamurai · Advanced Path · A13</div> <h4 data-astro-cid-khgtvzrl>In this course</h4> <ul data-astro-cid-khgtvzrl> <li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a1/en" class data-astro-cid-khgtvzrl> A1 · AI studio stack — May 2026  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a2/en" class data-astro-cid-khgtvzrl> A2 · Multi-modal pipeline architecture  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a3/en" class data-astro-cid-khgtvzrl> A3 · Local vs Cloud matrix  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a4/en" class data-astro-cid-khgtvzrl> A4 · Design system as a contract  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a5/en" class data-astro-cid-khgtvzrl> A5 · Image generation for a brand  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a6/en" class data-astro-cid-khgtvzrl> A6 · Marketplace + product photoshoot  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a7/en" class data-astro-cid-khgtvzrl> A7 · Video generation pipelines  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a8/en" class data-astro-cid-khgtvzrl> A8 · Identity-preserving generation  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a9/en" class data-astro-cid-khgtvzrl> A9 · TouchDesigner + StreamDiffusion  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a10/en" class data-astro-cid-khgtvzrl> A10 · Audio-reactive AV installations  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a11/en" class data-astro-cid-khgtvzrl> A11 · Interactive booths: STT+LLM+TTS+CV  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a12/en" class data-astro-cid-khgtvzrl> A12 · Telemetry → control loop  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a13/en" class="current" data-astro-cid-khgtvzrl> A13 · Private RAG for an archive  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a14/en" class data-astro-cid-khgtvzrl> A14 · Local LLMs on 8GB VRAM  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a15/en" class data-astro-cid-khgtvzrl> A15 · RunPod Flash + vLLM  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a16/en" class data-astro-cid-khgtvzrl> A16 · Custom MCP servers  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a17/en" class data-astro-cid-khgtvzrl> A17 · Token economics across modalities  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a18/en" class data-astro-cid-khgtvzrl> A18 · Eval for creative output  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a19/en" class data-astro-cid-khgtvzrl> A19 · Security in a creative studio  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a20/en" class data-astro-cid-khgtvzrl> A20 · Capstone: launching the studio  </a> </li> </ul>  </aside> <main class="reader-main" data-astro-cid-a7sruqtr> <div class="chapter-eyebrow" data-astro-cid-a7sruqtr> <span data-astro-cid-a7sruqtr>Advanced Path · a13</span> <a class="lang-toggle" href="/vibesamurai-site/courses/advanced/a13" aria-label="Switch to RU" data-astro-cid-a7sruqtr>RU</a> </div> <h1 class="chapter-title" data-astro-cid-a7sruqtr>A13 · Private RAG for an archive</h1> <p class="chapter-subtitle" data-astro-cid-a7sruqtr>A private archive (TG channels, files, audio) → ASR/OCR/files/links → BGE-M3 + LanceDB → Sonnet 4.6. Idempotent re-ingest. The tg_archive case.</p> <h2 id="what-were-building">What we’re building</h2>
+<p>A private RAG system over your own archive: heterogeneous sources (TG channels, files, audio, screenshots) collected into an index, retrieval runs locally, generation is hybrid (Sonnet 4.6 for the final answer, local Qwen for the routine). The archive never leaves the host — critical for business data and private correspondence.</p>
+<h2 id="architecture">Architecture</h2>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>SOURCES               INGEST                 INDEX                 ANSWER</span></span>
+<span class="line"><span>─────────             ──────                 ─────                 ──────</span></span>
+<span class="line"><span>TG channels       ──► pywinauto export   ──►  text/file chunks  ──►  retrieve</span></span>
+<span class="line"><span>PDF/docx files    ──► OCR / extract      ──►  BGE-M3 embeddings      (top-k)</span></span>
+<span class="line"><span>audio             ──► Whisper STT        ──►  LanceDB                  │</span></span>
+<span class="line"><span>screenshots       ──► OCR                ──►  metadata index            ▼</span></span>
+<span class="line"><span>links             ──► fetch + dedup      ──►  link cache             rerank</span></span>
+<span class="line"><span>                                                                         │</span></span>
+<span class="line"><span>                                                                         ▼</span></span>
+<span class="line"><span>                                                              Sonnet 4.6 / Qwen</span></span>
+<span class="line"><span>                                                                         │</span></span>
+<span class="line"><span>                                                                         ▼</span></span>
+<span class="line"><span>                                                                      answer</span></span></code></pre>
+<h2 id="stack">Stack</h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Node</th><th>Tool</th><th>Why</th></tr></thead><tbody><tr><td>TG export</td><td>pywinauto every 2 h</td><td>Auto content collection</td></tr><tr><td>ASR</td><td>Whisper large-v3 locally</td><td>Voice messages, audio notes</td></tr><tr><td>OCR</td><td>PaddleOCR / Tesseract</td><td>Screenshots, images in posts</td></tr><tr><td>Document extract</td><td>unstructured + pdfminer</td><td>PDF, docx, xlsx</td></tr><tr><td>Embeddings</td><td>BGE-M3</td><td>Multilingual, 8k context, local</td></tr><tr><td>Vector store</td><td>LanceDB</td><td>Embedded, on-disk, no server</td></tr><tr><td>Reranker</td><td>bge-reranker-large</td><td>Refines top-k</td></tr><tr><td>LLM final</td><td>Claude Sonnet 4.6</td><td>Final answer</td></tr><tr><td>LLM filter</td><td>Qwen3.5-21B locally</td><td>Filtering before Sonnet</td></tr></tbody></table>
+<p>LanceDB is embedded — no Postgres / Milvus / Qdrant required. File-on-disk; everything lives in a <code>lance/</code> folder.</p>
+<h2 id="bge-m3-why-this-embedder">BGE-M3: why this embedder</h2>
+<ul>
+<li><strong>Multilingual</strong> — Russian + English + 100+ languages in one index.</li>
+<li><strong>Long context</strong> — up to 8192 tokens per chunk; you don’t have to over-shard.</li>
+<li><strong>Local</strong> — model ~2 GB on disk, runs tolerably on CPU and fast on GPU.</li>
+<li><strong>Multi-vector</strong> — three representation types (dense, sparse, multi-vector) in one model; raises retrieval quality at the same chunk size.</li>
+</ul>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="python"><code><span class="line"><span style="color:#FF79C6;--shiki-dark:#FF79C6">from</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2"> FlagEmbedding </span><span style="color:#FF79C6;--shiki-dark:#FF79C6">import</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2"> BGEM3FlagModel</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">model </span><span style="color:#FF79C6;--shiki-dark:#FF79C6">=</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2"> BGEM3FlagModel(</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">BAAI/bge-m3</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">, </span><span style="color:#FFB86C;--shiki-light-font-style:italic;--shiki-dark:#FFB86C;--shiki-dark-font-style:italic">use_fp16</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">=</span><span style="color:#BD93F9;--shiki-dark:#BD93F9">True</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#FF79C6;--shiki-dark:#FF79C6">def</span><span style="color:#50FA7B;--shiki-dark:#50FA7B"> embed</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">(</span><span style="color:#FFB86C;--shiki-light-font-style:italic;--shiki-dark:#FFB86C;--shiki-dark-font-style:italic">texts</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">:</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2"> list[</span><span style="color:#8BE9FD;--shiki-light-font-style:italic;--shiki-dark:#8BE9FD;--shiki-dark-font-style:italic">str</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">]) </span><span style="color:#FF79C6;--shiki-dark:#FF79C6">-></span><span style="color:#8BE9FD;--shiki-light-font-style:italic;--shiki-dark:#8BE9FD;--shiki-dark-font-style:italic"> dict</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">:</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    out </span><span style="color:#FF79C6;--shiki-dark:#FF79C6">=</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2"> model.encode(</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">        texts,</span></span>
+<span class="line"><span style="color:#FFB86C;--shiki-light-font-style:italic;--shiki-dark:#FFB86C;--shiki-dark-font-style:italic">        batch_size</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">=</span><span style="color:#BD93F9;--shiki-dark:#BD93F9">12</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">,</span></span>
+<span class="line"><span style="color:#FFB86C;--shiki-light-font-style:italic;--shiki-dark:#FFB86C;--shiki-dark-font-style:italic">        max_length</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">=</span><span style="color:#BD93F9;--shiki-dark:#BD93F9">8192</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">,</span></span>
+<span class="line"><span style="color:#FFB86C;--shiki-light-font-style:italic;--shiki-dark:#FFB86C;--shiki-dark-font-style:italic">        return_dense</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">=</span><span style="color:#BD93F9;--shiki-dark:#BD93F9">True</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">,</span></span>
+<span class="line"><span style="color:#FFB86C;--shiki-light-font-style:italic;--shiki-dark:#FFB86C;--shiki-dark-font-style:italic">        return_sparse</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">=</span><span style="color:#BD93F9;--shiki-dark:#BD93F9">True</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">,</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    )</span></span>
+<span class="line"><span style="color:#FF79C6;--shiki-dark:#FF79C6">    return</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2"> {</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">dense</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">: out[</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">dense_vecs</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">], </span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">sparse</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">: out[</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">lexical_weights</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">]}</span></span></code></pre>
+<p>For everyday RAG use only the dense vectors; turn on sparse when quality dips on short or specific queries.</p>
+<h2 id="idempotent-re-ingest">Idempotent re-ingest</h2>
+<p>The main RAG pain: “I re-ran ingest and the index bloated or duplicated.” Fix: a cache key per chunk = <code>sha256(source_id + chunk_position + content_hash)</code>.</p>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="python"><code><span class="line"><span style="color:#FF79C6;--shiki-dark:#FF79C6">def</span><span style="color:#50FA7B;--shiki-dark:#50FA7B"> upsert_chunk</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">(</span><span style="color:#FFB86C;--shiki-light-font-style:italic;--shiki-dark:#FFB86C;--shiki-dark-font-style:italic">chunk</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">:</span><span style="color:#8BE9FD;--shiki-light-font-style:italic;--shiki-dark:#8BE9FD;--shiki-dark-font-style:italic"> dict</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">):</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    key </span><span style="color:#FF79C6;--shiki-dark:#FF79C6">=</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2"> hashlib.sha256(</span></span>
+<span class="line"><span style="color:#FF79C6;--shiki-dark:#FF79C6">        f</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">"</span><span style="color:#BD93F9;--shiki-dark:#BD93F9">{</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">chunk[</span><span style="color:#E9F284;--shiki-dark:#E9F284">'</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">source_id</span><span style="color:#E9F284;--shiki-dark:#E9F284">'</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">]</span><span style="color:#BD93F9;--shiki-dark:#BD93F9">}</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">|</span><span style="color:#BD93F9;--shiki-dark:#BD93F9">{</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">chunk[</span><span style="color:#E9F284;--shiki-dark:#E9F284">'</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">position</span><span style="color:#E9F284;--shiki-dark:#E9F284">'</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">]</span><span style="color:#BD93F9;--shiki-dark:#BD93F9">}</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">|</span><span style="color:#BD93F9;--shiki-dark:#BD93F9">{</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">chunk[</span><span style="color:#E9F284;--shiki-dark:#E9F284">'</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">content</span><span style="color:#E9F284;--shiki-dark:#E9F284">'</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">][:</span><span style="color:#BD93F9;--shiki-dark:#BD93F9">512</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">]</span><span style="color:#BD93F9;--shiki-dark:#BD93F9">}</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">"</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">.encode()</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    ).hexdigest()</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    chunk[</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">chunk_id</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">] </span><span style="color:#FF79C6;--shiki-dark:#FF79C6">=</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2"> key</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    db.merge_insert(</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">documents</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">) \</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">        .when_matched_update_all() \</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">        .when_not_matched_insert_all() \</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">        .execute([chunk])</span></span></code></pre>
+<p>LanceDB <code>merge_insert</code> natively supports upsert by key. Re-running ingest = re-hash and no-op for unchanged chunks.</p>
+<h2 id="real-case-tg_archive">Real case: tg_archive</h2>
+<p>From memory <code>project_tg_archive</code>: TG channels → ASR/OCR/files/links → BGE-M3 + LanceDB → Claude Sonnet 4.6 RAG. pywinauto export every 2 h.</p>
+<p>Submodule: <code>tg_assistant/ingest/</code>. Architecture — a separate process; doesn’t block the bot.</p>
+<p>Manual launch (rule <code>feedback_no_tg_archive_cron</code>): hand-run only, <strong>don’t</strong> register <code>TgArchiveSync</code>, <strong>don’t</strong> call <code>install_tg_sync_scheduler.ps1</code>. Cron created incidents with lost context due to races with pywinauto. Run <code>python -m tg_archive.ingest</code> on demand.</p>
+<h2 id="query-with-rerank">Query with rerank</h2>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="python"><code><span class="line"><span style="color:#FF79C6;--shiki-dark:#FF79C6">def</span><span style="color:#50FA7B;--shiki-dark:#50FA7B"> query</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">(</span><span style="color:#FFB86C;--shiki-light-font-style:italic;--shiki-dark:#FFB86C;--shiki-dark-font-style:italic">question</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">:</span><span style="color:#8BE9FD;--shiki-light-font-style:italic;--shiki-dark:#8BE9FD;--shiki-dark-font-style:italic"> str</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">, </span><span style="color:#FFB86C;--shiki-light-font-style:italic;--shiki-dark:#FFB86C;--shiki-dark-font-style:italic">k</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">:</span><span style="color:#8BE9FD;--shiki-light-font-style:italic;--shiki-dark:#8BE9FD;--shiki-dark-font-style:italic"> int</span><span style="color:#FF79C6;--shiki-dark:#FF79C6"> =</span><span style="color:#BD93F9;--shiki-dark:#BD93F9"> 20</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">, </span><span style="color:#FFB86C;--shiki-light-font-style:italic;--shiki-dark:#FFB86C;--shiki-dark-font-style:italic">final_k</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">:</span><span style="color:#8BE9FD;--shiki-light-font-style:italic;--shiki-dark:#8BE9FD;--shiki-dark-font-style:italic"> int</span><span style="color:#FF79C6;--shiki-dark:#FF79C6"> =</span><span style="color:#BD93F9;--shiki-dark:#BD93F9"> 5</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">):</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    q_emb </span><span style="color:#FF79C6;--shiki-dark:#FF79C6">=</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2"> embed([question])[</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">dense</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">][</span><span style="color:#BD93F9;--shiki-dark:#BD93F9">0</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">]</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    candidates </span><span style="color:#FF79C6;--shiki-dark:#FF79C6">=</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2"> db.open_table(</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">documents</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">).search(q_emb).limit(k).to_list()</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    rerank_scores </span><span style="color:#FF79C6;--shiki-dark:#FF79C6">=</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2"> reranker.compute_score(</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">        [(question, c[</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">content</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">]) </span><span style="color:#FF79C6;--shiki-dark:#FF79C6">for</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2"> c </span><span style="color:#FF79C6;--shiki-dark:#FF79C6">in</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2"> candidates]</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    )</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    ranked </span><span style="color:#FF79C6;--shiki-dark:#FF79C6">=</span><span style="color:#8BE9FD;--shiki-dark:#8BE9FD"> sorted</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">(</span><span style="color:#8BE9FD;--shiki-dark:#8BE9FD">zip</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">(candidates, rerank_scores), </span><span style="color:#FFB86C;--shiki-light-font-style:italic;--shiki-dark:#FFB86C;--shiki-dark-font-style:italic">key</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">=lambda</span><span style="color:#FFB86C;--shiki-light-font-style:italic;--shiki-dark:#FFB86C;--shiki-dark-font-style:italic"> x</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">: </span><span style="color:#FF79C6;--shiki-dark:#FF79C6">-</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">x[</span><span style="color:#BD93F9;--shiki-dark:#BD93F9">1</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">])</span></span>
+<span class="line"><span style="color:#FF79C6;--shiki-dark:#FF79C6">    return</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2"> [c </span><span style="color:#FF79C6;--shiki-dark:#FF79C6">for</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2"> c, _ </span><span style="color:#FF79C6;--shiki-dark:#FF79C6">in</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2"> ranked[</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">:</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">final_k]]</span></span></code></pre>
+<p>k=20 → rerank → final_k=5. Without rerank, answer quality degrades on long archives: a dense embedding catches the “topic” but not the “relevance to the question.”</p>
+<h2 id="hybrid-local-filter--sonnet">Hybrid: local filter → Sonnet</h2>
+<p>Don’t push every retrieval to Sonnet. A cheap local Qwen checks “is there enough context in the retrieved chunks to actually answer?” If not — refuse. If yes — final answer through Sonnet.</p>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>question ──► retrieval ──► top-5 chunks</span></span>
+<span class="line"><span>                │</span></span>
+<span class="line"><span>                ▼</span></span>
+<span class="line"><span>        Qwen3.5: "is the context enough?"</span></span>
+<span class="line"><span>                │</span></span>
+<span class="line"><span>                ├── no  ──► "not found in archive" (no Sonnet call)</span></span>
+<span class="line"><span>                │</span></span>
+<span class="line"><span>                └── yes ──► Sonnet 4.6 final</span></span></code></pre>
+<p>On archives of hundreds of thousands of chunks 30–40 % of queries terminate at “not found” — a large savings on Sonnet tokens.</p>
+<h2 id="pitfalls">Pitfalls</h2>
+<ul>
+<li><strong>Chunk size 200 tokens</strong> — breaks context. BGE-M3 is designed for long chunks (512–2048 tokens). Don’t over-shard.</li>
+<li><strong>No timestamp in metadata</strong> — RAG answers “from the archive” without knowing when it was. Time is a mandatory field.</li>
+<li><strong>OCR on low-quality screenshots</strong> — garbage in the index. A confidence filter on the OCR output (drop &#x3C;0.5) helps.</li>
+<li><strong>Reranker without GPU</strong> — bge-reranker-large at 200–500 ms per pair on CPU adds seconds at k=20. Reranker on GPU or a smaller model (<code>bge-reranker-base</code>).</li>
+<li><strong>TG channel duplicates</strong> — the same post is reprinted 3 times. Dedup by content similarity (Jaccard on n-grams) before ingest.</li>
+<li><strong>“Asked Sonnet about a 2024 fact”</strong> — the answer may be irrelevant even if a 2026 fact exists in the archive. Time-filter on retrieval (e.g. top-k from the last year).</li>
+</ul>
+<h2 id="recap">Recap</h2>
+<ul>
+<li>Architecture: ingest → BGE-M3 → LanceDB → retrieve → rerank → (Qwen filter) → Sonnet.</li>
+<li>LanceDB is embedded — no separate server.</li>
+<li>BGE-M3 — multilingual, long-context, local; use dense + optionally sparse.</li>
+<li>Idempotent ingest via a per-chunk cache key; LanceDB <code>merge_insert</code> natively.</li>
+<li>Rerank after retrieval is mandatory on long archives.</li>
+<li>Local filter before Sonnet saves 30–40 % of tokens.</li>
+</ul>
+<h2 id="further-reading">Further reading</h2>
+<ul>
+<li><strong>BGE-M3 paper / model</strong> — <a href="https://huggingface.co/BAAI/bge-m3">huggingface.co/BAAI/bge-m3</a>. Architecture, usage, multilinguality.</li>
+<li><strong>LanceDB docs</strong> — <a href="https://lancedb.github.io/lancedb/">lancedb.github.io/lancedb</a>. Embedded vector DB, merge_insert, full-text + vector hybrid.</li>
+<li><strong>Whisper large-v3</strong> — <a href="https://github.com/openai/whisper">github.com/openai/whisper</a>. Local STT for audio messages in the archive.</li>
+<li><strong>Anthropic — Contextual Retrieval</strong> — <a href="https://www.anthropic.com/news/contextual-retrieval">anthropic.com/news/contextual-retrieval</a>. When retrieval + rerank still misses — the “contextual chunks” pattern.</li>
+</ul> <nav class="chapter-nav" data-astro-cid-a7sruqtr> <a href="/vibesamurai-site/courses/advanced/a12/en" data-astro-cid-a7sruqtr> <span class="dir" data-astro-cid-a7sruqtr>← Back</span> <span class="title" data-astro-cid-a7sruqtr>A12 · Telemetry → control loop</span> </a> <a href="/vibesamurai-site/courses/advanced/a14/en" data-astro-cid-a7sruqtr> <span class="dir" data-astro-cid-a7sruqtr>Next →</span> <span class="title" data-astro-cid-a7sruqtr>A14 · Local LLMs on 8GB VRAM</span> </a> </nav> </main>  </div> <script type="module">
+    import { gatingEnabled } from '../lib/supabase';
+    import { fetchChapter } from '../lib/auth';
+
+    const base = import.meta.env.BASE_URL;
+    let mermaidLib = null;
+
+    function scopeOf(root) {
+      return root === document ? document.querySelector('.reader-main') : root;
+    }
+
+    function addCopyBtns(root) {
+      const scope = scopeOf(root); if (!scope) return;
+      scope.querySelectorAll('pre').forEach((pre) => {
+        if (pre.closest('.code-tabs')) return;
+        if (pre.querySelector('.copy-btn')) return;
+        const btn = document.createElement('button');
+        btn.className = 'copy-btn';
+        btn.textContent = 'copy';
+        btn.addEventListener('click', async () => {
+          const code = pre.querySelector('code')?.textContent ?? pre.textContent ?? '';
+          await navigator.clipboard.writeText(code.trimEnd());
+          btn.textContent = '✓ copied';
+          setTimeout(() => { btn.textContent = 'copy'; }, 1600);
+        });
+        pre.appendChild(btn);
+      });
+    }
+
+    function tightenMermaidSvgs(retries = 6) {
+      let pending = false;
+      document.querySelectorAll('.mermaid svg').forEach((svg) => {
+        if (svg.dataset.tightened === '1') return;
+        try {
+          const bbox = svg.getBBox();
+          if (!bbox || bbox.width === 0) { pending = true; return; }
+          const pad = 6;
+          svg.setAttribute('viewBox',
+            `${bbox.x - pad} ${bbox.y - pad} ${bbox.width + pad * 2} ${bbox.height + pad * 2}`);
+          svg.removeAttribute('height');
+          svg.style.height = 'auto';
+          svg.style.maxWidth = '100%';
+          svg.style.display = 'block';
+          svg.dataset.tightened = '1';
+        } catch (e) { pending = true; }
+      });
+      if (pending && retries > 0) setTimeout(() => tightenMermaidSvgs(retries - 1), 120);
+    }
+
+    async function ensureMermaid() {
+      if (mermaidLib) return mermaidLib;
+      const mod = await import('https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs');
+      mermaidLib = mod.default;
+      mermaidLib.initialize({
+        startOnLoad: false, theme: 'neutral',
+        themeVariables: {
+          fontFamily: 'JetBrains Mono, ui-monospace, monospace',
+          primaryColor: '#f5f5f5', primaryBorderColor: '#222',
+          primaryTextColor: '#111', lineColor: '#444',
+        },
+        flowchart: { curve: 'basis', padding: 12, useMaxWidth: true },
+      });
+      return mermaidLib;
+    }
+
+    async function renderMermaid(root) {
+      const scope = scopeOf(root); if (!scope) return;
+      const matches = scope.querySelectorAll(
+        'pre[data-language="mermaid"], pre.language-mermaid, code.language-mermaid'
+      );
+      if (!matches.length) return;
+      matches.forEach((el) => {
+        const block = el.tagName === 'CODE' ? el.closest('pre') || el : el;
+        const codeEl = block.querySelector('code') || block;
+        const wrap = document.createElement('div');
+        wrap.className = 'mermaid';
+        wrap.textContent = codeEl.textContent;
+        block.replaceWith(wrap);
+      });
+      try {
+        const m = await ensureMermaid();
+        await m.run();
+        tightenMermaidSvgs();
+      } catch (err) {
+        console.warn('mermaid failed', err);
+        document.querySelectorAll('.mermaid:not(:has(svg))').forEach((el) => { el.style.display = 'none'; });
+      }
+    }
+
+    async function enhance(root = document) {
+      addCopyBtns(root);
+      await renderMermaid(root);
+    }
+
+    function paywallHtml(required, needLogin) {
+      const label = { beginner: 'Beginner (300 ₽)', middle: 'Beginner + Middle (500 ₽)', all: 'Весь пакет (700 ₽)' }[required] || '';
+      return `<div class="paywall">
+        <div class="paywall-ic">🔒</div>
+        <h3>Эта глава — в платном доступе</h3>
+        <p>Нужен тариф: <strong>${label}</strong>. Доступ навсегда, без подписки.</p>
+        ${needLogin ? '<p>Войди через Google и оформи доступ — продолжишь с любого устройства.</p>' : ''}
+        <a class="paywall-btn" href="${base}pricing">Открыть доступ →</a>
+        <a class="paywall-link" href="${base}account">Войти / мой аккаунт</a>
+      </div>`;
+    }
+
+    async function gatedFlow(mount) {
+      const slug = mount.dataset.slug;
+      const required = mount.dataset.required || 'beginner';
+      mount.innerHTML = '<p class="gate-msg">Проверяем доступ…</p>';
+      const res = await fetchChapter(slug);
+      if (res.ok) {
+        mount.innerHTML = res.html;
+        await enhance(mount);
+      } else if (res.status === 401) {
+        mount.innerHTML = paywallHtml(required, true);
+      } else if (res.status === 402) {
+        mount.innerHTML = paywallHtml(res.requiredTier || required, false);
+      } else {
+        mount.innerHTML = '<p class="gate-msg">Не удалось загрузить главу. Обнови страницу.</p>';
+      }
+    }
+
+    const mount = document.getElementById('gated-mount');
+    if (mount && gatingEnabled) gatedFlow(mount);
+    else enhance(document);
+  </script> </body> </html>

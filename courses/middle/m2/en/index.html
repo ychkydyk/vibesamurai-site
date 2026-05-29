@@ -1,0 +1,352 @@
+<!DOCTYPE html><html lang="en" data-astro-cid-a7sruqtr> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Architecting agent boundaries — Vibesamurai</title><meta name="description" content="Inputs, outputs, success criteria. How to separate plan from action so the agent doesn't break the important things."><meta property="og:title" content="Architecting agent boundaries"><meta property="og:type" content="article"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Inter:wght@300..800&family=JetBrains+Mono:wght@400..600&display=swap" rel="stylesheet"><link rel="stylesheet" href="/vibesamurai-site/_astro/_slug_.Cs4TX1wt.css">
+<style>.account-btn{display:inline-flex;align-items:center;gap:var(--space-2);font-family:var(--font-mono);font-size:var(--size-2);text-transform:uppercase;letter-spacing:.06em;padding:5px 10px;border:1px solid var(--rule);border-radius:999px;color:var(--text-soft);background:var(--surface);transition:border-color var(--d-fast),color var(--d-fast)}.account-btn:hover{border-color:var(--accent);color:var(--text)}.account-ic{width:18px;height:18px;display:grid;place-items:center;border-radius:50%;background:var(--accent);color:var(--accent-ink);font-weight:700;font-size:10px;line-height:1}.reader-rail .account-btn{padding:0;border:none;background:transparent}.reader-rail .account-label{display:none}.reader-rail .account-ic{width:32px;height:32px;font-size:13px}.rail-toggle{width:36px;height:36px;display:grid;place-items:center;background:var(--accent);border:1px solid var(--accent);border-radius:4px;cursor:pointer;transition:filter var(--d-fast),transform var(--d-fast);padding:0}.rail-toggle:hover{filter:brightness(1.08);transform:translateY(-1px)}.rail-toggle:active{transform:translateY(0)}.rail-toggle-icon{width:14px;height:12px;border-left:2px solid var(--accent-ink);border-right:2px solid var(--accent-ink);transition:transform var(--d-normal) var(--ease-standard)}.reader-app.sidebar-open .rail-toggle-icon{transform:rotate(0)}.reader-app:not(.sidebar-open) .rail-toggle-icon{transform:scaleX(.5)}.sidebar-backdrop{display:none;position:fixed;inset:0;background:#0000008c;z-index:140;border:0;padding:0;cursor:pointer}@media(max-width:900px){.reader-app.sidebar-open~.sidebar-backdrop{display:block}}.rail-spacer[data-astro-cid-ofsbkzh7]{flex:1}.reader-sidebar[data-astro-cid-khgtvzrl] .ru-tag[data-astro-cid-khgtvzrl]{font-style:normal;font-family:var(--font-mono);font-size:.7em;color:var(--text-mute);margin-left:4px;padding:1px 4px;border:1px solid var(--rule);border-radius:3px;text-transform:uppercase;vertical-align:middle}.chapter-eyebrow[data-astro-cid-a7sruqtr]{display:flex;justify-content:space-between;align-items:center;gap:var(--space-3)}.lang-toggle[data-astro-cid-a7sruqtr]{font-family:var(--font-mono);font-size:var(--size-2);padding:2px 8px;border:1px solid var(--rule);border-radius:4px;color:var(--text-mute);text-decoration:none;text-transform:uppercase;letter-spacing:.08em}.lang-toggle[data-astro-cid-a7sruqtr]:hover{color:var(--accent);border-color:var(--accent)}.code-tabs[data-astro-cid-hg66rjob]{margin:var(--space-5) 0}.code-tabs-nav[data-astro-cid-hg66rjob]{display:flex;gap:2px;margin-bottom:-1px;position:relative;z-index:1}.ctab[data-astro-cid-hg66rjob]{font-family:var(--font-mono);font-size:11px;text-transform:uppercase;letter-spacing:.07em;padding:5px 14px;border:1px solid #21222c;border-bottom:none;background:#1a1b23;color:#6272a4;cursor:pointer;border-radius:4px 4px 0 0;transition:color .12s,background .12s}.ctab[data-astro-cid-hg66rjob].is-active{background:#282a36;color:#f8f8f2;border-color:#21222c}.ctab[data-astro-cid-hg66rjob]:hover:not(.is-active){color:#cdd6f4}.ctab-panel[data-astro-cid-hg66rjob]{display:none}.ctab-panel[data-astro-cid-hg66rjob].is-active{display:block}.ctab-panel[data-astro-cid-hg66rjob] pre{margin-top:0!important;border-radius:0 6px 6px!important}
+</style></head> <body data-astro-cid-a7sruqtr> <div class="reader-app" data-astro-cid-a7sruqtr> <aside class="reader-rail" data-astro-cid-ofsbkzh7> <a href="/vibesamurai-site/" class="logo" aria-label="Vibesamurai home" data-astro-cid-ofsbkzh7>V</a> <button type="button" class="rail-toggle" id="sidebar-toggle" aria-label="Свернуть/развернуть оглавление" title="Свернуть/развернуть оглавление" data-astro-cid-ofsbkzh7> <span class="rail-toggle-icon" aria-hidden="true" data-astro-cid-ofsbkzh7></span> </button> <div class="rail-spacer" data-astro-cid-ofsbkzh7></div> <a href="/vibesamurai-site/account" class="account-btn" id="account-btn" aria-label="Аккаунт"> <span class="account-ic" id="account-ic">⌂</span> <span class="account-label" id="account-label">Войти</span> </a>  <script type="module" src="/vibesamurai-site/_astro/AccountButton.astro_astro_type_script_index_0_lang.CmD2sdn9.js"></script> </aside>  <button type="button" class="sidebar-backdrop" id="sidebar-backdrop" aria-label="Закрыть оглавление" tabindex="-1" data-astro-cid-ofsbkzh7></button>  <script type="module">const d="vs-sidebar-open",a="(max-width: 900px)";function t(e){const n=document.querySelector(".reader-app");n&&n.classList.toggle("sidebar-open",e)}function r(){return!window.matchMedia(a).matches}function s(){const e=localStorage.getItem(d),i=window.matchMedia(a).matches?!1:e!==null?e==="1":r();t(i),document.getElementById("sidebar-toggle")?.addEventListener("click",()=>{const c=!document.querySelector(".reader-app")?.classList.contains("sidebar-open");window.matchMedia(a).matches||localStorage.setItem(d,c?"1":"0"),t(c)}),document.getElementById("sidebar-backdrop")?.addEventListener("click",()=>t(!1)),document.querySelectorAll(".reader-sidebar a").forEach(o=>{o.addEventListener("click",()=>{window.matchMedia(a).matches&&t(!1)})})}document.readyState==="loading"?document.addEventListener("DOMContentLoaded",s):s();</script> <aside class="reader-sidebar" data-astro-cid-khgtvzrl> <div class="breadcrumb" data-astro-cid-khgtvzrl>Vibesamurai · Middle Path · M2</div> <h4 data-astro-cid-khgtvzrl>In this course</h4> <ul data-astro-cid-khgtvzrl> <li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m1/en" class data-astro-cid-khgtvzrl> M1 · What is agentic AI in the SDLC  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m2/en" class="current" data-astro-cid-khgtvzrl> M2 · Architecting agent boundaries  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m3/en" class data-astro-cid-khgtvzrl> M3 · Observability and human-in-the-loop  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m4/en" class data-astro-cid-khgtvzrl> M4 · Tool inventory and permissions  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m5/en" class data-astro-cid-khgtvzrl> M5 · MCP deep dive  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m6/en" class data-astro-cid-khgtvzrl> M6 · Claude Code CLI mastery  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m7/en" class data-astro-cid-khgtvzrl> M7 · GPT-5.3 Codex CLI and OpenAI agents  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m8/en" class data-astro-cid-khgtvzrl> M8 · Cursor Composer + IDE agents  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m9/en" class data-astro-cid-khgtvzrl> M9 · Memory strategies  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m10/en" class data-astro-cid-khgtvzrl> M10 · State, drift, continuity  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m11/en" class data-astro-cid-khgtvzrl> M11 · Evaluating agents: metrics over vibes  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m12/en" class data-astro-cid-khgtvzrl> M12 · Regression tests for agents  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m13/en" class data-astro-cid-khgtvzrl> M13 · Tuning: what to change when metrics don&#39;t move  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m14/en" class data-astro-cid-khgtvzrl> M14 · One agent, many steps: pipelines and orchestration  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m15/en" class data-astro-cid-khgtvzrl> M15 · Multi-agent: roles, communication, supervisor  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m16/en" class data-astro-cid-khgtvzrl> M16 · When multi-agent is overkill. Anti-patterns  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m17/en" class data-astro-cid-khgtvzrl> M17 · Production: deploying agents to live environments  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m18/en" class data-astro-cid-khgtvzrl> M18 · Security in prod: secrets, sandbox, audit  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m19/en" class data-astro-cid-khgtvzrl> M19 · Incidents &amp; post-mortems  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m20/en" class data-astro-cid-khgtvzrl> M20 · Finale: where to go after Middle  </a> </li> </ul>  </aside> <main class="reader-main" data-astro-cid-a7sruqtr> <div class="chapter-eyebrow" data-astro-cid-a7sruqtr> <span data-astro-cid-a7sruqtr>Middle Path · m2</span> <a class="lang-toggle" href="/vibesamurai-site/courses/middle/m2" aria-label="Switch to RU" data-astro-cid-a7sruqtr>RU</a> </div> <h1 class="chapter-title" data-astro-cid-a7sruqtr>M2 · Architecting agent boundaries</h1> <p class="chapter-subtitle" data-astro-cid-a7sruqtr>Inputs, outputs, success criteria. How to separate plan from action so the agent doesn&#39;t break the important things.</p> <h2 id="what-this-chapter-is-about">What this chapter is about</h2>
+<p>Hey folks, welcome 👋</p>
+<p>In M1 we agreed that an agent is a <strong>contributor</strong>, not a reference manual, and that the core of its work is the <strong>plan → act → evaluate</strong> cycle. That was the mental frame.</p>
+<p>Now we drop one level down — <strong>to engineering</strong>. When you launch an agent not “to play around” but for a real task in a real repo, four questions show up immediately:</p>
+<ol>
+<li>What exactly am I feeding it as input?</li>
+<li>What exactly do I want as output?</li>
+<li>How should the agent state its plan so I can verify it <strong>before</strong> action?</li>
+<li>Where and how do I install the stop-cord if things go wrong?</li>
+</ol>
+<p>The answers to these four questions <em>are</em> <strong>architecting boundaries</strong>. If you haven’t thought them through — it doesn’t matter how “smart” your agent is, the cycle will fall apart.</p>
+<p>In this chapter we walk through each of the four questions with concrete patterns, code, and examples of how it all fits into a production flow.</p>
+<h2 id="the-contract-inputs-outputs-success-criteria">The contract: inputs, outputs, success criteria</h2>
+<p>Any agent task is a <strong>contract</strong>. Not a request, not “help me,” not “let’s try” — a contract with three mandatory fields.</p>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>TASK CONTRACT</span></span>
+<span class="line"><span>├── INPUTS              — what the agent has at the start</span></span>
+<span class="line"><span>├── OUTPUTS             — what must exist when done</span></span>
+<span class="line"><span>└── SUCCESS CRITERION   — how we know the output is valid</span></span></code></pre>
+<h3 id="inputs">Inputs</h3>
+<p>This is <strong>the full set of what the agent sees</strong>: the repo, specific files, environment variables, API access, specific tools. Principle — <strong>least context, not most context</strong>: give the minimum sufficient for the task. Not “here’s the whole repo, figure it out,” but “here are these three files, this ticket, this spec.”</p>
+<p>Why minimum:</p>
+<ul>
+<li>Extra context = noise = more hallucinations</li>
+<li>Extra context = more tokens = more money</li>
+<li>Extra context = blurred responsibility (“it dug in the wrong place”)</li>
+</ul>
+<h3 id="outputs">Outputs</h3>
+<p>A concrete artifact. Not “an answer,” not “a solution,” but a <strong>physical thing</strong>: a file, a patch, a PR, a test case, a JSON. If you can’t sketch the structure of the output — the task isn’t ready for delegation.</p>
+<p>Bad: “help with authorization.”
+Good: “output — a patch on <code>auth/oauth.py</code> + a new test in <code>tests/test_oauth.py</code>, both committed to branch <code>feat/oauth-pkce</code>.”</p>
+<h3 id="success-criterion">Success criterion</h3>
+<p>The most often-skipped field. It’s a <strong>verifiable condition</strong> by which you decide “accept” or “rollback.” Not “works,” not “looks ok,” but a concrete test:</p>
+<ul>
+<li>All unit tests in <code>tests/</code> green</li>
+<li>Linter <code>ruff check</code> quiet</li>
+<li>Function <code>verify_pkce_challenge</code> with the stated signature exists in <code>auth/oauth.py</code></li>
+<li>Test coverage on the new function ≥ 80 %</li>
+</ul>
+<p>When the criterion is explicit, the agent gains the <strong>ability to say “didn’t work.”</strong> Without a criterion, the agent defaults to “done,” even if the result is garbage. Not because it lies, but because it has no measure.</p>
+<h2 id="plan--reasoning--action-separate-layers-not-one-cloth">Plan ↔ Reasoning ↔ Action: separate layers, not one cloth</h2>
+<p>Inside a single agent session three qualitatively different things happen:</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Layer</th><th>What it is</th><th>Who watches what</th></tr></thead><tbody><tr><td><strong>Reasoning</strong></td><td>Internal model deliberation, “why I think this way”</td><td>Mostly for debugging</td></tr><tr><td><strong>Plan</strong></td><td>A structured list of steps with verifiable items</td><td>The main review artifact</td></tr><tr><td><strong>Action</strong></td><td>A concrete tool call (write_file, run_bash, etc.)</td><td>The change trigger</td></tr></tbody></table>
+<p>When beginners work with an agent without separating these layers — everything is mashed into one stream of consciousness: “I’ll think — I’ll do — I’ll check — I’ll think again.” Result: you don’t know what happened and can’t stop the agent at “don’t do that.”</p>
+<p>When you split the layers — you get <strong>gates</strong> where stops are possible. Think of them as concentric trust rings: from what’s inside (the model’s reasoning) out to what’s outside (files, network, production) — each ring has an explicit check.</p>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="mermaid"><code><span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">flowchart LR</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    R[Reasoning&#x3C;br/>internal] --> G1{Gate 1&#x3C;br/>need a plan?}</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    G1 -->|yes| P[Plan&#x3C;br/>structured]</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    P --> G2{Gate 2&#x3C;br/>plan ok?}</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    G2 -->|approve| A[Action&#x3C;br/>file / cmd / net]</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    A --> G3{Gate 3&#x3C;br/>result&#x3C;br/>matches?}</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    G3 -->|ok| Next([Next iteration])</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    G3 -.-> P</span></span></code></pre>
+<p>At every gate a simple rule applies: <strong>the further from the centre, the more expensive the mistake.</strong> Fixing reasoning is cheap, an action on a file is more serious, an action against the network/prod is the most expensive. Architecturally you place control points from the inner ring outward, not the other way round.</p>
+<ul>
+<li><strong>Gate 1</strong> (after reasoning): is a plan needed or is the task trivial?</li>
+<li><strong>Gate 2</strong> (after plan): is the plan good, can we act?</li>
+<li><strong>Gate 3</strong> (after action): does the result match the criterion?</li>
+</ul>
+<p>In current agentic tools these gates are implemented differently:</p>
+<ul>
+<li><strong>Claude Code</strong> — <code>--permission-mode plan</code> (physical separation of plan from action), <code>--ask-before-each-tool-use</code> (gate before each action)</li>
+<li><strong>Cursor Composer</strong> — separate “Plan” and “Edit” modes; review changes before apply</li>
+<li><strong>Codex CLI</strong> — <code>--approval-mode suggest</code> vs <code>auto-edit</code> vs <code>full-auto</code></li>
+<li><strong>GitHub Copilot Workspace</strong> — separate Spec → Plan → Implementation steps with the ability to edit in between</li>
+</ul>
+<p>Critically: <strong>a tool where these layers aren’t separated isn’t an agentic tool</strong>, it’s autocomplete on steroids. Don’t use such tools for serious work.</p>
+<h2 id="structured-plan-output">Structured plan output</h2>
+<p>The plan must be <strong>structural</strong>, not free text. Otherwise you can’t validate it and you’ll “read into” every plan, losing 10 minutes per chapter.</p>
+<p>Minimum plan structure (which you can require from any current agent):</p>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="yaml"><code><span class="line"><span style="color:#8BE9FD;--shiki-dark:#8BE9FD">goal</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">:</span><span style="color:#E9F284;--shiki-dark:#E9F284"> "</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">Add PKCE to the OAuth flow</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span></span>
+<span class="line"><span style="color:#8BE9FD;--shiki-dark:#8BE9FD">context_inputs</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">:</span></span>
+<span class="line"><span style="color:#FF79C6;--shiki-dark:#FF79C6">  -</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C"> auth/oauth.py</span></span>
+<span class="line"><span style="color:#FF79C6;--shiki-dark:#FF79C6">  -</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C"> docs/spec-auth-v2.md</span></span>
+<span class="line"><span style="color:#8BE9FD;--shiki-dark:#8BE9FD">steps</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">:</span></span>
+<span class="line"><span style="color:#FF79C6;--shiki-dark:#FF79C6">  -</span><span style="color:#8BE9FD;--shiki-dark:#8BE9FD"> id</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">:</span><span style="color:#BD93F9;--shiki-dark:#BD93F9"> 1</span></span>
+<span class="line"><span style="color:#8BE9FD;--shiki-dark:#8BE9FD">    action</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">:</span><span style="color:#E9F284;--shiki-dark:#E9F284"> "</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">edit</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span></span>
+<span class="line"><span style="color:#8BE9FD;--shiki-dark:#8BE9FD">    target</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">:</span><span style="color:#E9F284;--shiki-dark:#E9F284"> "</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">auth/oauth.py</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span></span>
+<span class="line"><span style="color:#8BE9FD;--shiki-dark:#8BE9FD">    intent</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">:</span><span style="color:#E9F284;--shiki-dark:#E9F284"> "</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">Add a verify_pkce_challenge function</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span></span>
+<span class="line"><span style="color:#8BE9FD;--shiki-dark:#8BE9FD">    risk</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">:</span><span style="color:#E9F284;--shiki-dark:#E9F284"> "</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">low</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span></span>
+<span class="line"><span style="color:#8BE9FD;--shiki-dark:#8BE9FD">    rollback</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">:</span><span style="color:#E9F284;--shiki-dark:#E9F284"> "</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">git restore auth/oauth.py</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span></span>
+<span class="line"><span style="color:#FF79C6;--shiki-dark:#FF79C6">  -</span><span style="color:#8BE9FD;--shiki-dark:#8BE9FD"> id</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">:</span><span style="color:#BD93F9;--shiki-dark:#BD93F9"> 2</span></span>
+<span class="line"><span style="color:#8BE9FD;--shiki-dark:#8BE9FD">    action</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">:</span><span style="color:#E9F284;--shiki-dark:#E9F284"> "</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">create</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span></span>
+<span class="line"><span style="color:#8BE9FD;--shiki-dark:#8BE9FD">    target</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">:</span><span style="color:#E9F284;--shiki-dark:#E9F284"> "</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">tests/test_pkce.py</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span></span>
+<span class="line"><span style="color:#8BE9FD;--shiki-dark:#8BE9FD">    intent</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">:</span><span style="color:#E9F284;--shiki-dark:#E9F284"> "</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">Test for verify_pkce_challenge</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span></span>
+<span class="line"><span style="color:#8BE9FD;--shiki-dark:#8BE9FD">    risk</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">:</span><span style="color:#E9F284;--shiki-dark:#E9F284"> "</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">low</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span></span>
+<span class="line"><span style="color:#FF79C6;--shiki-dark:#FF79C6">  -</span><span style="color:#8BE9FD;--shiki-dark:#8BE9FD"> id</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">:</span><span style="color:#BD93F9;--shiki-dark:#BD93F9"> 3</span></span>
+<span class="line"><span style="color:#8BE9FD;--shiki-dark:#8BE9FD">    action</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">:</span><span style="color:#E9F284;--shiki-dark:#E9F284"> "</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">run</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span></span>
+<span class="line"><span style="color:#8BE9FD;--shiki-dark:#8BE9FD">    target</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">:</span><span style="color:#E9F284;--shiki-dark:#E9F284"> "</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">pytest tests/test_pkce.py</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span></span>
+<span class="line"><span style="color:#8BE9FD;--shiki-dark:#8BE9FD">    intent</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">:</span><span style="color:#E9F284;--shiki-dark:#E9F284"> "</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">Verification</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span></span>
+<span class="line"><span style="color:#8BE9FD;--shiki-dark:#8BE9FD">    risk</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">:</span><span style="color:#E9F284;--shiki-dark:#E9F284"> "</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">none</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span></span>
+<span class="line"><span style="color:#8BE9FD;--shiki-dark:#8BE9FD">success_criterion</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">:</span></span>
+<span class="line"><span style="color:#FF79C6;--shiki-dark:#FF79C6">  -</span><span style="color:#E9F284;--shiki-dark:#E9F284"> "</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">pytest -q exit code 0</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span></span>
+<span class="line"><span style="color:#FF79C6;--shiki-dark:#FF79C6">  -</span><span style="color:#E9F284;--shiki-dark:#E9F284"> "</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">ruff check exit code 0</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span></span>
+<span class="line"><span style="color:#FF79C6;--shiki-dark:#FF79C6">  -</span><span style="color:#E9F284;--shiki-dark:#E9F284"> "</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">coverage on auth/oauth.py >= 80%</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span></span>
+<span class="line"><span style="color:#8BE9FD;--shiki-dark:#8BE9FD">risks_and_mitigations</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">:</span></span>
+<span class="line"><span style="color:#FF79C6;--shiki-dark:#FF79C6">  -</span><span style="color:#8BE9FD;--shiki-dark:#8BE9FD"> risk</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">:</span><span style="color:#E9F284;--shiki-dark:#E9F284"> "</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">Refresh-token flow may break if the signature changes</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span></span>
+<span class="line"><span style="color:#8BE9FD;--shiki-dark:#8BE9FD">    mitigation</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">:</span><span style="color:#E9F284;--shiki-dark:#E9F284"> "</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">Before the change — run existing tests, confirm they pass</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span></span></code></pre>
+<p>Every step has:</p>
+<ul>
+<li><strong>action</strong> — a verb (edit, create, delete, run, search)</li>
+<li><strong>target</strong> — concrete file / command / artifact</li>
+<li><strong>intent</strong> — <em>why</em> this step (this field is for you, not for the agent)</li>
+<li><strong>risk</strong> — assessment (low / medium / high)</li>
+<li><strong>rollback</strong> — how to roll back (if risk ≥ medium — mandatory)</li>
+</ul>
+<p>When the plan is in YAML/JSON/markdown with clear structure — you spend 30 seconds checking a 10-step plan. When the plan is a paragraph of free text — you spend 5 minutes and still miss things.</p>
+<blockquote>
+<p><strong>Asking for such a plan is easy:</strong> add a phrase to the prompt: “Output the plan as structured YAML with fields: goal, context_inputs, steps (id/action/target/intent/risk/rollback), success_criterion, risks_and_mitigations. Do not execute anything until the plan is approved.”</p>
+</blockquote>
+<h2 id="validation-gates-where-to-install-the-stop-cord">Validation gates: where to install the stop-cord</h2>
+<p>Between phases there must be <strong>gates</strong> — check points. Minimum set:</p>
+<h3 id="gate-1--after-plan-before-action">Gate 1 — After plan, before action</h3>
+<p><strong>What we check:</strong></p>
+<ul>
+<li>Every step in the plan matches the original task (the agent didn’t “expand scope”)</li>
+<li>No <code>risk: high</code> steps without an explicit rollback</li>
+<li>Every target file is real (the agent didn’t invent a path)</li>
+<li>Success criterion is actually verifiable (not “works well”)</li>
+</ul>
+<p><strong>Who checks:</strong> you (or a senior on the team if the process is multi-party).</p>
+<h3 id="gate-2--after-every-risk-high-action">Gate 2 — After every <code>risk: high</code> action</h3>
+<p><strong>What we check:</strong></p>
+<ul>
+<li>The step result matches the intent</li>
+<li>Tests are still green (if they were green before)</li>
+<li>No unrelated files were touched</li>
+</ul>
+<p><strong>Who checks:</strong> you or CI.</p>
+<h3 id="gate-3--before-merge">Gate 3 — Before merge</h3>
+<p><strong>What we check:</strong></p>
+<ul>
+<li>All success criteria from the plan are satisfied</li>
+<li>The diff is reviewed (an agent PR is still a PR)</li>
+<li>No “bonus” changes outside the plan</li>
+</ul>
+<p><strong>Who checks:</strong> a human, mandatory.</p>
+<h3 id="gate-4--after-deploy">Gate 4 — After deploy</h3>
+<p><strong>What we check:</strong> observability shows the expected behaviour.</p>
+<p><strong>Who checks:</strong> at this level — monitoring. Details in M3.</p>
+<h2 id="anti-pattern-contract-after-the-fact">Anti-pattern: “contract after the fact”</h2>
+<p>The most common anti-pattern of middle developers when they first build a serious pipeline: they <strong>state the success criterion after the agent has already done everything</strong>.</p>
+<p>The logic goes: “well, let’s see how it turns out, then I’ll decide if it’s good.” This <strong>doesn’t work</strong>. Once you have a result, you subconsciously bend the criterion to fit it, because redoing the work is unappealing.</p>
+<p>The rule: <strong>success criterion is fixed before action and doesn’t change during.</strong> If you realised the criterion is bad — roll everything back, reformulate, start over. Don’t patch on the fly.</p>
+<p>That’s exactly the discipline without which Plan → Act → Evaluate turns into Plan → Improvise → Rationalize.</p>
+<h2 id="practice-build-the-contract-for-your-own-task">Practice: build the contract for your own task</h2>
+<p>Take a <strong>real</strong> task from your backlog that you’d like to delegate to an agent. Not a training task — one you were going to do this week anyway.</p>
+<p>Fill the contract by template:</p>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="yaml"><code><span class="line"><span style="color:#8BE9FD;--shiki-dark:#8BE9FD">inputs</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">:</span></span>
+<span class="line"><span style="color:#8BE9FD;--shiki-dark:#8BE9FD">  files</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">:</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2"> []</span></span>
+<span class="line"><span style="color:#8BE9FD;--shiki-dark:#8BE9FD">  docs</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">:</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2"> []</span></span>
+<span class="line"><span style="color:#8BE9FD;--shiki-dark:#8BE9FD">  envs</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">:</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2"> []</span></span>
+<span class="line"><span style="color:#8BE9FD;--shiki-dark:#8BE9FD">  tools_allowed</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">:</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2"> []</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#8BE9FD;--shiki-dark:#8BE9FD">outputs</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">:</span></span>
+<span class="line"><span style="color:#8BE9FD;--shiki-dark:#8BE9FD">  artifacts</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">:</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2"> []   </span><span style="color:#6272A4;--shiki-dark:#6272A4"># PR, files, test cases, JSON report — something measurable</span></span>
+<span class="line"><span style="color:#8BE9FD;--shiki-dark:#8BE9FD">  branch</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">:</span><span style="color:#E9F284;--shiki-dark:#E9F284"> ""</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#8BE9FD;--shiki-dark:#8BE9FD">success_criterion</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">:</span></span>
+<span class="line"><span style="color:#FF79C6;--shiki-dark:#FF79C6">  -</span><span style="color:#E9F284;--shiki-dark:#E9F284"> ""</span></span>
+<span class="line"><span style="color:#FF79C6;--shiki-dark:#FF79C6">  -</span><span style="color:#E9F284;--shiki-dark:#E9F284"> ""</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#8BE9FD;--shiki-dark:#8BE9FD">forbidden</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">:</span></span>
+<span class="line"><span style="color:#FF79C6;--shiki-dark:#FF79C6">  -</span><span style="color:#E9F284;--shiki-dark:#E9F284"> "</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">do not touch files outside inputs.files</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span></span>
+<span class="line"><span style="color:#FF79C6;--shiki-dark:#FF79C6">  -</span><span style="color:#E9F284;--shiki-dark:#E9F284"> "</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">do not run commands outside tools_allowed</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#8BE9FD;--shiki-dark:#8BE9FD">risks</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">:</span></span>
+<span class="line"><span style="color:#FF79C6;--shiki-dark:#FF79C6">  -</span><span style="color:#8BE9FD;--shiki-dark:#8BE9FD"> risk</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">:</span><span style="color:#E9F284;--shiki-dark:#E9F284"> ""</span></span>
+<span class="line"><span style="color:#8BE9FD;--shiki-dark:#8BE9FD">    mitigation</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">:</span><span style="color:#E9F284;--shiki-dark:#E9F284"> ""</span></span></code></pre>
+<p>If even one field doesn’t fill — the task is <strong>not ready to delegate</strong>. Go finish formulating it, don’t try to “explain it somehow.” That’s the most expensive mistake at this level.</p>
+<blockquote>
+<p><em>Pro tip:</em> you can ask the agent to <strong>help fill the contract</strong> before doing anything. So the first session is task formalisation, not execution. Sounds odd, saves hours.</p>
+</blockquote>
+<h2 id="recap">Recap</h2>
+<ul>
+<li><strong>Contract = inputs + outputs + success criterion.</strong> All three fields are mandatory, the criterion is fixed <em>before</em> action.</li>
+<li><strong>Three layers — reasoning, plan, action — must be separated</strong>, otherwise there are no points to stop at.</li>
+<li><strong>Plan structured</strong> (YAML/JSON), not free text. Fields: action, target, intent, risk, rollback.</li>
+<li><strong>Validation gates</strong> sit between phases. Minimum 4: after plan, after high-risk action, before merge, after deploy.</li>
+<li><strong>Anti-pattern “contract after the fact”</strong> — a success criterion set after the result always gets bent to fit it.</li>
+</ul>
+<h2 id="whats-next">What’s next</h2>
+<p>In <strong>M3 — Observability and human-in-the-loop</strong> we’ll talk about degrees of autonomy: where the agent acts alone, where it asks permission, what artifacts it has to leave so you can reconstruct what happened — without slowing velocity.</p>
+<p>If this clicked — share with your team, especially leads and folks running CI/agent pipelines. If you have specific patterns from your practice I haven’t covered — write in the course comments, your feedback really helps.</p>
+<h2 id="-further-reading">📚 Further reading</h2>
+<p>The chapter is technical, and many points hide behind other people’s patterns. To avoid theorising, keep a short list of primary sources on boundaries and sandboxes.</p>
+<p><strong>Boundaries and agent patterns</strong></p>
+<ul>
+<li><strong>Anthropic — “Building effective agents”</strong> — <a href="https://www.anthropic.com/research/building-effective-agents">anthropic.com/research/building-effective-agents</a>. The split workflows vs agents and why <code>prompt chaining</code> / <code>routing</code> / <code>gates</code> are separate patterns with different cost-of-error profiles. Right in our topic.</li>
+<li><strong>Anthropic — “Making Claude Code more secure and autonomous” (sandbox)</strong> — <a href="https://www.anthropic.com/engineering/claude-code-sandboxing">anthropic.com/engineering/claude-code-sandboxing</a>. How Anthropic slices the filesystem and network into separate rings; a good reference for how boundaries are implemented “at the big shops.”</li>
+</ul>
+<p><strong>Permission config in practice</strong></p>
+<ul>
+<li><strong>Claude Code — Configure permissions</strong> — <a href="https://code.claude.com/docs/en/permissions">code.claude.com/docs/en/permissions</a>. What fields <code>permissions</code> has (allow/deny/ask), how evaluation order works; everything in M4 sits on top of this.</li>
+</ul>
+<blockquote>
+<p><strong>Tip:</strong> don’t read all three in one go. The Anthropic article is strategy, the sandbox post is implementation, Claude Code docs are tactics. Peel layer by layer.</p>
+</blockquote>
+<hr>
+<p><strong>Maps to:</strong> GH-600 §1.2 — <em>Agent boundary architecture and contracts</em></p> <nav class="chapter-nav" data-astro-cid-a7sruqtr> <a href="/vibesamurai-site/courses/middle/m1/en" data-astro-cid-a7sruqtr> <span class="dir" data-astro-cid-a7sruqtr>← Back</span> <span class="title" data-astro-cid-a7sruqtr>M1 · What is agentic AI in the SDLC</span> </a> <a href="/vibesamurai-site/courses/middle/m3/en" data-astro-cid-a7sruqtr> <span class="dir" data-astro-cid-a7sruqtr>Next →</span> <span class="title" data-astro-cid-a7sruqtr>M3 · Observability and human-in-the-loop</span> </a> </nav> </main>  </div> <script type="module">
+    import { gatingEnabled } from '../lib/supabase';
+    import { fetchChapter } from '../lib/auth';
+
+    const base = import.meta.env.BASE_URL;
+    let mermaidLib = null;
+
+    function scopeOf(root) {
+      return root === document ? document.querySelector('.reader-main') : root;
+    }
+
+    function addCopyBtns(root) {
+      const scope = scopeOf(root); if (!scope) return;
+      scope.querySelectorAll('pre').forEach((pre) => {
+        if (pre.closest('.code-tabs')) return;
+        if (pre.querySelector('.copy-btn')) return;
+        const btn = document.createElement('button');
+        btn.className = 'copy-btn';
+        btn.textContent = 'copy';
+        btn.addEventListener('click', async () => {
+          const code = pre.querySelector('code')?.textContent ?? pre.textContent ?? '';
+          await navigator.clipboard.writeText(code.trimEnd());
+          btn.textContent = '✓ copied';
+          setTimeout(() => { btn.textContent = 'copy'; }, 1600);
+        });
+        pre.appendChild(btn);
+      });
+    }
+
+    function tightenMermaidSvgs(retries = 6) {
+      let pending = false;
+      document.querySelectorAll('.mermaid svg').forEach((svg) => {
+        if (svg.dataset.tightened === '1') return;
+        try {
+          const bbox = svg.getBBox();
+          if (!bbox || bbox.width === 0) { pending = true; return; }
+          const pad = 6;
+          svg.setAttribute('viewBox',
+            `${bbox.x - pad} ${bbox.y - pad} ${bbox.width + pad * 2} ${bbox.height + pad * 2}`);
+          svg.removeAttribute('height');
+          svg.style.height = 'auto';
+          svg.style.maxWidth = '100%';
+          svg.style.display = 'block';
+          svg.dataset.tightened = '1';
+        } catch (e) { pending = true; }
+      });
+      if (pending && retries > 0) setTimeout(() => tightenMermaidSvgs(retries - 1), 120);
+    }
+
+    async function ensureMermaid() {
+      if (mermaidLib) return mermaidLib;
+      const mod = await import('https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs');
+      mermaidLib = mod.default;
+      mermaidLib.initialize({
+        startOnLoad: false, theme: 'neutral',
+        themeVariables: {
+          fontFamily: 'JetBrains Mono, ui-monospace, monospace',
+          primaryColor: '#f5f5f5', primaryBorderColor: '#222',
+          primaryTextColor: '#111', lineColor: '#444',
+        },
+        flowchart: { curve: 'basis', padding: 12, useMaxWidth: true },
+      });
+      return mermaidLib;
+    }
+
+    async function renderMermaid(root) {
+      const scope = scopeOf(root); if (!scope) return;
+      const matches = scope.querySelectorAll(
+        'pre[data-language="mermaid"], pre.language-mermaid, code.language-mermaid'
+      );
+      if (!matches.length) return;
+      matches.forEach((el) => {
+        const block = el.tagName === 'CODE' ? el.closest('pre') || el : el;
+        const codeEl = block.querySelector('code') || block;
+        const wrap = document.createElement('div');
+        wrap.className = 'mermaid';
+        wrap.textContent = codeEl.textContent;
+        block.replaceWith(wrap);
+      });
+      try {
+        const m = await ensureMermaid();
+        await m.run();
+        tightenMermaidSvgs();
+      } catch (err) {
+        console.warn('mermaid failed', err);
+        document.querySelectorAll('.mermaid:not(:has(svg))').forEach((el) => { el.style.display = 'none'; });
+      }
+    }
+
+    async function enhance(root = document) {
+      addCopyBtns(root);
+      await renderMermaid(root);
+    }
+
+    function paywallHtml(required, needLogin) {
+      const label = { beginner: 'Beginner (300 ₽)', middle: 'Beginner + Middle (500 ₽)', all: 'Весь пакет (700 ₽)' }[required] || '';
+      return `<div class="paywall">
+        <div class="paywall-ic">🔒</div>
+        <h3>Эта глава — в платном доступе</h3>
+        <p>Нужен тариф: <strong>${label}</strong>. Доступ навсегда, без подписки.</p>
+        ${needLogin ? '<p>Войди через Google и оформи доступ — продолжишь с любого устройства.</p>' : ''}
+        <a class="paywall-btn" href="${base}pricing">Открыть доступ →</a>
+        <a class="paywall-link" href="${base}account">Войти / мой аккаунт</a>
+      </div>`;
+    }
+
+    async function gatedFlow(mount) {
+      const slug = mount.dataset.slug;
+      const required = mount.dataset.required || 'beginner';
+      mount.innerHTML = '<p class="gate-msg">Проверяем доступ…</p>';
+      const res = await fetchChapter(slug);
+      if (res.ok) {
+        mount.innerHTML = res.html;
+        await enhance(mount);
+      } else if (res.status === 401) {
+        mount.innerHTML = paywallHtml(required, true);
+      } else if (res.status === 402) {
+        mount.innerHTML = paywallHtml(res.requiredTier || required, false);
+      } else {
+        mount.innerHTML = '<p class="gate-msg">Не удалось загрузить главу. Обнови страницу.</p>';
+      }
+    }
+
+    const mount = document.getElementById('gated-mount');
+    if (mount && gatingEnabled) gatedFlow(mount);
+    else enhance(document);
+  </script> </body> </html>

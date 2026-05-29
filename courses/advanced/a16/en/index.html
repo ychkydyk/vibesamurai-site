@@ -1,0 +1,255 @@
+<!DOCTYPE html><html lang="en" data-astro-cid-a7sruqtr> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Custom MCP servers — Vibesamurai</title><meta name="description" content="When to write your own MCP, when to take someone else's. Security audit of a third-party node. Allow-list, brand-tokens and media-archive as MCPs."><meta property="og:title" content="Custom MCP servers"><meta property="og:type" content="article"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Inter:wght@300..800&family=JetBrains+Mono:wght@400..600&display=swap" rel="stylesheet"><link rel="stylesheet" href="/vibesamurai-site/_astro/_slug_.Cs4TX1wt.css">
+<style>.account-btn{display:inline-flex;align-items:center;gap:var(--space-2);font-family:var(--font-mono);font-size:var(--size-2);text-transform:uppercase;letter-spacing:.06em;padding:5px 10px;border:1px solid var(--rule);border-radius:999px;color:var(--text-soft);background:var(--surface);transition:border-color var(--d-fast),color var(--d-fast)}.account-btn:hover{border-color:var(--accent);color:var(--text)}.account-ic{width:18px;height:18px;display:grid;place-items:center;border-radius:50%;background:var(--accent);color:var(--accent-ink);font-weight:700;font-size:10px;line-height:1}.reader-rail .account-btn{padding:0;border:none;background:transparent}.reader-rail .account-label{display:none}.reader-rail .account-ic{width:32px;height:32px;font-size:13px}.rail-toggle{width:36px;height:36px;display:grid;place-items:center;background:var(--accent);border:1px solid var(--accent);border-radius:4px;cursor:pointer;transition:filter var(--d-fast),transform var(--d-fast);padding:0}.rail-toggle:hover{filter:brightness(1.08);transform:translateY(-1px)}.rail-toggle:active{transform:translateY(0)}.rail-toggle-icon{width:14px;height:12px;border-left:2px solid var(--accent-ink);border-right:2px solid var(--accent-ink);transition:transform var(--d-normal) var(--ease-standard)}.reader-app.sidebar-open .rail-toggle-icon{transform:rotate(0)}.reader-app:not(.sidebar-open) .rail-toggle-icon{transform:scaleX(.5)}.sidebar-backdrop{display:none;position:fixed;inset:0;background:#0000008c;z-index:140;border:0;padding:0;cursor:pointer}@media(max-width:900px){.reader-app.sidebar-open~.sidebar-backdrop{display:block}}.rail-spacer[data-astro-cid-ofsbkzh7]{flex:1}.reader-sidebar[data-astro-cid-khgtvzrl] .ru-tag[data-astro-cid-khgtvzrl]{font-style:normal;font-family:var(--font-mono);font-size:.7em;color:var(--text-mute);margin-left:4px;padding:1px 4px;border:1px solid var(--rule);border-radius:3px;text-transform:uppercase;vertical-align:middle}.chapter-eyebrow[data-astro-cid-a7sruqtr]{display:flex;justify-content:space-between;align-items:center;gap:var(--space-3)}.lang-toggle[data-astro-cid-a7sruqtr]{font-family:var(--font-mono);font-size:var(--size-2);padding:2px 8px;border:1px solid var(--rule);border-radius:4px;color:var(--text-mute);text-decoration:none;text-transform:uppercase;letter-spacing:.08em}.lang-toggle[data-astro-cid-a7sruqtr]:hover{color:var(--accent);border-color:var(--accent)}.code-tabs[data-astro-cid-hg66rjob]{margin:var(--space-5) 0}.code-tabs-nav[data-astro-cid-hg66rjob]{display:flex;gap:2px;margin-bottom:-1px;position:relative;z-index:1}.ctab[data-astro-cid-hg66rjob]{font-family:var(--font-mono);font-size:11px;text-transform:uppercase;letter-spacing:.07em;padding:5px 14px;border:1px solid #21222c;border-bottom:none;background:#1a1b23;color:#6272a4;cursor:pointer;border-radius:4px 4px 0 0;transition:color .12s,background .12s}.ctab[data-astro-cid-hg66rjob].is-active{background:#282a36;color:#f8f8f2;border-color:#21222c}.ctab[data-astro-cid-hg66rjob]:hover:not(.is-active){color:#cdd6f4}.ctab-panel[data-astro-cid-hg66rjob]{display:none}.ctab-panel[data-astro-cid-hg66rjob].is-active{display:block}.ctab-panel[data-astro-cid-hg66rjob] pre{margin-top:0!important;border-radius:0 6px 6px!important}
+</style></head> <body data-astro-cid-a7sruqtr> <div class="reader-app" data-astro-cid-a7sruqtr> <aside class="reader-rail" data-astro-cid-ofsbkzh7> <a href="/vibesamurai-site/" class="logo" aria-label="Vibesamurai home" data-astro-cid-ofsbkzh7>V</a> <button type="button" class="rail-toggle" id="sidebar-toggle" aria-label="Свернуть/развернуть оглавление" title="Свернуть/развернуть оглавление" data-astro-cid-ofsbkzh7> <span class="rail-toggle-icon" aria-hidden="true" data-astro-cid-ofsbkzh7></span> </button> <div class="rail-spacer" data-astro-cid-ofsbkzh7></div> <a href="/vibesamurai-site/account" class="account-btn" id="account-btn" aria-label="Аккаунт"> <span class="account-ic" id="account-ic">⌂</span> <span class="account-label" id="account-label">Войти</span> </a>  <script type="module" src="/vibesamurai-site/_astro/AccountButton.astro_astro_type_script_index_0_lang.CmD2sdn9.js"></script> </aside>  <button type="button" class="sidebar-backdrop" id="sidebar-backdrop" aria-label="Закрыть оглавление" tabindex="-1" data-astro-cid-ofsbkzh7></button>  <script type="module">const d="vs-sidebar-open",a="(max-width: 900px)";function t(e){const n=document.querySelector(".reader-app");n&&n.classList.toggle("sidebar-open",e)}function r(){return!window.matchMedia(a).matches}function s(){const e=localStorage.getItem(d),i=window.matchMedia(a).matches?!1:e!==null?e==="1":r();t(i),document.getElementById("sidebar-toggle")?.addEventListener("click",()=>{const c=!document.querySelector(".reader-app")?.classList.contains("sidebar-open");window.matchMedia(a).matches||localStorage.setItem(d,c?"1":"0"),t(c)}),document.getElementById("sidebar-backdrop")?.addEventListener("click",()=>t(!1)),document.querySelectorAll(".reader-sidebar a").forEach(o=>{o.addEventListener("click",()=>{window.matchMedia(a).matches&&t(!1)})})}document.readyState==="loading"?document.addEventListener("DOMContentLoaded",s):s();</script> <aside class="reader-sidebar" data-astro-cid-khgtvzrl> <div class="breadcrumb" data-astro-cid-khgtvzrl>Vibesamurai · Advanced Path · A16</div> <h4 data-astro-cid-khgtvzrl>In this course</h4> <ul data-astro-cid-khgtvzrl> <li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a1/en" class data-astro-cid-khgtvzrl> A1 · AI studio stack — May 2026  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a2/en" class data-astro-cid-khgtvzrl> A2 · Multi-modal pipeline architecture  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a3/en" class data-astro-cid-khgtvzrl> A3 · Local vs Cloud matrix  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a4/en" class data-astro-cid-khgtvzrl> A4 · Design system as a contract  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a5/en" class data-astro-cid-khgtvzrl> A5 · Image generation for a brand  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a6/en" class data-astro-cid-khgtvzrl> A6 · Marketplace + product photoshoot  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a7/en" class data-astro-cid-khgtvzrl> A7 · Video generation pipelines  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a8/en" class data-astro-cid-khgtvzrl> A8 · Identity-preserving generation  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a9/en" class data-astro-cid-khgtvzrl> A9 · TouchDesigner + StreamDiffusion  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a10/en" class data-astro-cid-khgtvzrl> A10 · Audio-reactive AV installations  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a11/en" class data-astro-cid-khgtvzrl> A11 · Interactive booths: STT+LLM+TTS+CV  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a12/en" class data-astro-cid-khgtvzrl> A12 · Telemetry → control loop  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a13/en" class data-astro-cid-khgtvzrl> A13 · Private RAG for an archive  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a14/en" class data-astro-cid-khgtvzrl> A14 · Local LLMs on 8GB VRAM  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a15/en" class data-astro-cid-khgtvzrl> A15 · RunPod Flash + vLLM  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a16/en" class="current" data-astro-cid-khgtvzrl> A16 · Custom MCP servers  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a17/en" class data-astro-cid-khgtvzrl> A17 · Token economics across modalities  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a18/en" class data-astro-cid-khgtvzrl> A18 · Eval for creative output  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a19/en" class data-astro-cid-khgtvzrl> A19 · Security in a creative studio  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a20/en" class data-astro-cid-khgtvzrl> A20 · Capstone: launching the studio  </a> </li> </ul>  </aside> <main class="reader-main" data-astro-cid-a7sruqtr> <div class="chapter-eyebrow" data-astro-cid-a7sruqtr> <span data-astro-cid-a7sruqtr>Advanced Path · a16</span> <a class="lang-toggle" href="/vibesamurai-site/courses/advanced/a16" aria-label="Switch to RU" data-astro-cid-a7sruqtr>RU</a> </div> <h1 class="chapter-title" data-astro-cid-a7sruqtr>A16 · Custom MCP servers</h1> <p class="chapter-subtitle" data-astro-cid-a7sruqtr>When to write your own MCP, when to take someone else&#39;s. Security audit of a third-party node. Allow-list, brand-tokens and media-archive as MCPs.</p> <h2 id="what-were-building">What we’re building</h2>
+<p>Your own MCP (Model Context Protocol) server that exposes a studio-specific resource as an agent tool: brand tokens, media archive, generation queue, telemetry. Plus a method for safely installing third-party MCPs.</p>
+<p>Middle (M5) covered the MCP basics. Advanced is about applied use and safety stuff on a real stack.</p>
+<h2 id="protocol-state-may-2026">Protocol state (May 2026)</h2>
+<p>The current MCP spec is <strong>2025-11-25</strong> (under the Linux Foundation Agentic AI). Since <code>spec 2025-03-26</code> the recommended remote transport is <strong>Streamable HTTP</strong> (replaced SSE). Local servers still run over stdio.</p>
+<p>Python SDK: <code>pip install mcp</code>. Primary framework — <strong>FastMCP</strong> with <code>@tool</code> / <code>@resource</code> / <code>@prompt</code> decorators.</p>
+<h2 id="when-to-write-your-own-mcp">When to write your own MCP</h2>
+<p>Custom MCP is justified when:</p>
+<ol>
+<li><strong>The resource is unique to your studio</strong> — custom brand tokens, project layout, local indexes.</li>
+<li><strong>An action is safer wrapped than left as a bash script</strong> — the agent shouldn’t see <code>rm -rf</code>, the agent should see <code>delete_artifact(id)</code>.</li>
+<li><strong>Audience is broader than one project</strong> — reused across all studio projects (brand MCP, archive MCP).</li>
+<li><strong>The off-the-shelf MCP doesn’t cover an edge case</strong> — a thin wrapper is cheaper than forking someone else’s server.</li>
+</ol>
+<p>Not justified if a shell command via bash-tool with permissions handles it.</p>
+<h2 id="minimum-mcp-server-fastmcp">Minimum MCP server (FastMCP)</h2>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="python"><code><span class="line"><span style="color:#6272A4;--shiki-dark:#6272A4"># mcp_brand_tokens/server.py</span></span>
+<span class="line"><span style="color:#FF79C6;--shiki-dark:#FF79C6">from</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2"> mcp.server.fastmcp </span><span style="color:#FF79C6;--shiki-dark:#FF79C6">import</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2"> FastMCP</span></span>
+<span class="line"><span style="color:#FF79C6;--shiki-dark:#FF79C6">from</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2"> pathlib </span><span style="color:#FF79C6;--shiki-dark:#FF79C6">import</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2"> Path</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">mcp </span><span style="color:#FF79C6;--shiki-dark:#FF79C6">=</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2"> FastMCP(</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">brand-tokens</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">)</span></span>
+<span class="line"><span style="color:#BD93F9;--shiki-dark:#BD93F9">TOKENS_DIR</span><span style="color:#FF79C6;--shiki-dark:#FF79C6"> =</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2"> Path(</span><span style="color:#BD93F9;--shiki-dark:#BD93F9">__file__</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">).parent.parent </span><span style="color:#FF79C6;--shiki-dark:#FF79C6">/</span><span style="color:#E9F284;--shiki-dark:#E9F284"> "</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">brands</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#50FA7B;--shiki-dark:#50FA7B">@mcp.tool</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">()</span></span>
+<span class="line"><span style="color:#FF79C6;--shiki-dark:#FF79C6">def</span><span style="color:#50FA7B;--shiki-dark:#50FA7B"> list_brands</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">() </span><span style="color:#FF79C6;--shiki-dark:#FF79C6">-></span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2"> list[</span><span style="color:#8BE9FD;--shiki-light-font-style:italic;--shiki-dark:#8BE9FD;--shiki-dark-font-style:italic">str</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">]:</span></span>
+<span class="line"><span style="color:#6272A4;--shiki-dark:#6272A4">    """List available brands."""</span></span>
+<span class="line"><span style="color:#FF79C6;--shiki-dark:#FF79C6">    return</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2"> [p.stem </span><span style="color:#FF79C6;--shiki-dark:#FF79C6">for</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2"> p </span><span style="color:#FF79C6;--shiki-dark:#FF79C6">in</span><span style="color:#BD93F9;--shiki-dark:#BD93F9"> TOKENS_DIR</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">.glob(</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">*.json</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">)]</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#50FA7B;--shiki-dark:#50FA7B">@mcp.tool</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">()</span></span>
+<span class="line"><span style="color:#FF79C6;--shiki-dark:#FF79C6">def</span><span style="color:#50FA7B;--shiki-dark:#50FA7B"> get_brand</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">(</span><span style="color:#FFB86C;--shiki-light-font-style:italic;--shiki-dark:#FFB86C;--shiki-dark-font-style:italic">brand</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">:</span><span style="color:#8BE9FD;--shiki-light-font-style:italic;--shiki-dark:#8BE9FD;--shiki-dark-font-style:italic"> str</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">) </span><span style="color:#FF79C6;--shiki-dark:#FF79C6">-></span><span style="color:#8BE9FD;--shiki-light-font-style:italic;--shiki-dark:#8BE9FD;--shiki-dark-font-style:italic"> str</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">:</span></span>
+<span class="line"><span style="color:#6272A4;--shiki-dark:#6272A4">    """Return JSON brand tokens for the given brand name."""</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    path </span><span style="color:#FF79C6;--shiki-dark:#FF79C6">=</span><span style="color:#BD93F9;--shiki-dark:#BD93F9"> TOKENS_DIR</span><span style="color:#FF79C6;--shiki-dark:#FF79C6"> /</span><span style="color:#FF79C6;--shiki-dark:#FF79C6"> f</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">"</span><span style="color:#BD93F9;--shiki-dark:#BD93F9">{</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">brand</span><span style="color:#BD93F9;--shiki-dark:#BD93F9">}</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">.json"</span></span>
+<span class="line"><span style="color:#FF79C6;--shiki-dark:#FF79C6">    if</span><span style="color:#FF79C6;--shiki-dark:#FF79C6"> not</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2"> path.exists():</span></span>
+<span class="line"><span style="color:#FF79C6;--shiki-dark:#FF79C6">        return</span><span style="color:#FF79C6;--shiki-dark:#FF79C6"> f</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">"brand </span><span style="color:#BD93F9;--shiki-dark:#BD93F9">{</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">brand</span><span style="color:#BD93F9;--shiki-dark:#BD93F9">}</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C"> not found"</span></span>
+<span class="line"><span style="color:#FF79C6;--shiki-dark:#FF79C6">    return</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2"> path.read_text()</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#FF79C6;--shiki-dark:#FF79C6">if</span><span style="color:#BD93F9;--shiki-dark:#BD93F9"> __name__</span><span style="color:#FF79C6;--shiki-dark:#FF79C6"> ==</span><span style="color:#E9F284;--shiki-dark:#E9F284"> "</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">__main__</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">:</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    mcp.run(</span><span style="color:#FFB86C;--shiki-light-font-style:italic;--shiki-dark:#FFB86C;--shiki-dark-font-style:italic">transport</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">=</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">stdio</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">)</span></span></code></pre>
+<p>15 lines instead of hand-registering <code>list_tools</code> / <code>call_tool</code>. FastMCP builds the JSON schema from type hints and the docstring.</p>
+<p>Registration in <code>~/.claude.json</code>:</p>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="json"><code><span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">{</span></span>
+<span class="line"><span style="color:#8BE9FE;--shiki-dark:#8BE9FE">  "</span><span style="color:#8BE9FD;--shiki-dark:#8BE9FD">mcpServers</span><span style="color:#8BE9FE;--shiki-dark:#8BE9FE">"</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">:</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2"> {</span></span>
+<span class="line"><span style="color:#8BE9FE;--shiki-dark:#8BE9FE">    "</span><span style="color:#8BE9FD;--shiki-dark:#8BE9FD">brand-tokens</span><span style="color:#8BE9FE;--shiki-dark:#8BE9FE">"</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">:</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2"> {</span></span>
+<span class="line"><span style="color:#8BE9FE;--shiki-dark:#8BE9FE">      "</span><span style="color:#8BE9FD;--shiki-dark:#8BE9FD">command</span><span style="color:#8BE9FE;--shiki-dark:#8BE9FE">"</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">:</span><span style="color:#E9F284;--shiki-dark:#E9F284"> "</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">python</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">,</span></span>
+<span class="line"><span style="color:#8BE9FE;--shiki-dark:#8BE9FE">      "</span><span style="color:#8BE9FD;--shiki-dark:#8BE9FD">args</span><span style="color:#8BE9FE;--shiki-dark:#8BE9FE">"</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">:</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2"> [</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">-m</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">, </span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">mcp_brand_tokens.server</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">]</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    }</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">  }</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">}</span></span></code></pre>
+<p>Rule (memory <code>feedback_mcp_panel_sync</code>): on any change to <code>mcpServers</code> in <code>~/.claude.json</code>, synchronously update <code>C:\Claude\mcp-admin\mcps.json</code> — that’s the control panel.</p>
+<h2 id="security-audit-for-a-third-party-mcp">Security audit for a third-party MCP</h2>
+<p>The main rule (memory <code>feedback_comfyui_node_security</code>): <strong>before installing any third-party MCP / custom node</strong> — a mandatory check:</p>
+<ol>
+<li><strong>GitHub link to the source</strong>. Not “tried it, it worked,” but a concrete repo.</li>
+<li><strong>Code audit</strong>:
+<ul>
+<li>network calls (what’s sent outside);</li>
+<li>reads from <code>.env</code> / <code>~/.ssh</code> / <code>Documents</code>;</li>
+<li>eval/exec/subprocess on user input;</li>
+<li>persistent processes (cron, scheduled tasks);</li>
+<li>hooks/install scripts (what runs at install time);</li>
+<li>transitive dependencies.</li>
+</ul>
+</li>
+<li><strong>Explicit “yes” from the user</strong>. Not “I see a green logo, fine.”</li>
+</ol>
+<p>For skills additionally (<code>feedback_skill_install_no_y</code>, <code>feedback_skill_install_audit</code>):</p>
+<ul>
+<li><code>npx skills add</code> always <strong>without</strong> <code>-y</code>, manual confirmation;</li>
+<li>read <code>SKILL.md</code> in full — look for hidden directives, exfiltration, zero-width chars, transitive installers.</li>
+</ul>
+<p>These rules save you from incidents that would otherwise pile up.</p>
+<h2 id="allow-list">Allow-list</h2>
+<p>After installing an MCP — explicitly allow only the needed tools:</p>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="json"><code><span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">{</span></span>
+<span class="line"><span style="color:#8BE9FE;--shiki-dark:#8BE9FE">  "</span><span style="color:#8BE9FD;--shiki-dark:#8BE9FD">permissions</span><span style="color:#8BE9FE;--shiki-dark:#8BE9FE">"</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">:</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2"> {</span></span>
+<span class="line"><span style="color:#8BE9FE;--shiki-dark:#8BE9FE">    "</span><span style="color:#8BE9FD;--shiki-dark:#8BE9FD">allow</span><span style="color:#8BE9FE;--shiki-dark:#8BE9FE">"</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">:</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2"> [</span></span>
+<span class="line"><span style="color:#E9F284;--shiki-dark:#E9F284">      "</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">mcp:brand-tokens:get_brand</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">,</span></span>
+<span class="line"><span style="color:#E9F284;--shiki-dark:#E9F284">      "</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">mcp:brand-tokens:list_brands</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    ],</span></span>
+<span class="line"><span style="color:#8BE9FE;--shiki-dark:#8BE9FE">    "</span><span style="color:#8BE9FD;--shiki-dark:#8BE9FD">deny</span><span style="color:#8BE9FE;--shiki-dark:#8BE9FE">"</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">:</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2"> [</span></span>
+<span class="line"><span style="color:#E9F284;--shiki-dark:#E9F284">      "</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">mcp:brand-tokens:write_*</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    ]</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">  }</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">}</span></span></code></pre>
+<p>Allow-list, not “everything allowed.” This is a Middle rule (M4 — Tool inventory &#x26; permissions), but studios slack on it for their own MCPs in particular. Don’t.</p>
+<h2 id="real-case-mcp-admin-panel">Real case: MCP admin panel</h2>
+<p>From memory <code>project_mcp_setup</code>: 5 active MCPs (fs, playwright, github, comfyui, davinci) + the panel at <code>C:\Claude\mcp-admin\</code> + <code>GUIDE.md</code>.</p>
+<p>Architecture:</p>
+<ul>
+<li><code>mcps.json</code> — single source of truth for installed MCPs;</li>
+<li><code>~/.claude.json</code> — synced from <code>mcps.json</code>;</li>
+<li><code>GUIDE.md</code> — what for, how to enable/disable;</li>
+<li><code>security_monitor</code> (background PS monitor at <code>C:\Claude\security_monitor\</code>) — watches <code>~/.claude.json</code>, alerts when something appears outside the panel.</li>
+</ul>
+<p>The MCP admin is the “single console” for the agent’s tooling. Without it, three months later you have 15 MCP servers and no idea what they do.</p>
+<h2 id="mcp-for-a-media-archive">MCP for a media archive</h2>
+<p>From archive production (see A13): MCP <code>archive-search</code> wraps the RAG stack and gives the agent a single tool <code>search(query: str, k: int)</code>. The agent doesn’t know about BGE-M3, LanceDB, the reranker — those are implementation details.</p>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="python"><code><span class="line"><span style="color:#50FA7B;--shiki-dark:#50FA7B">@mcp.tool</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">()</span></span>
+<span class="line"><span style="color:#FF79C6;--shiki-dark:#FF79C6">def</span><span style="color:#50FA7B;--shiki-dark:#50FA7B"> search</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">(</span><span style="color:#FFB86C;--shiki-light-font-style:italic;--shiki-dark:#FFB86C;--shiki-dark-font-style:italic">query</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">:</span><span style="color:#8BE9FD;--shiki-light-font-style:italic;--shiki-dark:#8BE9FD;--shiki-dark-font-style:italic"> str</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">, </span><span style="color:#FFB86C;--shiki-light-font-style:italic;--shiki-dark:#FFB86C;--shiki-dark-font-style:italic">k</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">:</span><span style="color:#8BE9FD;--shiki-light-font-style:italic;--shiki-dark:#8BE9FD;--shiki-dark-font-style:italic"> int</span><span style="color:#FF79C6;--shiki-dark:#FF79C6"> =</span><span style="color:#BD93F9;--shiki-dark:#BD93F9"> 5</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">) </span><span style="color:#FF79C6;--shiki-dark:#FF79C6">-></span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2"> list[</span><span style="color:#8BE9FD;--shiki-light-font-style:italic;--shiki-dark:#8BE9FD;--shiki-dark-font-style:italic">dict</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">]:</span></span>
+<span class="line"><span style="color:#6272A4;--shiki-dark:#6272A4">    """Search the private archive (TG, files, audio).</span></span>
+<span class="line"><span style="color:#6272A4;--shiki-dark:#6272A4">    Returns top-k fragments with sources."""</span></span>
+<span class="line"><span style="color:#FF79C6;--shiki-dark:#FF79C6">    return</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2"> rag_query(query, </span><span style="color:#FFB86C;--shiki-light-font-style:italic;--shiki-dark:#FFB86C;--shiki-dark-font-style:italic">k</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">=</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">k)</span></span></code></pre>
+<p>Advantage over raw-RAG: the agent doesn’t leak extra data (only top-k reaches the context); the agent doesn’t get confused about embedder parameters.</p>
+<h2 id="pitfalls">Pitfalls</h2>
+<ul>
+<li><strong>“Installed an MCP without looking”</strong> — the most common supply-chain channel. Apply the security audit strictly.</li>
+<li><strong><code>~/.claude.json</code> out of sync with the admin</strong> — you forgot to update <code>mcps.json</code>, a month later it’s unclear what’s wired.</li>
+<li><strong>MCP without allow-list</strong> — every one of its tools is reachable by the agent. At minimum, deny-list destructive operations.</li>
+<li><strong>Heavy MCP at every startup</strong> — if an MCP takes 3 s to start, the agent waits for it on every session. Long-running MCPs are separate daemons.</li>
+<li><strong>MCP logging on, secrets in logs</strong> — the default logger writes tool-call arguments. Mask sensitive fields.</li>
+</ul>
+<h2 id="recap">Recap</h2>
+<ul>
+<li>Custom MCP — for unique studio resources and for wrapping dangerous commands.</li>
+<li>Minimum MCP server with FastMCP — 15 lines of Python.</li>
+<li>Security audit for a third-party MCP is mandatory (GitHub link → code audit → explicit yes).</li>
+<li>Allow-list, not “everything allowed.”</li>
+<li>MCP admin + security_monitor — a single control console.</li>
+<li>MCP over RAG — hides implementation and limits leakage.</li>
+</ul>
+<h2 id="further-reading">Further reading</h2>
+<ul>
+<li><strong>Model Context Protocol — Spec 2025-11-25</strong> — <a href="https://modelcontextprotocol.io/specification/2025-11-25">modelcontextprotocol.io/specification/2025-11-25</a>. Current spec and the Streamable HTTP transport.</li>
+<li><strong>MCP Python SDK</strong> — <a href="https://github.com/modelcontextprotocol/python-sdk">github.com/modelcontextprotocol/python-sdk</a>. Official SDK with FastMCP framework.</li>
+<li><strong>MCP server examples</strong> — <a href="https://github.com/modelcontextprotocol/servers">github.com/modelcontextprotocol/servers</a>. Reference servers (fs, github, sqlite, etc.).</li>
+<li><strong>Memory: project_mcp_setup</strong> — real configuration of the studio MCP stack with the admin panel.</li>
+</ul> <nav class="chapter-nav" data-astro-cid-a7sruqtr> <a href="/vibesamurai-site/courses/advanced/a15/en" data-astro-cid-a7sruqtr> <span class="dir" data-astro-cid-a7sruqtr>← Back</span> <span class="title" data-astro-cid-a7sruqtr>A15 · RunPod Flash + vLLM</span> </a> <a href="/vibesamurai-site/courses/advanced/a17/en" data-astro-cid-a7sruqtr> <span class="dir" data-astro-cid-a7sruqtr>Next →</span> <span class="title" data-astro-cid-a7sruqtr>A17 · Token economics across modalities</span> </a> </nav> </main>  </div> <script type="module">
+    import { gatingEnabled } from '../lib/supabase';
+    import { fetchChapter } from '../lib/auth';
+
+    const base = import.meta.env.BASE_URL;
+    let mermaidLib = null;
+
+    function scopeOf(root) {
+      return root === document ? document.querySelector('.reader-main') : root;
+    }
+
+    function addCopyBtns(root) {
+      const scope = scopeOf(root); if (!scope) return;
+      scope.querySelectorAll('pre').forEach((pre) => {
+        if (pre.closest('.code-tabs')) return;
+        if (pre.querySelector('.copy-btn')) return;
+        const btn = document.createElement('button');
+        btn.className = 'copy-btn';
+        btn.textContent = 'copy';
+        btn.addEventListener('click', async () => {
+          const code = pre.querySelector('code')?.textContent ?? pre.textContent ?? '';
+          await navigator.clipboard.writeText(code.trimEnd());
+          btn.textContent = '✓ copied';
+          setTimeout(() => { btn.textContent = 'copy'; }, 1600);
+        });
+        pre.appendChild(btn);
+      });
+    }
+
+    function tightenMermaidSvgs(retries = 6) {
+      let pending = false;
+      document.querySelectorAll('.mermaid svg').forEach((svg) => {
+        if (svg.dataset.tightened === '1') return;
+        try {
+          const bbox = svg.getBBox();
+          if (!bbox || bbox.width === 0) { pending = true; return; }
+          const pad = 6;
+          svg.setAttribute('viewBox',
+            `${bbox.x - pad} ${bbox.y - pad} ${bbox.width + pad * 2} ${bbox.height + pad * 2}`);
+          svg.removeAttribute('height');
+          svg.style.height = 'auto';
+          svg.style.maxWidth = '100%';
+          svg.style.display = 'block';
+          svg.dataset.tightened = '1';
+        } catch (e) { pending = true; }
+      });
+      if (pending && retries > 0) setTimeout(() => tightenMermaidSvgs(retries - 1), 120);
+    }
+
+    async function ensureMermaid() {
+      if (mermaidLib) return mermaidLib;
+      const mod = await import('https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs');
+      mermaidLib = mod.default;
+      mermaidLib.initialize({
+        startOnLoad: false, theme: 'neutral',
+        themeVariables: {
+          fontFamily: 'JetBrains Mono, ui-monospace, monospace',
+          primaryColor: '#f5f5f5', primaryBorderColor: '#222',
+          primaryTextColor: '#111', lineColor: '#444',
+        },
+        flowchart: { curve: 'basis', padding: 12, useMaxWidth: true },
+      });
+      return mermaidLib;
+    }
+
+    async function renderMermaid(root) {
+      const scope = scopeOf(root); if (!scope) return;
+      const matches = scope.querySelectorAll(
+        'pre[data-language="mermaid"], pre.language-mermaid, code.language-mermaid'
+      );
+      if (!matches.length) return;
+      matches.forEach((el) => {
+        const block = el.tagName === 'CODE' ? el.closest('pre') || el : el;
+        const codeEl = block.querySelector('code') || block;
+        const wrap = document.createElement('div');
+        wrap.className = 'mermaid';
+        wrap.textContent = codeEl.textContent;
+        block.replaceWith(wrap);
+      });
+      try {
+        const m = await ensureMermaid();
+        await m.run();
+        tightenMermaidSvgs();
+      } catch (err) {
+        console.warn('mermaid failed', err);
+        document.querySelectorAll('.mermaid:not(:has(svg))').forEach((el) => { el.style.display = 'none'; });
+      }
+    }
+
+    async function enhance(root = document) {
+      addCopyBtns(root);
+      await renderMermaid(root);
+    }
+
+    function paywallHtml(required, needLogin) {
+      const label = { beginner: 'Beginner (300 ₽)', middle: 'Beginner + Middle (500 ₽)', all: 'Весь пакет (700 ₽)' }[required] || '';
+      return `<div class="paywall">
+        <div class="paywall-ic">🔒</div>
+        <h3>Эта глава — в платном доступе</h3>
+        <p>Нужен тариф: <strong>${label}</strong>. Доступ навсегда, без подписки.</p>
+        ${needLogin ? '<p>Войди через Google и оформи доступ — продолжишь с любого устройства.</p>' : ''}
+        <a class="paywall-btn" href="${base}pricing">Открыть доступ →</a>
+        <a class="paywall-link" href="${base}account">Войти / мой аккаунт</a>
+      </div>`;
+    }
+
+    async function gatedFlow(mount) {
+      const slug = mount.dataset.slug;
+      const required = mount.dataset.required || 'beginner';
+      mount.innerHTML = '<p class="gate-msg">Проверяем доступ…</p>';
+      const res = await fetchChapter(slug);
+      if (res.ok) {
+        mount.innerHTML = res.html;
+        await enhance(mount);
+      } else if (res.status === 401) {
+        mount.innerHTML = paywallHtml(required, true);
+      } else if (res.status === 402) {
+        mount.innerHTML = paywallHtml(res.requiredTier || required, false);
+      } else {
+        mount.innerHTML = '<p class="gate-msg">Не удалось загрузить главу. Обнови страницу.</p>';
+      }
+    }
+
+    const mount = document.getElementById('gated-mount');
+    if (mount && gatingEnabled) gatedFlow(mount);
+    else enhance(document);
+  </script> </body> </html>

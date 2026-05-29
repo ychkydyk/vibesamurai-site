@@ -1,0 +1,292 @@
+<!DOCTYPE html><html lang="en" data-astro-cid-a7sruqtr> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Building the first project (todo app) — Vibesamurai</title><meta name="description" content="End-to-end: empty folder → agent writes → we run → we fix. What to do when it doesn't work."><meta property="og:title" content="Building the first project (todo app)"><meta property="og:type" content="article"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Inter:wght@300..800&family=JetBrains+Mono:wght@400..600&display=swap" rel="stylesheet"><link rel="stylesheet" href="/vibesamurai-site/_astro/_slug_.Cs4TX1wt.css">
+<style>.account-btn{display:inline-flex;align-items:center;gap:var(--space-2);font-family:var(--font-mono);font-size:var(--size-2);text-transform:uppercase;letter-spacing:.06em;padding:5px 10px;border:1px solid var(--rule);border-radius:999px;color:var(--text-soft);background:var(--surface);transition:border-color var(--d-fast),color var(--d-fast)}.account-btn:hover{border-color:var(--accent);color:var(--text)}.account-ic{width:18px;height:18px;display:grid;place-items:center;border-radius:50%;background:var(--accent);color:var(--accent-ink);font-weight:700;font-size:10px;line-height:1}.reader-rail .account-btn{padding:0;border:none;background:transparent}.reader-rail .account-label{display:none}.reader-rail .account-ic{width:32px;height:32px;font-size:13px}.rail-toggle{width:36px;height:36px;display:grid;place-items:center;background:var(--accent);border:1px solid var(--accent);border-radius:4px;cursor:pointer;transition:filter var(--d-fast),transform var(--d-fast);padding:0}.rail-toggle:hover{filter:brightness(1.08);transform:translateY(-1px)}.rail-toggle:active{transform:translateY(0)}.rail-toggle-icon{width:14px;height:12px;border-left:2px solid var(--accent-ink);border-right:2px solid var(--accent-ink);transition:transform var(--d-normal) var(--ease-standard)}.reader-app.sidebar-open .rail-toggle-icon{transform:rotate(0)}.reader-app:not(.sidebar-open) .rail-toggle-icon{transform:scaleX(.5)}.sidebar-backdrop{display:none;position:fixed;inset:0;background:#0000008c;z-index:140;border:0;padding:0;cursor:pointer}@media(max-width:900px){.reader-app.sidebar-open~.sidebar-backdrop{display:block}}.rail-spacer[data-astro-cid-ofsbkzh7]{flex:1}.reader-sidebar[data-astro-cid-khgtvzrl] .ru-tag[data-astro-cid-khgtvzrl]{font-style:normal;font-family:var(--font-mono);font-size:.7em;color:var(--text-mute);margin-left:4px;padding:1px 4px;border:1px solid var(--rule);border-radius:3px;text-transform:uppercase;vertical-align:middle}.chapter-eyebrow[data-astro-cid-a7sruqtr]{display:flex;justify-content:space-between;align-items:center;gap:var(--space-3)}.lang-toggle[data-astro-cid-a7sruqtr]{font-family:var(--font-mono);font-size:var(--size-2);padding:2px 8px;border:1px solid var(--rule);border-radius:4px;color:var(--text-mute);text-decoration:none;text-transform:uppercase;letter-spacing:.08em}.lang-toggle[data-astro-cid-a7sruqtr]:hover{color:var(--accent);border-color:var(--accent)}.code-tabs[data-astro-cid-hg66rjob]{margin:var(--space-5) 0}.code-tabs-nav[data-astro-cid-hg66rjob]{display:flex;gap:2px;margin-bottom:-1px;position:relative;z-index:1}.ctab[data-astro-cid-hg66rjob]{font-family:var(--font-mono);font-size:11px;text-transform:uppercase;letter-spacing:.07em;padding:5px 14px;border:1px solid #21222c;border-bottom:none;background:#1a1b23;color:#6272a4;cursor:pointer;border-radius:4px 4px 0 0;transition:color .12s,background .12s}.ctab[data-astro-cid-hg66rjob].is-active{background:#282a36;color:#f8f8f2;border-color:#21222c}.ctab[data-astro-cid-hg66rjob]:hover:not(.is-active){color:#cdd6f4}.ctab-panel[data-astro-cid-hg66rjob]{display:none}.ctab-panel[data-astro-cid-hg66rjob].is-active{display:block}.ctab-panel[data-astro-cid-hg66rjob] pre{margin-top:0!important;border-radius:0 6px 6px!important}
+</style></head> <body data-astro-cid-a7sruqtr> <div class="reader-app" data-astro-cid-a7sruqtr> <aside class="reader-rail" data-astro-cid-ofsbkzh7> <a href="/vibesamurai-site/" class="logo" aria-label="Vibesamurai home" data-astro-cid-ofsbkzh7>V</a> <button type="button" class="rail-toggle" id="sidebar-toggle" aria-label="Свернуть/развернуть оглавление" title="Свернуть/развернуть оглавление" data-astro-cid-ofsbkzh7> <span class="rail-toggle-icon" aria-hidden="true" data-astro-cid-ofsbkzh7></span> </button> <div class="rail-spacer" data-astro-cid-ofsbkzh7></div> <a href="/vibesamurai-site/account" class="account-btn" id="account-btn" aria-label="Аккаунт"> <span class="account-ic" id="account-ic">⌂</span> <span class="account-label" id="account-label">Войти</span> </a>  <script type="module" src="/vibesamurai-site/_astro/AccountButton.astro_astro_type_script_index_0_lang.CmD2sdn9.js"></script> </aside>  <button type="button" class="sidebar-backdrop" id="sidebar-backdrop" aria-label="Закрыть оглавление" tabindex="-1" data-astro-cid-ofsbkzh7></button>  <script type="module">const d="vs-sidebar-open",a="(max-width: 900px)";function t(e){const n=document.querySelector(".reader-app");n&&n.classList.toggle("sidebar-open",e)}function r(){return!window.matchMedia(a).matches}function s(){const e=localStorage.getItem(d),i=window.matchMedia(a).matches?!1:e!==null?e==="1":r();t(i),document.getElementById("sidebar-toggle")?.addEventListener("click",()=>{const c=!document.querySelector(".reader-app")?.classList.contains("sidebar-open");window.matchMedia(a).matches||localStorage.setItem(d,c?"1":"0"),t(c)}),document.getElementById("sidebar-backdrop")?.addEventListener("click",()=>t(!1)),document.querySelectorAll(".reader-sidebar a").forEach(o=>{o.addEventListener("click",()=>{window.matchMedia(a).matches&&t(!1)})})}document.readyState==="loading"?document.addEventListener("DOMContentLoaded",s):s();</script> <aside class="reader-sidebar" data-astro-cid-khgtvzrl> <div class="breadcrumb" data-astro-cid-khgtvzrl>Vibesamurai · Beginner Path · B5</div> <h4 data-astro-cid-khgtvzrl>In this course</h4> <ul data-astro-cid-khgtvzrl> <li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b1/en" class data-astro-cid-khgtvzrl> B1 · What is an AI agent  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b2/en" class data-astro-cid-khgtvzrl> B2 · Installing your first AI agent  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b3/en" class data-astro-cid-khgtvzrl> B3 · First conversation  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b4/en" class data-astro-cid-khgtvzrl> B4 · What&#39;s a repo and why commit  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b5/en" class="current" data-astro-cid-khgtvzrl> B5 · Building the first project (todo app)  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b6/en" class data-astro-cid-khgtvzrl> B6 · Reading the code the agent wrote  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b7/en" class data-astro-cid-khgtvzrl> B7 · Security for beginners  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b8/en" class data-astro-cid-khgtvzrl> B8 · Cursor vs Claude Code vs Codex CLI  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b9/en" class data-astro-cid-khgtvzrl> B9 · Deploying the first project  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b10/en" class data-astro-cid-khgtvzrl> B10 · How to evaluate the agent&#39;s output  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b11/en" class data-astro-cid-khgtvzrl> B11 · Capstone: build your own tool  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b12/en" class data-astro-cid-khgtvzrl> B12 · Where to go next  </a> </li> </ul>  </aside> <main class="reader-main" data-astro-cid-a7sruqtr> <div class="chapter-eyebrow" data-astro-cid-a7sruqtr> <span data-astro-cid-a7sruqtr>Beginner Path · b5</span> <a class="lang-toggle" href="/vibesamurai-site/courses/beginner/b5" aria-label="Switch to RU" data-astro-cid-a7sruqtr>RU</a> </div> <h1 class="chapter-title" data-astro-cid-a7sruqtr>B5 · Building the first project (todo app)</h1> <p class="chapter-subtitle" data-astro-cid-a7sruqtr>End-to-end: empty folder → agent writes → we run → we fix. What to do when it doesn&#39;t work.</p> <h2 id="hook">Hook</h2>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>Before the chapter:        After the chapter:</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>Empty folder       →       my-todo/</span></span>
+<span class="line"><span>                           ├── index.html</span></span>
+<span class="line"><span>                           ├── style.css</span></span>
+<span class="line"><span>                           ├── app.js</span></span>
+<span class="line"><span>                           └── README.md</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>                           ↓ open in browser ↓</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>                           ✓ Buy coffee</span></span>
+<span class="line"><span>                           ✓ Finish the course</span></span>
+<span class="line"><span>                           ✓ Hug everyone</span></span>
+<span class="line"><span></span></span></code></pre>
+<p>Hey folks, welcome 👋</p>
+<p>Forty to sixty minutes and you have <strong>a real working todo app</strong> in the browser that you built with an agent, in a repo, with commits. The first moment in the course where the abstractions of B1–B4 become <strong>the full package</strong> — a concrete project that works.</p>
+<p>And — important — we do this <strong>without breaking the rules</strong>: “look, don’t touch” mode at the start, the B3 request formula, commit after each accepted edit. Not perfect, but actually works.</p>
+<h2 id="concept-end-to-end-agent-flow">Concept: end-to-end agent flow</h2>
+<p>Any project with an agent — any size — follows one pattern:</p>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>1. Setup            — folder + git init</span></span>
+<span class="line"><span>2. Brief            — what we want, by the B3 formula</span></span>
+<span class="line"><span>3. Plan (not code!) — ask the agent for a plan, read it</span></span>
+<span class="line"><span>4. First iteration  — agent builds the base</span></span>
+<span class="line"><span>5. Run              — open the result, take a look</span></span>
+<span class="line"><span>6. Edits            — say what to change</span></span>
+<span class="line"><span>7. Commit           — after every accepted edit</span></span>
+<span class="line"><span>8. Repeat 5-7       — until "done"</span></span></code></pre>
+<p>In this chapter we walk the whole pattern on a simple but <strong>real</strong> project: a browser todo app.</p>
+<p>On a napkin the loop looks like:</p>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="mermaid"><code><span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">flowchart LR</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    S([Setup&#x3C;br/>folder + git]) --> T[Brief&#x3C;br/>WHAT / WHERE / HOW WE KNOW]</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    T --> P[Agent writes the plan&#x3C;br/>you read]</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    P --> D[Agent acts&#x3C;br/>file diff]</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    D --> R[Run&#x3C;br/>verify in browser]</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    R -->|ok| C([Commit])</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    R -->|edits| E[Small edit&#x3C;br/>to the agent]</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    E --> D</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    C -.-> E</span></span></code></pre>
+<p>Inside one iteration — the three phases from B1 (plan → act → evaluate), and a commit turns “seems to work” into a rollback point you can always return to.</p>
+<h2 id="example-building-todo-with-the-agent">Example: building todo with the agent</h2>
+<h3 id="step-1-setup">Step 1. Setup</h3>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#50FA7B;--shiki-dark:#50FA7B">mkdir</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C"> my-todo</span></span>
+<span class="line"><span style="color:#8BE9FD;--shiki-dark:#8BE9FD">cd</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C"> my-todo</span></span>
+<span class="line"><span style="color:#50FA7B;--shiki-dark:#50FA7B">git</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C"> init</span></span></code></pre>
+<p>Open the agent:</p>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#50FA7B;--shiki-dark:#50FA7B">claude</span></span></code></pre>
+<h3 id="step-2-brief-by-the-b3-formula">Step 2. Brief (by the B3 formula)</h3>
+<p>In the Claude chat:</p>
+<blockquote>
+<p><strong>What:</strong> Build a simple browser todo app
+<strong>Where:</strong> Current empty folder
+<strong>How we know it’s done:</strong></p>
+<ul>
+<li>Open <code>index.html</code> in a browser → see the heading “My todo list,” an input field, an “Add” button, a list of tasks</li>
+<li>Added a task → it appears in the list</li>
+<li>Clicked a task → it strikes through as completed</li>
+<li>Reloaded the page → tasks persisted (localStorage)</li>
+</ul>
+<p><strong>Tech:</strong> plain HTML/CSS/JS, no libraries, all in one folder, no build step.
+<strong>Show the plan first</strong> before writing any code.</p>
+</blockquote>
+<p>That’s a <strong>typical brief</strong> for a starter project. Notice — five clear acceptance criteria. No “pretty,” no “convenient.” Concrete.</p>
+<h3 id="step-3-plan-not-code">Step 3. Plan (not code!)</h3>
+<p>The agent shows the plan — usually three or four files:</p>
+<ul>
+<li><code>index.html</code> — page structure</li>
+<li><code>style.css</code> — styling</li>
+<li><code>app.js</code> — logic</li>
+<li><code>README.md</code> — description</li>
+</ul>
+<p>Plus a step list: create HTML, add styles, implement logic, test. <strong>Read the plan.</strong> If you agree — “Good, go.” If you want to adjust — adjust now, not later.</p>
+<h3 id="step-4-first-iteration">Step 4. First iteration</h3>
+<p>The agent creates the files. In the terminal you can follow along:</p>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#50FA7B;--shiki-dark:#50FA7B">ls</span><span style="color:#6272A4;--shiki-dark:#6272A4">           # see new files</span></span>
+<span class="line"><span style="color:#50FA7B;--shiki-dark:#50FA7B">git</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C"> status</span><span style="color:#6272A4;--shiki-dark:#6272A4">   # see what's new</span></span></code></pre>
+<h3 id="step-5-run">Step 5. Run</h3>
+<p>Open <code>index.html</code> in a browser. macOS:</p>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#50FA7B;--shiki-dark:#50FA7B">open</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C"> index.html</span></span></code></pre>
+<p>Windows:</p>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#50FA7B;--shiki-dark:#50FA7B">start</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C"> index.html</span></span></code></pre>
+<p>Linux:</p>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#50FA7B;--shiki-dark:#50FA7B">xdg-open</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C"> index.html</span></span></code></pre>
+<p>Or just a double-click in the file manager.</p>
+<p>A page appears. Add a couple of tasks, click, reload.</p>
+<h3 id="step-6-something-off--edits">Step 6. Something off? — edits</h3>
+<p>Say it turned out:</p>
+<ul>
+<li>Font is small</li>
+<li>You want a ❌ button to delete tasks</li>
+<li>The “Add” button is in English, you want it in Russian</li>
+</ul>
+<p>Tell the agent:</p>
+<blockquote>
+<p>Good, it works. Three edits:</p>
+<ol>
+<li>Increase the font size to 18px for the task list</li>
+<li>Add a ❌ button next to every task — click deletes the task</li>
+<li>Replace the “Add” text on the button with “Добавить”</li>
+</ol>
+<p>After the edits I want to see only these three changes, don’t touch anything else.</p>
+</blockquote>
+<p>The agent applies — check the browser (F5).</p>
+<h3 id="step-7-commit-after-every-accepted-edit">Step 7. Commit after <strong>every</strong> accepted edit</h3>
+<p>A good result → save it to history:</p>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#50FA7B;--shiki-dark:#50FA7B">git</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C"> add</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C"> .</span></span>
+<span class="line"><span style="color:#50FA7B;--shiki-dark:#50FA7B">git</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C"> commit</span><span style="color:#BD93F9;--shiki-dark:#BD93F9"> -m</span><span style="color:#E9F284;--shiki-dark:#E9F284"> "</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">init todo: add, complete, persist</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span></span></code></pre>
+<p>After the next batch of edits:</p>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#50FA7B;--shiki-dark:#50FA7B">git</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C"> add</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C"> .</span></span>
+<span class="line"><span style="color:#50FA7B;--shiki-dark:#50FA7B">git</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C"> commit</span><span style="color:#BD93F9;--shiki-dark:#BD93F9"> -m</span><span style="color:#E9F284;--shiki-dark:#E9F284"> "</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">ui polish: font, delete button, ru text</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span></span></code></pre>
+<p>A couple of iterations later you have a short clear history. You can roll back to any step.</p>
+<h3 id="step-8-repeat-to-done">Step 8. Repeat to “done”</h3>
+<p>Want more? Sort? Categories? Deadlines? Personally I drift into details — at this stage <strong>stop</strong> as soon as the todo solves your problem. Too many features = <strong>endless tail</strong> and the project never ships.</p>
+<h2 id="what-to-do-when-it-doesnt-work">What to do when it doesn’t work</h2>
+<h3 id="case-1-opened-indexhtml--blank-page">Case 1. Opened <code>index.html</code> — blank page</h3>
+<ul>
+<li>Open <strong>Developer Tools</strong> in the browser (Cmd+Option+I / F12) → Console tab</li>
+<li>Copy the error</li>
+<li>Tell the agent: “Browser console error <code>&#x3C;…></code>. Fix it.”</li>
+</ul>
+<h3 id="case-2-tasks-add-but-disappear-on-reload">Case 2. Tasks add but disappear on reload</h3>
+<p>Tell the agent: “Tasks don’t persist after reload. Check the localStorage logic in <code>app.js</code>, fix it.”</p>
+<h3 id="case-3-the-agent-did-something-weird-things-got-worse">Case 3. The agent did something weird, things got worse</h3>
+<p>Don’t try to fix “fix on top of fix.” Roll back to the last working commit:</p>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#50FA7B;--shiki-dark:#50FA7B">git</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C"> restore</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C"> .</span></span></code></pre>
+<p>And re-state what you wanted, by the formula.</p>
+<h3 id="case-4-nothing-makes-sense-at-all">Case 4. Nothing makes sense at all</h3>
+<p>Tell the agent: “Explain to me in one paragraph what <code>app.js</code> does. No code, plain words.”</p>
+<p>That’s <strong>not surrender</strong>. It’s a normal step — ask for an explainer, not just “fix.”</p>
+<h2 id="practice-4060-minutes">Practice (40–60 minutes)</h2>
+<h3 id="task-1-40-minutes--walk-the-chapter-by-hand">Task 1 (40 minutes) — walk the chapter by hand</h3>
+<p>Start to finish. Your <code>my-todo</code>, your edits, your commits. Don’t skip <code>git add . + git commit</code> after every accepted edit — that’s the most important habit.</p>
+<h3 id="task-2-20-minutes--add-your-own-feature">Task 2 (20 minutes) — add your own feature</h3>
+<p>Once the base todo works — pick <strong>one</strong> feature you personally want. Anything: colour tags, search, export to file. Phrase it by the B3 formula and ask the agent. Commit.</p>
+<h2 id="recap">Recap</h2>
+<ul>
+<li><strong>End-to-end flow is the same</strong> for any project: setup → brief → plan → iteration → run → edits → commit.</li>
+<li><strong>Commit after every accepted edit.</strong> Base insurance against agent mistakes.</li>
+<li><strong>No fix-on-fix.</strong> If something got worse after an edit — roll back, then reformulate.</li>
+</ul>
+<h2 id="vibe-samurai">Vibe Samurai</h2>
+<aside class="skeptic">
+<p><strong>🥷 Vibe Samurai asks:</strong>
+“I could write a todo list myself in an hour. What’s the point of doing it through an agent?”</p>
+<p><strong>Answer:</strong> The point isn’t <strong>this specific</strong> todo. The point is that you <strong>train the workflow</strong> which you then apply to projects you <strong>couldn’t</strong> build yourself. In two weeks of this rhythm you’ll ask the agent to build a personal helper for tasks you used to do by hand for hours. The todo app is the “no-handlebar bike” of driving school. Nobody rides it — they learn to <strong>hold the wheel</strong>. <strong>Not perfect, but actually works.</strong></p>
+</aside>
+<h2 id="whats-next">What’s next</h2>
+<p>In <strong>B6 — Reading the agent’s code</strong> we cover how to <strong>look</strong> at the code the agent wrote and at least roughly know what’s going on — even if you’re not a programmer. Not about “learning to code,” about basic <strong>orientation</strong> so you’re not blind in your own project.</p>
+<p>If this clicked — share with anyone who’s been wanting “to try building their own app but doesn’t know where to start.” If your todo worked — drop a screenshot in the comments, <strong>a like and a comment is extra appreciated</strong>, your feedback really helps polish the material.</p>
+<h2 id="-further-reading">📚 Further reading</h2>
+<p>If this todo felt easy and you want more projects in the same workflow — a short verified list.</p>
+<p><strong>Starting with an agent</strong></p>
+<ul>
+<li><strong>Quickstart — Claude Code</strong> — <a href="https://code.claude.com/docs/en/quickstart">code.claude.com/docs/en/quickstart</a>. The official “zero to first working edit” path, short and no fluff.</li>
+<li><strong>Best practices for Claude Code</strong> — <a href="https://code.claude.com/docs/en/best-practices">code.claude.com/docs/en/best-practices</a>. The “Explore, plan, code, commit” section is exactly our loop, written by Anthropic.</li>
+</ul>
+<p><strong>Ideas for next projects</strong></p>
+<ul>
+<li><strong>12 Claude Code Project Ideas (Beginner to Advanced)</strong> — <a href="https://codelikeagirl.substack.com/p/claude-code-project-ideas-beginner-to-advanced">codelikeagirl.substack.com/p/claude-code-project-ideas-beginner-to-advanced</a>. Curated with time estimates and starting prompts, convenient for picking “the next step.”</li>
+<li><strong>The Claude Code Handbook (freeCodeCamp)</strong> — <a href="https://www.freecodecamp.org/news/claude-code-handbook/">freecodecamp.org/news/claude-code-handbook</a>. A long honest intro for going deeper after todo.</li>
+</ul>
+<blockquote>
+<p><strong>Tip:</strong> don’t pounce on a “real” big project. Build 1–2 more micro things in the same flow — the workflow becomes reflex. Not perfect, but actually works.</p>
+</blockquote> <nav class="chapter-nav" data-astro-cid-a7sruqtr> <a href="/vibesamurai-site/courses/beginner/b4/en" data-astro-cid-a7sruqtr> <span class="dir" data-astro-cid-a7sruqtr>← Back</span> <span class="title" data-astro-cid-a7sruqtr>B4 · What&#39;s a repo and why commit</span> </a> <a href="/vibesamurai-site/courses/beginner/b6/en" data-astro-cid-a7sruqtr> <span class="dir" data-astro-cid-a7sruqtr>Next →</span> <span class="title" data-astro-cid-a7sruqtr>B6 · Reading the agent&#39;s code</span> </a> </nav> </main>  </div> <script type="module">
+    import { gatingEnabled } from '../lib/supabase';
+    import { fetchChapter } from '../lib/auth';
+
+    const base = import.meta.env.BASE_URL;
+    let mermaidLib = null;
+
+    function scopeOf(root) {
+      return root === document ? document.querySelector('.reader-main') : root;
+    }
+
+    function addCopyBtns(root) {
+      const scope = scopeOf(root); if (!scope) return;
+      scope.querySelectorAll('pre').forEach((pre) => {
+        if (pre.closest('.code-tabs')) return;
+        if (pre.querySelector('.copy-btn')) return;
+        const btn = document.createElement('button');
+        btn.className = 'copy-btn';
+        btn.textContent = 'copy';
+        btn.addEventListener('click', async () => {
+          const code = pre.querySelector('code')?.textContent ?? pre.textContent ?? '';
+          await navigator.clipboard.writeText(code.trimEnd());
+          btn.textContent = '✓ copied';
+          setTimeout(() => { btn.textContent = 'copy'; }, 1600);
+        });
+        pre.appendChild(btn);
+      });
+    }
+
+    function tightenMermaidSvgs(retries = 6) {
+      let pending = false;
+      document.querySelectorAll('.mermaid svg').forEach((svg) => {
+        if (svg.dataset.tightened === '1') return;
+        try {
+          const bbox = svg.getBBox();
+          if (!bbox || bbox.width === 0) { pending = true; return; }
+          const pad = 6;
+          svg.setAttribute('viewBox',
+            `${bbox.x - pad} ${bbox.y - pad} ${bbox.width + pad * 2} ${bbox.height + pad * 2}`);
+          svg.removeAttribute('height');
+          svg.style.height = 'auto';
+          svg.style.maxWidth = '100%';
+          svg.style.display = 'block';
+          svg.dataset.tightened = '1';
+        } catch (e) { pending = true; }
+      });
+      if (pending && retries > 0) setTimeout(() => tightenMermaidSvgs(retries - 1), 120);
+    }
+
+    async function ensureMermaid() {
+      if (mermaidLib) return mermaidLib;
+      const mod = await import('https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs');
+      mermaidLib = mod.default;
+      mermaidLib.initialize({
+        startOnLoad: false, theme: 'neutral',
+        themeVariables: {
+          fontFamily: 'JetBrains Mono, ui-monospace, monospace',
+          primaryColor: '#f5f5f5', primaryBorderColor: '#222',
+          primaryTextColor: '#111', lineColor: '#444',
+        },
+        flowchart: { curve: 'basis', padding: 12, useMaxWidth: true },
+      });
+      return mermaidLib;
+    }
+
+    async function renderMermaid(root) {
+      const scope = scopeOf(root); if (!scope) return;
+      const matches = scope.querySelectorAll(
+        'pre[data-language="mermaid"], pre.language-mermaid, code.language-mermaid'
+      );
+      if (!matches.length) return;
+      matches.forEach((el) => {
+        const block = el.tagName === 'CODE' ? el.closest('pre') || el : el;
+        const codeEl = block.querySelector('code') || block;
+        const wrap = document.createElement('div');
+        wrap.className = 'mermaid';
+        wrap.textContent = codeEl.textContent;
+        block.replaceWith(wrap);
+      });
+      try {
+        const m = await ensureMermaid();
+        await m.run();
+        tightenMermaidSvgs();
+      } catch (err) {
+        console.warn('mermaid failed', err);
+        document.querySelectorAll('.mermaid:not(:has(svg))').forEach((el) => { el.style.display = 'none'; });
+      }
+    }
+
+    async function enhance(root = document) {
+      addCopyBtns(root);
+      await renderMermaid(root);
+    }
+
+    function paywallHtml(required, needLogin) {
+      const label = { beginner: 'Beginner (300 ₽)', middle: 'Beginner + Middle (500 ₽)', all: 'Весь пакет (700 ₽)' }[required] || '';
+      return `<div class="paywall">
+        <div class="paywall-ic">🔒</div>
+        <h3>Эта глава — в платном доступе</h3>
+        <p>Нужен тариф: <strong>${label}</strong>. Доступ навсегда, без подписки.</p>
+        ${needLogin ? '<p>Войди через Google и оформи доступ — продолжишь с любого устройства.</p>' : ''}
+        <a class="paywall-btn" href="${base}pricing">Открыть доступ →</a>
+        <a class="paywall-link" href="${base}account">Войти / мой аккаунт</a>
+      </div>`;
+    }
+
+    async function gatedFlow(mount) {
+      const slug = mount.dataset.slug;
+      const required = mount.dataset.required || 'beginner';
+      mount.innerHTML = '<p class="gate-msg">Проверяем доступ…</p>';
+      const res = await fetchChapter(slug);
+      if (res.ok) {
+        mount.innerHTML = res.html;
+        await enhance(mount);
+      } else if (res.status === 401) {
+        mount.innerHTML = paywallHtml(required, true);
+      } else if (res.status === 402) {
+        mount.innerHTML = paywallHtml(res.requiredTier || required, false);
+      } else {
+        mount.innerHTML = '<p class="gate-msg">Не удалось загрузить главу. Обнови страницу.</p>';
+      }
+    }
+
+    const mount = document.getElementById('gated-mount');
+    if (mount && gatingEnabled) gatedFlow(mount);
+    else enhance(document);
+  </script> </body> </html>

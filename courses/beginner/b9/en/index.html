@@ -1,0 +1,276 @@
+<!DOCTYPE html><html lang="en" data-astro-cid-a7sruqtr> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Deploying the first project — Vibesamurai</title><meta name="description" content="From a local folder to a public link. GitHub Pages, Cloudflare Pages — free, 15 minutes, no servers."><meta property="og:title" content="Deploying the first project"><meta property="og:type" content="article"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Inter:wght@300..800&family=JetBrains+Mono:wght@400..600&display=swap" rel="stylesheet"><link rel="stylesheet" href="/vibesamurai-site/_astro/_slug_.Cs4TX1wt.css">
+<style>.account-btn{display:inline-flex;align-items:center;gap:var(--space-2);font-family:var(--font-mono);font-size:var(--size-2);text-transform:uppercase;letter-spacing:.06em;padding:5px 10px;border:1px solid var(--rule);border-radius:999px;color:var(--text-soft);background:var(--surface);transition:border-color var(--d-fast),color var(--d-fast)}.account-btn:hover{border-color:var(--accent);color:var(--text)}.account-ic{width:18px;height:18px;display:grid;place-items:center;border-radius:50%;background:var(--accent);color:var(--accent-ink);font-weight:700;font-size:10px;line-height:1}.reader-rail .account-btn{padding:0;border:none;background:transparent}.reader-rail .account-label{display:none}.reader-rail .account-ic{width:32px;height:32px;font-size:13px}.rail-toggle{width:36px;height:36px;display:grid;place-items:center;background:var(--accent);border:1px solid var(--accent);border-radius:4px;cursor:pointer;transition:filter var(--d-fast),transform var(--d-fast);padding:0}.rail-toggle:hover{filter:brightness(1.08);transform:translateY(-1px)}.rail-toggle:active{transform:translateY(0)}.rail-toggle-icon{width:14px;height:12px;border-left:2px solid var(--accent-ink);border-right:2px solid var(--accent-ink);transition:transform var(--d-normal) var(--ease-standard)}.reader-app.sidebar-open .rail-toggle-icon{transform:rotate(0)}.reader-app:not(.sidebar-open) .rail-toggle-icon{transform:scaleX(.5)}.sidebar-backdrop{display:none;position:fixed;inset:0;background:#0000008c;z-index:140;border:0;padding:0;cursor:pointer}@media(max-width:900px){.reader-app.sidebar-open~.sidebar-backdrop{display:block}}.rail-spacer[data-astro-cid-ofsbkzh7]{flex:1}.reader-sidebar[data-astro-cid-khgtvzrl] .ru-tag[data-astro-cid-khgtvzrl]{font-style:normal;font-family:var(--font-mono);font-size:.7em;color:var(--text-mute);margin-left:4px;padding:1px 4px;border:1px solid var(--rule);border-radius:3px;text-transform:uppercase;vertical-align:middle}.chapter-eyebrow[data-astro-cid-a7sruqtr]{display:flex;justify-content:space-between;align-items:center;gap:var(--space-3)}.lang-toggle[data-astro-cid-a7sruqtr]{font-family:var(--font-mono);font-size:var(--size-2);padding:2px 8px;border:1px solid var(--rule);border-radius:4px;color:var(--text-mute);text-decoration:none;text-transform:uppercase;letter-spacing:.08em}.lang-toggle[data-astro-cid-a7sruqtr]:hover{color:var(--accent);border-color:var(--accent)}.code-tabs[data-astro-cid-hg66rjob]{margin:var(--space-5) 0}.code-tabs-nav[data-astro-cid-hg66rjob]{display:flex;gap:2px;margin-bottom:-1px;position:relative;z-index:1}.ctab[data-astro-cid-hg66rjob]{font-family:var(--font-mono);font-size:11px;text-transform:uppercase;letter-spacing:.07em;padding:5px 14px;border:1px solid #21222c;border-bottom:none;background:#1a1b23;color:#6272a4;cursor:pointer;border-radius:4px 4px 0 0;transition:color .12s,background .12s}.ctab[data-astro-cid-hg66rjob].is-active{background:#282a36;color:#f8f8f2;border-color:#21222c}.ctab[data-astro-cid-hg66rjob]:hover:not(.is-active){color:#cdd6f4}.ctab-panel[data-astro-cid-hg66rjob]{display:none}.ctab-panel[data-astro-cid-hg66rjob].is-active{display:block}.ctab-panel[data-astro-cid-hg66rjob] pre{margin-top:0!important;border-radius:0 6px 6px!important}
+</style></head> <body data-astro-cid-a7sruqtr> <div class="reader-app" data-astro-cid-a7sruqtr> <aside class="reader-rail" data-astro-cid-ofsbkzh7> <a href="/vibesamurai-site/" class="logo" aria-label="Vibesamurai home" data-astro-cid-ofsbkzh7>V</a> <button type="button" class="rail-toggle" id="sidebar-toggle" aria-label="Свернуть/развернуть оглавление" title="Свернуть/развернуть оглавление" data-astro-cid-ofsbkzh7> <span class="rail-toggle-icon" aria-hidden="true" data-astro-cid-ofsbkzh7></span> </button> <div class="rail-spacer" data-astro-cid-ofsbkzh7></div> <a href="/vibesamurai-site/account" class="account-btn" id="account-btn" aria-label="Аккаунт"> <span class="account-ic" id="account-ic">⌂</span> <span class="account-label" id="account-label">Войти</span> </a>  <script type="module" src="/vibesamurai-site/_astro/AccountButton.astro_astro_type_script_index_0_lang.CmD2sdn9.js"></script> </aside>  <button type="button" class="sidebar-backdrop" id="sidebar-backdrop" aria-label="Закрыть оглавление" tabindex="-1" data-astro-cid-ofsbkzh7></button>  <script type="module">const d="vs-sidebar-open",a="(max-width: 900px)";function t(e){const n=document.querySelector(".reader-app");n&&n.classList.toggle("sidebar-open",e)}function r(){return!window.matchMedia(a).matches}function s(){const e=localStorage.getItem(d),i=window.matchMedia(a).matches?!1:e!==null?e==="1":r();t(i),document.getElementById("sidebar-toggle")?.addEventListener("click",()=>{const c=!document.querySelector(".reader-app")?.classList.contains("sidebar-open");window.matchMedia(a).matches||localStorage.setItem(d,c?"1":"0"),t(c)}),document.getElementById("sidebar-backdrop")?.addEventListener("click",()=>t(!1)),document.querySelectorAll(".reader-sidebar a").forEach(o=>{o.addEventListener("click",()=>{window.matchMedia(a).matches&&t(!1)})})}document.readyState==="loading"?document.addEventListener("DOMContentLoaded",s):s();</script> <aside class="reader-sidebar" data-astro-cid-khgtvzrl> <div class="breadcrumb" data-astro-cid-khgtvzrl>Vibesamurai · Beginner Path · B9</div> <h4 data-astro-cid-khgtvzrl>In this course</h4> <ul data-astro-cid-khgtvzrl> <li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b1/en" class data-astro-cid-khgtvzrl> B1 · What is an AI agent  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b2/en" class data-astro-cid-khgtvzrl> B2 · Installing your first AI agent  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b3/en" class data-astro-cid-khgtvzrl> B3 · First conversation  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b4/en" class data-astro-cid-khgtvzrl> B4 · What&#39;s a repo and why commit  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b5/en" class data-astro-cid-khgtvzrl> B5 · Building the first project (todo app)  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b6/en" class data-astro-cid-khgtvzrl> B6 · Reading the code the agent wrote  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b7/en" class data-astro-cid-khgtvzrl> B7 · Security for beginners  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b8/en" class data-astro-cid-khgtvzrl> B8 · Cursor vs Claude Code vs Codex CLI  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b9/en" class="current" data-astro-cid-khgtvzrl> B9 · Deploying the first project  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b10/en" class data-astro-cid-khgtvzrl> B10 · How to evaluate the agent&#39;s output  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b11/en" class data-astro-cid-khgtvzrl> B11 · Capstone: build your own tool  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b12/en" class data-astro-cid-khgtvzrl> B12 · Where to go next  </a> </li> </ul>  </aside> <main class="reader-main" data-astro-cid-a7sruqtr> <div class="chapter-eyebrow" data-astro-cid-a7sruqtr> <span data-astro-cid-a7sruqtr>Beginner Path · b9</span> <a class="lang-toggle" href="/vibesamurai-site/courses/beginner/b9" aria-label="Switch to RU" data-astro-cid-a7sruqtr>RU</a> </div> <h1 class="chapter-title" data-astro-cid-a7sruqtr>B9 · Deploying the first project</h1> <p class="chapter-subtitle" data-astro-cid-a7sruqtr>From a local folder to a public link. GitHub Pages, Cloudflare Pages — free, 15 minutes, no servers.</p> <h2 id="hook">Hook</h2>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>BEFORE:                          AFTER:</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>"I have a project,        →     "Here's the link:</span></span>
+<span class="line"><span> but it's only on my             https://your-name.github.io/my-todo</span></span>
+<span class="line"><span> own machine"                    — open it, tap around"</span></span></code></pre>
+<p>Hey folks, welcome 👋</p>
+<p>This chapter is about <strong>that moment</strong> when your todo app from B5 stops being “a local folder on my laptop” and becomes a <strong>public link</strong> you can share. It’s <strong>the moment you actually built something</strong> — because there’s a <strong>URL</strong>, and it can be sent.</p>
+<p>Fifteen minutes. No servers, no admin, no money. Via <strong>GitHub Pages</strong>.</p>
+<h2 id="concept-static--just-files">Concept: static = just files</h2>
+<p>Your todo (from B5) is a <strong>static site</strong>. Three files:</p>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>my-todo/</span></span>
+<span class="line"><span>├── index.html</span></span>
+<span class="line"><span>├── style.css</span></span>
+<span class="line"><span>└── app.js</span></span></code></pre>
+<p>No database, no backend — everything runs <strong>in the user’s browser</strong>. So “hosting” such a site is just <strong>copying files to any server</strong> that knows how to serve them.</p>
+<p>Free services that do this <strong>out of the box</strong> are plenty:</p>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>┌─────────────────────────────────────────────────────┐</span></span>
+<span class="line"><span>│  GitHub Pages       — simplest, free                │</span></span>
+<span class="line"><span>│  Cloudflare Pages   — faster, a bit more setup      │</span></span>
+<span class="line"><span>│  Vercel             — for the next step             │</span></span>
+<span class="line"><span>│  Netlify            — for the next step             │</span></span>
+<span class="line"><span>└─────────────────────────────────────────────────────┘</span></span></code></pre>
+<p>We take <strong>GitHub Pages</strong> in this chapter because you already have git (B4) and a repo, and the second step is just flipping a setting.</p>
+<h2 id="example-deploying-todo-to-github-pages">Example: deploying todo to GitHub Pages</h2>
+<h3 id="step-1-create-a-github-account-if-you-dont-have-one">Step 1. Create a GitHub account (if you don’t have one)</h3>
+<p>Go to <a href="https://github.com">github.com</a> → Sign up. Pick the username deliberately — it ends up <strong>in the URL</strong> of your site (<code>https://YOUR-NAME.github.io/project</code>).</p>
+<h3 id="step-2-create-a-repository-on-github">Step 2. Create a repository on GitHub</h3>
+<p>Top-right on GitHub: <strong>+</strong> → <strong>New repository</strong>.</p>
+<ul>
+<li><strong>Repository name:</strong> <code>my-todo</code></li>
+<li><strong>Description:</strong> “My first todo list”</li>
+<li><strong>Public</strong> — required. GitHub Pages for private repos is only on paid plans.</li>
+<li><strong>Don’t tick</strong> “Add README,” “Add .gitignore,” “Add license” — we already have our own files.</li>
+<li>Click <strong>Create repository</strong>.</li>
+</ul>
+<p>GitHub will show “how to push an existing project.” We take those commands.</p>
+<h3 id="step-3-push-the-local-repo-to-github">Step 3. Push the local repo to GitHub</h3>
+<p>In the terminal, in the <code>my-todo</code> folder:</p>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#50FA7B;--shiki-dark:#50FA7B">git</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C"> remote</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C"> add</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C"> origin</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C"> https://github.com/YOUR-NAME/my-todo.git</span></span>
+<span class="line"><span style="color:#50FA7B;--shiki-dark:#50FA7B">git</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C"> branch</span><span style="color:#BD93F9;--shiki-dark:#BD93F9"> -M</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C"> main</span></span>
+<span class="line"><span style="color:#50FA7B;--shiki-dark:#50FA7B">git</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C"> push</span><span style="color:#BD93F9;--shiki-dark:#BD93F9"> -u</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C"> origin</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C"> main</span></span></code></pre>
+<p>On first push GitHub asks for auth. From there it’s <strong>personal access tokens</strong> (PATs) — guidance is in GitHub’s own docs, or ask your agent to walk you through the steps.</p>
+<p>After push, open the repo on GitHub in the browser — you’ll see your files.</p>
+<h3 id="step-4-enable-github-pages">Step 4. Enable GitHub Pages</h3>
+<p>In the repo on GitHub:</p>
+<ol>
+<li><strong>Settings</strong> (top right)</li>
+<li>Left side — <strong>Pages</strong></li>
+<li><strong>Source:</strong> Deploy from a branch</li>
+<li><strong>Branch:</strong> <code>main</code>, folder <code>/ (root)</code></li>
+<li><strong>Save</strong></li>
+</ol>
+<p>In 30–60 seconds GitHub builds the site. A green banner appears at the top with the <strong>URL</strong> — usually <code>https://YOUR-NAME.github.io/my-todo/</code>.</p>
+<h3 id="step-5-open-the-link">Step 5. Open the link</h3>
+<p>Open the URL in a browser. You see <strong>the same</strong> todo as on your laptop. <strong>Now it’s on the internet.</strong></p>
+<p>Share the link with someone. That’s the <strong>full package</strong> — your first public product.</p>
+<h2 id="if-something-doesnt-work">If something doesn’t work</h2>
+<h3 id="case-1-the-url-shows-404">Case 1. The URL shows 404</h3>
+<ul>
+<li>Verify in <strong>Settings → Pages</strong> that the status is “Your site is live at …”</li>
+<li>Wait a minute or two — first build is sometimes slow</li>
+<li>Make sure <code>index.html</code> sits <strong>at the root</strong> of the repo (not in a subfolder)</li>
+</ul>
+<h3 id="case-2-site-opens-but-no-styles--no-logic">Case 2. Site opens but no styles / no logic</h3>
+<p>That means <strong>file paths are broken</strong>. In <code>index.html</code> paths must be <strong>relative</strong>, no leading <code>/</code>:</p>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="html"><code><span class="line"><span style="color:#6272A4;--shiki-dark:#6272A4">&#x3C;!-- GOOD --></span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">&#x3C;</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">link</span><span style="color:#50FA7B;--shiki-light-font-style:italic;--shiki-dark:#50FA7B;--shiki-dark-font-style:italic"> rel</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">=</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">stylesheet</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#50FA7B;--shiki-light-font-style:italic;--shiki-dark:#50FA7B;--shiki-dark-font-style:italic"> href</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">=</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">style.css</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">></span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">&#x3C;</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">script</span><span style="color:#50FA7B;--shiki-light-font-style:italic;--shiki-dark:#50FA7B;--shiki-dark-font-style:italic"> src</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">=</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">app.js</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">>&#x3C;/</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">script</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">></span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6272A4;--shiki-dark:#6272A4">&#x3C;!-- BAD — breaks on GitHub Pages subpaths --></span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">&#x3C;</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">link</span><span style="color:#50FA7B;--shiki-light-font-style:italic;--shiki-dark:#50FA7B;--shiki-dark-font-style:italic"> rel</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">=</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">stylesheet</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#50FA7B;--shiki-light-font-style:italic;--shiki-dark:#50FA7B;--shiki-dark-font-style:italic"> href</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">=</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">/style.css</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">></span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">&#x3C;</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">script</span><span style="color:#50FA7B;--shiki-light-font-style:italic;--shiki-dark:#50FA7B;--shiki-dark-font-style:italic"> src</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">=</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">/app.js</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">>&#x3C;/</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">script</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">></span></span></code></pre>
+<p>If your paths are bad — ask the agent: “Fix asset paths in <code>index.html</code> so it works both locally and on a GitHub Pages subpath.”</p>
+<h3 id="case-3-edited-files-locally--site-still-shows-old-content">Case 3. Edited files locally — site still shows old content</h3>
+<p>GitHub Pages only updates <strong>on push</strong>. After changes:</p>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#50FA7B;--shiki-dark:#50FA7B">git</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C"> add</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C"> .</span></span>
+<span class="line"><span style="color:#50FA7B;--shiki-dark:#50FA7B">git</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C"> commit</span><span style="color:#BD93F9;--shiki-dark:#BD93F9"> -m</span><span style="color:#E9F284;--shiki-dark:#E9F284"> "</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">edits</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span></span>
+<span class="line"><span style="color:#50FA7B;--shiki-dark:#50FA7B">git</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C"> push</span></span></code></pre>
+<p>In 30 seconds the site updates.</p>
+<h3 id="case-4-personal-access-token--whats-that">Case 4. “Personal access token” — what’s that</h3>
+<p>It’s <strong>a password for git</strong> that replaces your regular password. Created in GitHub: Settings → Developer settings → Personal access tokens → Tokens (classic) → Generate new token.</p>
+<p>Give it <code>repo</code> access only, set a 90-day lifetime. Save it somewhere secure (or a password manager).</p>
+<blockquote>
+<p><em>Don’t commit a PAT into code.</em> From B7 — secrets don’t go in the repo. If you accidentally committed — <strong>revoke immediately</strong>, then deal with git.</p>
+</blockquote>
+<h2 id="cloudflare-pages--alternative-for-the-next-step">Cloudflare Pages — alternative for the next step</h2>
+<p>Once you’re comfortable with GitHub Pages, try <strong>Cloudflare Pages</strong> (<code>pages.dev</code>). Pros:</p>
+<ul>
+<li><strong>Faster</strong> in most regions (CDN network)</li>
+<li><strong>Doesn’t require a public repo</strong> — private works on the free tier too</li>
+<li><strong>Custom domains</strong> in one click</li>
+</ul>
+<p>Cons — slightly more setup up front. If GitHub Pages is <strong>enough</strong> for you — don’t switch, <strong>don’t multiply entities</strong>. From experience — move when you want a custom domain or have a concrete speed problem.</p>
+<h2 id="checklist-product-ready-to-share">Checklist “product ready to share”</h2>
+<p>Before sending the link to a friend, walk through:</p>
+<ul class="contains-task-list">
+<li class="task-list-item"><input type="checkbox" disabled> <strong>Opens on mobile</strong> (not only desktop) — open the link from your phone, verify</li>
+<li class="task-list-item"><input type="checkbox" disabled> <strong>All features work</strong> — not only “add” but also “delete,” “save”</li>
+<li class="task-list-item"><input type="checkbox" disabled> <strong>No console errors</strong> — F12 → Console, should be empty or near-empty</li>
+<li class="task-list-item"><input type="checkbox" disabled> <strong>Clear what it is</strong> — there’s a heading, clear how to use it</li>
+<li class="task-list-item"><input type="checkbox" disabled> <strong>No leaked secrets</strong> — look at files in the GitHub repo, no <code>.env</code>, keys, passwords</li>
+</ul>
+<p>If everything ticked — <strong>send it</strong>. <strong>Not perfect, but actually works.</strong></p>
+<h2 id="practice-30-minutes">Practice (30 minutes)</h2>
+<h3 id="task-1-20-minutes--deploy-your-todo">Task 1 (20 minutes) — deploy your todo</h3>
+<p>Walk through all 5 steps above. Get the URL. <strong>Open it on your phone</strong> — important final test.</p>
+<p>If you got stuck at some step — <strong>ask the agent in Claude Code</strong>:</p>
+<blockquote>
+<p>“I’m deploying to GitHub Pages, step N fails with error: <paste>. What’s wrong?”</paste></p>
+</blockquote>
+<p>The agent knows GitHub Pages <strong>well</strong>, walks you out of any block.</p>
+<h3 id="task-2-10-minutes--share-the-link">Task 2 (10 minutes) — share the link</h3>
+<p>Send the URL to <strong>at least one person</strong>, ask for feedback:</p>
+<blockquote>
+<p>“Open it on your phone, try adding a couple of tasks, tell me what’s wrong.”</p>
+</blockquote>
+<p>That’s <strong>the first real use</strong> of your project by another human. Note the feedback — that’s the <strong>growth edge</strong> for the next iteration.</p>
+<h2 id="recap">Recap</h2>
+<ul>
+<li><strong>Static = just files.</strong> Any static site can be deployed in minutes for free.</li>
+<li><strong>GitHub Pages</strong> — the simplest first deploy. Create repo → push → enable Pages → done.</li>
+<li><strong>Pre-share checklist:</strong> mobile, features, console, clarity, secret leaks.</li>
+</ul>
+<h2 id="vibe-samurai">Vibe Samurai</h2>
+<aside class="skeptic">
+<p><strong>🥷 Vibe Samurai asks:</strong>
+“Why do I need to deploy? I’m just learning, who cares about my janky todo on the internet?”</p>
+<p><strong>Answer:</strong> It’s not about <strong>this specific</strong> todo. It’s about the <strong>loop</strong>: you built something → it went <strong>into the world</strong> → someone looked → you got feedback → you improved. If your projects sit in a local folder for years — you <strong>don’t get feedback</strong> and <strong>don’t learn</strong> from real use. Everyone I know in the industry — even absolute beginners — has a <strong>public portfolio</strong>. Not because “it’s needed for work,” but because <strong>visible results motivate</strong>. One URL is the <strong>full package</strong> of motivation for the next project. <strong>Not perfect, but actually works.</strong></p>
+</aside>
+<h2 id="whats-next">What’s next</h2>
+<p>In <strong>B10 — How to evaluate the agent’s output</strong> we cover how to know the result is “good” and not just “looks good.” Checklists, sceptical checks, the typical “holes” newcomers fall into. Without this chapter you’ll accept <strong>the first pretty-looking thing</strong> — and that’s half of agentic screw-ups.</p>
+<p>If this clicked — share with anyone whose “everything is on the laptop and nobody sees it.” If you deployed — <strong>drop the link in the comments</strong>, I’d love to see what you built. <strong>A like and a comment is extra appreciated</strong>, your feedback really helps polish the material.</p>
+<h2 id="-further-reading">📚 Further reading</h2>
+<p>There are many static hosts and each has its quirks. A short list — official docs for the three I personally use (GitHub Pages for learning, Cloudflare Pages for prod with a domain, Vercel — when a frontend framework joins).</p>
+<p><strong>Official docs</strong></p>
+<ul>
+<li><strong>GitHub Pages — Creating a site</strong> (full guide: from creating a repo to publishing, with the user/organisation sites section): <a href="https://docs.github.com/en/pages/getting-started-with-github-pages/creating-a-github-pages-site">docs.github.com/en/pages/getting-started-with-github-pages/creating-a-github-pages-site</a>.</li>
+<li><strong>Cloudflare Pages — Get started</strong> (the “deploy static as-is” section, no build): <a href="https://developers.cloudflare.com/pages/get-started/">developers.cloudflare.com/pages/get-started</a>.</li>
+<li><strong>Vercel — Deployments</strong> (for later: pushing static via CLI or git, no servers): <a href="https://vercel.com/docs/deployments">vercel.com/docs/deployments</a>.</li>
+</ul>
+<p><strong>Token security</strong></p>
+<ul>
+<li><strong>GitHub — Managing your personal access tokens</strong> (how to create a PAT, which scopes, how to revoke): <a href="https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens">docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens</a>. Read the <strong>fine-grained tokens</strong> section — that’s the 2026 recommendation, not classic PATs.</li>
+</ul>
+<blockquote>
+<p><strong>Tip:</strong> don’t rush to move from GitHub Pages to Cloudflare/Vercel “because cooler.” A move makes sense when there’s a concrete reason — custom domain, speed, dynamic features. Otherwise <strong>don’t multiply entities</strong>.</p>
+</blockquote> <nav class="chapter-nav" data-astro-cid-a7sruqtr> <a href="/vibesamurai-site/courses/beginner/b8/en" data-astro-cid-a7sruqtr> <span class="dir" data-astro-cid-a7sruqtr>← Back</span> <span class="title" data-astro-cid-a7sruqtr>B8 · Cursor vs Claude Code vs Codex CLI</span> </a> <a href="/vibesamurai-site/courses/beginner/b10/en" data-astro-cid-a7sruqtr> <span class="dir" data-astro-cid-a7sruqtr>Next →</span> <span class="title" data-astro-cid-a7sruqtr>B10 · How to evaluate the agent&#39;s output</span> </a> </nav> </main>  </div> <script type="module">
+    import { gatingEnabled } from '../lib/supabase';
+    import { fetchChapter } from '../lib/auth';
+
+    const base = import.meta.env.BASE_URL;
+    let mermaidLib = null;
+
+    function scopeOf(root) {
+      return root === document ? document.querySelector('.reader-main') : root;
+    }
+
+    function addCopyBtns(root) {
+      const scope = scopeOf(root); if (!scope) return;
+      scope.querySelectorAll('pre').forEach((pre) => {
+        if (pre.closest('.code-tabs')) return;
+        if (pre.querySelector('.copy-btn')) return;
+        const btn = document.createElement('button');
+        btn.className = 'copy-btn';
+        btn.textContent = 'copy';
+        btn.addEventListener('click', async () => {
+          const code = pre.querySelector('code')?.textContent ?? pre.textContent ?? '';
+          await navigator.clipboard.writeText(code.trimEnd());
+          btn.textContent = '✓ copied';
+          setTimeout(() => { btn.textContent = 'copy'; }, 1600);
+        });
+        pre.appendChild(btn);
+      });
+    }
+
+    function tightenMermaidSvgs(retries = 6) {
+      let pending = false;
+      document.querySelectorAll('.mermaid svg').forEach((svg) => {
+        if (svg.dataset.tightened === '1') return;
+        try {
+          const bbox = svg.getBBox();
+          if (!bbox || bbox.width === 0) { pending = true; return; }
+          const pad = 6;
+          svg.setAttribute('viewBox',
+            `${bbox.x - pad} ${bbox.y - pad} ${bbox.width + pad * 2} ${bbox.height + pad * 2}`);
+          svg.removeAttribute('height');
+          svg.style.height = 'auto';
+          svg.style.maxWidth = '100%';
+          svg.style.display = 'block';
+          svg.dataset.tightened = '1';
+        } catch (e) { pending = true; }
+      });
+      if (pending && retries > 0) setTimeout(() => tightenMermaidSvgs(retries - 1), 120);
+    }
+
+    async function ensureMermaid() {
+      if (mermaidLib) return mermaidLib;
+      const mod = await import('https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs');
+      mermaidLib = mod.default;
+      mermaidLib.initialize({
+        startOnLoad: false, theme: 'neutral',
+        themeVariables: {
+          fontFamily: 'JetBrains Mono, ui-monospace, monospace',
+          primaryColor: '#f5f5f5', primaryBorderColor: '#222',
+          primaryTextColor: '#111', lineColor: '#444',
+        },
+        flowchart: { curve: 'basis', padding: 12, useMaxWidth: true },
+      });
+      return mermaidLib;
+    }
+
+    async function renderMermaid(root) {
+      const scope = scopeOf(root); if (!scope) return;
+      const matches = scope.querySelectorAll(
+        'pre[data-language="mermaid"], pre.language-mermaid, code.language-mermaid'
+      );
+      if (!matches.length) return;
+      matches.forEach((el) => {
+        const block = el.tagName === 'CODE' ? el.closest('pre') || el : el;
+        const codeEl = block.querySelector('code') || block;
+        const wrap = document.createElement('div');
+        wrap.className = 'mermaid';
+        wrap.textContent = codeEl.textContent;
+        block.replaceWith(wrap);
+      });
+      try {
+        const m = await ensureMermaid();
+        await m.run();
+        tightenMermaidSvgs();
+      } catch (err) {
+        console.warn('mermaid failed', err);
+        document.querySelectorAll('.mermaid:not(:has(svg))').forEach((el) => { el.style.display = 'none'; });
+      }
+    }
+
+    async function enhance(root = document) {
+      addCopyBtns(root);
+      await renderMermaid(root);
+    }
+
+    function paywallHtml(required, needLogin) {
+      const label = { beginner: 'Beginner (300 ₽)', middle: 'Beginner + Middle (500 ₽)', all: 'Весь пакет (700 ₽)' }[required] || '';
+      return `<div class="paywall">
+        <div class="paywall-ic">🔒</div>
+        <h3>Эта глава — в платном доступе</h3>
+        <p>Нужен тариф: <strong>${label}</strong>. Доступ навсегда, без подписки.</p>
+        ${needLogin ? '<p>Войди через Google и оформи доступ — продолжишь с любого устройства.</p>' : ''}
+        <a class="paywall-btn" href="${base}pricing">Открыть доступ →</a>
+        <a class="paywall-link" href="${base}account">Войти / мой аккаунт</a>
+      </div>`;
+    }
+
+    async function gatedFlow(mount) {
+      const slug = mount.dataset.slug;
+      const required = mount.dataset.required || 'beginner';
+      mount.innerHTML = '<p class="gate-msg">Проверяем доступ…</p>';
+      const res = await fetchChapter(slug);
+      if (res.ok) {
+        mount.innerHTML = res.html;
+        await enhance(mount);
+      } else if (res.status === 401) {
+        mount.innerHTML = paywallHtml(required, true);
+      } else if (res.status === 402) {
+        mount.innerHTML = paywallHtml(res.requiredTier || required, false);
+      } else {
+        mount.innerHTML = '<p class="gate-msg">Не удалось загрузить главу. Обнови страницу.</p>';
+      }
+    }
+
+    const mount = document.getElementById('gated-mount');
+    if (mount && gatingEnabled) gatedFlow(mount);
+    else enhance(document);
+  </script> </body> </html>

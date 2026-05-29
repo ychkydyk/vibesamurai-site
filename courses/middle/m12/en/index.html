@@ -1,0 +1,410 @@
+<!DOCTYPE html><html lang="en" data-astro-cid-a7sruqtr> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Regression tests for agents — Vibesamurai</title><meta name="description" content="Golden examples, snapshot harness, CI integration. Catch regressions at the moment of change, not two weeks later."><meta property="og:title" content="Regression tests for agents"><meta property="og:type" content="article"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Inter:wght@300..800&family=JetBrains+Mono:wght@400..600&display=swap" rel="stylesheet"><link rel="stylesheet" href="/vibesamurai-site/_astro/_slug_.Cs4TX1wt.css">
+<style>.account-btn{display:inline-flex;align-items:center;gap:var(--space-2);font-family:var(--font-mono);font-size:var(--size-2);text-transform:uppercase;letter-spacing:.06em;padding:5px 10px;border:1px solid var(--rule);border-radius:999px;color:var(--text-soft);background:var(--surface);transition:border-color var(--d-fast),color var(--d-fast)}.account-btn:hover{border-color:var(--accent);color:var(--text)}.account-ic{width:18px;height:18px;display:grid;place-items:center;border-radius:50%;background:var(--accent);color:var(--accent-ink);font-weight:700;font-size:10px;line-height:1}.reader-rail .account-btn{padding:0;border:none;background:transparent}.reader-rail .account-label{display:none}.reader-rail .account-ic{width:32px;height:32px;font-size:13px}.rail-toggle{width:36px;height:36px;display:grid;place-items:center;background:var(--accent);border:1px solid var(--accent);border-radius:4px;cursor:pointer;transition:filter var(--d-fast),transform var(--d-fast);padding:0}.rail-toggle:hover{filter:brightness(1.08);transform:translateY(-1px)}.rail-toggle:active{transform:translateY(0)}.rail-toggle-icon{width:14px;height:12px;border-left:2px solid var(--accent-ink);border-right:2px solid var(--accent-ink);transition:transform var(--d-normal) var(--ease-standard)}.reader-app.sidebar-open .rail-toggle-icon{transform:rotate(0)}.reader-app:not(.sidebar-open) .rail-toggle-icon{transform:scaleX(.5)}.sidebar-backdrop{display:none;position:fixed;inset:0;background:#0000008c;z-index:140;border:0;padding:0;cursor:pointer}@media(max-width:900px){.reader-app.sidebar-open~.sidebar-backdrop{display:block}}.rail-spacer[data-astro-cid-ofsbkzh7]{flex:1}.reader-sidebar[data-astro-cid-khgtvzrl] .ru-tag[data-astro-cid-khgtvzrl]{font-style:normal;font-family:var(--font-mono);font-size:.7em;color:var(--text-mute);margin-left:4px;padding:1px 4px;border:1px solid var(--rule);border-radius:3px;text-transform:uppercase;vertical-align:middle}.chapter-eyebrow[data-astro-cid-a7sruqtr]{display:flex;justify-content:space-between;align-items:center;gap:var(--space-3)}.lang-toggle[data-astro-cid-a7sruqtr]{font-family:var(--font-mono);font-size:var(--size-2);padding:2px 8px;border:1px solid var(--rule);border-radius:4px;color:var(--text-mute);text-decoration:none;text-transform:uppercase;letter-spacing:.08em}.lang-toggle[data-astro-cid-a7sruqtr]:hover{color:var(--accent);border-color:var(--accent)}.code-tabs[data-astro-cid-hg66rjob]{margin:var(--space-5) 0}.code-tabs-nav[data-astro-cid-hg66rjob]{display:flex;gap:2px;margin-bottom:-1px;position:relative;z-index:1}.ctab[data-astro-cid-hg66rjob]{font-family:var(--font-mono);font-size:11px;text-transform:uppercase;letter-spacing:.07em;padding:5px 14px;border:1px solid #21222c;border-bottom:none;background:#1a1b23;color:#6272a4;cursor:pointer;border-radius:4px 4px 0 0;transition:color .12s,background .12s}.ctab[data-astro-cid-hg66rjob].is-active{background:#282a36;color:#f8f8f2;border-color:#21222c}.ctab[data-astro-cid-hg66rjob]:hover:not(.is-active){color:#cdd6f4}.ctab-panel[data-astro-cid-hg66rjob]{display:none}.ctab-panel[data-astro-cid-hg66rjob].is-active{display:block}.ctab-panel[data-astro-cid-hg66rjob] pre{margin-top:0!important;border-radius:0 6px 6px!important}
+</style></head> <body data-astro-cid-a7sruqtr> <div class="reader-app" data-astro-cid-a7sruqtr> <aside class="reader-rail" data-astro-cid-ofsbkzh7> <a href="/vibesamurai-site/" class="logo" aria-label="Vibesamurai home" data-astro-cid-ofsbkzh7>V</a> <button type="button" class="rail-toggle" id="sidebar-toggle" aria-label="Свернуть/развернуть оглавление" title="Свернуть/развернуть оглавление" data-astro-cid-ofsbkzh7> <span class="rail-toggle-icon" aria-hidden="true" data-astro-cid-ofsbkzh7></span> </button> <div class="rail-spacer" data-astro-cid-ofsbkzh7></div> <a href="/vibesamurai-site/account" class="account-btn" id="account-btn" aria-label="Аккаунт"> <span class="account-ic" id="account-ic">⌂</span> <span class="account-label" id="account-label">Войти</span> </a>  <script type="module" src="/vibesamurai-site/_astro/AccountButton.astro_astro_type_script_index_0_lang.CmD2sdn9.js"></script> </aside>  <button type="button" class="sidebar-backdrop" id="sidebar-backdrop" aria-label="Закрыть оглавление" tabindex="-1" data-astro-cid-ofsbkzh7></button>  <script type="module">const d="vs-sidebar-open",a="(max-width: 900px)";function t(e){const n=document.querySelector(".reader-app");n&&n.classList.toggle("sidebar-open",e)}function r(){return!window.matchMedia(a).matches}function s(){const e=localStorage.getItem(d),i=window.matchMedia(a).matches?!1:e!==null?e==="1":r();t(i),document.getElementById("sidebar-toggle")?.addEventListener("click",()=>{const c=!document.querySelector(".reader-app")?.classList.contains("sidebar-open");window.matchMedia(a).matches||localStorage.setItem(d,c?"1":"0"),t(c)}),document.getElementById("sidebar-backdrop")?.addEventListener("click",()=>t(!1)),document.querySelectorAll(".reader-sidebar a").forEach(o=>{o.addEventListener("click",()=>{window.matchMedia(a).matches&&t(!1)})})}document.readyState==="loading"?document.addEventListener("DOMContentLoaded",s):s();</script> <aside class="reader-sidebar" data-astro-cid-khgtvzrl> <div class="breadcrumb" data-astro-cid-khgtvzrl>Vibesamurai · Middle Path · M12</div> <h4 data-astro-cid-khgtvzrl>In this course</h4> <ul data-astro-cid-khgtvzrl> <li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m1/en" class data-astro-cid-khgtvzrl> M1 · What is agentic AI in the SDLC  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m2/en" class data-astro-cid-khgtvzrl> M2 · Architecting agent boundaries  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m3/en" class data-astro-cid-khgtvzrl> M3 · Observability and human-in-the-loop  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m4/en" class data-astro-cid-khgtvzrl> M4 · Tool inventory and permissions  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m5/en" class data-astro-cid-khgtvzrl> M5 · MCP deep dive  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m6/en" class data-astro-cid-khgtvzrl> M6 · Claude Code CLI mastery  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m7/en" class data-astro-cid-khgtvzrl> M7 · GPT-5.3 Codex CLI and OpenAI agents  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m8/en" class data-astro-cid-khgtvzrl> M8 · Cursor Composer + IDE agents  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m9/en" class data-astro-cid-khgtvzrl> M9 · Memory strategies  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m10/en" class data-astro-cid-khgtvzrl> M10 · State, drift, continuity  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m11/en" class data-astro-cid-khgtvzrl> M11 · Evaluating agents: metrics over vibes  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m12/en" class="current" data-astro-cid-khgtvzrl> M12 · Regression tests for agents  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m13/en" class data-astro-cid-khgtvzrl> M13 · Tuning: what to change when metrics don&#39;t move  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m14/en" class data-astro-cid-khgtvzrl> M14 · One agent, many steps: pipelines and orchestration  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m15/en" class data-astro-cid-khgtvzrl> M15 · Multi-agent: roles, communication, supervisor  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m16/en" class data-astro-cid-khgtvzrl> M16 · When multi-agent is overkill. Anti-patterns  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m17/en" class data-astro-cid-khgtvzrl> M17 · Production: deploying agents to live environments  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m18/en" class data-astro-cid-khgtvzrl> M18 · Security in prod: secrets, sandbox, audit  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m19/en" class data-astro-cid-khgtvzrl> M19 · Incidents &amp; post-mortems  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m20/en" class data-astro-cid-khgtvzrl> M20 · Finale: where to go after Middle  </a> </li> </ul>  </aside> <main class="reader-main" data-astro-cid-a7sruqtr> <div class="chapter-eyebrow" data-astro-cid-a7sruqtr> <span data-astro-cid-a7sruqtr>Middle Path · m12</span> <a class="lang-toggle" href="/vibesamurai-site/courses/middle/m12" aria-label="Switch to RU" data-astro-cid-a7sruqtr>RU</a> </div> <h1 class="chapter-title" data-astro-cid-a7sruqtr>M12 · Regression tests for agents</h1> <p class="chapter-subtitle" data-astro-cid-a7sruqtr>Golden examples, snapshot harness, CI integration. Catch regressions at the moment of change, not two weeks later.</p> <h2 id="hook">Hook</h2>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>WITHOUT a regression harness:    WITH a regression harness:</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>Updated the model        →       git commit + push</span></span>
+<span class="line"><span>Two weeks later spotted          CI: 12/20 → 9/20</span></span>
+<span class="line"><span>something got worse              specific cases failed</span></span>
+<span class="line"><span>                                 roll back until solved</span></span>
+<span class="line"><span>"hard to reproduce"              "here's a reproducible diff"</span></span></code></pre>
+<p>Hey folks, welcome 👋</p>
+<p>This chapter is about a <strong>harness</strong> that catches regressions <strong>at the moment</strong> of change, not two weeks later. In normal development we call this <strong>regression tests</strong>, here transposed onto agents.</p>
+<p>An hour, maybe an hour and a half. This is the <strong>step up</strong> from M11 tier 2 to tier 3 — automated eval that <strong>tells you</strong> “got worse.”</p>
+<h2 id="concept-a-golden-example-as-a-unit-test-for-an-agent">Concept: a golden example as a unit test for an agent</h2>
+<p>In normal development a regression test is:</p>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="python"><code><span class="line"><span style="color:#FF79C6;--shiki-dark:#FF79C6">def</span><span style="color:#50FA7B;--shiki-dark:#50FA7B"> test_add_returns_sum</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">():</span></span>
+<span class="line"><span style="color:#FF79C6;--shiki-dark:#FF79C6">    assert</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2"> add(</span><span style="color:#BD93F9;--shiki-dark:#BD93F9">2</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">, </span><span style="color:#BD93F9;--shiki-dark:#BD93F9">3</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">) </span><span style="color:#FF79C6;--shiki-dark:#FF79C6">==</span><span style="color:#BD93F9;--shiki-dark:#BD93F9"> 5</span></span></code></pre>
+<p>Hard: input 2,3 → expected output 5. If <code>add</code> changes and the test fails — <strong>regression</strong>, caught immediately.</p>
+<p>You can’t do that with an agent. An agent is <strong>non-deterministic</strong> — same prompt, different answers. But you can build a <strong>similar shape</strong>:</p>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>┌─────────────────────────────────────────────────────┐</span></span>
+<span class="line"><span>│  Golden example = input + criteria, not input+output│</span></span>
+<span class="line"><span>│  Criteria = a set of automatic checks:              │</span></span>
+<span class="line"><span>│   - regex match                                     │</span></span>
+<span class="line"><span>│   - unit tests after applying the diff              │</span></span>
+<span class="line"><span>│   - syntax checks (AST)                             │</span></span>
+<span class="line"><span>│   - judge-LLM (GPT looks and scores)                │</span></span>
+<span class="line"><span>└─────────────────────────────────────────────────────┘</span></span></code></pre>
+<p>Not “output must be <strong>exactly</strong> this,” but “output must <strong>satisfy</strong> these conditions.”</p>
+<h2 id="harness-structure">Harness structure</h2>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>project/</span></span>
+<span class="line"><span>├── evals/</span></span>
+<span class="line"><span>│   ├── cases/</span></span>
+<span class="line"><span>│   │   ├── case-01-refactor-controller/</span></span>
+<span class="line"><span>│   │   │   ├── setup.sh           # prepares a clean state</span></span>
+<span class="line"><span>│   │   │   ├── prompt.md          # input for the agent</span></span>
+<span class="line"><span>│   │   │   ├── verify.sh          # verifies the result</span></span>
+<span class="line"><span>│   │   │   └── expected.md        # what should be (for eyes)</span></span>
+<span class="line"><span>│   │   ├── case-02-bug-fix/</span></span>
+<span class="line"><span>│   │   │   └── ...</span></span>
+<span class="line"><span>│   ├── run.sh                     # runs all cases</span></span>
+<span class="line"><span>│   ├── runs/</span></span>
+<span class="line"><span>│   │   ├── 2026-05-15/</span></span>
+<span class="line"><span>│   │   │   ├── case-01.log</span></span>
+<span class="line"><span>│   │   │   ├── case-01.pass</span></span>
+<span class="line"><span>│   │   │   └── summary.csv</span></span>
+<span class="line"><span>│   │   └── 2026-05-01/</span></span>
+<span class="line"><span>│   └── trends.md                  # manual analysis</span></span></code></pre>
+<p>Each case is an <strong>isolated unit</strong>: setup → prompt → verify. Each run is <strong>independent</strong>, order doesn’t matter.</p>
+<h2 id="example-case-refactor-controller">Example case: refactor controller</h2>
+<p><code>evals/cases/case-01-refactor-controller/setup.sh</code>:</p>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#6272A4;--shiki-dark:#6272A4">#!/usr/bin/env bash</span></span>
+<span class="line"><span style="color:#8BE9FD;--shiki-dark:#8BE9FD">set</span><span style="color:#BD93F9;--shiki-dark:#BD93F9"> -e</span></span>
+<span class="line"><span style="color:#6272A4;--shiki-dark:#6272A4"># Reset working copy to the "before" point</span></span>
+<span class="line"><span style="color:#50FA7B;--shiki-dark:#50FA7B">git</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C"> checkout</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C"> main</span><span style="color:#BD93F9;--shiki-dark:#BD93F9"> --</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C"> src/api/users.ts</span></span>
+<span class="line"><span style="color:#50FA7B;--shiki-dark:#50FA7B">git</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C"> checkout</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C"> main</span><span style="color:#BD93F9;--shiki-dark:#BD93F9"> --</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C"> tests/users.test.ts</span></span>
+<span class="line"><span style="color:#6272A4;--shiki-dark:#6272A4"># Remove leftovers from previous runs</span></span>
+<span class="line"><span style="color:#50FA7B;--shiki-dark:#50FA7B">rm</span><span style="color:#BD93F9;--shiki-dark:#BD93F9"> -f</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C"> src/validators/userValidator.ts</span></span></code></pre>
+<p><code>evals/cases/case-01-refactor-controller/prompt.md</code>:</p>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="markdown"><code><span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">In </span><span style="color:#50FA7B;--shiki-dark:#50FA7B">`src/api/users.ts`</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2"> the </span><span style="color:#50FA7B;--shiki-dark:#50FA7B">`createUser`</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2"> method mixes three responsibilities:</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">input validation, business logic, and DB access.</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">Task: extract validation into a separate module </span><span style="color:#50FA7B;--shiki-dark:#50FA7B">`src/validators/userValidator.ts`</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">.</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">Requirements:</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">- </span><span style="color:#50FA7B;--shiki-dark:#50FA7B">`createUser`</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2"> should import from the new module</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">- Existing tests </span><span style="color:#50FA7B;--shiki-dark:#50FA7B">`tests/users.test.ts`</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2"> must pass unchanged</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">- No new dependencies</span></span></code></pre>
+<p><code>evals/cases/case-01-refactor-controller/verify.sh</code>:</p>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#6272A4;--shiki-dark:#6272A4">#!/usr/bin/env bash</span></span>
+<span class="line"><span style="color:#8BE9FD;--shiki-dark:#8BE9FD">set</span><span style="color:#BD93F9;--shiki-dark:#BD93F9"> -e</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6272A4;--shiki-dark:#6272A4"># 1. File exists</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">[ </span><span style="color:#FF79C6;--shiki-dark:#FF79C6">-f</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2"> src/validators/userValidator.ts ] </span><span style="color:#FF79C6;--shiki-dark:#FF79C6">||</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2"> { </span><span style="color:#8BE9FD;--shiki-dark:#8BE9FD">echo</span><span style="color:#E9F284;--shiki-dark:#E9F284"> "</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">FAIL: validator file missing</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">; </span><span style="color:#8BE9FD;--shiki-dark:#8BE9FD">exit</span><span style="color:#BD93F9;--shiki-dark:#BD93F9"> 1</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">; }</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6272A4;--shiki-dark:#6272A4"># 2. Import in createUser</span></span>
+<span class="line"><span style="color:#50FA7B;--shiki-dark:#50FA7B">grep</span><span style="color:#BD93F9;--shiki-dark:#BD93F9"> -q</span><span style="color:#E9F284;--shiki-dark:#E9F284"> "</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">from.*validators/userValidator</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C"> src/api/users.ts</span><span style="color:#FF79C6;--shiki-dark:#FF79C6"> ||</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2"> { </span><span style="color:#8BE9FD;--shiki-dark:#8BE9FD">echo</span><span style="color:#E9F284;--shiki-dark:#E9F284"> "</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">FAIL: no import</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">; </span><span style="color:#8BE9FD;--shiki-dark:#8BE9FD">exit</span><span style="color:#BD93F9;--shiki-dark:#BD93F9"> 1</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">; }</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6272A4;--shiki-dark:#6272A4"># 3. Tests pass</span></span>
+<span class="line"><span style="color:#50FA7B;--shiki-dark:#50FA7B">npm</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C"> test</span><span style="color:#BD93F9;--shiki-dark:#BD93F9"> --</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C"> tests/users.test.ts</span><span style="color:#FF79C6;--shiki-dark:#FF79C6"> ||</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2"> { </span><span style="color:#8BE9FD;--shiki-dark:#8BE9FD">echo</span><span style="color:#E9F284;--shiki-dark:#E9F284"> "</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">FAIL: tests broken</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">; </span><span style="color:#8BE9FD;--shiki-dark:#8BE9FD">exit</span><span style="color:#BD93F9;--shiki-dark:#BD93F9"> 1</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">; }</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6272A4;--shiki-dark:#6272A4"># 4. No new dependencies</span></span>
+<span class="line"><span style="color:#50FA7B;--shiki-dark:#50FA7B">git</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C"> diff</span><span style="color:#BD93F9;--shiki-dark:#BD93F9"> --quiet</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C"> package.json</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C"> package-lock.json</span><span style="color:#FF79C6;--shiki-dark:#FF79C6"> ||</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2"> { </span><span style="color:#8BE9FD;--shiki-dark:#8BE9FD">echo</span><span style="color:#E9F284;--shiki-dark:#E9F284"> "</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">FAIL: deps changed</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">; </span><span style="color:#8BE9FD;--shiki-dark:#8BE9FD">exit</span><span style="color:#BD93F9;--shiki-dark:#BD93F9"> 1</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">; }</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#8BE9FD;--shiki-dark:#8BE9FD">echo</span><span style="color:#E9F284;--shiki-dark:#E9F284"> "</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">PASS</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span></span></code></pre>
+<p>That’s a <strong>complete</strong> automated case. Runs in a minute, gives a <strong>binary</strong> answer.</p>
+<h2 id="runner-runsh">Runner: <code>run.sh</code></h2>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#6272A4;--shiki-dark:#6272A4">#!/usr/bin/env bash</span></span>
+<span class="line"><span style="color:#8BE9FD;--shiki-dark:#8BE9FD">set</span><span style="color:#BD93F9;--shiki-dark:#BD93F9"> -u</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#BD93F9;--shiki-dark:#BD93F9">RUN_ID</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">=</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">$(</span><span style="color:#50FA7B;--shiki-dark:#50FA7B">date</span><span style="color:#BD93F9;--shiki-dark:#BD93F9"> -u</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C"> +%Y-%m-%dT%H-%M-%S)</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span></span>
+<span class="line"><span style="color:#BD93F9;--shiki-dark:#BD93F9">OUT_DIR</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">=</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">evals/runs/</span><span style="color:#BD93F9;--shiki-dark:#BD93F9">$RUN_ID</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span></span>
+<span class="line"><span style="color:#50FA7B;--shiki-dark:#50FA7B">mkdir</span><span style="color:#BD93F9;--shiki-dark:#BD93F9"> -p</span><span style="color:#E9F284;--shiki-dark:#E9F284"> "</span><span style="color:#BD93F9;--shiki-dark:#BD93F9">$OUT_DIR</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#BD93F9;--shiki-dark:#BD93F9">SUMMARY</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">=</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#BD93F9;--shiki-dark:#BD93F9">$OUT_DIR</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">/summary.csv</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span></span>
+<span class="line"><span style="color:#8BE9FD;--shiki-dark:#8BE9FD">echo</span><span style="color:#E9F284;--shiki-dark:#E9F284"> "</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">case,pass,duration_s,notes</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#FF79C6;--shiki-dark:#FF79C6"> ></span><span style="color:#E9F284;--shiki-dark:#E9F284"> "</span><span style="color:#BD93F9;--shiki-dark:#BD93F9">$SUMMARY</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#FF79C6;--shiki-dark:#FF79C6">for</span><span style="color:#BD93F9;--shiki-dark:#BD93F9"> case_dir</span><span style="color:#FF79C6;--shiki-dark:#FF79C6"> in</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C"> evals/cases/*/</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">; </span><span style="color:#FF79C6;--shiki-dark:#FF79C6">do</span></span>
+<span class="line"><span style="color:#BD93F9;--shiki-dark:#BD93F9">    name</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">=</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">$(</span><span style="color:#50FA7B;--shiki-dark:#50FA7B">basename</span><span style="color:#E9F284;--shiki-dark:#E9F284"> "</span><span style="color:#BD93F9;--shiki-dark:#BD93F9">$case_dir</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">)</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span></span>
+<span class="line"><span style="color:#BD93F9;--shiki-dark:#BD93F9">    log</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">=</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#BD93F9;--shiki-dark:#BD93F9">$OUT_DIR</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">/</span><span style="color:#BD93F9;--shiki-dark:#BD93F9">$name</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">.log</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span></span>
+<span class="line"><span style="color:#BD93F9;--shiki-dark:#BD93F9">    start</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">=</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">$(</span><span style="color:#50FA7B;--shiki-dark:#50FA7B">date</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C"> +%s</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6272A4;--shiki-dark:#6272A4">    # Clean state</span></span>
+<span class="line"><span style="color:#50FA7B;--shiki-dark:#50FA7B">    bash</span><span style="color:#E9F284;--shiki-dark:#E9F284"> "</span><span style="color:#BD93F9;--shiki-dark:#BD93F9">$case_dir</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">/setup.sh</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#FF79C6;--shiki-dark:#FF79C6"> ></span><span style="color:#E9F284;--shiki-dark:#E9F284"> "</span><span style="color:#BD93F9;--shiki-dark:#BD93F9">$log</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#FF79C6;--shiki-dark:#FF79C6"> 2>&#x26;1</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6272A4;--shiki-dark:#6272A4">    # Run the agent</span></span>
+<span class="line"><span style="color:#50FA7B;--shiki-dark:#50FA7B">    cat</span><span style="color:#E9F284;--shiki-dark:#E9F284"> "</span><span style="color:#BD93F9;--shiki-dark:#BD93F9">$case_dir</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">/prompt.md</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#FF79C6;--shiki-dark:#FF79C6"> |</span><span style="color:#50FA7B;--shiki-dark:#50FA7B"> claude</span><span style="color:#BD93F9;--shiki-dark:#BD93F9"> --print</span><span style="color:#BD93F9;--shiki-dark:#BD93F9"> --output-format=json</span><span style="color:#FF79C6;--shiki-dark:#FF79C6"> >></span><span style="color:#E9F284;--shiki-dark:#E9F284"> "</span><span style="color:#BD93F9;--shiki-dark:#BD93F9">$log</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#FF79C6;--shiki-dark:#FF79C6"> 2>&#x26;1</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6272A4;--shiki-dark:#6272A4">    # Verify</span></span>
+<span class="line"><span style="color:#FF79C6;--shiki-dark:#FF79C6">    if</span><span style="color:#50FA7B;--shiki-dark:#50FA7B"> bash</span><span style="color:#E9F284;--shiki-dark:#E9F284"> "</span><span style="color:#BD93F9;--shiki-dark:#BD93F9">$case_dir</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">/verify.sh</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#FF79C6;--shiki-dark:#FF79C6"> >></span><span style="color:#E9F284;--shiki-dark:#E9F284"> "</span><span style="color:#BD93F9;--shiki-dark:#BD93F9">$log</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#FF79C6;--shiki-dark:#FF79C6"> 2>&#x26;1</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">; </span><span style="color:#FF79C6;--shiki-dark:#FF79C6">then</span></span>
+<span class="line"><span style="color:#BD93F9;--shiki-dark:#BD93F9">        pass</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">=</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">1</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span></span>
+<span class="line"><span style="color:#FF79C6;--shiki-dark:#FF79C6">    else</span></span>
+<span class="line"><span style="color:#BD93F9;--shiki-dark:#BD93F9">        pass</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">=</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">0</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span></span>
+<span class="line"><span style="color:#FF79C6;--shiki-dark:#FF79C6">    fi</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#BD93F9;--shiki-dark:#BD93F9">    dur</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">=</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">$(( </span><span style="color:#50FA7B;--shiki-dark:#50FA7B">$(date</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C"> +%s</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">) - start ))</span></span>
+<span class="line"><span style="color:#8BE9FD;--shiki-dark:#8BE9FD">    echo</span><span style="color:#E9F284;--shiki-dark:#E9F284"> "</span><span style="color:#BD93F9;--shiki-dark:#BD93F9">$name</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">,</span><span style="color:#BD93F9;--shiki-dark:#BD93F9">$pass</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">,</span><span style="color:#BD93F9;--shiki-dark:#BD93F9">$dur</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">,</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#FF79C6;--shiki-dark:#FF79C6"> >></span><span style="color:#E9F284;--shiki-dark:#E9F284"> "</span><span style="color:#BD93F9;--shiki-dark:#BD93F9">$SUMMARY</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span></span>
+<span class="line"><span style="color:#FF79C6;--shiki-dark:#FF79C6">done</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6272A4;--shiki-dark:#6272A4"># Final stats</span></span>
+<span class="line"><span style="color:#BD93F9;--shiki-dark:#BD93F9">total</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">=</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">$(( </span><span style="color:#50FA7B;--shiki-dark:#50FA7B">$(wc</span><span style="color:#BD93F9;--shiki-dark:#BD93F9"> -l</span><span style="color:#FF79C6;--shiki-dark:#FF79C6"> &#x3C;</span><span style="color:#E9F284;--shiki-dark:#E9F284"> "</span><span style="color:#BD93F9;--shiki-dark:#BD93F9">$SUMMARY</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">) - 1 ))</span></span>
+<span class="line"><span style="color:#BD93F9;--shiki-dark:#BD93F9">passed</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">=</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">$(</span><span style="color:#50FA7B;--shiki-dark:#50FA7B">grep</span><span style="color:#BD93F9;--shiki-dark:#BD93F9"> -c</span><span style="color:#E9F284;--shiki-dark:#E9F284"> "</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">,1,</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#E9F284;--shiki-dark:#E9F284"> "</span><span style="color:#BD93F9;--shiki-dark:#BD93F9">$SUMMARY</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#FF79C6;--shiki-dark:#FF79C6"> ||</span><span style="color:#8BE9FD;--shiki-dark:#8BE9FD"> true</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">)</span></span>
+<span class="line"><span style="color:#8BE9FD;--shiki-dark:#8BE9FD">echo</span><span style="color:#E9F284;--shiki-dark:#E9F284"> "</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">Run </span><span style="color:#BD93F9;--shiki-dark:#BD93F9">$RUN_ID</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">: </span><span style="color:#BD93F9;--shiki-dark:#BD93F9">$passed</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">/</span><span style="color:#BD93F9;--shiki-dark:#BD93F9">$total</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span></span></code></pre>
+<p><strong>Important:</strong> <code>claude --print --output-format=json</code> is <strong>non-interactive</strong> mode. The agent gets the prompt, runs (with the project’s CLAUDE.md), exits. That’s what you need for CI.</p>
+<h2 id="ci-integration-github-actions">CI integration (GitHub Actions)</h2>
+<p><code>.github/workflows/agent-evals.yml</code>:</p>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="yaml"><code><span class="line"><span style="color:#8BE9FD;--shiki-dark:#8BE9FD">name</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">:</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C"> agent-evals</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#BD93F9;--shiki-dark:#BD93F9">on</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">:</span></span>
+<span class="line"><span style="color:#8BE9FD;--shiki-dark:#8BE9FD">  schedule</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">:</span></span>
+<span class="line"><span style="color:#FF79C6;--shiki-dark:#FF79C6">    -</span><span style="color:#8BE9FD;--shiki-dark:#8BE9FD"> cron</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">:</span><span style="color:#E9F284;--shiki-dark:#E9F284"> "</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">0 4 * * MON</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#6272A4;--shiki-dark:#6272A4">      # every Monday, to catch</span></span>
+<span class="line"><span style="color:#6272A4;--shiki-dark:#6272A4">                               # model drift + project changes</span></span>
+<span class="line"><span style="color:#8BE9FD;--shiki-dark:#8BE9FD">  workflow_dispatch</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">:</span><span style="color:#6272A4;--shiki-dark:#6272A4">           # manual when needed</span></span>
+<span class="line"><span style="color:#8BE9FD;--shiki-dark:#8BE9FD">  pull_request</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">:</span></span>
+<span class="line"><span style="color:#8BE9FD;--shiki-dark:#8BE9FD">    paths</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">:</span></span>
+<span class="line"><span style="color:#FF79C6;--shiki-dark:#FF79C6">      -</span><span style="color:#E9F284;--shiki-dark:#E9F284"> "</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">CLAUDE.md</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span></span>
+<span class="line"><span style="color:#FF79C6;--shiki-dark:#FF79C6">      -</span><span style="color:#E9F284;--shiki-dark:#E9F284"> "</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">.claude/**</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span></span>
+<span class="line"><span style="color:#FF79C6;--shiki-dark:#FF79C6">      -</span><span style="color:#E9F284;--shiki-dark:#E9F284"> "</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">evals/cases/**</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#6272A4;--shiki-dark:#6272A4">       # run on agent config changes</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#8BE9FD;--shiki-dark:#8BE9FD">jobs</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">:</span></span>
+<span class="line"><span style="color:#8BE9FD;--shiki-dark:#8BE9FD">  eval</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">:</span></span>
+<span class="line"><span style="color:#8BE9FD;--shiki-dark:#8BE9FD">    runs-on</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">:</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C"> ubuntu-latest</span></span>
+<span class="line"><span style="color:#8BE9FD;--shiki-dark:#8BE9FD">    steps</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">:</span></span>
+<span class="line"><span style="color:#FF79C6;--shiki-dark:#FF79C6">      -</span><span style="color:#8BE9FD;--shiki-dark:#8BE9FD"> uses</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">:</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C"> actions/checkout@v4</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#FF79C6;--shiki-dark:#FF79C6">      -</span><span style="color:#8BE9FD;--shiki-dark:#8BE9FD"> name</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">:</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C"> Install Claude Code</span></span>
+<span class="line"><span style="color:#8BE9FD;--shiki-dark:#8BE9FD">        run</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">:</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C"> npm install -g @anthropic-ai/claude-code</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#FF79C6;--shiki-dark:#FF79C6">      -</span><span style="color:#8BE9FD;--shiki-dark:#8BE9FD"> name</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">:</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C"> Run evals</span></span>
+<span class="line"><span style="color:#8BE9FD;--shiki-dark:#8BE9FD">        env</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">:</span></span>
+<span class="line"><span style="color:#8BE9FD;--shiki-dark:#8BE9FD">          ANTHROPIC_API_KEY</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">:</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C"> ${{ secrets.ANTHROPIC_API_KEY }}</span></span>
+<span class="line"><span style="color:#8BE9FD;--shiki-dark:#8BE9FD">        run</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">:</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C"> bash evals/run.sh</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#FF79C6;--shiki-dark:#FF79C6">      -</span><span style="color:#8BE9FD;--shiki-dark:#8BE9FD"> name</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">:</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C"> Upload artifacts</span></span>
+<span class="line"><span style="color:#8BE9FD;--shiki-dark:#8BE9FD">        uses</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">:</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C"> actions/upload-artifact@v4</span></span>
+<span class="line"><span style="color:#8BE9FD;--shiki-dark:#8BE9FD">        with</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">:</span></span>
+<span class="line"><span style="color:#8BE9FD;--shiki-dark:#8BE9FD">          name</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">:</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C"> eval-run</span></span>
+<span class="line"><span style="color:#8BE9FD;--shiki-dark:#8BE9FD">          path</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">:</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C"> evals/runs/</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#FF79C6;--shiki-dark:#FF79C6">      -</span><span style="color:#8BE9FD;--shiki-dark:#8BE9FD"> name</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">:</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C"> Fail if pass rate drops</span></span>
+<span class="line"><span style="color:#8BE9FD;--shiki-dark:#8BE9FD">        run</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">:</span><span style="color:#FF79C6;--shiki-dark:#FF79C6"> |</span></span>
+<span class="line"><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">          # Compare to baseline in evals/baseline.txt</span></span>
+<span class="line"><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">          baseline=$(cat evals/baseline.txt)</span></span>
+<span class="line"><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">          latest=$(ls -t evals/runs/ | head -n 1)</span></span>
+<span class="line"><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">          passed=$(grep -c ",1," "evals/runs/$latest/summary.csv" || echo 0)</span></span>
+<span class="line"><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">          total=$(( $(wc -l &#x3C; "evals/runs/$latest/summary.csv") - 1 ))</span></span>
+<span class="line"><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">          rate=$(( passed * 100 / total ))</span></span>
+<span class="line"><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">          echo "Pass rate: $rate% (baseline: $baseline%)"</span></span>
+<span class="line"><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">          if [ "$rate" -lt "$baseline" ]; then</span></span>
+<span class="line"><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">            echo "::error::Regression detected"</span></span>
+<span class="line"><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">            exit 1</span></span>
+<span class="line"><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">          fi</span></span></code></pre>
+<p>This is a <strong>production harness</strong>. Runs on schedule + on agent-config changes + manually. If the pass rate dips below baseline — <strong>CI fails</strong>, you see it immediately.</p>
+<h2 id="check-types-verifysh">Check types (verify.sh)</h2>
+<h3 id="1-filestring">1. File/string</h3>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">[ </span><span style="color:#FF79C6;--shiki-dark:#FF79C6">-f</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2"> path/to/file ] </span><span style="color:#FF79C6;--shiki-dark:#FF79C6">||</span><span style="color:#8BE9FD;--shiki-dark:#8BE9FD"> exit</span><span style="color:#BD93F9;--shiki-dark:#BD93F9"> 1</span></span>
+<span class="line"><span style="color:#50FA7B;--shiki-dark:#50FA7B">grep</span><span style="color:#BD93F9;--shiki-dark:#BD93F9"> -q</span><span style="color:#E9F284;--shiki-dark:#E9F284"> "</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">pattern</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C"> file</span><span style="color:#FF79C6;--shiki-dark:#FF79C6"> ||</span><span style="color:#8BE9FD;--shiki-dark:#8BE9FD"> exit</span><span style="color:#BD93F9;--shiki-dark:#BD93F9"> 1</span></span></code></pre>
+<p>Simple exists/contains. Great for “a module should appear” / “an import should exist.”</p>
+<h3 id="2-astsyntax">2. AST/syntax</h3>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#6272A4;--shiki-dark:#6272A4"># TypeScript — check the code parses</span></span>
+<span class="line"><span style="color:#50FA7B;--shiki-dark:#50FA7B">tsc</span><span style="color:#BD93F9;--shiki-dark:#BD93F9"> --noEmit</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C"> src/api/users.ts</span><span style="color:#FF79C6;--shiki-dark:#FF79C6"> ||</span><span style="color:#8BE9FD;--shiki-dark:#8BE9FD"> exit</span><span style="color:#BD93F9;--shiki-dark:#BD93F9"> 1</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6272A4;--shiki-dark:#6272A4"># Python</span></span>
+<span class="line"><span style="color:#50FA7B;--shiki-dark:#50FA7B">python</span><span style="color:#BD93F9;--shiki-dark:#BD93F9"> -m</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C"> py_compile</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C"> src/auth.py</span><span style="color:#FF79C6;--shiki-dark:#FF79C6"> ||</span><span style="color:#8BE9FD;--shiki-dark:#8BE9FD"> exit</span><span style="color:#BD93F9;--shiki-dark:#BD93F9"> 1</span></span></code></pre>
+<p>Guard against “the agent wrote invalid code.”</p>
+<h3 id="3-tests">3. Tests</h3>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#50FA7B;--shiki-dark:#50FA7B">npm</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C"> test</span><span style="color:#BD93F9;--shiki-dark:#BD93F9"> --</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C"> tests/users.test.ts</span><span style="color:#FF79C6;--shiki-dark:#FF79C6"> ||</span><span style="color:#8BE9FD;--shiki-dark:#8BE9FD"> exit</span><span style="color:#BD93F9;--shiki-dark:#BD93F9"> 1</span></span>
+<span class="line"><span style="color:#50FA7B;--shiki-dark:#50FA7B">pytest</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C"> tests/test_auth.py</span><span style="color:#FF79C6;--shiki-dark:#FF79C6"> ||</span><span style="color:#8BE9FD;--shiki-dark:#8BE9FD"> exit</span><span style="color:#BD93F9;--shiki-dark:#BD93F9"> 1</span></span></code></pre>
+<p>The most valuable check — <strong>existing</strong> tests still pass.</p>
+<h3 id="4-diff-scope">4. Diff scope</h3>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#6272A4;--shiki-dark:#6272A4"># Did only the expected files change?</span></span>
+<span class="line"><span style="color:#BD93F9;--shiki-dark:#BD93F9">expected_files</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">=</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">$(</span><span style="color:#50FA7B;--shiki-dark:#50FA7B">cat</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C"> case_dir/allowed_files.txt</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">)</span></span>
+<span class="line"><span style="color:#BD93F9;--shiki-dark:#BD93F9">actual_files</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">=</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">$(</span><span style="color:#50FA7B;--shiki-dark:#50FA7B">git</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C"> diff</span><span style="color:#BD93F9;--shiki-dark:#BD93F9"> --name-only</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">)</span></span>
+<span class="line"><span style="color:#50FA7B;--shiki-dark:#50FA7B">diff</span><span style="color:#E9F284;--shiki-dark:#E9F284"> &#x3C;(</span><span style="color:#8BE9FD;--shiki-dark:#8BE9FD">echo</span><span style="color:#E9F284;--shiki-dark:#E9F284"> "</span><span style="color:#BD93F9;--shiki-dark:#BD93F9">$expected_files</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#FF79C6;--shiki-dark:#FF79C6"> |</span><span style="color:#50FA7B;--shiki-dark:#50FA7B"> sort</span><span style="color:#E9F284;--shiki-dark:#E9F284">)</span><span style="color:#E9F284;--shiki-dark:#E9F284"> &#x3C;(</span><span style="color:#8BE9FD;--shiki-dark:#8BE9FD">echo</span><span style="color:#E9F284;--shiki-dark:#E9F284"> "</span><span style="color:#BD93F9;--shiki-dark:#BD93F9">$actual_files</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#FF79C6;--shiki-dark:#FF79C6"> |</span><span style="color:#50FA7B;--shiki-dark:#50FA7B"> sort</span><span style="color:#E9F284;--shiki-dark:#E9F284">)</span><span style="color:#FF79C6;--shiki-dark:#FF79C6"> ||</span><span style="color:#8BE9FD;--shiki-dark:#8BE9FD"> exit</span><span style="color:#BD93F9;--shiki-dark:#BD93F9"> 1</span></span></code></pre>
+<p>Guard against “wandered into the wrong place” — critical for security scenarios.</p>
+<h3 id="5-llm-as-judge">5. LLM-as-judge</h3>
+<p>If you can’t check <strong>programmatically</strong> (code style, message clarity):</p>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#6272A4;--shiki-dark:#6272A4"># verify.sh writes a prompt for the judge model and parses the response</span></span>
+<span class="line"><span style="color:#BD93F9;--shiki-dark:#BD93F9">judge_response</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">=</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">$(</span><span style="color:#50FA7B;--shiki-dark:#50FA7B">cat</span><span style="color:#FF79C6;--shiki-dark:#FF79C6"> &#x3C;&#x3C;</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">EOF</span><span style="color:#FF79C6;--shiki-dark:#FF79C6"> |</span><span style="color:#50FA7B;--shiki-dark:#50FA7B"> claude</span><span style="color:#BD93F9;--shiki-dark:#BD93F9"> --print</span></span>
+<span class="line"><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">You are the judge. Below is a refactor result. Rate 1-5 on:</span></span>
+<span class="line"><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">- readability of the new module</span></span>
+<span class="line"><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">- degree of separation of responsibilities</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">Result file:</span></span>
+<span class="line"><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">$(</span><span style="color:#50FA7B;--shiki-dark:#50FA7B">cat</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C"> src/validators/userValidator.ts)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">Reply strictly in format: SCORE=N</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">EOF</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">)</span></span>
+<span class="line"><span style="color:#BD93F9;--shiki-dark:#BD93F9">score</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">=</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">$(</span><span style="color:#8BE9FD;--shiki-dark:#8BE9FD">echo</span><span style="color:#E9F284;--shiki-dark:#E9F284"> "</span><span style="color:#BD93F9;--shiki-dark:#BD93F9">$judge_response</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#FF79C6;--shiki-dark:#FF79C6"> |</span><span style="color:#50FA7B;--shiki-dark:#50FA7B"> grep</span><span style="color:#BD93F9;--shiki-dark:#BD93F9"> -oP</span><span style="color:#E9F284;--shiki-dark:#E9F284"> "</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">SCORE=\K\d+</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">)</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">[ </span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#BD93F9;--shiki-dark:#BD93F9">$score</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#FF79C6;--shiki-dark:#FF79C6"> -ge</span><span style="color:#BD93F9;--shiki-dark:#BD93F9"> 4</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2"> ] </span><span style="color:#FF79C6;--shiki-dark:#FF79C6">||</span><span style="color:#8BE9FD;--shiki-dark:#8BE9FD"> exit</span><span style="color:#BD93F9;--shiki-dark:#BD93F9"> 1</span></span></code></pre>
+<p><strong>Caution:</strong> the judge-LLM has its <strong>own</strong> variance. For statistics — multiple runs and averaging.</p>
+<h2 id="harness-anti-patterns">Harness anti-patterns</h2>
+<h3 id="1-hard-snapshots">1. Hard snapshots</h3>
+<p>“The agent must generate <strong>exactly</strong> this code.” Two days later the model does the same with <strong>different</strong> words — fails, while <strong>semantically</strong> correct.</p>
+<p><strong>Cure:</strong> verify <strong>semantics</strong> (tests, AST, structural regex), not exact text.</p>
+<h3 id="2-cases-too-short--too-long">2. Cases too short / too long</h3>
+<ul>
+<li><strong>Short</strong> (10 seconds) — no signal for hard tasks</li>
+<li><strong>Long</strong> (30+ minutes) — can’t run often, expensive</li>
+</ul>
+<p><strong>Cure:</strong> 1–5 minutes per case. 20 cases = 20–100 minutes per run. Once a week — acceptable.</p>
+<h3 id="3-leaving-flaky-cases-as-is">3. Leaving flaky cases as is</h3>
+<p>A case fails one run in two — “we’ll <strong>temporarily</strong> ignore.” A month later you have 5 flaky cases, the suite is <strong>not verifiable</strong>.</p>
+<p><strong>Cure:</strong> flaky case → <strong>immediate</strong> work item “fix or delete.” Better <strong>fewer</strong> stable cases than <strong>many</strong> noisy ones.</p>
+<h3 id="4-suite-isolated-from-production">4. Suite isolated from production</h3>
+<p>The reference suite lives in a <strong>separate</strong> repo. Nobody <strong>updates</strong> it when production changes.</p>
+<p><strong>Cure:</strong> the suite <strong>in the same</strong> repo as the code, in the same branch. Part of the PR checklist: “if you changed CLAUDE.md, check the suite is green.”</p>
+<h3 id="5-passfail-only">5. Pass/fail only</h3>
+<p>Binary is too coarse. A case “passed” but took <strong>15 minutes</strong> instead of the usual <strong>3</strong> — that’s <strong>degradation</strong>, not captured.</p>
+<p><strong>Cure:</strong> record <strong>duration</strong>, <strong>token cost</strong>, <strong>number of tool calls</strong>. Efficiency regression is regression.</p>
+<h2 id="a-delicate-point-model-drift">A delicate point: “model drift”</h2>
+<p>At Anthropic, OpenAI, and others, <strong>model snapshots change</strong>. Sometimes explicitly (new ID), sometimes <strong>silently</strong> on the same API endpoint. Which means:</p>
+<ul>
+<li>Your harness can <strong>suddenly</strong> show a drop in pass rate, while <strong>you changed nothing</strong></li>
+<li>That’s <strong>not a bug</strong> — it’s <strong>drift</strong> — the model is slightly different</li>
+</ul>
+<p><strong>What to do:</strong></p>
+<ol>
+<li><strong>Pin</strong> the concrete model ID in the config (<code>claude-opus-4-7</code>, not “opus-latest”)</li>
+<li><strong>Log</strong> the model ID on every run (a field in summary.csv)</li>
+<li><strong>When the ID changes</strong> — a separate baseline for the new version</li>
+</ol>
+<p>Without a pinned model ID your trends are <strong>noise</strong>.</p>
+<h2 id="practice-90120-minutes">Practice (90–120 minutes)</h2>
+<h3 id="task-1-60-minutes--build-a-minimal-harness">Task 1 (60 minutes) — build a minimal harness</h3>
+<p>Take 3 cases from the M11 reference suite. Convert into <code>setup.sh + prompt.md + verify.sh</code>. Run by hand once — should go green.</p>
+<p>If not green — <strong>fix verify.sh</strong>, not the task. Verify must <strong>precisely</strong> mirror the acceptance criterion.</p>
+<h3 id="task-2-30-minutes--runner">Task 2 (30 minutes) — runner</h3>
+<p>Write <code>evals/run.sh</code> (template above). Run on 3 cases. Get <code>summary.csv</code>.</p>
+<h3 id="task-3-30-minutes--ci">Task 3 (30 minutes) — CI</h3>
+<p>Drop in a minimal <code>.github/workflows/agent-evals.yml</code>. Trigger it <strong>manually</strong> via workflow_dispatch. Confirm artifacts upload.</p>
+<h3 id="optional-60-minutes--extension">Optional (60 minutes) — extension</h3>
+<p>Add 5 more cases, create <code>evals/baseline.txt</code>, turn on the “pass rate ≥ baseline” check in CI. Now you have a <strong>full-fledged</strong> agent regression harness.</p>
+<h2 id="recap">Recap</h2>
+<ul>
+<li><strong>Golden example = input + criteria</strong>, not input+output. You verify <strong>semantics</strong>, not text.</li>
+<li><strong>Harness = setup → prompt → verify</strong> per case. The runner sweeps everything, CI watches.</li>
+<li><strong>Pin model ID + duration + token cost</strong> — otherwise trends are noisy. Model drift is its own signal category.</li>
+</ul>
+<h2 id="vibe-samurai">Vibe Samurai</h2>
+<aside class="skeptic">
+<p><strong>🥷 Vibe Samurai asks:</strong>
+“That’s heavy process! I have 3 developers on agents, not Google — why CI and a harness?”</p>
+<p><strong>Answer:</strong> A harness is <strong>cheaper</strong> to build than it sounds. The base — <strong>3 hours of work</strong>, pays back the <strong>first</strong> “the model quietly got worse.” If the team is 3+ on agents — without a common harness you <strong>don’t know</strong> whose CLAUDE.md / .claude/ tweaks help or hurt the agent. It becomes a <strong>source of conflicts</strong>: everyone “tunes for themselves,” collective throughput drops, nobody <strong>knows why</strong>. A harness is <strong>shared truth</strong>. <strong>Not perfect, but actually works.</strong> A 3-hour investment in a simple harness returns those 3 hours in the <strong>first</strong> week you catch a silent regression.</p>
+</aside>
+<h2 id="whats-next">What’s next</h2>
+<p>In <strong>M13 — Tuning: what to change when metrics don’t move</strong> we look at <strong>what to do</strong> if metrics stay below target. Prompts, context, task decomposition, model choice, hooks — <strong>in what order</strong> to tune, and <strong>where not to start</strong>. After M13 we close Part IV.</p>
+<p>If this clicked — share with anyone whose “agent works but feels worse lately.” If you have your own harness — share it in the comments, we’ll unpack. Your feedback really helps polish the material.</p>
+<h2 id="-further-reading">📚 Further reading</h2>
+<p>If you want to dig deeper into regression testing for LLM agents, here are several practical sources I use myself.</p>
+<p><strong>Golden datasets and regression practice</strong></p>
+<ul>
+<li><strong>LLM Regression Testing Pipeline (TestQuality, 2026)</strong> — practical pipeline walk-through with RAG triad and gold sets: <a href="https://testquality.com/llm-regression-testing-pipeline/">testquality.com/llm-regression-testing-pipeline</a>.</li>
+<li><strong>7 Proven Strategies for LLM Regression Testing</strong> (Techment) — golden vs random sampling, how to prep gold sets for CI: <a href="https://www.techment.com/blogs/llm-regression-testing/">techment.com/blogs/llm-regression-testing</a>.</li>
+<li><strong>Continuous Evaluation in Production</strong> (dev.to / Lamhot) — patterns for evals-as-CI and a living test suite: <a href="https://dev.to/lamhot/continuous-evaluation-in-production-monitoring-regressions-evals-in-cicd-k87">dev.to/lamhot/continuous-evaluation-in-production-monitoring-regressions-evals-in-cicd-k87</a>.</li>
+</ul>
+<p><strong>Eval frameworks to lean on</strong></p>
+<ul>
+<li><strong>openai/evals</strong> — a registry of benchmarks and a framework, handy as a “skeleton” for your harness: <a href="https://github.com/openai/evals">github.com/openai/evals</a>.</li>
+<li><strong>Anthropic — Create strong empirical evaluations</strong> — rubric and grading guide, useful before you write your own golden examples: <a href="https://docs.claude.com/en/docs/test-and-evaluate/develop-tests">docs.claude.com/en/docs/test-and-evaluate/develop-tests</a>.</li>
+</ul>
+<blockquote>
+<p><strong>Tip:</strong> the harness must be <strong>boring</strong>. Any “smart” fancy stack with lots of abstractions breaks in a month. Boring bash + JSON files + one “pass rate” metric outlives everything.</p>
+</blockquote> <nav class="chapter-nav" data-astro-cid-a7sruqtr> <a href="/vibesamurai-site/courses/middle/m11/en" data-astro-cid-a7sruqtr> <span class="dir" data-astro-cid-a7sruqtr>← Back</span> <span class="title" data-astro-cid-a7sruqtr>M11 · Evaluating agents: metrics over vibes</span> </a> <a href="/vibesamurai-site/courses/middle/m13/en" data-astro-cid-a7sruqtr> <span class="dir" data-astro-cid-a7sruqtr>Next →</span> <span class="title" data-astro-cid-a7sruqtr>M13 · Tuning: what to change when metrics don&#39;t move</span> </a> </nav> </main>  </div> <script type="module">
+    import { gatingEnabled } from '../lib/supabase';
+    import { fetchChapter } from '../lib/auth';
+
+    const base = import.meta.env.BASE_URL;
+    let mermaidLib = null;
+
+    function scopeOf(root) {
+      return root === document ? document.querySelector('.reader-main') : root;
+    }
+
+    function addCopyBtns(root) {
+      const scope = scopeOf(root); if (!scope) return;
+      scope.querySelectorAll('pre').forEach((pre) => {
+        if (pre.closest('.code-tabs')) return;
+        if (pre.querySelector('.copy-btn')) return;
+        const btn = document.createElement('button');
+        btn.className = 'copy-btn';
+        btn.textContent = 'copy';
+        btn.addEventListener('click', async () => {
+          const code = pre.querySelector('code')?.textContent ?? pre.textContent ?? '';
+          await navigator.clipboard.writeText(code.trimEnd());
+          btn.textContent = '✓ copied';
+          setTimeout(() => { btn.textContent = 'copy'; }, 1600);
+        });
+        pre.appendChild(btn);
+      });
+    }
+
+    function tightenMermaidSvgs(retries = 6) {
+      let pending = false;
+      document.querySelectorAll('.mermaid svg').forEach((svg) => {
+        if (svg.dataset.tightened === '1') return;
+        try {
+          const bbox = svg.getBBox();
+          if (!bbox || bbox.width === 0) { pending = true; return; }
+          const pad = 6;
+          svg.setAttribute('viewBox',
+            `${bbox.x - pad} ${bbox.y - pad} ${bbox.width + pad * 2} ${bbox.height + pad * 2}`);
+          svg.removeAttribute('height');
+          svg.style.height = 'auto';
+          svg.style.maxWidth = '100%';
+          svg.style.display = 'block';
+          svg.dataset.tightened = '1';
+        } catch (e) { pending = true; }
+      });
+      if (pending && retries > 0) setTimeout(() => tightenMermaidSvgs(retries - 1), 120);
+    }
+
+    async function ensureMermaid() {
+      if (mermaidLib) return mermaidLib;
+      const mod = await import('https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs');
+      mermaidLib = mod.default;
+      mermaidLib.initialize({
+        startOnLoad: false, theme: 'neutral',
+        themeVariables: {
+          fontFamily: 'JetBrains Mono, ui-monospace, monospace',
+          primaryColor: '#f5f5f5', primaryBorderColor: '#222',
+          primaryTextColor: '#111', lineColor: '#444',
+        },
+        flowchart: { curve: 'basis', padding: 12, useMaxWidth: true },
+      });
+      return mermaidLib;
+    }
+
+    async function renderMermaid(root) {
+      const scope = scopeOf(root); if (!scope) return;
+      const matches = scope.querySelectorAll(
+        'pre[data-language="mermaid"], pre.language-mermaid, code.language-mermaid'
+      );
+      if (!matches.length) return;
+      matches.forEach((el) => {
+        const block = el.tagName === 'CODE' ? el.closest('pre') || el : el;
+        const codeEl = block.querySelector('code') || block;
+        const wrap = document.createElement('div');
+        wrap.className = 'mermaid';
+        wrap.textContent = codeEl.textContent;
+        block.replaceWith(wrap);
+      });
+      try {
+        const m = await ensureMermaid();
+        await m.run();
+        tightenMermaidSvgs();
+      } catch (err) {
+        console.warn('mermaid failed', err);
+        document.querySelectorAll('.mermaid:not(:has(svg))').forEach((el) => { el.style.display = 'none'; });
+      }
+    }
+
+    async function enhance(root = document) {
+      addCopyBtns(root);
+      await renderMermaid(root);
+    }
+
+    function paywallHtml(required, needLogin) {
+      const label = { beginner: 'Beginner (300 ₽)', middle: 'Beginner + Middle (500 ₽)', all: 'Весь пакет (700 ₽)' }[required] || '';
+      return `<div class="paywall">
+        <div class="paywall-ic">🔒</div>
+        <h3>Эта глава — в платном доступе</h3>
+        <p>Нужен тариф: <strong>${label}</strong>. Доступ навсегда, без подписки.</p>
+        ${needLogin ? '<p>Войди через Google и оформи доступ — продолжишь с любого устройства.</p>' : ''}
+        <a class="paywall-btn" href="${base}pricing">Открыть доступ →</a>
+        <a class="paywall-link" href="${base}account">Войти / мой аккаунт</a>
+      </div>`;
+    }
+
+    async function gatedFlow(mount) {
+      const slug = mount.dataset.slug;
+      const required = mount.dataset.required || 'beginner';
+      mount.innerHTML = '<p class="gate-msg">Проверяем доступ…</p>';
+      const res = await fetchChapter(slug);
+      if (res.ok) {
+        mount.innerHTML = res.html;
+        await enhance(mount);
+      } else if (res.status === 401) {
+        mount.innerHTML = paywallHtml(required, true);
+      } else if (res.status === 402) {
+        mount.innerHTML = paywallHtml(res.requiredTier || required, false);
+      } else {
+        mount.innerHTML = '<p class="gate-msg">Не удалось загрузить главу. Обнови страницу.</p>';
+      }
+    }
+
+    const mount = document.getElementById('gated-mount');
+    if (mount && gatingEnabled) gatedFlow(mount);
+    else enhance(document);
+  </script> </body> </html>

@@ -1,0 +1,431 @@
+<!DOCTYPE html><html lang="en" data-astro-cid-a7sruqtr> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Claude Code CLI mastery — Vibesamurai</title><meta name="description" content="Installation, configuration, hooks, skills, custom commands, subagents and .claude/settings.json patterns."><meta property="og:title" content="Claude Code CLI mastery"><meta property="og:type" content="article"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Inter:wght@300..800&family=JetBrains+Mono:wght@400..600&display=swap" rel="stylesheet"><link rel="stylesheet" href="/vibesamurai-site/_astro/_slug_.Cs4TX1wt.css">
+<style>.account-btn{display:inline-flex;align-items:center;gap:var(--space-2);font-family:var(--font-mono);font-size:var(--size-2);text-transform:uppercase;letter-spacing:.06em;padding:5px 10px;border:1px solid var(--rule);border-radius:999px;color:var(--text-soft);background:var(--surface);transition:border-color var(--d-fast),color var(--d-fast)}.account-btn:hover{border-color:var(--accent);color:var(--text)}.account-ic{width:18px;height:18px;display:grid;place-items:center;border-radius:50%;background:var(--accent);color:var(--accent-ink);font-weight:700;font-size:10px;line-height:1}.reader-rail .account-btn{padding:0;border:none;background:transparent}.reader-rail .account-label{display:none}.reader-rail .account-ic{width:32px;height:32px;font-size:13px}.rail-toggle{width:36px;height:36px;display:grid;place-items:center;background:var(--accent);border:1px solid var(--accent);border-radius:4px;cursor:pointer;transition:filter var(--d-fast),transform var(--d-fast);padding:0}.rail-toggle:hover{filter:brightness(1.08);transform:translateY(-1px)}.rail-toggle:active{transform:translateY(0)}.rail-toggle-icon{width:14px;height:12px;border-left:2px solid var(--accent-ink);border-right:2px solid var(--accent-ink);transition:transform var(--d-normal) var(--ease-standard)}.reader-app.sidebar-open .rail-toggle-icon{transform:rotate(0)}.reader-app:not(.sidebar-open) .rail-toggle-icon{transform:scaleX(.5)}.sidebar-backdrop{display:none;position:fixed;inset:0;background:#0000008c;z-index:140;border:0;padding:0;cursor:pointer}@media(max-width:900px){.reader-app.sidebar-open~.sidebar-backdrop{display:block}}.rail-spacer[data-astro-cid-ofsbkzh7]{flex:1}.reader-sidebar[data-astro-cid-khgtvzrl] .ru-tag[data-astro-cid-khgtvzrl]{font-style:normal;font-family:var(--font-mono);font-size:.7em;color:var(--text-mute);margin-left:4px;padding:1px 4px;border:1px solid var(--rule);border-radius:3px;text-transform:uppercase;vertical-align:middle}.chapter-eyebrow[data-astro-cid-a7sruqtr]{display:flex;justify-content:space-between;align-items:center;gap:var(--space-3)}.lang-toggle[data-astro-cid-a7sruqtr]{font-family:var(--font-mono);font-size:var(--size-2);padding:2px 8px;border:1px solid var(--rule);border-radius:4px;color:var(--text-mute);text-decoration:none;text-transform:uppercase;letter-spacing:.08em}.lang-toggle[data-astro-cid-a7sruqtr]:hover{color:var(--accent);border-color:var(--accent)}.code-tabs[data-astro-cid-hg66rjob]{margin:var(--space-5) 0}.code-tabs-nav[data-astro-cid-hg66rjob]{display:flex;gap:2px;margin-bottom:-1px;position:relative;z-index:1}.ctab[data-astro-cid-hg66rjob]{font-family:var(--font-mono);font-size:11px;text-transform:uppercase;letter-spacing:.07em;padding:5px 14px;border:1px solid #21222c;border-bottom:none;background:#1a1b23;color:#6272a4;cursor:pointer;border-radius:4px 4px 0 0;transition:color .12s,background .12s}.ctab[data-astro-cid-hg66rjob].is-active{background:#282a36;color:#f8f8f2;border-color:#21222c}.ctab[data-astro-cid-hg66rjob]:hover:not(.is-active){color:#cdd6f4}.ctab-panel[data-astro-cid-hg66rjob]{display:none}.ctab-panel[data-astro-cid-hg66rjob].is-active{display:block}.ctab-panel[data-astro-cid-hg66rjob] pre{margin-top:0!important;border-radius:0 6px 6px!important}
+</style></head> <body data-astro-cid-a7sruqtr> <div class="reader-app" data-astro-cid-a7sruqtr> <aside class="reader-rail" data-astro-cid-ofsbkzh7> <a href="/vibesamurai-site/" class="logo" aria-label="Vibesamurai home" data-astro-cid-ofsbkzh7>V</a> <button type="button" class="rail-toggle" id="sidebar-toggle" aria-label="Свернуть/развернуть оглавление" title="Свернуть/развернуть оглавление" data-astro-cid-ofsbkzh7> <span class="rail-toggle-icon" aria-hidden="true" data-astro-cid-ofsbkzh7></span> </button> <div class="rail-spacer" data-astro-cid-ofsbkzh7></div> <a href="/vibesamurai-site/account" class="account-btn" id="account-btn" aria-label="Аккаунт"> <span class="account-ic" id="account-ic">⌂</span> <span class="account-label" id="account-label">Войти</span> </a>  <script type="module" src="/vibesamurai-site/_astro/AccountButton.astro_astro_type_script_index_0_lang.CmD2sdn9.js"></script> </aside>  <button type="button" class="sidebar-backdrop" id="sidebar-backdrop" aria-label="Закрыть оглавление" tabindex="-1" data-astro-cid-ofsbkzh7></button>  <script type="module">const d="vs-sidebar-open",a="(max-width: 900px)";function t(e){const n=document.querySelector(".reader-app");n&&n.classList.toggle("sidebar-open",e)}function r(){return!window.matchMedia(a).matches}function s(){const e=localStorage.getItem(d),i=window.matchMedia(a).matches?!1:e!==null?e==="1":r();t(i),document.getElementById("sidebar-toggle")?.addEventListener("click",()=>{const c=!document.querySelector(".reader-app")?.classList.contains("sidebar-open");window.matchMedia(a).matches||localStorage.setItem(d,c?"1":"0"),t(c)}),document.getElementById("sidebar-backdrop")?.addEventListener("click",()=>t(!1)),document.querySelectorAll(".reader-sidebar a").forEach(o=>{o.addEventListener("click",()=>{window.matchMedia(a).matches&&t(!1)})})}document.readyState==="loading"?document.addEventListener("DOMContentLoaded",s):s();</script> <aside class="reader-sidebar" data-astro-cid-khgtvzrl> <div class="breadcrumb" data-astro-cid-khgtvzrl>Vibesamurai · Middle Path · M6</div> <h4 data-astro-cid-khgtvzrl>In this course</h4> <ul data-astro-cid-khgtvzrl> <li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m1/en" class data-astro-cid-khgtvzrl> M1 · What is agentic AI in the SDLC  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m2/en" class data-astro-cid-khgtvzrl> M2 · Architecting agent boundaries  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m3/en" class data-astro-cid-khgtvzrl> M3 · Observability and human-in-the-loop  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m4/en" class data-astro-cid-khgtvzrl> M4 · Tool inventory and permissions  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m5/en" class data-astro-cid-khgtvzrl> M5 · MCP deep dive  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m6/en" class="current" data-astro-cid-khgtvzrl> M6 · Claude Code CLI mastery  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m7/en" class data-astro-cid-khgtvzrl> M7 · GPT-5.3 Codex CLI and OpenAI agents  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m8/en" class data-astro-cid-khgtvzrl> M8 · Cursor Composer + IDE agents  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m9/en" class data-astro-cid-khgtvzrl> M9 · Memory strategies  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m10/en" class data-astro-cid-khgtvzrl> M10 · State, drift, continuity  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m11/en" class data-astro-cid-khgtvzrl> M11 · Evaluating agents: metrics over vibes  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m12/en" class data-astro-cid-khgtvzrl> M12 · Regression tests for agents  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m13/en" class data-astro-cid-khgtvzrl> M13 · Tuning: what to change when metrics don&#39;t move  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m14/en" class data-astro-cid-khgtvzrl> M14 · One agent, many steps: pipelines and orchestration  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m15/en" class data-astro-cid-khgtvzrl> M15 · Multi-agent: roles, communication, supervisor  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m16/en" class data-astro-cid-khgtvzrl> M16 · When multi-agent is overkill. Anti-patterns  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m17/en" class data-astro-cid-khgtvzrl> M17 · Production: deploying agents to live environments  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m18/en" class data-astro-cid-khgtvzrl> M18 · Security in prod: secrets, sandbox, audit  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m19/en" class data-astro-cid-khgtvzrl> M19 · Incidents &amp; post-mortems  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m20/en" class data-astro-cid-khgtvzrl> M20 · Finale: where to go after Middle  </a> </li> </ul>  </aside> <main class="reader-main" data-astro-cid-a7sruqtr> <div class="chapter-eyebrow" data-astro-cid-a7sruqtr> <span data-astro-cid-a7sruqtr>Middle Path · m6</span> <a class="lang-toggle" href="/vibesamurai-site/courses/middle/m6" aria-label="Switch to RU" data-astro-cid-a7sruqtr>RU</a> </div> <h1 class="chapter-title" data-astro-cid-a7sruqtr>M6 · Claude Code CLI mastery</h1> <p class="chapter-subtitle" data-astro-cid-a7sruqtr>Installation, configuration, hooks, skills, custom commands, subagents and .claude/settings.json patterns.</p> <h2 id="what-this-chapter-is-about">What this chapter is about</h2>
+<p>Hey folks, welcome 👋</p>
+<p>Heads-up — this is the first chapter that <strong>steps outside GH-600</strong>. Microsoft’s certification says little about specific tools: general principles, abstract patterns. That’s fine for a certification, because it has to age well. But if you came here to <strong>actually work with an agent</strong> — you can’t avoid a deep tour of the specific tools.</p>
+<p>So in M6, M7, M8 I give you the full menu on the three main tools of May 2026:</p>
+<ul>
+<li><strong>M6 — Claude Code</strong> (CLI and IDE plugin from Anthropic)</li>
+<li><strong>M7 — GPT-5.3 Codex CLI</strong> (CLI from OpenAI)</li>
+<li><strong>M8 — Cursor Composer + other IDE agents</strong> (Cline, Aider, Windsurf)</li>
+</ul>
+<p>We start with Claude Code. <strong>Not because I love it more</strong> (spoiler — yes I do, I spend most of my time in it), but because architecturally it’s the most “reference” version: how hooks, skills, settings are done has become the de-facto standard everyone else aligns to.</p>
+<h2 id="installation-and-first-run">Installation and first run</h2>
+<p>Minimum install (May 2026):</p>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#6272A4;--shiki-dark:#6272A4"># npm channel, the recommended one</span></span>
+<span class="line"><span style="color:#50FA7B;--shiki-dark:#50FA7B">npm</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C"> install</span><span style="color:#BD93F9;--shiki-dark:#BD93F9"> -g</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C"> @anthropic-ai/claude-code</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6272A4;--shiki-dark:#6272A4"># first run — authorisation</span></span>
+<span class="line"><span style="color:#50FA7B;--shiki-dark:#50FA7B">claude</span></span></code></pre>
+<p>Install alternatives per platform:</p>
+<ul>
+<li><strong>macOS native</strong> — <code>brew install claude-code</code> or the <code>.dmg</code> from anthropic.com</li>
+<li><strong>Windows native</strong> — <code>.exe</code> installer or MS Store. I’m on Windows myself — runs natively, no WSL required.</li>
+<li><strong>Linux</strong> — <code>npm</code> or <code>.deb</code>/<code>.rpm</code> for the major distros</li>
+</ul>
+<p>On the first run <code>claude</code> will ask you to log in via browser (Pro/Max subscription) or paste an API key (pay-per-use). I’m personally on the Max plan — it pays for itself on day one if you write daily.</p>
+<h3 id="base-layout">Base layout</h3>
+<p>After install and login you get:</p>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>~/.claude.json                     # global config (mcp servers, settings)</span></span>
+<span class="line"><span>~/.claude/                         # user folder</span></span>
+<span class="line"><span>├── commands/                      # global slash-commands</span></span>
+<span class="line"><span>├── agents/                        # global subagents</span></span>
+<span class="line"><span>├── skills/                        # global skills</span></span>
+<span class="line"><span>├── projects/                      # session history per project</span></span>
+<span class="line"><span>└── settings.json                  # global permissions + hooks</span></span></code></pre>
+<p>Per project there can be a local config:</p>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>project-root/</span></span>
+<span class="line"><span>├── .claude/</span></span>
+<span class="line"><span>│   ├── settings.json              # project-level overrides</span></span>
+<span class="line"><span>│   ├── settings.local.json        # gitignored, personal</span></span>
+<span class="line"><span>│   ├── commands/                  # project slash-commands</span></span>
+<span class="line"><span>│   ├── agents/                    # project subagents</span></span>
+<span class="line"><span>│   └── skills/                    # project skills</span></span>
+<span class="line"><span>├── CLAUDE.md                      # project "memo" for the agent</span></span>
+<span class="line"><span>└── .mcp.json                      # project MCP servers</span></span></code></pre>
+<p>Rule: <strong>global is for you</strong>, <strong>project is for the team</strong> (under git, via PR). <code>settings.local.json</code> is your personal toggle, <strong>never enters the repo</strong>.</p>
+<h2 id="claudemd--the-main-file">CLAUDE.md — the main file</h2>
+<p>The most important artifact. <code>CLAUDE.md</code> in the project root is the <strong>persistent context</strong> Claude Code reads on every session. This is what separates “agent with memory” from “single-use agent.”</p>
+<p>What to put in <code>CLAUDE.md</code>:</p>
+<ul>
+<li><strong>Project type</strong> (Node/Python/Rust/etc., version)</li>
+<li><strong>Commands</strong>: how to run tests, lint, build</li>
+<li><strong>Architectural conventions</strong> of the project</li>
+<li><strong>What NOT to touch</strong> (legacy code, generated files, other people’s zones)</li>
+<li><strong>Commit style</strong>, branch convention</li>
+<li>Any <strong>“tribal knowledge”</strong> the team learned the hard way</li>
+</ul>
+<p>A minimal <code>CLAUDE.md</code> for a Node project:</p>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="markdown"><code><span class="line"><span style="color:#BD93F9;--shiki-light-font-weight:bold;--shiki-dark:#BD93F9;--shiki-dark-font-weight:bold"># Project context for Claude Code</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">This is a TypeScript SaaS backend on Node 22 + Fastify + Prisma + Postgres.</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#BD93F9;--shiki-light-font-weight:bold;--shiki-dark:#BD93F9;--shiki-dark-font-weight:bold">## Commands</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">- Tests: </span><span style="color:#50FA7B;--shiki-dark:#50FA7B">`npm test`</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2"> (vitest, ~30s)</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">- Lint: </span><span style="color:#50FA7B;--shiki-dark:#50FA7B">`npm run lint`</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2"> (eslint + prettier)</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">- Typecheck: </span><span style="color:#50FA7B;--shiki-dark:#50FA7B">`npm run typecheck`</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">- Dev: </span><span style="color:#50FA7B;--shiki-dark:#50FA7B">`npm run dev`</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2"> (auto-reload on 3000)</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">- Build: </span><span style="color:#50FA7B;--shiki-dark:#50FA7B">`npm run build`</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2"> (output to dist/)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#BD93F9;--shiki-light-font-weight:bold;--shiki-dark:#BD93F9;--shiki-dark-font-weight:bold">## Conventions</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">- Path aliases: use </span><span style="color:#50FA7B;--shiki-dark:#50FA7B">`@/`</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2"> (mapped to src/)</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">- Imports: named only, no default</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">- Async: top-level await is fine</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">- Errors: throw typed errors from </span><span style="color:#50FA7B;--shiki-dark:#50FA7B">`src/errors/`</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">, never strings</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#BD93F9;--shiki-light-font-weight:bold;--shiki-dark:#BD93F9;--shiki-dark-font-weight:bold">## Do NOT touch</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">- </span><span style="color:#50FA7B;--shiki-dark:#50FA7B">`src/legacy/`</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2"> — being deprecated, frozen</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">- </span><span style="color:#50FA7B;--shiki-dark:#50FA7B">`prisma/migrations/`</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2"> — never edit existing, only add new</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">- </span><span style="color:#50FA7B;--shiki-dark:#50FA7B">`.env*`</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2"> — secrets, ask the human</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#BD93F9;--shiki-light-font-weight:bold;--shiki-dark:#BD93F9;--shiki-dark-font-weight:bold">## Commit style</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">Conventional commits with type prefix: </span><span style="color:#50FA7B;--shiki-dark:#50FA7B">`feat:`</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">, </span><span style="color:#50FA7B;--shiki-dark:#50FA7B">`fix:`</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">, </span><span style="color:#50FA7B;--shiki-dark:#50FA7B">`refactor:`</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">, </span><span style="color:#50FA7B;--shiki-dark:#50FA7B">`chore:`</span></span></code></pre>
+<p>This is the <strong>first artifact you create in a new project</strong> before serious work with the agent. Without it, every session the agent will re-open the repo and re-derive your conventions from scratch.</p>
+<blockquote>
+<p><em>Pro tip:</em> <code>CLAUDE.md</code> can also be generated by Claude Code itself. The <code>/init</code> command on a fresh project — it reads the structure and proposes a first version. You fix it by hand from there.</p>
+</blockquote>
+<h2 id="claudesettingsjson--permissions-and-hooks">.claude/settings.json — permissions and hooks</h2>
+<p>File shape:</p>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="json"><code><span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">{</span></span>
+<span class="line"><span style="color:#8BE9FE;--shiki-dark:#8BE9FE">  "</span><span style="color:#8BE9FD;--shiki-dark:#8BE9FD">permissions</span><span style="color:#8BE9FE;--shiki-dark:#8BE9FE">"</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">:</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2"> {</span></span>
+<span class="line"><span style="color:#8BE9FE;--shiki-dark:#8BE9FE">    "</span><span style="color:#8BE9FD;--shiki-dark:#8BE9FD">allow</span><span style="color:#8BE9FE;--shiki-dark:#8BE9FE">"</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">:</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2"> [</span><span style="color:#FF5555;--shiki-light-font-style:italic;--shiki-light-text-decoration:underline;--shiki-dark:#FF5555;--shiki-dark-font-style:italic;--shiki-dark-text-decoration:underline">...</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">],</span></span>
+<span class="line"><span style="color:#8BE9FE;--shiki-dark:#8BE9FE">    "</span><span style="color:#8BE9FD;--shiki-dark:#8BE9FD">deny</span><span style="color:#8BE9FE;--shiki-dark:#8BE9FE">"</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">:</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2"> [</span><span style="color:#FF5555;--shiki-light-font-style:italic;--shiki-light-text-decoration:underline;--shiki-dark:#FF5555;--shiki-dark-font-style:italic;--shiki-dark-text-decoration:underline">...</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">]</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">  },</span></span>
+<span class="line"><span style="color:#8BE9FE;--shiki-dark:#8BE9FE">  "</span><span style="color:#8BE9FD;--shiki-dark:#8BE9FD">hooks</span><span style="color:#8BE9FE;--shiki-dark:#8BE9FE">"</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">:</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2"> {</span></span>
+<span class="line"><span style="color:#8BE9FE;--shiki-dark:#8BE9FE">    "</span><span style="color:#8BE9FD;--shiki-dark:#8BE9FD">PreToolUse</span><span style="color:#8BE9FE;--shiki-dark:#8BE9FE">"</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">:</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2"> [</span><span style="color:#FF5555;--shiki-light-font-style:italic;--shiki-light-text-decoration:underline;--shiki-dark:#FF5555;--shiki-dark-font-style:italic;--shiki-dark-text-decoration:underline">...</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">],</span></span>
+<span class="line"><span style="color:#8BE9FE;--shiki-dark:#8BE9FE">    "</span><span style="color:#8BE9FD;--shiki-dark:#8BE9FD">PostToolUse</span><span style="color:#8BE9FE;--shiki-dark:#8BE9FE">"</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">:</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2"> [</span><span style="color:#FF5555;--shiki-light-font-style:italic;--shiki-light-text-decoration:underline;--shiki-dark:#FF5555;--shiki-dark-font-style:italic;--shiki-dark-text-decoration:underline">...</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">],</span></span>
+<span class="line"><span style="color:#8BE9FE;--shiki-dark:#8BE9FE">    "</span><span style="color:#8BE9FD;--shiki-dark:#8BE9FD">Stop</span><span style="color:#8BE9FE;--shiki-dark:#8BE9FE">"</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">:</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2"> [</span><span style="color:#FF5555;--shiki-light-font-style:italic;--shiki-light-text-decoration:underline;--shiki-dark:#FF5555;--shiki-dark-font-style:italic;--shiki-dark-text-decoration:underline">...</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">]</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">  },</span></span>
+<span class="line"><span style="color:#8BE9FE;--shiki-dark:#8BE9FE">  "</span><span style="color:#8BE9FD;--shiki-dark:#8BE9FD">env</span><span style="color:#8BE9FE;--shiki-dark:#8BE9FE">"</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">:</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2"> {</span><span style="color:#FF5555;--shiki-light-font-style:italic;--shiki-light-text-decoration:underline;--shiki-dark:#FF5555;--shiki-dark-font-style:italic;--shiki-dark-text-decoration:underline">...</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">},</span></span>
+<span class="line"><span style="color:#8BE9FE;--shiki-dark:#8BE9FE">  "</span><span style="color:#8BE9FD;--shiki-dark:#8BE9FD">model</span><span style="color:#8BE9FE;--shiki-dark:#8BE9FE">"</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">:</span><span style="color:#E9F284;--shiki-dark:#E9F284"> "</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">claude-opus-4-7</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">}</span></span></code></pre>
+<h3 id="permissions-m4-revisited-specifically-here">Permissions (M4 revisited, specifically here)</h3>
+<p>We covered this in M4. Key patterns:</p>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="json"><code><span class="line"><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">allow</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">: [</span></span>
+<span class="line"><span style="color:#E9F284;--shiki-dark:#E9F284">  "</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">Bash(npm run test:*)</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">,</span></span>
+<span class="line"><span style="color:#E9F284;--shiki-dark:#E9F284">  "</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">Bash(npm run lint)</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">,</span></span>
+<span class="line"><span style="color:#E9F284;--shiki-dark:#E9F284">  "</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">Bash(git status)</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">,</span></span>
+<span class="line"><span style="color:#E9F284;--shiki-dark:#E9F284">  "</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">Bash(git diff:*)</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">,</span></span>
+<span class="line"><span style="color:#E9F284;--shiki-dark:#E9F284">  "</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">Bash(git log:*)</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">,</span></span>
+<span class="line"><span style="color:#E9F284;--shiki-dark:#E9F284">  "</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">Read</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">,</span></span>
+<span class="line"><span style="color:#E9F284;--shiki-dark:#E9F284">  "</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">Edit</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">,</span></span>
+<span class="line"><span style="color:#E9F284;--shiki-dark:#E9F284">  "</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">Glob</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">,</span></span>
+<span class="line"><span style="color:#E9F284;--shiki-dark:#E9F284">  "</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">Grep</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">],</span></span>
+<span class="line"><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">deny</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">: [</span></span>
+<span class="line"><span style="color:#E9F284;--shiki-dark:#E9F284">  "</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">Bash(rm:*)</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">,</span></span>
+<span class="line"><span style="color:#E9F284;--shiki-dark:#E9F284">  "</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">Bash(git push:*)</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">,</span></span>
+<span class="line"><span style="color:#E9F284;--shiki-dark:#E9F284">  "</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">Bash(git reset --hard:*)</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">,</span></span>
+<span class="line"><span style="color:#E9F284;--shiki-dark:#E9F284">  "</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">Read(./.env*)</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">,</span></span>
+<span class="line"><span style="color:#E9F284;--shiki-dark:#E9F284">  "</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">Read(~/.ssh/**)</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">,</span></span>
+<span class="line"><span style="color:#E9F284;--shiki-dark:#E9F284">  "</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">Read(~/.aws/**)</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">]</span></span></code></pre>
+<h3 id="hooks--claude-codes-most-powerful-feature">Hooks — Claude Code’s most powerful feature</h3>
+<p>A <strong>hook</strong> is a command that runs <strong>deterministically</strong> in response to an agent event. It’s not “ask the agent to do something” — it’s <strong>a guaranteed script</strong> the harness will execute.</p>
+<p>Events:</p>
+<ul>
+<li><code>PreToolUse</code> — before each tool call</li>
+<li><code>PostToolUse</code> — after each tool call</li>
+<li><code>UserPromptSubmit</code> — when the user submitted a prompt</li>
+<li><code>Notification</code> — on notifications (e.g. waiting for input)</li>
+<li><code>Stop</code> — when the session ends</li>
+</ul>
+<p>Example: auto prettier after every edit:</p>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="json"><code><span class="line"><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">hooks</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">: {</span></span>
+<span class="line"><span style="color:#8BE9FE;--shiki-dark:#8BE9FE">  "</span><span style="color:#8BE9FD;--shiki-dark:#8BE9FD">PostToolUse</span><span style="color:#8BE9FE;--shiki-dark:#8BE9FE">"</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">:</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2"> [</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    {</span></span>
+<span class="line"><span style="color:#8BE9FE;--shiki-dark:#8BE9FE">      "</span><span style="color:#8BE9FD;--shiki-dark:#8BE9FD">matcher</span><span style="color:#8BE9FE;--shiki-dark:#8BE9FE">"</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">:</span><span style="color:#E9F284;--shiki-dark:#E9F284"> "</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">Edit|Write</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">,</span></span>
+<span class="line"><span style="color:#8BE9FE;--shiki-dark:#8BE9FE">      "</span><span style="color:#8BE9FD;--shiki-dark:#8BE9FD">hooks</span><span style="color:#8BE9FE;--shiki-dark:#8BE9FE">"</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">:</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2"> [</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">        {</span></span>
+<span class="line"><span style="color:#8BE9FE;--shiki-dark:#8BE9FE">          "</span><span style="color:#8BE9FD;--shiki-dark:#8BE9FD">type</span><span style="color:#8BE9FE;--shiki-dark:#8BE9FE">"</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">:</span><span style="color:#E9F284;--shiki-dark:#E9F284"> "</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">command</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">,</span></span>
+<span class="line"><span style="color:#8BE9FE;--shiki-dark:#8BE9FE">          "</span><span style="color:#8BE9FD;--shiki-dark:#8BE9FD">command</span><span style="color:#8BE9FE;--shiki-dark:#8BE9FE">"</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">:</span><span style="color:#E9F284;--shiki-dark:#E9F284"> "</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">npx prettier --write $CLAUDE_TOOL_INPUT_file_path</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">        }</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">      ]</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    }</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">  ]</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">}</span></span></code></pre>
+<p>Example: a ban on editing files inside <code>legacy/</code>:</p>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="json"><code><span class="line"><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">hooks</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">: {</span></span>
+<span class="line"><span style="color:#8BE9FE;--shiki-dark:#8BE9FE">  "</span><span style="color:#8BE9FD;--shiki-dark:#8BE9FD">PreToolUse</span><span style="color:#8BE9FE;--shiki-dark:#8BE9FE">"</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">:</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2"> [</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    {</span></span>
+<span class="line"><span style="color:#8BE9FE;--shiki-dark:#8BE9FE">      "</span><span style="color:#8BE9FD;--shiki-dark:#8BE9FD">matcher</span><span style="color:#8BE9FE;--shiki-dark:#8BE9FE">"</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">:</span><span style="color:#E9F284;--shiki-dark:#E9F284"> "</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">Edit|Write</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">,</span></span>
+<span class="line"><span style="color:#8BE9FE;--shiki-dark:#8BE9FE">      "</span><span style="color:#8BE9FD;--shiki-dark:#8BE9FD">hooks</span><span style="color:#8BE9FE;--shiki-dark:#8BE9FE">"</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">:</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2"> [</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">        {</span></span>
+<span class="line"><span style="color:#8BE9FE;--shiki-dark:#8BE9FE">          "</span><span style="color:#8BE9FD;--shiki-dark:#8BE9FD">type</span><span style="color:#8BE9FE;--shiki-dark:#8BE9FE">"</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">:</span><span style="color:#E9F284;--shiki-dark:#E9F284"> "</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">command</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">,</span></span>
+<span class="line"><span style="color:#8BE9FE;--shiki-dark:#8BE9FE">          "</span><span style="color:#8BE9FD;--shiki-dark:#8BE9FD">command</span><span style="color:#8BE9FE;--shiki-dark:#8BE9FE">"</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">:</span><span style="color:#E9F284;--shiki-dark:#E9F284"> "</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">node .claude/scripts/check-legacy.js</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">        }</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">      ]</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    }</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">  ]</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">}</span></span></code></pre>
+<p>And in <code>check-legacy.js</code>:</p>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="js"><code><span class="line"><span style="color:#6272A4;--shiki-dark:#6272A4">#!/usr/bin/env node</span></span>
+<span class="line"><span style="color:#FF79C6;--shiki-dark:#FF79C6">const</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2"> path </span><span style="color:#FF79C6;--shiki-dark:#FF79C6">=</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2"> process.env.CLAUDE_TOOL_INPUT_file_path;</span></span>
+<span class="line"><span style="color:#FF79C6;--shiki-dark:#FF79C6">if</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2"> (path?.</span><span style="color:#50FA7B;--shiki-dark:#50FA7B">includes</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">(</span><span style="color:#E9F284;--shiki-dark:#E9F284">'</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">/legacy/</span><span style="color:#E9F284;--shiki-dark:#E9F284">'</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">)) {</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">  console.</span><span style="color:#50FA7B;--shiki-dark:#50FA7B">error</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">(</span><span style="color:#E9F284;--shiki-dark:#E9F284">'</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">Editing files in legacy/ is forbidden by hook.</span><span style="color:#E9F284;--shiki-dark:#E9F284">'</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">);</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">  process.</span><span style="color:#50FA7B;--shiki-dark:#50FA7B">exit</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">(</span><span style="color:#BD93F9;--shiki-dark:#BD93F9">2</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">);  </span><span style="color:#6272A4;--shiki-dark:#6272A4">// exit 2 = block the tool use</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">}</span></span></code></pre>
+<p>This is a <strong>physical restriction</strong>, not “we asked the model not to touch this.” Pass <code>exit 2</code> — the tool call is blocked, the agent sees the error and revises.</p>
+<blockquote>
+<p><em>Principle:</em> any rule that is <strong>critical to follow</strong> belongs in a hook, not in <code>CLAUDE.md</code>. Instructions the model can “forget”; a hook can’t.</p>
+</blockquote>
+<h2 id="slash-commands--repeatable-tasks">Slash-commands — repeatable tasks</h2>
+<p>A slash-command is a <strong>named task</strong> you can run from any session. Stored in <code>.claude/commands/&#x3C;name>.md</code>.</p>
+<p>Simplest example, <code>.claude/commands/review.md</code>:</p>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="markdown"><code><span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">---</span></span>
+<span class="line"><span style="color:#8BE9FD;--shiki-dark:#8BE9FD">description</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">:</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C"> Review uncommitted changes against project conventions</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">---</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">Read the git diff of current uncommitted changes and do a code review against the checklist:</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">- Conformance to CLAUDE.md conventions</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">- Naming</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">- Error handling</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">- Test coverage for new functions</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">- Security (no hardcoded secrets)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">End with a verdict: "ok / needs work / blocking issues".</span></span></code></pre>
+<p>Use it in chat: just <code>/review</code> — and Claude knows what to do.</p>
+<p>Commands can take arguments:</p>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="markdown"><code><span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">---</span></span>
+<span class="line"><span style="color:#8BE9FD;--shiki-dark:#8BE9FD">description</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">:</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C"> Generate test for a specific function</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">---</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">Generate a test file for function $1 in file $2.</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">Use vitest. Cover happy path + edge cases + error path.</span></span></code></pre>
+<p>Use: <code>/test parseDate src/utils/date.ts</code></p>
+<p>Commands come in global (<code>~/.claude/commands/</code>) and project (<code>.claude/commands/</code>) flavours. Project ones go into git, shared by the team. This is the <strong>templating layer</strong> that genuinely speeds up daily work.</p>
+<h2 id="subagents--isolated-executors">Subagents — isolated executors</h2>
+<p>A subagent is a <strong>separate agent with its own system prompt</strong> the main agent can delegate to. Stored in <code>.claude/agents/&#x3C;name>.md</code>.</p>
+<p>Why they matter:</p>
+<ul>
+<li><strong>Isolated context</strong> — the subagent doesn’t see your main session, doesn’t pollute it.</li>
+<li><strong>Specialised prompt</strong> — e.g. a reviewer-agent with a different system prompt than a writer-agent.</li>
+<li><strong>Parallel work</strong> — the main agent can spawn 3 subagents in parallel (e.g. on different parts of the codebase).</li>
+</ul>
+<p>Example <code>.claude/agents/code-reviewer.md</code>:</p>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="markdown"><code><span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">---</span></span>
+<span class="line"><span style="color:#8BE9FD;--shiki-dark:#8BE9FD">name</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">:</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C"> code-reviewer</span></span>
+<span class="line"><span style="color:#8BE9FD;--shiki-dark:#8BE9FD">description</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">:</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C"> Strict code reviewer. Use when reviewing diffs against project conventions.</span></span>
+<span class="line"><span style="color:#8BE9FD;--shiki-dark:#8BE9FD">tools</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">:</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C"> Read, Grep, Glob, Bash(git diff:*), Bash(git log:*)</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">---</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">You are a strict but constructive code reviewer.</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">Your job: read the diff, compare it against CLAUDE.md conventions, and produce a structured review.</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">Focus on:</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">- Convention violations</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">- Logical errors</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">- Missing tests</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">- Security issues</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">Do NOT modify any files.</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">Output as markdown with sections: BLOCKING, MAJOR, MINOR, NITS.</span></span></code></pre>
+<p>In session, the main agent can delegate via the <code>Task</code> tool (available by default):</p>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>Use Task tool, subagent_type=code-reviewer, prompt="Review the diff in src/api/auth.ts"</span></span></code></pre>
+<p>You get back <strong>only the reviewer’s final answer</strong>, none of the intermediate scuffle. The main agent’s context stays clean.</p>
+<p>This is <strong>one of the most underrated features</strong> of Claude Code. If you have a long session with a big context — subagents for side tasks are <strong>your main defence against context dilution</strong>.</p>
+<h2 id="skills--packaged-capabilities">Skills — packaged capabilities</h2>
+<p>Skills are <strong>folders with instructions + optional scripts</strong> that the agent can “activate” by trigger words.</p>
+<p>Skill structure:</p>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>~/.claude/skills/skill-name/</span></span>
+<span class="line"><span>├── SKILL.md                # description + frontmatter with triggers</span></span>
+<span class="line"><span>├── scripts/                # helper scripts</span></span>
+<span class="line"><span>└── reference/              # files the skill loads on demand</span></span></code></pre>
+<p>Example <code>SKILL.md</code>:</p>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="markdown"><code><span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">---</span></span>
+<span class="line"><span style="color:#8BE9FD;--shiki-dark:#8BE9FD">name</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">:</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C"> webp-conversion</span></span>
+<span class="line"><span style="color:#8BE9FD;--shiki-dark:#8BE9FD">description</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">:</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C"> Convert PNG/JPG to WebP with quality optimisation. Triggers when user asks to compress/optimise images.</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">---</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">When user wants to convert images to WebP:</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">1. Use </span><span style="color:#50FA7B;--shiki-dark:#50FA7B">`cwebp`</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2"> (from libwebp-tools) with quality 85 by default</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">2. For batch: parallelise with xargs</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">3. Output to same directory unless told otherwise</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">Script: </span><span style="color:#50FA7B;--shiki-dark:#50FA7B">`bash scripts/webp_batch.sh &#x3C;input_dir> [quality]`</span></span></code></pre>
+<p>Skills differ from commands in that:</p>
+<ul>
+<li>They activate <strong>automatically</strong> by context (the agent decides on use)</li>
+<li>They can include scripts, extra files, reference documents</li>
+<li>They suit <strong>reusable capabilities</strong> not tied to one project</li>
+</ul>
+<blockquote>
+<p><em>Heads up (a safety rule):</em> installing a third-party skill = reading SKILL.md in full before launch. SKILL.md may contain hidden directives and transitive prompt injection. I have an iron personal rule on this: <code>npx skills add</code> always without <code>-y</code>. Manual confirmation of every install — mandatory.</p>
+</blockquote>
+<h2 id="useful-dev-practices">Useful dev practices</h2>
+<h3 id="1-one-project--one-claude">1. One project — one <code>.claude/</code></h3>
+<p>Don’t try to make a “universal” <code>.claude/settings.json</code> for all projects via user-level. Every project has its own context, permissions, hooks.</p>
+<h3 id="2-claudesettingslocaljson-for-personal-experiments">2. <code>.claude/settings.local.json</code> for personal experiments</h3>
+<p>If you want to try a new hook without committing to the team — put it in <code>settings.local.json</code> (gitignored). Liked it — move to <code>settings.json</code> via PR.</p>
+<h3 id="3-claudemd-grows-over-time">3. CLAUDE.md grows over time</h3>
+<p>Don’t write it in full at once. Run <code>/init</code>, iterate on the result. Every time the agent did something wrong because of missing context — <strong>add that context to CLAUDE.md</strong>. In 2–3 weeks you’ll have the perfect file.</p>
+<h3 id="4-hooks-for-security-critical-rules">4. Hooks for security-critical rules</h3>
+<p>Any rule like “don’t touch .env,” “don’t push to main,” “don’t run rm in these folders” — <strong>must be a hook</strong>, never “we asked the model.”</p>
+<h3 id="5-subagents-for-side-tasks">5. Subagents for side tasks</h3>
+<p>If the main session is going through a big task and you suddenly need a “different context” (say, look at a neighbouring repo) — <strong>subagent</strong>, not the main session. Keep context clean.</p>
+<h2 id="practice">Practice</h2>
+<p>20–30 minutes. Step by step:</p>
+<ol>
+<li><strong>Open your current working project.</strong> If no <code>CLAUDE.md</code> — run <code>/init</code>, polish the result.</li>
+<li><strong>Create <code>.claude/settings.json</code></strong> with a minimal <code>allow</code>/<code>deny</code> (see M4) + at least one hook (e.g. prettier on edit).</li>
+<li><strong>Make one slash-command</strong> — something you regularly ask the agent for. Save as <code>.claude/commands/&#x3C;name>.md</code>.</li>
+<li><strong>Try a subagent.</strong> Create <code>.claude/agents/reviewer.md</code> with a minimal system prompt. Delegate a task via the <code>Task</code> tool.</li>
+<li><strong>Commit <code>.claude/</code> to the project git</strong> (but add <code>.claude/settings.local.json</code> to <code>.gitignore</code>).</li>
+</ol>
+<h2 id="recap">Recap</h2>
+<ul>
+<li><strong>CLAUDE.md = persistent project context.</strong> The main artifact, grows over time.</li>
+<li><strong><code>.claude/settings.json</code> = permissions + hooks</strong> at the project level. <code>settings.local.json</code> is personal, not in git.</li>
+<li><strong>Hooks — deterministic scripts</strong> on agent events. Security-critical rules must be hooks.</li>
+<li><strong>Slash-commands</strong> — repeatable tasks. <code>.claude/commands/&#x3C;name>.md</code>.</li>
+<li><strong>Subagents</strong> — isolated executors with their own prompt. Keep main-session context clean.</li>
+<li><strong>Skills</strong> — packaged capabilities with auto-activation. Third-party skills — mandatory manual audit of SKILL.md.</li>
+</ul>
+<h2 id="whats-next">What’s next</h2>
+<p>In <strong>M7 — GPT-5.3 Codex CLI and OpenAI agents</strong> we tour the competitor. In 2026 Codex CLI isn’t “just another CLI” — it’s a <strong>different philosophy</strong> of approval modes and sandbox. I’ll show which tasks Codex beats Claude Code on, and vice versa. No flame, based on benchmark data and personal practice.</p>
+<p>If this clicked — share with the team, especially folks just starting with Claude Code. If you have <code>.claude/</code> setup tricks I missed — write in the comments, your feedback really helps.</p>
+<h2 id="-further-reading">📚 Further reading</h2>
+<p>Dense topic — there’s a lot of doc behind this chapter that I summarised. For more depth on specific sections — a short verified list.</p>
+<p><strong>Official Claude Code documentation</strong></p>
+<ul>
+<li><strong>Best practices for Claude Code</strong> — Anthropic Engineering’s programmatic article, the whole “school” of CLI work sits on top of it: <a href="https://www.anthropic.com/engineering/claude-code-best-practices">anthropic.com/engineering/claude-code-best-practices</a>.</li>
+<li><strong>Sub-agents</strong> — official reference (frontmatter, tools, context isolation): <a href="https://docs.claude.com/en/docs/claude-code/sub-agents">docs.claude.com/en/docs/claude-code/sub-agents</a>.</li>
+<li><strong>Claude Code SDK overview</strong> — entry point into the Agent SDK if you want to build your own agent over the same base: <a href="https://docs.claude.com/en/docs/claude-code/sdk/sdk-overview">docs.claude.com/en/docs/claude-code/sdk/sdk-overview</a>.</li>
+</ul>
+<p><strong>Community and templates</strong></p>
+<ul>
+<li><strong>awesome-claude-code</strong> (hesreallyhim) — curated stash of skills, hooks, slash-commands, CLAUDE.md patterns: <a href="https://github.com/hesreallyhim/awesome-claude-code">github.com/hesreallyhim/awesome-claude-code</a>.</li>
+<li><strong>How Anthropic teams use Claude Code</strong> — internal PDF from Anthropic, real scenarios from different teams: <a href="https://www-cdn.anthropic.com/58284b19e702b49db9302d5b6f135ad8871e7658.pdf">www-cdn.anthropic.com/58284b19e702b49db9302d5b6f135ad8871e7658.pdf</a>.</li>
+</ul>
+<blockquote>
+<p><strong>Tip:</strong> before pulling someone’s skill from the awesome list — open <code>SKILL.md</code> and read it through. I have a dedicated personal rule about this, and it has saved my hide several times.</p>
+</blockquote>
+<hr>
+<p><strong>Maps to:</strong> Author’s block — Part II extension beyond GH-600</p> <nav class="chapter-nav" data-astro-cid-a7sruqtr> <a href="/vibesamurai-site/courses/middle/m5/en" data-astro-cid-a7sruqtr> <span class="dir" data-astro-cid-a7sruqtr>← Back</span> <span class="title" data-astro-cid-a7sruqtr>M5 · MCP deep dive</span> </a> <a href="/vibesamurai-site/courses/middle/m7/en" data-astro-cid-a7sruqtr> <span class="dir" data-astro-cid-a7sruqtr>Next →</span> <span class="title" data-astro-cid-a7sruqtr>M7 · GPT-5.3 Codex CLI and OpenAI agents</span> </a> </nav> </main>  </div> <script type="module">
+    import { gatingEnabled } from '../lib/supabase';
+    import { fetchChapter } from '../lib/auth';
+
+    const base = import.meta.env.BASE_URL;
+    let mermaidLib = null;
+
+    function scopeOf(root) {
+      return root === document ? document.querySelector('.reader-main') : root;
+    }
+
+    function addCopyBtns(root) {
+      const scope = scopeOf(root); if (!scope) return;
+      scope.querySelectorAll('pre').forEach((pre) => {
+        if (pre.closest('.code-tabs')) return;
+        if (pre.querySelector('.copy-btn')) return;
+        const btn = document.createElement('button');
+        btn.className = 'copy-btn';
+        btn.textContent = 'copy';
+        btn.addEventListener('click', async () => {
+          const code = pre.querySelector('code')?.textContent ?? pre.textContent ?? '';
+          await navigator.clipboard.writeText(code.trimEnd());
+          btn.textContent = '✓ copied';
+          setTimeout(() => { btn.textContent = 'copy'; }, 1600);
+        });
+        pre.appendChild(btn);
+      });
+    }
+
+    function tightenMermaidSvgs(retries = 6) {
+      let pending = false;
+      document.querySelectorAll('.mermaid svg').forEach((svg) => {
+        if (svg.dataset.tightened === '1') return;
+        try {
+          const bbox = svg.getBBox();
+          if (!bbox || bbox.width === 0) { pending = true; return; }
+          const pad = 6;
+          svg.setAttribute('viewBox',
+            `${bbox.x - pad} ${bbox.y - pad} ${bbox.width + pad * 2} ${bbox.height + pad * 2}`);
+          svg.removeAttribute('height');
+          svg.style.height = 'auto';
+          svg.style.maxWidth = '100%';
+          svg.style.display = 'block';
+          svg.dataset.tightened = '1';
+        } catch (e) { pending = true; }
+      });
+      if (pending && retries > 0) setTimeout(() => tightenMermaidSvgs(retries - 1), 120);
+    }
+
+    async function ensureMermaid() {
+      if (mermaidLib) return mermaidLib;
+      const mod = await import('https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs');
+      mermaidLib = mod.default;
+      mermaidLib.initialize({
+        startOnLoad: false, theme: 'neutral',
+        themeVariables: {
+          fontFamily: 'JetBrains Mono, ui-monospace, monospace',
+          primaryColor: '#f5f5f5', primaryBorderColor: '#222',
+          primaryTextColor: '#111', lineColor: '#444',
+        },
+        flowchart: { curve: 'basis', padding: 12, useMaxWidth: true },
+      });
+      return mermaidLib;
+    }
+
+    async function renderMermaid(root) {
+      const scope = scopeOf(root); if (!scope) return;
+      const matches = scope.querySelectorAll(
+        'pre[data-language="mermaid"], pre.language-mermaid, code.language-mermaid'
+      );
+      if (!matches.length) return;
+      matches.forEach((el) => {
+        const block = el.tagName === 'CODE' ? el.closest('pre') || el : el;
+        const codeEl = block.querySelector('code') || block;
+        const wrap = document.createElement('div');
+        wrap.className = 'mermaid';
+        wrap.textContent = codeEl.textContent;
+        block.replaceWith(wrap);
+      });
+      try {
+        const m = await ensureMermaid();
+        await m.run();
+        tightenMermaidSvgs();
+      } catch (err) {
+        console.warn('mermaid failed', err);
+        document.querySelectorAll('.mermaid:not(:has(svg))').forEach((el) => { el.style.display = 'none'; });
+      }
+    }
+
+    async function enhance(root = document) {
+      addCopyBtns(root);
+      await renderMermaid(root);
+    }
+
+    function paywallHtml(required, needLogin) {
+      const label = { beginner: 'Beginner (300 ₽)', middle: 'Beginner + Middle (500 ₽)', all: 'Весь пакет (700 ₽)' }[required] || '';
+      return `<div class="paywall">
+        <div class="paywall-ic">🔒</div>
+        <h3>Эта глава — в платном доступе</h3>
+        <p>Нужен тариф: <strong>${label}</strong>. Доступ навсегда, без подписки.</p>
+        ${needLogin ? '<p>Войди через Google и оформи доступ — продолжишь с любого устройства.</p>' : ''}
+        <a class="paywall-btn" href="${base}pricing">Открыть доступ →</a>
+        <a class="paywall-link" href="${base}account">Войти / мой аккаунт</a>
+      </div>`;
+    }
+
+    async function gatedFlow(mount) {
+      const slug = mount.dataset.slug;
+      const required = mount.dataset.required || 'beginner';
+      mount.innerHTML = '<p class="gate-msg">Проверяем доступ…</p>';
+      const res = await fetchChapter(slug);
+      if (res.ok) {
+        mount.innerHTML = res.html;
+        await enhance(mount);
+      } else if (res.status === 401) {
+        mount.innerHTML = paywallHtml(required, true);
+      } else if (res.status === 402) {
+        mount.innerHTML = paywallHtml(res.requiredTier || required, false);
+      } else {
+        mount.innerHTML = '<p class="gate-msg">Не удалось загрузить главу. Обнови страницу.</p>';
+      }
+    }
+
+    const mount = document.getElementById('gated-mount');
+    if (mount && gatingEnabled) gatedFlow(mount);
+    else enhance(document);
+  </script> </body> </html>

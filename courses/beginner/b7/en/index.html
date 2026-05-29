@@ -1,0 +1,359 @@
+<!DOCTYPE html><html lang="en" data-astro-cid-a7sruqtr> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Security for beginners — Vibesamurai</title><meta name="description" content="What not to give the agent. Secrets, API keys, dangerous commands. No paranoia, no naivety."><meta property="og:title" content="Security for beginners"><meta property="og:type" content="article"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Inter:wght@300..800&family=JetBrains+Mono:wght@400..600&display=swap" rel="stylesheet"><link rel="stylesheet" href="/vibesamurai-site/_astro/_slug_.Cs4TX1wt.css">
+<style>.account-btn{display:inline-flex;align-items:center;gap:var(--space-2);font-family:var(--font-mono);font-size:var(--size-2);text-transform:uppercase;letter-spacing:.06em;padding:5px 10px;border:1px solid var(--rule);border-radius:999px;color:var(--text-soft);background:var(--surface);transition:border-color var(--d-fast),color var(--d-fast)}.account-btn:hover{border-color:var(--accent);color:var(--text)}.account-ic{width:18px;height:18px;display:grid;place-items:center;border-radius:50%;background:var(--accent);color:var(--accent-ink);font-weight:700;font-size:10px;line-height:1}.reader-rail .account-btn{padding:0;border:none;background:transparent}.reader-rail .account-label{display:none}.reader-rail .account-ic{width:32px;height:32px;font-size:13px}.rail-toggle{width:36px;height:36px;display:grid;place-items:center;background:var(--accent);border:1px solid var(--accent);border-radius:4px;cursor:pointer;transition:filter var(--d-fast),transform var(--d-fast);padding:0}.rail-toggle:hover{filter:brightness(1.08);transform:translateY(-1px)}.rail-toggle:active{transform:translateY(0)}.rail-toggle-icon{width:14px;height:12px;border-left:2px solid var(--accent-ink);border-right:2px solid var(--accent-ink);transition:transform var(--d-normal) var(--ease-standard)}.reader-app.sidebar-open .rail-toggle-icon{transform:rotate(0)}.reader-app:not(.sidebar-open) .rail-toggle-icon{transform:scaleX(.5)}.sidebar-backdrop{display:none;position:fixed;inset:0;background:#0000008c;z-index:140;border:0;padding:0;cursor:pointer}@media(max-width:900px){.reader-app.sidebar-open~.sidebar-backdrop{display:block}}.rail-spacer[data-astro-cid-ofsbkzh7]{flex:1}.reader-sidebar[data-astro-cid-khgtvzrl] .ru-tag[data-astro-cid-khgtvzrl]{font-style:normal;font-family:var(--font-mono);font-size:.7em;color:var(--text-mute);margin-left:4px;padding:1px 4px;border:1px solid var(--rule);border-radius:3px;text-transform:uppercase;vertical-align:middle}.chapter-eyebrow[data-astro-cid-a7sruqtr]{display:flex;justify-content:space-between;align-items:center;gap:var(--space-3)}.lang-toggle[data-astro-cid-a7sruqtr]{font-family:var(--font-mono);font-size:var(--size-2);padding:2px 8px;border:1px solid var(--rule);border-radius:4px;color:var(--text-mute);text-decoration:none;text-transform:uppercase;letter-spacing:.08em}.lang-toggle[data-astro-cid-a7sruqtr]:hover{color:var(--accent);border-color:var(--accent)}.code-tabs[data-astro-cid-hg66rjob]{margin:var(--space-5) 0}.code-tabs-nav[data-astro-cid-hg66rjob]{display:flex;gap:2px;margin-bottom:-1px;position:relative;z-index:1}.ctab[data-astro-cid-hg66rjob]{font-family:var(--font-mono);font-size:11px;text-transform:uppercase;letter-spacing:.07em;padding:5px 14px;border:1px solid #21222c;border-bottom:none;background:#1a1b23;color:#6272a4;cursor:pointer;border-radius:4px 4px 0 0;transition:color .12s,background .12s}.ctab[data-astro-cid-hg66rjob].is-active{background:#282a36;color:#f8f8f2;border-color:#21222c}.ctab[data-astro-cid-hg66rjob]:hover:not(.is-active){color:#cdd6f4}.ctab-panel[data-astro-cid-hg66rjob]{display:none}.ctab-panel[data-astro-cid-hg66rjob].is-active{display:block}.ctab-panel[data-astro-cid-hg66rjob] pre{margin-top:0!important;border-radius:0 6px 6px!important}
+</style></head> <body data-astro-cid-a7sruqtr> <div class="reader-app" data-astro-cid-a7sruqtr> <aside class="reader-rail" data-astro-cid-ofsbkzh7> <a href="/vibesamurai-site/" class="logo" aria-label="Vibesamurai home" data-astro-cid-ofsbkzh7>V</a> <button type="button" class="rail-toggle" id="sidebar-toggle" aria-label="Свернуть/развернуть оглавление" title="Свернуть/развернуть оглавление" data-astro-cid-ofsbkzh7> <span class="rail-toggle-icon" aria-hidden="true" data-astro-cid-ofsbkzh7></span> </button> <div class="rail-spacer" data-astro-cid-ofsbkzh7></div> <a href="/vibesamurai-site/account" class="account-btn" id="account-btn" aria-label="Аккаунт"> <span class="account-ic" id="account-ic">⌂</span> <span class="account-label" id="account-label">Войти</span> </a>  <script type="module" src="/vibesamurai-site/_astro/AccountButton.astro_astro_type_script_index_0_lang.CmD2sdn9.js"></script> </aside>  <button type="button" class="sidebar-backdrop" id="sidebar-backdrop" aria-label="Закрыть оглавление" tabindex="-1" data-astro-cid-ofsbkzh7></button>  <script type="module">const d="vs-sidebar-open",a="(max-width: 900px)";function t(e){const n=document.querySelector(".reader-app");n&&n.classList.toggle("sidebar-open",e)}function r(){return!window.matchMedia(a).matches}function s(){const e=localStorage.getItem(d),i=window.matchMedia(a).matches?!1:e!==null?e==="1":r();t(i),document.getElementById("sidebar-toggle")?.addEventListener("click",()=>{const c=!document.querySelector(".reader-app")?.classList.contains("sidebar-open");window.matchMedia(a).matches||localStorage.setItem(d,c?"1":"0"),t(c)}),document.getElementById("sidebar-backdrop")?.addEventListener("click",()=>t(!1)),document.querySelectorAll(".reader-sidebar a").forEach(o=>{o.addEventListener("click",()=>{window.matchMedia(a).matches&&t(!1)})})}document.readyState==="loading"?document.addEventListener("DOMContentLoaded",s):s();</script> <aside class="reader-sidebar" data-astro-cid-khgtvzrl> <div class="breadcrumb" data-astro-cid-khgtvzrl>Vibesamurai · Beginner Path · B7</div> <h4 data-astro-cid-khgtvzrl>In this course</h4> <ul data-astro-cid-khgtvzrl> <li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b1/en" class data-astro-cid-khgtvzrl> B1 · What is an AI agent  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b2/en" class data-astro-cid-khgtvzrl> B2 · Installing your first AI agent  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b3/en" class data-astro-cid-khgtvzrl> B3 · First conversation  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b4/en" class data-astro-cid-khgtvzrl> B4 · What&#39;s a repo and why commit  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b5/en" class data-astro-cid-khgtvzrl> B5 · Building the first project (todo app)  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b6/en" class data-astro-cid-khgtvzrl> B6 · Reading the code the agent wrote  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b7/en" class="current" data-astro-cid-khgtvzrl> B7 · Security for beginners  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b8/en" class data-astro-cid-khgtvzrl> B8 · Cursor vs Claude Code vs Codex CLI  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b9/en" class data-astro-cid-khgtvzrl> B9 · Deploying the first project  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b10/en" class data-astro-cid-khgtvzrl> B10 · How to evaluate the agent&#39;s output  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b11/en" class data-astro-cid-khgtvzrl> B11 · Capstone: build your own tool  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b12/en" class data-astro-cid-khgtvzrl> B12 · Where to go next  </a> </li> </ul>  </aside> <main class="reader-main" data-astro-cid-a7sruqtr> <div class="chapter-eyebrow" data-astro-cid-a7sruqtr> <span data-astro-cid-a7sruqtr>Beginner Path · b7</span> <a class="lang-toggle" href="/vibesamurai-site/courses/beginner/b7" aria-label="Switch to RU" data-astro-cid-a7sruqtr>RU</a> </div> <h1 class="chapter-title" data-astro-cid-a7sruqtr>B7 · Security for beginners</h1> <p class="chapter-subtitle" data-astro-cid-a7sruqtr>What not to give the agent. Secrets, API keys, dangerous commands. No paranoia, no naivety.</p> <h2 id="hook">Hook</h2>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>WITHOUT rules:                    WITH rules:</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>API key       → in code      your key → .env, in .gitignore</span></span>
+<span class="line"><span>password      → in chat      agent doesn't see the password</span></span>
+<span class="line"><span>"yes" to all  → agent        agent asks before rm,</span></span>
+<span class="line"><span>                  rm -rf /                    git push, sudo</span></span></code></pre>
+<p>Hey folks, welcome 👋</p>
+<p>This chapter is <strong>not a scare story</strong>. I’m not going to scare you with “hackers” and “leaks.” But there are a few <strong>simple rules</strong> that save you from 90 % of typical trouble: from an accidentally published API key to a wiped photo folder. Twenty minutes — and you have base hygiene.</p>
+<p>The main thing to land: <strong>the agent isn’t malicious</strong>, but it’s <strong>extremely diligent</strong>. Give it rights to do something dangerous — it will do it without thinking. Your job — <strong>don’t give unnecessary rights</strong>.</p>
+<h2 id="concept-three-trust-levels">Concept: three trust levels</h2>
+<p>Imagine the agent is a <strong>capable intern</strong> you gave a laptop and credentials. The intern isn’t a vandal, but they act <strong>literally</strong>. Say “delete extra files” — they may delete your diploma because “the name looks similar.”</p>
+<p>So trust levels:</p>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>┌──────────────────────────────────────────────────┐</span></span>
+<span class="line"><span>│  L0 — Read-only       "look, don't touch"        │</span></span>
+<span class="line"><span>│  L1 — Local edits     "change files in this folder"│</span></span>
+<span class="line"><span>│  L2 — Run commands    "you can run tests"        │</span></span>
+<span class="line"><span>│  L3 — External actions "push, deploy, payments"  │</span></span>
+<span class="line"><span>└──────────────────────────────────────────────────┘</span></span></code></pre>
+<p>Rule: <strong>start every session at L0</strong>. Raise only when the agent’s behaviour is clear. Never grant L3 “for life.”</p>
+<p>If you draw the trust boundary on a napkin — who sees what and where they can’t look — it looks like:</p>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="mermaid"><code><span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">flowchart LR</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    subgraph WORLD[Outside world]</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">        GH[(GitHub /&#x3C;br/>others' services)]</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">        AI[(LLM provider&#x3C;br/>chat history)]</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    end</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    subgraph MACHINE[Your machine]</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">        HOME[~/ home, photos,&#x3C;br/>documents]</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">        ENV[.env&#x3C;br/>secrets]</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">        subgraph PROJ[Project folder]</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">            CODE[code + .gitignore]</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">            AGENT[Agent&#x3C;br/>sees only this]</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">        end</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    end</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    AGENT -.doesn't see.-> HOME</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    AGENT -.doesn't see values.-> ENV</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    ENV -- read as an&#x3C;br/>env variable --> CODE</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    AGENT --> CODE</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    CODE --> GH</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    AGENT -- prompt + context --> AI</span></span></code></pre>
+<p>Key from the diagram: the agent sees <strong>the folder it was launched in</strong> and the values of env variables <strong>through your code</strong>, not the secret string itself. Anything above the project folder or in <code>.env</code> is “dark” unless you yourself paste it into the chat.</p>
+<h2 id="what-you-must-not-give-the-agent">What you MUST NOT give the agent</h2>
+<h3 id="1-secrets-in-chat">1. Secrets in chat</h3>
+<p>If you wrote to the agent in chat:</p>
+<blockquote>
+<p>“Here’s my OpenAI API key: <code>sk-abc123...</code>, use it”</p>
+</blockquote>
+<p>— that’s <strong>already an incident</strong>. Because:</p>
+<ul>
+<li>That key now lives in the <strong>chat history</strong> the provider stores</li>
+<li>If you later screenshot the chat and post it — the key went public</li>
+<li>The agent <strong>can</strong> in some tool call accidentally forward this key to an external service</li>
+</ul>
+<p>Right way: put the key into an <strong>environment variable</strong> (<code>.env</code> file or <code>export VAR=...</code> in shell). Tell the agent:</p>
+<blockquote>
+<p>“Use the key from <code>OPENAI_API_KEY</code> in the environment.”</p>
+</blockquote>
+<p>The agent <strong>reads the value from the system</strong>, but <strong>doesn’t see</strong> the actual string in its memory.</p>
+<h3 id="2-passwords-tokens-keys--directly-in-code">2. Passwords, tokens, keys — directly in code</h3>
+<p>The most common newcomer mistake:</p>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#FF79C6;--shiki-dark:#FF79C6">const</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2"> apiKey </span><span style="color:#FF79C6;--shiki-dark:#FF79C6">=</span><span style="color:#E9F284;--shiki-dark:#E9F284"> "</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">sk-abc123def456...</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">;  </span><span style="color:#6272A4;--shiki-dark:#6272A4">// ⚠️ ⚠️ ⚠️</span></span></code></pre>
+<p>Then — <code>git commit</code>, <code>git push</code>, and your key is <strong>public on GitHub</strong>. Bots scan public repos every few minutes — your key will be used <strong>within minutes</strong>.</p>
+<p>Right way — always:</p>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#FF79C6;--shiki-dark:#FF79C6">const</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2"> apiKey </span><span style="color:#FF79C6;--shiki-dark:#FF79C6">=</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2"> process.env.</span><span style="color:#BD93F9;--shiki-dark:#BD93F9">OPENAI_API_KEY</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">;</span></span></code></pre>
+<p>And the key — in a <code>.env</code> file that is <strong>in <code>.gitignore</code></strong>:</p>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span># .gitignore</span></span>
+<span class="line"><span>.env</span></span>
+<span class="line"><span>.env.local</span></span>
+<span class="line"><span>node_modules/</span></span></code></pre>
+<blockquote>
+<p><em>If you accidentally committed a key — don’t “edit history” or remove it from the last commit first. First <strong>revoke</strong> the key at the provider (seconds), then deal with git. Revoke is primary, history cleanup is secondary.</em></p>
+</blockquote>
+<h3 id="3-access-to-folders-youre-not-working-in">3. Access to folders you’re not working in</h3>
+<p>By default the agent works in the <strong>folder</strong> you launched it from. That’s good.</p>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#8BE9FD;--shiki-dark:#8BE9FD">cd</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C"> my-project</span></span>
+<span class="line"><span style="color:#50FA7B;--shiki-dark:#50FA7B">claude</span><span style="color:#6272A4;--shiki-dark:#6272A4">       # the agent sees my-project and subfolders</span></span></code></pre>
+<p>Don’t run the agent from your home directory or the drive root — otherwise it has access to <strong>everything</strong>. Including your photos, documents, correspondence.</p>
+<p>Right way — a <strong>dedicated project folder</strong>. The agent looks there, and only there.</p>
+<h3 id="4-commands-without-confirmation">4. Commands without confirmation</h3>
+<p>In Claude Code (and in Cursor, and in Codex CLI) <strong>by default</strong> the agent asks before running commands. That’s <strong>built-in protection</strong>. <strong>Don’t disable it</strong> until you know what you’re doing.</p>
+<p>If you ever see a flag like <code>--dangerously-skip-permissions</code> or “yolo mode” — <strong>stop and think</strong>. That’s for the experienced who know the risks. A newcomer <strong>doesn’t need it</strong>.</p>
+<h2 id="a-short-aside">A short aside ⚡</h2>
+<p>Heard a story recently — a guy set up “safe tutorial mode” with <code>--yolo</code> (agent does everything without asking), said “build me a site,” went for coffee. Came back — the agent decided the <code>Downloads/</code> folder was “cluttered” and <strong>tidied</strong> it. Eight years of accumulated files. Out of a sense of order.</p>
+<p>The agent isn’t bad. The human gave it rights without thinking. <strong>Brewed it himself.</strong></p>
+<h2 id="hygiene-rules-memorise-like-letters">Hygiene rules (memorise like letters)</h2>
+<h3 id="rule-1-env--gitignore--always">Rule 1. <code>.env</code> + <code>.gitignore</code> — always</h3>
+<p>In <strong>any</strong> project that has at least one key/token:</p>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#6272A4;--shiki-dark:#6272A4"># Create .env (for secrets)</span></span>
+<span class="line"><span style="color:#8BE9FD;--shiki-dark:#8BE9FD">echo</span><span style="color:#E9F284;--shiki-dark:#E9F284"> "</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">OPENAI_API_KEY=sk-...</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#FF79C6;--shiki-dark:#FF79C6"> ></span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C"> .env</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6272A4;--shiki-dark:#6272A4"># Immediately add to .gitignore</span></span>
+<span class="line"><span style="color:#8BE9FD;--shiki-dark:#8BE9FD">echo</span><span style="color:#E9F284;--shiki-dark:#E9F284"> "</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">.env</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#FF79C6;--shiki-dark:#FF79C6"> >></span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C"> .gitignore</span></span></code></pre>
+<p>Check that <code>.env</code> <strong>doesn’t land in the commit</strong>:</p>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#50FA7B;--shiki-dark:#50FA7B">git</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C"> status</span></span></code></pre>
+<p>If <code>.env</code> isn’t in the list — great. If it is — add to <code>.gitignore</code> and don’t commit.</p>
+<h3 id="rule-2-look-dont-touch-at-the-start">Rule 2. “Look, don’t touch” at the start</h3>
+<p>First message in a new session:</p>
+<blockquote>
+<p>“Read the files in this folder. Don’t change anything, don’t run anything. Tell me what’s here.”</p>
+</blockquote>
+<p>That gives a <strong>project map</strong> and prevents the agent from doing something out of habit. When you’ve mapped the structure — raise the trust level.</p>
+<h3 id="rule-3-commit-before-every-dangerous-action">Rule 3. Commit before every dangerous action</h3>
+<p>Before:</p>
+<ul>
+<li>Letting the agent run commands</li>
+<li>Installing a new library (<code>npm install ...</code>)</li>
+<li>Rewriting something big</li>
+</ul>
+<p><strong>Commit</strong>. From B4 — that’s a <strong>rollback point</strong>. If anything goes wrong, <code>git restore .</code> brings it all back.</p>
+<h3 id="rule-4-dont-trust-safe-commands">Rule 4. Don’t trust “safe” commands</h3>
+<p>Commands that <strong>sound safe</strong> but can be dangerous:</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Command</th><th>What’s dangerous</th></tr></thead><tbody><tr><td><code>rm &#x3C;file></code></td><td>Deletion is <strong>irreversible</strong> in most cases</td></tr><tr><td><code>npm install &#x3C;pkg></code></td><td>Can pull malicious code via dependencies</td></tr><tr><td><code>git push --force</code></td><td>Overwrites server history, breaks colleagues</td></tr><tr><td><code>sudo &#x3C;anything></code></td><td>System changes, easy to break the OS</td></tr><tr><td><code>chmod 777 ...</code></td><td>Open permissions = anyone can edit the file</td></tr><tr><td><code>> file.txt</code></td><td>Redirect “wipes” the file entirely</td></tr></tbody></table>
+<p>If the agent itself wants to run one of these — <strong>read</strong> what exactly and why. Don’t hit “Yes” reflexively.</p>
+<h2 id="rule-5-suspicious-sources">Rule 5. Suspicious sources</h2>
+<p>If the agent suggests:</p>
+<ul>
+<li>Downloading from a little-known site (<code>curl http://random.site/install.sh | sh</code>)</li>
+<li>Installing a package you didn’t ask for</li>
+<li>Opening a “test link” in the browser</li>
+</ul>
+<p><strong>Stop. Ask:</strong></p>
+<blockquote>
+<p>“What’s this package/site, why is it needed, who’s the author? Give me a source link.”</p>
+</blockquote>
+<p>A good agent gives a link and explains. A bad one will hand-wave, and here your scepticism is your <strong>first defence</strong>. This move pays off regularly — better to ask one extra time and avoid trouble than later wrestle with the <strong>full package</strong> of consequences.</p>
+<h2 id="example-correct-initial-project-setup">Example: correct initial project setup</h2>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#6272A4;--shiki-dark:#6272A4"># 1. Make a folder, init git</span></span>
+<span class="line"><span style="color:#50FA7B;--shiki-dark:#50FA7B">mkdir</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C"> my-safe-project</span></span>
+<span class="line"><span style="color:#8BE9FD;--shiki-dark:#8BE9FD">cd</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C"> my-safe-project</span></span>
+<span class="line"><span style="color:#50FA7B;--shiki-dark:#50FA7B">git</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C"> init</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6272A4;--shiki-dark:#6272A4"># 2. Create .gitignore IMMEDIATELY, before the first commit</span></span>
+<span class="line"><span style="color:#50FA7B;--shiki-dark:#50FA7B">cat</span><span style="color:#FF79C6;--shiki-dark:#FF79C6"> ></span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C"> .gitignore</span><span style="color:#FF79C6;--shiki-dark:#FF79C6"> &#x3C;&#x3C;</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">EOF</span></span>
+<span class="line"><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">.env</span></span>
+<span class="line"><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">.env.local</span></span>
+<span class="line"><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">node_modules/</span></span>
+<span class="line"><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">*.log</span></span>
+<span class="line"><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">.DS_Store</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">EOF</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6272A4;--shiki-dark:#6272A4"># 3. Make .env for secrets (if you'll have any)</span></span>
+<span class="line"><span style="color:#50FA7B;--shiki-dark:#50FA7B">touch</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C"> .env</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6272A4;--shiki-dark:#6272A4"># 4. First commit — empty project with the right protection</span></span>
+<span class="line"><span style="color:#50FA7B;--shiki-dark:#50FA7B">git</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C"> add</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C"> .gitignore</span></span>
+<span class="line"><span style="color:#50FA7B;--shiki-dark:#50FA7B">git</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C"> commit</span><span style="color:#BD93F9;--shiki-dark:#BD93F9"> -m</span><span style="color:#E9F284;--shiki-dark:#E9F284"> "</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">init: safety baseline</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6272A4;--shiki-dark:#6272A4"># 5. Now launch the agent</span></span>
+<span class="line"><span style="color:#50FA7B;--shiki-dark:#50FA7B">claude</span></span></code></pre>
+<p>First message:</p>
+<blockquote>
+<p>“This is a new project. Only <code>.gitignore</code> is in the folder. Tell me what file structure you propose for <my task="">. Plan only, no code.”</my></p>
+</blockquote>
+<p>That’s a <strong>fully safe start</strong>. The agent can’t break anything because there’s nothing yet.</p>
+<h2 id="practice-2030-minutes">Practice (20–30 minutes)</h2>
+<h3 id="task-1-10-minutes--gitignore-for-all-your-projects">Task 1 (10 minutes) — <code>.gitignore</code> for all your projects</h3>
+<p>Open every folder where you built projects in B5 and earlier. Check:</p>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#50FA7B;--shiki-dark:#50FA7B">ls</span><span style="color:#BD93F9;--shiki-dark:#BD93F9"> -la</span><span style="color:#FF79C6;--shiki-dark:#FF79C6"> |</span><span style="color:#50FA7B;--shiki-dark:#50FA7B"> grep</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C"> .gitignore</span></span></code></pre>
+<p>If no <code>.gitignore</code> — create one. If there is — verify <code>.env</code>, <code>node_modules/</code>, and any heavy/secret folders are included.</p>
+<h3 id="task-2-15-minutes--audit-of-what-the-agent-touches">Task 2 (15 minutes) — audit of “what the agent touches”</h3>
+<p>In the <strong>next</strong> session with the agent, after <strong>every</strong> change, check:</p>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#50FA7B;--shiki-dark:#50FA7B">git</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C"> status</span></span></code></pre>
+<p>What <strong>exactly</strong> changed? Does it match what you asked? If there are “extra” changes — that’s a <strong>signal</strong>: re-ask the agent or roll back.</p>
+<p>Make it a habit: after every accepted edit — <code>git status</code> + a quick look. That’s <strong>base hygiene</strong>, same as washing hands.</p>
+<h2 id="recap">Recap</h2>
+<ul>
+<li><strong>Three trust levels:</strong> read-only → edits → run → external actions. Always start at the minimum.</li>
+<li><strong>Secrets in <code>.env</code>, and <code>.env</code> in <code>.gitignore</code>.</strong> Never <strong>write</strong> keys into chat or directly into code.</li>
+<li><strong>Launch the agent in a dedicated project folder.</strong> Not from home, not from the drive root.</li>
+</ul>
+<h2 id="vibe-samurai">Vibe Samurai</h2>
+<aside class="skeptic">
+<p><strong>🥷 Vibe Samurai asks:</strong>
+“I have a learning project, no real value — what’s there to protect? I just want to try quickly.”</p>
+<p><strong>Answer:</strong> A learning project is a <strong>habit trainer</strong>. If on a learning project you immediately <strong>always</strong> make <code>.gitignore</code> and don’t paste secrets into chat — on a <strong>real</strong> project it becomes reflex, and you won’t lose money/data/nerves. If on a learning project “I can be sloppy” — same on a real one, and one day it bites. Cost of the right habit at the start — <strong>a minute per project</strong>. Cost of not having it can be <strong>a bill for thousands of dollars</strong> for a stolen API key. <strong>Not perfect, but actually works</strong> — ten minutes of hygiene at the start save hours (and sometimes dollars) later.</p>
+</aside>
+<h2 id="whats-next">What’s next</h2>
+<p>In <strong>B8 — Cursor vs Claude Code vs Codex CLI</strong> we cover <strong>what other agents exist</strong> besides Claude Code, and when to pick them. Comparison table, pros and cons of each, <strong>what I personally use</strong> and why. Not a “holy war” about the best tool — a <strong>map of the zoo</strong> so you can pick by task.</p>
+<p>If this clicked — share with anyone working with an agent “loosely” and giving it everything. If you had your own leak/screw-up episode — share in the comments, no shame. <strong>A like and a comment is extra appreciated</strong>, your feedback really helps polish the material.</p>
+<h2 id="-further-reading">📚 Further reading</h2>
+<p>Security is a topic where primary sources beat summaries. A short, <strong>verified</strong> list I’d give any beginner.</p>
+<p><strong>Official documentation</strong></p>
+<ul>
+<li><strong>Claude Code — Sandboxing</strong> — <a href="https://code.claude.com/docs/en/sandboxing">code.claude.com/docs/en/sandboxing</a>. How Claude Code itself separates “allowed” from “forbidden” at the OS level. Useful to know what the tool protects and what’s your job.</li>
+<li><strong>Anthropic — Claude Code auto mode: a safer way to skip permissions</strong> — <a href="https://www.anthropic.com/engineering/claude-code-auto-mode">anthropic.com/engineering/claude-code-auto-mode</a>. Honest breakdown by Anthropic of what happens when you turn off confirmations and where that’s acceptable.</li>
+</ul>
+<p><strong>Attacks and threats — to know what to fear</strong></p>
+<ul>
+<li><strong>OWASP Top 10 for Agentic Applications (2026)</strong> — <a href="https://genai.owasp.org/resource/owasp-top-10-for-agentic-applications-for-2026/">genai.owasp.org/resource/owasp-top-10-for-agentic-applications-for-2026</a>. Map of typical agent risks. Not a scare story — a structured list.</li>
+<li><strong>Simon Willison — prompt injection</strong> (series) — <a href="https://simonwillison.net/tags/prompt-injection/">simonwillison.net/tags/prompt-injection</a>. The person who coined “prompt injection.” Best place to spend an hour and understand how an agent can be “talked into” something via slipped text.</li>
+</ul>
+<p><strong>Secrets and git</strong></p>
+<ul>
+<li><strong>GitGuardian — Secure Your Secrets With .env</strong> — <a href="https://blog.gitguardian.com/secure-your-secrets-with-env/">blog.gitguardian.com/secure-your-secrets-with-env</a>. Detailed walkthrough of <code>.env</code> + <code>.gitignore</code> and what to do if a key did leak.</li>
+</ul>
+<blockquote>
+<p><strong>Tip:</strong> if reading time is short — start with OWASP Top 10 for Agentic Applications. It’s the <strong>cheapest</strong> way to stop stepping on the same rakes everyone else does.</p>
+</blockquote> <nav class="chapter-nav" data-astro-cid-a7sruqtr> <a href="/vibesamurai-site/courses/beginner/b6/en" data-astro-cid-a7sruqtr> <span class="dir" data-astro-cid-a7sruqtr>← Back</span> <span class="title" data-astro-cid-a7sruqtr>B6 · Reading the agent&#39;s code</span> </a> <a href="/vibesamurai-site/courses/beginner/b8/en" data-astro-cid-a7sruqtr> <span class="dir" data-astro-cid-a7sruqtr>Next →</span> <span class="title" data-astro-cid-a7sruqtr>B8 · Cursor vs Claude Code vs Codex CLI</span> </a> </nav> </main>  </div> <script type="module">
+    import { gatingEnabled } from '../lib/supabase';
+    import { fetchChapter } from '../lib/auth';
+
+    const base = import.meta.env.BASE_URL;
+    let mermaidLib = null;
+
+    function scopeOf(root) {
+      return root === document ? document.querySelector('.reader-main') : root;
+    }
+
+    function addCopyBtns(root) {
+      const scope = scopeOf(root); if (!scope) return;
+      scope.querySelectorAll('pre').forEach((pre) => {
+        if (pre.closest('.code-tabs')) return;
+        if (pre.querySelector('.copy-btn')) return;
+        const btn = document.createElement('button');
+        btn.className = 'copy-btn';
+        btn.textContent = 'copy';
+        btn.addEventListener('click', async () => {
+          const code = pre.querySelector('code')?.textContent ?? pre.textContent ?? '';
+          await navigator.clipboard.writeText(code.trimEnd());
+          btn.textContent = '✓ copied';
+          setTimeout(() => { btn.textContent = 'copy'; }, 1600);
+        });
+        pre.appendChild(btn);
+      });
+    }
+
+    function tightenMermaidSvgs(retries = 6) {
+      let pending = false;
+      document.querySelectorAll('.mermaid svg').forEach((svg) => {
+        if (svg.dataset.tightened === '1') return;
+        try {
+          const bbox = svg.getBBox();
+          if (!bbox || bbox.width === 0) { pending = true; return; }
+          const pad = 6;
+          svg.setAttribute('viewBox',
+            `${bbox.x - pad} ${bbox.y - pad} ${bbox.width + pad * 2} ${bbox.height + pad * 2}`);
+          svg.removeAttribute('height');
+          svg.style.height = 'auto';
+          svg.style.maxWidth = '100%';
+          svg.style.display = 'block';
+          svg.dataset.tightened = '1';
+        } catch (e) { pending = true; }
+      });
+      if (pending && retries > 0) setTimeout(() => tightenMermaidSvgs(retries - 1), 120);
+    }
+
+    async function ensureMermaid() {
+      if (mermaidLib) return mermaidLib;
+      const mod = await import('https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs');
+      mermaidLib = mod.default;
+      mermaidLib.initialize({
+        startOnLoad: false, theme: 'neutral',
+        themeVariables: {
+          fontFamily: 'JetBrains Mono, ui-monospace, monospace',
+          primaryColor: '#f5f5f5', primaryBorderColor: '#222',
+          primaryTextColor: '#111', lineColor: '#444',
+        },
+        flowchart: { curve: 'basis', padding: 12, useMaxWidth: true },
+      });
+      return mermaidLib;
+    }
+
+    async function renderMermaid(root) {
+      const scope = scopeOf(root); if (!scope) return;
+      const matches = scope.querySelectorAll(
+        'pre[data-language="mermaid"], pre.language-mermaid, code.language-mermaid'
+      );
+      if (!matches.length) return;
+      matches.forEach((el) => {
+        const block = el.tagName === 'CODE' ? el.closest('pre') || el : el;
+        const codeEl = block.querySelector('code') || block;
+        const wrap = document.createElement('div');
+        wrap.className = 'mermaid';
+        wrap.textContent = codeEl.textContent;
+        block.replaceWith(wrap);
+      });
+      try {
+        const m = await ensureMermaid();
+        await m.run();
+        tightenMermaidSvgs();
+      } catch (err) {
+        console.warn('mermaid failed', err);
+        document.querySelectorAll('.mermaid:not(:has(svg))').forEach((el) => { el.style.display = 'none'; });
+      }
+    }
+
+    async function enhance(root = document) {
+      addCopyBtns(root);
+      await renderMermaid(root);
+    }
+
+    function paywallHtml(required, needLogin) {
+      const label = { beginner: 'Beginner (300 ₽)', middle: 'Beginner + Middle (500 ₽)', all: 'Весь пакет (700 ₽)' }[required] || '';
+      return `<div class="paywall">
+        <div class="paywall-ic">🔒</div>
+        <h3>Эта глава — в платном доступе</h3>
+        <p>Нужен тариф: <strong>${label}</strong>. Доступ навсегда, без подписки.</p>
+        ${needLogin ? '<p>Войди через Google и оформи доступ — продолжишь с любого устройства.</p>' : ''}
+        <a class="paywall-btn" href="${base}pricing">Открыть доступ →</a>
+        <a class="paywall-link" href="${base}account">Войти / мой аккаунт</a>
+      </div>`;
+    }
+
+    async function gatedFlow(mount) {
+      const slug = mount.dataset.slug;
+      const required = mount.dataset.required || 'beginner';
+      mount.innerHTML = '<p class="gate-msg">Проверяем доступ…</p>';
+      const res = await fetchChapter(slug);
+      if (res.ok) {
+        mount.innerHTML = res.html;
+        await enhance(mount);
+      } else if (res.status === 401) {
+        mount.innerHTML = paywallHtml(required, true);
+      } else if (res.status === 402) {
+        mount.innerHTML = paywallHtml(res.requiredTier || required, false);
+      } else {
+        mount.innerHTML = '<p class="gate-msg">Не удалось загрузить главу. Обнови страницу.</p>';
+      }
+    }
+
+    const mount = document.getElementById('gated-mount');
+    if (mount && gatingEnabled) gatedFlow(mount);
+    else enhance(document);
+  </script> </body> </html>

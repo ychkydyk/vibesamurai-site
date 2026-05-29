@@ -1,0 +1,354 @@
+<!DOCTYPE html><html lang="en" data-astro-cid-a7sruqtr> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Memory strategies — Vibesamurai</title><meta name="description" content="Short-term, long-term, and external memory. Scoping, pruning, the Copilot Memory model."><meta property="og:title" content="Memory strategies"><meta property="og:type" content="article"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Inter:wght@300..800&family=JetBrains+Mono:wght@400..600&display=swap" rel="stylesheet"><link rel="stylesheet" href="/vibesamurai-site/_astro/_slug_.Cs4TX1wt.css">
+<style>.account-btn{display:inline-flex;align-items:center;gap:var(--space-2);font-family:var(--font-mono);font-size:var(--size-2);text-transform:uppercase;letter-spacing:.06em;padding:5px 10px;border:1px solid var(--rule);border-radius:999px;color:var(--text-soft);background:var(--surface);transition:border-color var(--d-fast),color var(--d-fast)}.account-btn:hover{border-color:var(--accent);color:var(--text)}.account-ic{width:18px;height:18px;display:grid;place-items:center;border-radius:50%;background:var(--accent);color:var(--accent-ink);font-weight:700;font-size:10px;line-height:1}.reader-rail .account-btn{padding:0;border:none;background:transparent}.reader-rail .account-label{display:none}.reader-rail .account-ic{width:32px;height:32px;font-size:13px}.rail-toggle{width:36px;height:36px;display:grid;place-items:center;background:var(--accent);border:1px solid var(--accent);border-radius:4px;cursor:pointer;transition:filter var(--d-fast),transform var(--d-fast);padding:0}.rail-toggle:hover{filter:brightness(1.08);transform:translateY(-1px)}.rail-toggle:active{transform:translateY(0)}.rail-toggle-icon{width:14px;height:12px;border-left:2px solid var(--accent-ink);border-right:2px solid var(--accent-ink);transition:transform var(--d-normal) var(--ease-standard)}.reader-app.sidebar-open .rail-toggle-icon{transform:rotate(0)}.reader-app:not(.sidebar-open) .rail-toggle-icon{transform:scaleX(.5)}.sidebar-backdrop{display:none;position:fixed;inset:0;background:#0000008c;z-index:140;border:0;padding:0;cursor:pointer}@media(max-width:900px){.reader-app.sidebar-open~.sidebar-backdrop{display:block}}.rail-spacer[data-astro-cid-ofsbkzh7]{flex:1}.reader-sidebar[data-astro-cid-khgtvzrl] .ru-tag[data-astro-cid-khgtvzrl]{font-style:normal;font-family:var(--font-mono);font-size:.7em;color:var(--text-mute);margin-left:4px;padding:1px 4px;border:1px solid var(--rule);border-radius:3px;text-transform:uppercase;vertical-align:middle}.chapter-eyebrow[data-astro-cid-a7sruqtr]{display:flex;justify-content:space-between;align-items:center;gap:var(--space-3)}.lang-toggle[data-astro-cid-a7sruqtr]{font-family:var(--font-mono);font-size:var(--size-2);padding:2px 8px;border:1px solid var(--rule);border-radius:4px;color:var(--text-mute);text-decoration:none;text-transform:uppercase;letter-spacing:.08em}.lang-toggle[data-astro-cid-a7sruqtr]:hover{color:var(--accent);border-color:var(--accent)}.code-tabs[data-astro-cid-hg66rjob]{margin:var(--space-5) 0}.code-tabs-nav[data-astro-cid-hg66rjob]{display:flex;gap:2px;margin-bottom:-1px;position:relative;z-index:1}.ctab[data-astro-cid-hg66rjob]{font-family:var(--font-mono);font-size:11px;text-transform:uppercase;letter-spacing:.07em;padding:5px 14px;border:1px solid #21222c;border-bottom:none;background:#1a1b23;color:#6272a4;cursor:pointer;border-radius:4px 4px 0 0;transition:color .12s,background .12s}.ctab[data-astro-cid-hg66rjob].is-active{background:#282a36;color:#f8f8f2;border-color:#21222c}.ctab[data-astro-cid-hg66rjob]:hover:not(.is-active){color:#cdd6f4}.ctab-panel[data-astro-cid-hg66rjob]{display:none}.ctab-panel[data-astro-cid-hg66rjob].is-active{display:block}.ctab-panel[data-astro-cid-hg66rjob] pre{margin-top:0!important;border-radius:0 6px 6px!important}
+</style></head> <body data-astro-cid-a7sruqtr> <div class="reader-app" data-astro-cid-a7sruqtr> <aside class="reader-rail" data-astro-cid-ofsbkzh7> <a href="/vibesamurai-site/" class="logo" aria-label="Vibesamurai home" data-astro-cid-ofsbkzh7>V</a> <button type="button" class="rail-toggle" id="sidebar-toggle" aria-label="Свернуть/развернуть оглавление" title="Свернуть/развернуть оглавление" data-astro-cid-ofsbkzh7> <span class="rail-toggle-icon" aria-hidden="true" data-astro-cid-ofsbkzh7></span> </button> <div class="rail-spacer" data-astro-cid-ofsbkzh7></div> <a href="/vibesamurai-site/account" class="account-btn" id="account-btn" aria-label="Аккаунт"> <span class="account-ic" id="account-ic">⌂</span> <span class="account-label" id="account-label">Войти</span> </a>  <script type="module" src="/vibesamurai-site/_astro/AccountButton.astro_astro_type_script_index_0_lang.CmD2sdn9.js"></script> </aside>  <button type="button" class="sidebar-backdrop" id="sidebar-backdrop" aria-label="Закрыть оглавление" tabindex="-1" data-astro-cid-ofsbkzh7></button>  <script type="module">const d="vs-sidebar-open",a="(max-width: 900px)";function t(e){const n=document.querySelector(".reader-app");n&&n.classList.toggle("sidebar-open",e)}function r(){return!window.matchMedia(a).matches}function s(){const e=localStorage.getItem(d),i=window.matchMedia(a).matches?!1:e!==null?e==="1":r();t(i),document.getElementById("sidebar-toggle")?.addEventListener("click",()=>{const c=!document.querySelector(".reader-app")?.classList.contains("sidebar-open");window.matchMedia(a).matches||localStorage.setItem(d,c?"1":"0"),t(c)}),document.getElementById("sidebar-backdrop")?.addEventListener("click",()=>t(!1)),document.querySelectorAll(".reader-sidebar a").forEach(o=>{o.addEventListener("click",()=>{window.matchMedia(a).matches&&t(!1)})})}document.readyState==="loading"?document.addEventListener("DOMContentLoaded",s):s();</script> <aside class="reader-sidebar" data-astro-cid-khgtvzrl> <div class="breadcrumb" data-astro-cid-khgtvzrl>Vibesamurai · Middle Path · M9</div> <h4 data-astro-cid-khgtvzrl>In this course</h4> <ul data-astro-cid-khgtvzrl> <li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m1/en" class data-astro-cid-khgtvzrl> M1 · What is agentic AI in the SDLC  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m2/en" class data-astro-cid-khgtvzrl> M2 · Architecting agent boundaries  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m3/en" class data-astro-cid-khgtvzrl> M3 · Observability and human-in-the-loop  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m4/en" class data-astro-cid-khgtvzrl> M4 · Tool inventory and permissions  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m5/en" class data-astro-cid-khgtvzrl> M5 · MCP deep dive  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m6/en" class data-astro-cid-khgtvzrl> M6 · Claude Code CLI mastery  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m7/en" class data-astro-cid-khgtvzrl> M7 · GPT-5.3 Codex CLI and OpenAI agents  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m8/en" class data-astro-cid-khgtvzrl> M8 · Cursor Composer + IDE agents  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m9/en" class="current" data-astro-cid-khgtvzrl> M9 · Memory strategies  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m10/en" class data-astro-cid-khgtvzrl> M10 · State, drift, continuity  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m11/en" class data-astro-cid-khgtvzrl> M11 · Evaluating agents: metrics over vibes  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m12/en" class data-astro-cid-khgtvzrl> M12 · Regression tests for agents  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m13/en" class data-astro-cid-khgtvzrl> M13 · Tuning: what to change when metrics don&#39;t move  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m14/en" class data-astro-cid-khgtvzrl> M14 · One agent, many steps: pipelines and orchestration  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m15/en" class data-astro-cid-khgtvzrl> M15 · Multi-agent: roles, communication, supervisor  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m16/en" class data-astro-cid-khgtvzrl> M16 · When multi-agent is overkill. Anti-patterns  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m17/en" class data-astro-cid-khgtvzrl> M17 · Production: deploying agents to live environments  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m18/en" class data-astro-cid-khgtvzrl> M18 · Security in prod: secrets, sandbox, audit  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m19/en" class data-astro-cid-khgtvzrl> M19 · Incidents &amp; post-mortems  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m20/en" class data-astro-cid-khgtvzrl> M20 · Finale: where to go after Middle  </a> </li> </ul>  </aside> <main class="reader-main" data-astro-cid-a7sruqtr> <div class="chapter-eyebrow" data-astro-cid-a7sruqtr> <span data-astro-cid-a7sruqtr>Middle Path · m9</span> <a class="lang-toggle" href="/vibesamurai-site/courses/middle/m9" aria-label="Switch to RU" data-astro-cid-a7sruqtr>RU</a> </div> <h1 class="chapter-title" data-astro-cid-a7sruqtr>M9 · Memory strategies</h1> <p class="chapter-subtitle" data-astro-cid-a7sruqtr>Short-term, long-term, and external memory. Scoping, pruning, the Copilot Memory model.</p> <h2 id="what-this-chapter-is-about">What this chapter is about</h2>
+<p>Hey folks, welcome 👋</p>
+<p>In Part I and Part II we talked about <strong>one session</strong>: you opened the agent, gave it a task, it ran, you closed it. What happens <strong>between sessions</strong>? What does the agent remember, what does it forget, what context does it have “by default” at the next start?</p>
+<p>That’s <strong>the memory topic</strong>. And — spoiler — there’s a whole family of mistakes that catches middle developers stepping into agentic flow for the first time. The most common complaint from new agent users:</p>
+<blockquote>
+<p>“I explained all of this to it yesterday! Today it doesn’t remember!”</p>
+</blockquote>
+<p>It doesn’t. Because <strong>by default the agent remembers nothing outside the current session</strong>. And that’s fine — it’s an architectural decision, not a bug. In this chapter:</p>
+<ol>
+<li>Three memory types: short-term, long-term, external</li>
+<li>Concrete memory mechanisms in Claude Code, Codex CLI, Cursor, Copilot</li>
+<li><strong>Scoping</strong> — what to keep in memory, what not to</li>
+<li><strong>Pruning</strong> — how and when to clean</li>
+<li>Copilot Memory model — separately, because it’s the reference implementation for GH-600</li>
+</ol>
+<h2 id="three-memory-types">Three memory types</h2>
+<p>In layers — bottom slowest and longest-lived, top hottest:</p>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="mermaid"><code><span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">flowchart LR</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    Agent[Agent&#x3C;br/>session] -->|read/write| ST[Short-term&#x3C;br/>context window]</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    Agent -->|read/write| Cache[(Prompt cache&#x3C;br/>5 min / 1h)]</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    Agent -->|read| LT[Long-term&#x3C;br/>CLAUDE.md / AGENTS.md]</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    Agent -->|read/write| Ext[(External memory&#x3C;br/>vector DB / mem0)]</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    Agent -.read.-> Ref[Reference&#x3C;br/>wiki / issues / ADR]</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    LT -.git.-> Repo[(repo)]</span></span></code></pre>
+<p>Each layer solves its own problem: short-term holds “right now,” cache hits identical prefixes, long-term lives in the repo under version control, external accumulates across sessions, reference is the team’s external source of truth.</p>
+<h3 id="short-term-memory-the-sessions-working-context">Short-term memory (the session’s working context)</h3>
+<p>This is what’s <strong>in the model’s context window right now</strong>: your messages, the agent’s responses, files read, tool results. Lives <strong>only while the session is open</strong>.</p>
+<p>Size: bounded by the model’s context. As of May 2026 — Opus 4.7 gives 1M tokens, Sonnet 4.6 gives 1M, Haiku 4.5 — 200K. In practice effective work happens around 50–150K tokens; beyond that “context dilution” starts — the model focuses less well on specifics.</p>
+<p>Management:</p>
+<ul>
+<li><strong>Session size</strong> — short focused > long “kitchen sink”</li>
+<li><strong>Compaction</strong> — modern tools auto-summarise old context</li>
+<li><strong>Subagents</strong> (M6) — offload side tasks from the main context</li>
+</ul>
+<p>The most common anti-pattern: <strong>“one giant session per day”</strong>. After 4 hours the agent doesn’t remember the morning, gets tangled in its own decisions. Better: <strong>many focused sessions</strong>, one per task.</p>
+<h3 id="long-term-memory-between-sessions-in-the-project">Long-term memory (between sessions, in the project)</h3>
+<p>This is what <strong>survives session close and is read on next start</strong>. Implemented through files:</p>
+<ul>
+<li><code>CLAUDE.md</code> / <code>AGENTS.md</code> / <code>.cursor/rules/</code> — the main memory artifact</li>
+<li><code>.claude/memory/</code> (optional, via hook or skill)</li>
+<li>ADR files (Architecture Decision Records) in the repo</li>
+<li>Project README</li>
+</ul>
+<p>This <strong>belongs in git</strong>, under version control, for the whole team.</p>
+<p>Strength: <strong>deterministic</strong>. The file exists — the agent reads it. Delete the file — the agent forgets.</p>
+<p>Weakness: <strong>no automatic accumulation</strong>. If you want the agent to “remember” a decision from today’s session — you (or the agent on your request) have to write it into <code>CLAUDE.md</code>. It won’t appear by itself.</p>
+<blockquote>
+<p><em>Pro tip:</em> at the end of a session ask the agent to formulate “what did we decide / what should be captured in CLAUDE.md” and offer a diff. Accept it — committed. Reject — not captured.</p>
+</blockquote>
+<h3 id="external-memory-between-sessions-and-across-tools">External memory (between sessions and across tools)</h3>
+<p>Memory of <strong>broader scope</strong> — across sessions, tools, team members. Implemented through:</p>
+<ul>
+<li><strong>Notes / wiki systems</strong> (Notion, Confluence, Obsidian)</li>
+<li><strong>Issue tracker</strong> — Jira, Linear, GitHub issues</li>
+<li><strong>Personal memory systems</strong> (e.g. <code>~/.claude/memory/</code> with a user-level index — a pattern Anthropic introduced in their standard “auto-memory” setups)</li>
+<li><strong>MCP servers for memory</strong> — <code>mem0</code>, <code>memori</code>, and similar</li>
+</ul>
+<p>Strength: <strong>universality</strong>. One source, many consumers.</p>
+<p>Weakness: <strong>maintenance overhead</strong>. If you stuff everything in — in a month it’s a swamp where nothing’s findable.</p>
+<h2 id="mechanisms-per-tool">Mechanisms per tool</h2>
+<h3 id="claude-code-auto-memory">Claude Code: auto-memory</h3>
+<p>In Claude Code (from 2025-Q4) there’s a built-in <strong>auto-memory</strong>: the folder <code>~/.claude/memory/</code> with an index file <code>MEMORY.md</code> and individual memory files.</p>
+<p>Structure:</p>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>~/.claude/memory/</span></span>
+<span class="line"><span>├── MEMORY.md                       # index, always in context</span></span>
+<span class="line"><span>├── user_role.md                    # auto: user role record</span></span>
+<span class="line"><span>├── feedback_no_userbot.md          # auto: feedback record</span></span>
+<span class="line"><span>├── project_x.md                    # auto: project context</span></span>
+<span class="line"><span>└── reference_y.md                  # auto: external reference</span></span></code></pre>
+<p>The agent decides when to write to memory (on triggers like “user gave a directive not to do X,” “user confirmed approach Y”). On next start Claude Code reads <code>MEMORY.md</code> and pulls relevant entries into context.</p>
+<p>Memory types:</p>
+<ul>
+<li><strong>user</strong> — about the user (role, experience, specialisation)</li>
+<li><strong>feedback</strong> — what the user corrected or confirmed</li>
+<li><strong>project</strong> — state of projects</li>
+<li><strong>reference</strong> — links to external systems</li>
+</ul>
+<p>This is <strong>personal, not project</strong> memory. Stored locally on your machine, doesn’t go into git.</p>
+<h3 id="cursor-chat-history">Cursor: chat history</h3>
+<p>Cursor stores <strong>chat history</strong> in a local file and can “remember” previous conversations in a new session. Less formal than Claude’s mechanism — more “history” than “structured memory.”</p>
+<p><code>.cursor/rules/</code> is long-term project memory (see M8).</p>
+<h3 id="codex-cli-history">Codex CLI: history</h3>
+<p>Codex CLI stores session history in <code>~/.codex/history/</code>. Structurally simpler; formally no different from Claude project memory.</p>
+<p><code>AGENTS.md</code> is long-term project memory (see M7).</p>
+<h3 id="github-copilot-copilot-memory">GitHub Copilot: Copilot Memory</h3>
+<p>A separate, more <strong>enterprise-oriented</strong> mechanism, which in our GH-600 is covered as its own subdomain. Worth treating separately.</p>
+<h2 id="copilot-memory-model-for-gh-600">Copilot Memory model (for GH-600)</h2>
+<p>GitHub Copilot (especially in the Copilot Workspace / Copilot Coding Agent variant) uses <strong>Copilot Memory</strong> — a structured memory system with a concrete model:</p>
+<h3 id="scopes">Scopes</h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Scope</th><th>Who sees it</th><th>What’s stored</th></tr></thead><tbody><tr><td><strong>User</strong></td><td>Only one user</td><td>Personal preferences, work patterns</td></tr><tr><td><strong>Repository</strong></td><td>All repo collaborators</td><td>Project conventions, do-not-touch</td></tr><tr><td><strong>Organization</strong></td><td>The whole organisation</td><td>Corporate standards</td></tr><tr><td><strong>Enterprise</strong></td><td>Everyone in the enterprise</td><td>Compliance rules</td></tr></tbody></table>
+<h3 id="lifecycle">Lifecycle</h3>
+<ul>
+<li><strong>Capture</strong> — moment of writing. Can be automatic (trigger on “user said don’t do X”) or manual (commit-style “remember this”).</li>
+<li><strong>Storage</strong> — where it lives. Repository scope — in the repo itself (e.g. <code>.github/copilot-memory.yml</code>), user scope — on the GitHub account, and so on.</li>
+<li><strong>Retrieval</strong> — when it’s read. By default — always on session start. Optionally — semantic retrieval by context.</li>
+<li><strong>Decay / pruning</strong> — staleness. Memory can “fade” over time or via explicit <code>delete</code>.</li>
+<li><strong>Conflict resolution</strong> — what if user-scope conflicts with repository-scope. Default: narrower scope wins (user beats org, project beats user).</li>
+</ul>
+<h3 id="principal-patterns">Principal patterns</h3>
+<ul>
+<li><strong>Don’t duplicate memory across scopes.</strong> If a rule “don’t edit legacy/” — that’s repository-scope. No need to duplicate at user-scope.</li>
+<li><strong>User scope — personal preferences only.</strong> Don’t put project material there.</li>
+<li><strong>Org scope — compliance and policy.</strong> Don’t put “how we prefer to name variables” there.</li>
+<li><strong>Conflict is a signal</strong> that your memory architecture is leaking. Revisit scoping.</li>
+</ul>
+<h2 id="scoping-what-goes-in-memory-what-doesnt">Scoping: what goes in memory, what doesn’t</h2>
+<h3 id="keep-in-long-termexternal">Keep in long-term/external:</h3>
+<p>✅ Architectural decisions and why they were made
+✅ Conventions that aren’t obvious from code
+✅ Run commands (tests, lint, build)
+✅ Paths-not-to-touch list
+✅ Tribal knowledge from incidents
+✅ Personal work patterns (for user scope)
+✅ Resolved architectural questions (ADR)</p>
+<h3 id="dont-keep-in-long-termexternal">Don’t keep in long-term/external:</h3>
+<p>❌ What can be read from the code (folder structure, function names)
+❌ What changes fast (current tasks, ad-hoc decisions)
+❌ Secrets (any kind — passwords, tokens, keys)
+❌ Failure details “how we fixed yesterday’s bug” (that’s for commit messages)
+❌ Promises that may not be kept (lien-style)
+❌ Emotional comments (“an intern wrote this code, the dummy”)</p>
+<p>It’s <strong>like git</strong> — some things belong in a commit, some don’t. With memory the logic is the same.</p>
+<h2 id="pruning-how-to-clean">Pruning: how to clean</h2>
+<p>Memory without cleaning turns into a dump. In 6 months you’ve got 500 entries, 200 stale, 50 contradicting each other, the agent doesn’t know what to follow.</p>
+<h3 id="minimum-pruning-routine">Minimum pruning routine</h3>
+<p><strong>Once a month</strong> (or in the team’s sprint rhythm):</p>
+<ol>
+<li><strong>Read the full MEMORY.md / index.</strong> If it doesn’t skim in a minute — it’s too big.</li>
+<li><strong>For each entry ask:</strong>
+<ul>
+<li>Still relevant? (if no — delete)</li>
+<li>Conflicts with something else? (if yes — resolve)</li>
+<li>Can it be merged with similar ones? (if yes — combine)</li>
+</ul>
+</li>
+<li><strong>Delete stale.</strong> Don’t “mark deprecated” — <strong>delete</strong>. If it’s still needed, it lives in code or commit history.</li>
+<li><strong>Rewrite bulky entries</strong> into one short statement with “why” and “how to apply.”</li>
+</ol>
+<h3 id="signals-you-need-pruning-now">Signals you need pruning now</h3>
+<ul>
+<li>Memory index doesn’t fit on one screen — pruning needed</li>
+<li>The agent applies an outdated rule — pruning needed</li>
+<li>“Nobody on the team understands what’s in memory” — pruning + redocumentation</li>
+<li>Bypass events “because memory gets in the way” — pruning was needed yesterday</li>
+</ul>
+<blockquote>
+<p><em>Analogy:</em> a car’s mileage isn’t infinite. Memory without cleaning is the same car with no oil changes. It runs, but worse.</p>
+</blockquote>
+<h2 id="memory-anti-patterns">Memory anti-patterns</h2>
+<h3 id="1-memory-as-a-log">1. “Memory as a log”</h3>
+<p>Every agent sneeze recorded into memory. In a month — 1000 entries, 95 % garbage. <strong>Memory is a structured selection, not a log.</strong></p>
+<h3 id="2-memory-replaces-documentation">2. “Memory replaces documentation”</h3>
+<p>The team writes everything into Copilot Memory; the README empties. New joiner — can’t read the README, doesn’t have access to memory. <strong>Memory complements; it doesn’t replace.</strong></p>
+<h3 id="3-stale-memory-as-law">3. “Stale memory as law”</h3>
+<p>A rule was written 6 months ago. The stack has changed; the rule is still in memory. The agent blindly follows it. <strong>Memory must be reviewed, not dogmatised.</strong></p>
+<h3 id="4-one-memory-for-everyone">4. “One memory for everyone”</h3>
+<p>Project-scope rules in user scope. Or org policy in project scope. <strong>Each rule in its scope.</strong></p>
+<h3 id="5-memory-without-an-owner">5. “Memory without an owner”</h3>
+<p>The team has memory but nobody curates it. A year later — a swamp. <strong>Memory must have an owner</strong>, just like code has a maintainer.</p>
+<h2 id="practice">Practice</h2>
+<p>30 minutes:</p>
+<ol>
+<li><strong>Open your <code>MEMORY.md</code> or equivalent.</strong> If memory isn’t configured — set up the minimum (Claude Code auto-memory or a manual MEMORY.md in <code>~/.claude/</code>).</li>
+<li><strong>Read the index in full.</strong> If it takes > 1 screen — pruning candidate.</li>
+<li><strong>Delete 3–5 of the most obviously stale entries.</strong> “Not relevant anymore.”</li>
+<li><strong>Group 2–3 similar entries into one.</strong> If memory is large, it fragments — consolidate.</li>
+<li><strong>Open the project <code>CLAUDE.md</code> / <code>AGENTS.md</code></strong> in one of your projects. Compare: is what’s in there current? Anything to drop? Anything to add?</li>
+</ol>
+<h2 id="recap">Recap</h2>
+<ul>
+<li><strong>Three memory types:</strong> short-term (session context), long-term (project files), external (wiki/notes/MCP).</li>
+<li><strong>Auto-memory in Claude Code:</strong> <code>~/.claude/memory/</code> with typed entries (user/feedback/project/reference).</li>
+<li><strong>Copilot Memory model:</strong> scopes (user/repo/org/ent), lifecycle (capture→storage→retrieval→pruning), conflict-resolution “narrower scope wins.”</li>
+<li><strong>Scoping:</strong> in memory — conventions, decisions, tribal knowledge. NOT in memory — secrets, lien promises, fast-changing data.</li>
+<li><strong>Pruning monthly is mandatory.</strong> Without it — a swamp in 6 months.</li>
+<li><strong>5 anti-patterns:</strong> memory-as-log, memory-replaces-docs, stale-as-law, no scope separation, no owner.</li>
+</ul>
+<h2 id="whats-next">What’s next</h2>
+<p>In <strong>M10 — State, drift, continuity</strong> — we close Part III: resumable agents, durable artifacts, catching and fixing drift across sessions, sharing state between tools and environments. The most “engineering” chapter of Part III.</p>
+<p>If this clicked — share with anyone configuring the team’s agentic setup, especially those rolling out Copilot Memory. If you have specific memory-incident stories — write in the comments, your feedback really helps polish the material.</p>
+<h2 id="-further-reading">📚 Further reading</h2>
+<p>Memory is where it’s especially useful to see how “big shops” do it. Three anchors: Anthropic’s prompt cache, the granddaddy of memory agents (Letta/MemGPT), and a popular memory layer for agents (mem0).</p>
+<p><strong>Cache and context in LLMs</strong></p>
+<ul>
+<li><strong>Anthropic — Prompt caching</strong> — <a href="https://platform.claude.com/docs/en/build-with-claude/prompt-caching">platform.claude.com/docs/en/build-with-claude/prompt-caching</a>. How an identical prefix (system prompt + tools + CLAUDE.md) is cached and how it relates to compaction. Right in our “hot layer” topic.</li>
+</ul>
+<p><strong>Stateful agents with memory</strong></p>
+<ul>
+<li><strong>Letta (formerly MemGPT) — docs</strong> — <a href="https://docs.letta.com/concepts/memgpt/">docs.letta.com/concepts/memgpt/</a>. Architectural reference: how an agent splits core memory / archival memory and survives restarts.</li>
+<li><strong>mem0 — docs</strong> — <a href="https://docs.mem0.ai/introduction">docs.mem0.ai/introduction</a>. A memory layer that hooks onto a regular agent; episodic/semantic/procedural memory as separate entities.</li>
+</ul>
+<blockquote>
+<p><strong>Tip:</strong> Letta — for those interested in architecture “from the inside”; mem0 — for those who need a ready layer for an existing agent. Don’t install both at once.</p>
+</blockquote>
+<hr>
+<p><strong>Maps to:</strong> GH-600 §3.1 — <em>Memory architecture and lifecycle</em></p> <nav class="chapter-nav" data-astro-cid-a7sruqtr> <a href="/vibesamurai-site/courses/middle/m8/en" data-astro-cid-a7sruqtr> <span class="dir" data-astro-cid-a7sruqtr>← Back</span> <span class="title" data-astro-cid-a7sruqtr>M8 · Cursor Composer + IDE agents</span> </a> <a href="/vibesamurai-site/courses/middle/m10/en" data-astro-cid-a7sruqtr> <span class="dir" data-astro-cid-a7sruqtr>Next →</span> <span class="title" data-astro-cid-a7sruqtr>M10 · State, drift, continuity</span> </a> </nav> </main>  </div> <script type="module">
+    import { gatingEnabled } from '../lib/supabase';
+    import { fetchChapter } from '../lib/auth';
+
+    const base = import.meta.env.BASE_URL;
+    let mermaidLib = null;
+
+    function scopeOf(root) {
+      return root === document ? document.querySelector('.reader-main') : root;
+    }
+
+    function addCopyBtns(root) {
+      const scope = scopeOf(root); if (!scope) return;
+      scope.querySelectorAll('pre').forEach((pre) => {
+        if (pre.closest('.code-tabs')) return;
+        if (pre.querySelector('.copy-btn')) return;
+        const btn = document.createElement('button');
+        btn.className = 'copy-btn';
+        btn.textContent = 'copy';
+        btn.addEventListener('click', async () => {
+          const code = pre.querySelector('code')?.textContent ?? pre.textContent ?? '';
+          await navigator.clipboard.writeText(code.trimEnd());
+          btn.textContent = '✓ copied';
+          setTimeout(() => { btn.textContent = 'copy'; }, 1600);
+        });
+        pre.appendChild(btn);
+      });
+    }
+
+    function tightenMermaidSvgs(retries = 6) {
+      let pending = false;
+      document.querySelectorAll('.mermaid svg').forEach((svg) => {
+        if (svg.dataset.tightened === '1') return;
+        try {
+          const bbox = svg.getBBox();
+          if (!bbox || bbox.width === 0) { pending = true; return; }
+          const pad = 6;
+          svg.setAttribute('viewBox',
+            `${bbox.x - pad} ${bbox.y - pad} ${bbox.width + pad * 2} ${bbox.height + pad * 2}`);
+          svg.removeAttribute('height');
+          svg.style.height = 'auto';
+          svg.style.maxWidth = '100%';
+          svg.style.display = 'block';
+          svg.dataset.tightened = '1';
+        } catch (e) { pending = true; }
+      });
+      if (pending && retries > 0) setTimeout(() => tightenMermaidSvgs(retries - 1), 120);
+    }
+
+    async function ensureMermaid() {
+      if (mermaidLib) return mermaidLib;
+      const mod = await import('https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs');
+      mermaidLib = mod.default;
+      mermaidLib.initialize({
+        startOnLoad: false, theme: 'neutral',
+        themeVariables: {
+          fontFamily: 'JetBrains Mono, ui-monospace, monospace',
+          primaryColor: '#f5f5f5', primaryBorderColor: '#222',
+          primaryTextColor: '#111', lineColor: '#444',
+        },
+        flowchart: { curve: 'basis', padding: 12, useMaxWidth: true },
+      });
+      return mermaidLib;
+    }
+
+    async function renderMermaid(root) {
+      const scope = scopeOf(root); if (!scope) return;
+      const matches = scope.querySelectorAll(
+        'pre[data-language="mermaid"], pre.language-mermaid, code.language-mermaid'
+      );
+      if (!matches.length) return;
+      matches.forEach((el) => {
+        const block = el.tagName === 'CODE' ? el.closest('pre') || el : el;
+        const codeEl = block.querySelector('code') || block;
+        const wrap = document.createElement('div');
+        wrap.className = 'mermaid';
+        wrap.textContent = codeEl.textContent;
+        block.replaceWith(wrap);
+      });
+      try {
+        const m = await ensureMermaid();
+        await m.run();
+        tightenMermaidSvgs();
+      } catch (err) {
+        console.warn('mermaid failed', err);
+        document.querySelectorAll('.mermaid:not(:has(svg))').forEach((el) => { el.style.display = 'none'; });
+      }
+    }
+
+    async function enhance(root = document) {
+      addCopyBtns(root);
+      await renderMermaid(root);
+    }
+
+    function paywallHtml(required, needLogin) {
+      const label = { beginner: 'Beginner (300 ₽)', middle: 'Beginner + Middle (500 ₽)', all: 'Весь пакет (700 ₽)' }[required] || '';
+      return `<div class="paywall">
+        <div class="paywall-ic">🔒</div>
+        <h3>Эта глава — в платном доступе</h3>
+        <p>Нужен тариф: <strong>${label}</strong>. Доступ навсегда, без подписки.</p>
+        ${needLogin ? '<p>Войди через Google и оформи доступ — продолжишь с любого устройства.</p>' : ''}
+        <a class="paywall-btn" href="${base}pricing">Открыть доступ →</a>
+        <a class="paywall-link" href="${base}account">Войти / мой аккаунт</a>
+      </div>`;
+    }
+
+    async function gatedFlow(mount) {
+      const slug = mount.dataset.slug;
+      const required = mount.dataset.required || 'beginner';
+      mount.innerHTML = '<p class="gate-msg">Проверяем доступ…</p>';
+      const res = await fetchChapter(slug);
+      if (res.ok) {
+        mount.innerHTML = res.html;
+        await enhance(mount);
+      } else if (res.status === 401) {
+        mount.innerHTML = paywallHtml(required, true);
+      } else if (res.status === 402) {
+        mount.innerHTML = paywallHtml(res.requiredTier || required, false);
+      } else {
+        mount.innerHTML = '<p class="gate-msg">Не удалось загрузить главу. Обнови страницу.</p>';
+      }
+    }
+
+    const mount = document.getElementById('gated-mount');
+    if (mount && gatingEnabled) gatedFlow(mount);
+    else enhance(document);
+  </script> </body> </html>

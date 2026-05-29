@@ -1,0 +1,278 @@
+<!DOCTYPE html><html lang="en" data-astro-cid-a7sruqtr> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Capstone: launching an agent-powered studio — Vibesamurai</title><meta name="description" content="Assembly: 1 brand case + 1 SMM case + 1 media installation + 1 RAG tool. Client contract, KP / review site, metrics. Advanced finale."><meta property="og:title" content="Capstone: launching an agent-powered studio"><meta property="og:type" content="article"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Inter:wght@300..800&family=JetBrains+Mono:wght@400..600&display=swap" rel="stylesheet"><link rel="stylesheet" href="/vibesamurai-site/_astro/_slug_.Cs4TX1wt.css">
+<style>.account-btn{display:inline-flex;align-items:center;gap:var(--space-2);font-family:var(--font-mono);font-size:var(--size-2);text-transform:uppercase;letter-spacing:.06em;padding:5px 10px;border:1px solid var(--rule);border-radius:999px;color:var(--text-soft);background:var(--surface);transition:border-color var(--d-fast),color var(--d-fast)}.account-btn:hover{border-color:var(--accent);color:var(--text)}.account-ic{width:18px;height:18px;display:grid;place-items:center;border-radius:50%;background:var(--accent);color:var(--accent-ink);font-weight:700;font-size:10px;line-height:1}.reader-rail .account-btn{padding:0;border:none;background:transparent}.reader-rail .account-label{display:none}.reader-rail .account-ic{width:32px;height:32px;font-size:13px}.rail-toggle{width:36px;height:36px;display:grid;place-items:center;background:var(--accent);border:1px solid var(--accent);border-radius:4px;cursor:pointer;transition:filter var(--d-fast),transform var(--d-fast);padding:0}.rail-toggle:hover{filter:brightness(1.08);transform:translateY(-1px)}.rail-toggle:active{transform:translateY(0)}.rail-toggle-icon{width:14px;height:12px;border-left:2px solid var(--accent-ink);border-right:2px solid var(--accent-ink);transition:transform var(--d-normal) var(--ease-standard)}.reader-app.sidebar-open .rail-toggle-icon{transform:rotate(0)}.reader-app:not(.sidebar-open) .rail-toggle-icon{transform:scaleX(.5)}.sidebar-backdrop{display:none;position:fixed;inset:0;background:#0000008c;z-index:140;border:0;padding:0;cursor:pointer}@media(max-width:900px){.reader-app.sidebar-open~.sidebar-backdrop{display:block}}.rail-spacer[data-astro-cid-ofsbkzh7]{flex:1}.reader-sidebar[data-astro-cid-khgtvzrl] .ru-tag[data-astro-cid-khgtvzrl]{font-style:normal;font-family:var(--font-mono);font-size:.7em;color:var(--text-mute);margin-left:4px;padding:1px 4px;border:1px solid var(--rule);border-radius:3px;text-transform:uppercase;vertical-align:middle}.chapter-eyebrow[data-astro-cid-a7sruqtr]{display:flex;justify-content:space-between;align-items:center;gap:var(--space-3)}.lang-toggle[data-astro-cid-a7sruqtr]{font-family:var(--font-mono);font-size:var(--size-2);padding:2px 8px;border:1px solid var(--rule);border-radius:4px;color:var(--text-mute);text-decoration:none;text-transform:uppercase;letter-spacing:.08em}.lang-toggle[data-astro-cid-a7sruqtr]:hover{color:var(--accent);border-color:var(--accent)}.code-tabs[data-astro-cid-hg66rjob]{margin:var(--space-5) 0}.code-tabs-nav[data-astro-cid-hg66rjob]{display:flex;gap:2px;margin-bottom:-1px;position:relative;z-index:1}.ctab[data-astro-cid-hg66rjob]{font-family:var(--font-mono);font-size:11px;text-transform:uppercase;letter-spacing:.07em;padding:5px 14px;border:1px solid #21222c;border-bottom:none;background:#1a1b23;color:#6272a4;cursor:pointer;border-radius:4px 4px 0 0;transition:color .12s,background .12s}.ctab[data-astro-cid-hg66rjob].is-active{background:#282a36;color:#f8f8f2;border-color:#21222c}.ctab[data-astro-cid-hg66rjob]:hover:not(.is-active){color:#cdd6f4}.ctab-panel[data-astro-cid-hg66rjob]{display:none}.ctab-panel[data-astro-cid-hg66rjob].is-active{display:block}.ctab-panel[data-astro-cid-hg66rjob] pre{margin-top:0!important;border-radius:0 6px 6px!important}
+</style></head> <body data-astro-cid-a7sruqtr> <div class="reader-app" data-astro-cid-a7sruqtr> <aside class="reader-rail" data-astro-cid-ofsbkzh7> <a href="/vibesamurai-site/" class="logo" aria-label="Vibesamurai home" data-astro-cid-ofsbkzh7>V</a> <button type="button" class="rail-toggle" id="sidebar-toggle" aria-label="Свернуть/развернуть оглавление" title="Свернуть/развернуть оглавление" data-astro-cid-ofsbkzh7> <span class="rail-toggle-icon" aria-hidden="true" data-astro-cid-ofsbkzh7></span> </button> <div class="rail-spacer" data-astro-cid-ofsbkzh7></div> <a href="/vibesamurai-site/account" class="account-btn" id="account-btn" aria-label="Аккаунт"> <span class="account-ic" id="account-ic">⌂</span> <span class="account-label" id="account-label">Войти</span> </a>  <script type="module" src="/vibesamurai-site/_astro/AccountButton.astro_astro_type_script_index_0_lang.CmD2sdn9.js"></script> </aside>  <button type="button" class="sidebar-backdrop" id="sidebar-backdrop" aria-label="Закрыть оглавление" tabindex="-1" data-astro-cid-ofsbkzh7></button>  <script type="module">const d="vs-sidebar-open",a="(max-width: 900px)";function t(e){const n=document.querySelector(".reader-app");n&&n.classList.toggle("sidebar-open",e)}function r(){return!window.matchMedia(a).matches}function s(){const e=localStorage.getItem(d),i=window.matchMedia(a).matches?!1:e!==null?e==="1":r();t(i),document.getElementById("sidebar-toggle")?.addEventListener("click",()=>{const c=!document.querySelector(".reader-app")?.classList.contains("sidebar-open");window.matchMedia(a).matches||localStorage.setItem(d,c?"1":"0"),t(c)}),document.getElementById("sidebar-backdrop")?.addEventListener("click",()=>t(!1)),document.querySelectorAll(".reader-sidebar a").forEach(o=>{o.addEventListener("click",()=>{window.matchMedia(a).matches&&t(!1)})})}document.readyState==="loading"?document.addEventListener("DOMContentLoaded",s):s();</script> <aside class="reader-sidebar" data-astro-cid-khgtvzrl> <div class="breadcrumb" data-astro-cid-khgtvzrl>Vibesamurai · Advanced Path · A20</div> <h4 data-astro-cid-khgtvzrl>In this course</h4> <ul data-astro-cid-khgtvzrl> <li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a1/en" class data-astro-cid-khgtvzrl> A1 · AI studio stack — May 2026  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a2/en" class data-astro-cid-khgtvzrl> A2 · Multi-modal pipeline architecture  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a3/en" class data-astro-cid-khgtvzrl> A3 · Local vs Cloud matrix  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a4/en" class data-astro-cid-khgtvzrl> A4 · Design system as a contract  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a5/en" class data-astro-cid-khgtvzrl> A5 · Image generation for a brand  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a6/en" class data-astro-cid-khgtvzrl> A6 · Marketplace + product photoshoot  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a7/en" class data-astro-cid-khgtvzrl> A7 · Video generation pipelines  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a8/en" class data-astro-cid-khgtvzrl> A8 · Identity-preserving generation  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a9/en" class data-astro-cid-khgtvzrl> A9 · TouchDesigner + StreamDiffusion  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a10/en" class data-astro-cid-khgtvzrl> A10 · Audio-reactive AV installations  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a11/en" class data-astro-cid-khgtvzrl> A11 · Interactive booths: STT+LLM+TTS+CV  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a12/en" class data-astro-cid-khgtvzrl> A12 · Telemetry → control loop  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a13/en" class data-astro-cid-khgtvzrl> A13 · Private RAG for an archive  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a14/en" class data-astro-cid-khgtvzrl> A14 · Local LLMs on 8GB VRAM  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a15/en" class data-astro-cid-khgtvzrl> A15 · RunPod Flash + vLLM  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a16/en" class data-astro-cid-khgtvzrl> A16 · Custom MCP servers  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a17/en" class data-astro-cid-khgtvzrl> A17 · Token economics across modalities  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a18/en" class data-astro-cid-khgtvzrl> A18 · Eval for creative output  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a19/en" class data-astro-cid-khgtvzrl> A19 · Security in a creative studio  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a20/en" class="current" data-astro-cid-khgtvzrl> A20 · Capstone: launching the studio  </a> </li> </ul>  </aside> <main class="reader-main" data-astro-cid-a7sruqtr> <div class="chapter-eyebrow" data-astro-cid-a7sruqtr> <span data-astro-cid-a7sruqtr>Advanced Path · a20</span> <a class="lang-toggle" href="/vibesamurai-site/courses/advanced/a20" aria-label="Switch to RU" data-astro-cid-a7sruqtr>RU</a> </div> <h1 class="chapter-title" data-astro-cid-a7sruqtr>A20 · Capstone: launching the studio</h1> <p class="chapter-subtitle" data-astro-cid-a7sruqtr>Assembly: 1 brand case + 1 SMM case + 1 media installation + 1 RAG tool. Client contract, KP / review site, metrics. Advanced finale.</p> <h2 id="what-were-building">What we’re building</h2>
+<p>The final project of the Advanced track: launching a working AI studio in 4 weeks. Not a “training example” — the minimally complete configuration ready to take its first paying client. The capstone collects topics A1–A19 into one workflow.</p>
+<h2 id="goal-and-perimeter">Goal and perimeter</h2>
+<p>Four weeks after start, the studio has:</p>
+<ol>
+<li><strong>One brand case</strong> — own or client brand with design system (A4), site + KP.</li>
+<li><strong>One SMM case</strong> — a series of 12 hero + motion posts in brand style (A5–A8).</li>
+<li><strong>One media installation</strong> — a working booth (A9–A12), ready for public presentation.</li>
+<li><strong>One RAG tool</strong> — a private archive with search for your own purposes (A13).</li>
+</ol>
+<p>Plus the operating base: tokenomics gate (A17), eval (A18), security checklist (A19), local LLM (A14), MCP admin (A16).</p>
+<h2 id="4-week-roadmap">4-week roadmap</h2>
+<h3 id="week-1--foundation">Week 1 — foundation</h3>
+<ul>
+<li><code>brand-tokens.json</code> (A4), design system in Figma, code connect.</li>
+<li>Local Qwen on <code>127.0.0.1:8080</code> (A14).</li>
+<li>RAG for your own archive (A13) — TG + files + audio.</li>
+<li>MCP admin + security_monitor (A16, A19).</li>
+<li>Claude-process-allowlist + claude_managed_ports.</li>
+</ul>
+<p><strong>Week 1 result:</strong> infrastructure ready, brand formalised, personal archive available via RAG.</p>
+<h3 id="week-2--visual-production">Week 2 — visual production</h3>
+<ul>
+<li>Image pipeline (A5) — FLUX 2 + brand prefix + post-validator.</li>
+<li>Marketplace cards / product photoshoot pipeline (A6) — if the brand applies.</li>
+<li>Video pipeline (A7) — Seedance 2.0 for motion pins.</li>
+<li>If the brand uses a face — Soul ID training (A8).</li>
+<li>Multi-modal orchestrator (A2) with cache and lineage.</li>
+</ul>
+<p><strong>Week 2 result:</strong> 12 hero + 12 motion pins for SMM; cost on the receipt; every artifact with lineage.</p>
+<h3 id="week-3--media-installation">Week 3 — media installation</h3>
+<ul>
+<li>TouchDesigner project (A9) + StreamDiffusion if applicable.</li>
+<li>Audio-reactive layer (A10) on VB-Cable + analyzer.</li>
+<li>If the booth is interactive — STT + LLM + TTS + CV (A11).</li>
+<li>Telemetry → control loop (A12).</li>
+<li>Security predeploy checklist (A19), demo token.</li>
+</ul>
+<p><strong>Week 3 result:</strong> working booth, ready for a 30+ minute public showing without restarts.</p>
+<h3 id="week-4--client-readiness">Week 4 — client-readiness</h3>
+<ul>
+<li>Eval pipeline (A18) for selecting final variants.</li>
+<li>Tokenomics gate (A17) across all nodes.</li>
+<li>Client review template (flag-review) deployed.</li>
+<li>KP / contract / generative licences reviewed.</li>
+<li>One-click commands for deploying for a new client.</li>
+</ul>
+<p><strong>Week 4 result:</strong> the studio is ready to take its first paying client.</p>
+<h2 id="client-contract">Client contract</h2>
+<p>A base contract after Advanced:</p>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>- scope of work               list of artifacts (count, format, ar, length)</span></span>
+<span class="line"><span>- brand tokens                link to brand@version</span></span>
+<span class="line"><span>- generative licences         what we generate, where commercial use is allowed</span></span>
+<span class="line"><span>- watermark / IP / faces      who signs off, which refs are forbidden</span></span>
+<span class="line"><span>- review                      number of rounds, method (flag-review)</span></span>
+<span class="line"><span>- deadlines                   calendar, not "when ready"</span></span>
+<span class="line"><span>- cost                        generative + work + 15% buffer</span></span>
+<span class="line"><span>- artifact ownership          client / studio</span></span></code></pre>
+<p>Without a formal contract, scope and cost balloon fast. This rule isn’t from “training,” it’s from production.</p>
+<h2 id="studio-metrics">Studio metrics</h2>
+<p>After launch — what to measure to gauge health:</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Metric</th><th>Target</th></tr></thead><tbody><tr><td>Avg time from brief to first variant</td><td>1–2 business days</td></tr><tr><td>Avg number of iterations</td><td>≤3</td></tr><tr><td>Generative $ / project</td><td>within budget ± 15%</td></tr><tr><td>Local vs cloud LLM split</td><td>≥60% local</td></tr><tr><td>Share of rejected client reviews</td><td>&#x3C;30%</td></tr><tr><td>Time to repeat a project</td><td>&#x3C;50% of first-time</td></tr></tbody></table>
+<p>Metrics aren’t “for the presentation,” they’re for your operating picture. If a repeat project isn’t cheaper than the first — the cascade/caching is broken.</p>
+<h2 id="real-case-a-portfolio-of-interlinked-projects">Real case: a portfolio of interlinked projects</h2>
+<p>An example portfolio of interacting projects (from memory):</p>
+<ul>
+<li><strong>WEDOIT brand</strong> (<code>feedback_wedoit_brand</code>) — design system, template for KP/landing/review sites.</li>
+<li><strong>flag-review template</strong> (<code>project_flag_review</code>) — Cloudflare Pages + Worker + KV for client review; clonable in 30 minutes.</li>
+<li><strong>svib-review</strong> (<code>project_svib_review</code>) — concrete application of the flag-review template: Crimean Bridge, 3 Seedance 2.0 motion variants on brand.</li>
+<li><strong>lubava platform</strong> (<code>project_lubava_platform</code>) — artist with handpan/vocals, React+Vite+TS platform; Soul ID for a publication series.</li>
+<li><strong>tsoy_booth + fitting_kiosk + pmef_booth</strong> — three installations on one architectural base (STT+LLM+TTS+CV).</li>
+<li><strong>tg_archive</strong> (<code>project_tg_archive</code>) — private RAG as an operational tool.</li>
+</ul>
+<p>This isn’t “portfolio for show” — it’s one way Advanced topics tie into a full studio.</p>
+<h2 id="anti-patterns">Anti-patterns</h2>
+<ul>
+<li><strong>“Studio site first, then the first client”</strong> — reverse: first client, then site. A site without cases is empty.</li>
+<li><strong>“I’ll take a cheaper project for the portfolio”</strong> — low cheque = low priority on your own side. Better one project at the full rate.</li>
+<li><strong>“I’ll build it all myself without an agent”</strong> — Advanced is about what an orchestrator agent assembles. Build it yourself and you lose the speed.</li>
+<li><strong>“I’ll add security when I grow”</strong> — security is day one, not “later.”</li>
+</ul>
+<h2 id="what-advanced-doesnt-cover">What Advanced doesn’t cover</h2>
+<p>An honest list of what’s not in this course (as of 2026-05-29):</p>
+<ul>
+<li><strong>Sales and marketing</strong> — outside the technical Advanced scope. Learned separately.</li>
+<li><strong>Legal setup</strong> — self-employed/IP/LLC, cross-border, taxes. Locale-specific; only a base checklist in the course.</li>
+<li><strong>HR and team scaling</strong> — Advanced is sized for 1–3 people at launch.</li>
+<li><strong>Specific client tariffs</strong> — the market is volatile. Calculator — yes; tariffs — no.</li>
+</ul>
+<p>These topics are outside the technical track. Possibly a separate material in the future.</p>
+<h2 id="advanced-finale">Advanced finale</h2>
+<p>If you’ve worked through A1–A19 and assembled the capstone, you:</p>
+<ul>
+<li>split the stack between local and cloud inference with taste;</li>
+<li>can compute the cost of every pipeline node and see the drivers;</li>
+<li>know how to produce creative output of repeatable quality, not “guess the right frame”;</li>
+<li>can stand up and architect a media installation with a closed control loop;</li>
+<li>run RAG over your own archive;</li>
+<li>work with MCPs — your own and others’;</li>
+<li>keep security predictable.</li>
+</ul>
+<p>From here — <strong>only real projects</strong>. The course is a map. Experience is years of work. Take the first client, run them through every A1–A19 stage on a live project, draw the lessons. In 6–12 months you’ll have your own view of what in Advanced is stale and what’s understated — write feedback, the course updates from those letters.</p>
+<h2 id="recap">Recap</h2>
+<ul>
+<li>Capstone = 1 brand case + 1 SMM case + 1 installation + 1 RAG tool in 4 weeks.</li>
+<li>Client contract — formal, with licences and watermark rules.</li>
+<li>Studio metrics — for the operating picture, not the presentation.</li>
+<li>Security and tokenomics — day one, not “when I grow.”</li>
+<li>From here — real projects. The course is a map; experience is years.</li>
+</ul>
+<h2 id="further-reading">Further reading</h2>
+<ul>
+<li><strong>All previous chapters</strong> — A1–A19. The capstone collects them into one build.</li>
+<li><strong>Memory: <code>feedback_wedoit_brand</code>, <code>project_flag_review</code>, <code>project_svib_review</code></strong> — operational templates of the studio.</li>
+<li><strong>Memory: <code>project_mcp_setup</code>, <code>project_security_monitor</code></strong> — the administrative base.</li>
+<li><strong>Anthropic — Building effective agents</strong> — <a href="https://www.anthropic.com/research/building-effective-agents">anthropic.com/research/building-effective-agents</a>. Closes the course’s conceptual loop: workflow vs agent, gates, the cost of error.</li>
+</ul> <nav class="chapter-nav" data-astro-cid-a7sruqtr> <a href="/vibesamurai-site/courses/advanced/a19/en" data-astro-cid-a7sruqtr> <span class="dir" data-astro-cid-a7sruqtr>← Back</span> <span class="title" data-astro-cid-a7sruqtr>A19 · Security in a creative studio</span> </a> <span data-astro-cid-a7sruqtr></span> </nav> </main>  </div> <script type="module">
+    import { gatingEnabled } from '../lib/supabase';
+    import { fetchChapter } from '../lib/auth';
+
+    const base = import.meta.env.BASE_URL;
+    let mermaidLib = null;
+
+    function scopeOf(root) {
+      return root === document ? document.querySelector('.reader-main') : root;
+    }
+
+    function addCopyBtns(root) {
+      const scope = scopeOf(root); if (!scope) return;
+      scope.querySelectorAll('pre').forEach((pre) => {
+        if (pre.closest('.code-tabs')) return;
+        if (pre.querySelector('.copy-btn')) return;
+        const btn = document.createElement('button');
+        btn.className = 'copy-btn';
+        btn.textContent = 'copy';
+        btn.addEventListener('click', async () => {
+          const code = pre.querySelector('code')?.textContent ?? pre.textContent ?? '';
+          await navigator.clipboard.writeText(code.trimEnd());
+          btn.textContent = '✓ copied';
+          setTimeout(() => { btn.textContent = 'copy'; }, 1600);
+        });
+        pre.appendChild(btn);
+      });
+    }
+
+    function tightenMermaidSvgs(retries = 6) {
+      let pending = false;
+      document.querySelectorAll('.mermaid svg').forEach((svg) => {
+        if (svg.dataset.tightened === '1') return;
+        try {
+          const bbox = svg.getBBox();
+          if (!bbox || bbox.width === 0) { pending = true; return; }
+          const pad = 6;
+          svg.setAttribute('viewBox',
+            `${bbox.x - pad} ${bbox.y - pad} ${bbox.width + pad * 2} ${bbox.height + pad * 2}`);
+          svg.removeAttribute('height');
+          svg.style.height = 'auto';
+          svg.style.maxWidth = '100%';
+          svg.style.display = 'block';
+          svg.dataset.tightened = '1';
+        } catch (e) { pending = true; }
+      });
+      if (pending && retries > 0) setTimeout(() => tightenMermaidSvgs(retries - 1), 120);
+    }
+
+    async function ensureMermaid() {
+      if (mermaidLib) return mermaidLib;
+      const mod = await import('https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs');
+      mermaidLib = mod.default;
+      mermaidLib.initialize({
+        startOnLoad: false, theme: 'neutral',
+        themeVariables: {
+          fontFamily: 'JetBrains Mono, ui-monospace, monospace',
+          primaryColor: '#f5f5f5', primaryBorderColor: '#222',
+          primaryTextColor: '#111', lineColor: '#444',
+        },
+        flowchart: { curve: 'basis', padding: 12, useMaxWidth: true },
+      });
+      return mermaidLib;
+    }
+
+    async function renderMermaid(root) {
+      const scope = scopeOf(root); if (!scope) return;
+      const matches = scope.querySelectorAll(
+        'pre[data-language="mermaid"], pre.language-mermaid, code.language-mermaid'
+      );
+      if (!matches.length) return;
+      matches.forEach((el) => {
+        const block = el.tagName === 'CODE' ? el.closest('pre') || el : el;
+        const codeEl = block.querySelector('code') || block;
+        const wrap = document.createElement('div');
+        wrap.className = 'mermaid';
+        wrap.textContent = codeEl.textContent;
+        block.replaceWith(wrap);
+      });
+      try {
+        const m = await ensureMermaid();
+        await m.run();
+        tightenMermaidSvgs();
+      } catch (err) {
+        console.warn('mermaid failed', err);
+        document.querySelectorAll('.mermaid:not(:has(svg))').forEach((el) => { el.style.display = 'none'; });
+      }
+    }
+
+    async function enhance(root = document) {
+      addCopyBtns(root);
+      await renderMermaid(root);
+    }
+
+    function paywallHtml(required, needLogin) {
+      const label = { beginner: 'Beginner (300 ₽)', middle: 'Beginner + Middle (500 ₽)', all: 'Весь пакет (700 ₽)' }[required] || '';
+      return `<div class="paywall">
+        <div class="paywall-ic">🔒</div>
+        <h3>Эта глава — в платном доступе</h3>
+        <p>Нужен тариф: <strong>${label}</strong>. Доступ навсегда, без подписки.</p>
+        ${needLogin ? '<p>Войди через Google и оформи доступ — продолжишь с любого устройства.</p>' : ''}
+        <a class="paywall-btn" href="${base}pricing">Открыть доступ →</a>
+        <a class="paywall-link" href="${base}account">Войти / мой аккаунт</a>
+      </div>`;
+    }
+
+    async function gatedFlow(mount) {
+      const slug = mount.dataset.slug;
+      const required = mount.dataset.required || 'beginner';
+      mount.innerHTML = '<p class="gate-msg">Проверяем доступ…</p>';
+      const res = await fetchChapter(slug);
+      if (res.ok) {
+        mount.innerHTML = res.html;
+        await enhance(mount);
+      } else if (res.status === 401) {
+        mount.innerHTML = paywallHtml(required, true);
+      } else if (res.status === 402) {
+        mount.innerHTML = paywallHtml(res.requiredTier || required, false);
+      } else {
+        mount.innerHTML = '<p class="gate-msg">Не удалось загрузить главу. Обнови страницу.</p>';
+      }
+    }
+
+    const mount = document.getElementById('gated-mount');
+    if (mount && gatingEnabled) gatedFlow(mount);
+    else enhance(document);
+  </script> </body> </html>

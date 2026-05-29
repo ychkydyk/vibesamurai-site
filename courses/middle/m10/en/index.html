@@ -1,0 +1,307 @@
+<!DOCTYPE html><html lang="en" data-astro-cid-a7sruqtr> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>State, drift, continuity — Vibesamurai</title><meta name="description" content="Resumable agents, durable artifacts. How to catch and correct drift. Cross-tool / cross-env state sharing."><meta property="og:title" content="State, drift, continuity"><meta property="og:type" content="article"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Inter:wght@300..800&family=JetBrains+Mono:wght@400..600&display=swap" rel="stylesheet"><link rel="stylesheet" href="/vibesamurai-site/_astro/_slug_.Cs4TX1wt.css">
+<style>.account-btn{display:inline-flex;align-items:center;gap:var(--space-2);font-family:var(--font-mono);font-size:var(--size-2);text-transform:uppercase;letter-spacing:.06em;padding:5px 10px;border:1px solid var(--rule);border-radius:999px;color:var(--text-soft);background:var(--surface);transition:border-color var(--d-fast),color var(--d-fast)}.account-btn:hover{border-color:var(--accent);color:var(--text)}.account-ic{width:18px;height:18px;display:grid;place-items:center;border-radius:50%;background:var(--accent);color:var(--accent-ink);font-weight:700;font-size:10px;line-height:1}.reader-rail .account-btn{padding:0;border:none;background:transparent}.reader-rail .account-label{display:none}.reader-rail .account-ic{width:32px;height:32px;font-size:13px}.rail-toggle{width:36px;height:36px;display:grid;place-items:center;background:var(--accent);border:1px solid var(--accent);border-radius:4px;cursor:pointer;transition:filter var(--d-fast),transform var(--d-fast);padding:0}.rail-toggle:hover{filter:brightness(1.08);transform:translateY(-1px)}.rail-toggle:active{transform:translateY(0)}.rail-toggle-icon{width:14px;height:12px;border-left:2px solid var(--accent-ink);border-right:2px solid var(--accent-ink);transition:transform var(--d-normal) var(--ease-standard)}.reader-app.sidebar-open .rail-toggle-icon{transform:rotate(0)}.reader-app:not(.sidebar-open) .rail-toggle-icon{transform:scaleX(.5)}.sidebar-backdrop{display:none;position:fixed;inset:0;background:#0000008c;z-index:140;border:0;padding:0;cursor:pointer}@media(max-width:900px){.reader-app.sidebar-open~.sidebar-backdrop{display:block}}.rail-spacer[data-astro-cid-ofsbkzh7]{flex:1}.reader-sidebar[data-astro-cid-khgtvzrl] .ru-tag[data-astro-cid-khgtvzrl]{font-style:normal;font-family:var(--font-mono);font-size:.7em;color:var(--text-mute);margin-left:4px;padding:1px 4px;border:1px solid var(--rule);border-radius:3px;text-transform:uppercase;vertical-align:middle}.chapter-eyebrow[data-astro-cid-a7sruqtr]{display:flex;justify-content:space-between;align-items:center;gap:var(--space-3)}.lang-toggle[data-astro-cid-a7sruqtr]{font-family:var(--font-mono);font-size:var(--size-2);padding:2px 8px;border:1px solid var(--rule);border-radius:4px;color:var(--text-mute);text-decoration:none;text-transform:uppercase;letter-spacing:.08em}.lang-toggle[data-astro-cid-a7sruqtr]:hover{color:var(--accent);border-color:var(--accent)}.code-tabs[data-astro-cid-hg66rjob]{margin:var(--space-5) 0}.code-tabs-nav[data-astro-cid-hg66rjob]{display:flex;gap:2px;margin-bottom:-1px;position:relative;z-index:1}.ctab[data-astro-cid-hg66rjob]{font-family:var(--font-mono);font-size:11px;text-transform:uppercase;letter-spacing:.07em;padding:5px 14px;border:1px solid #21222c;border-bottom:none;background:#1a1b23;color:#6272a4;cursor:pointer;border-radius:4px 4px 0 0;transition:color .12s,background .12s}.ctab[data-astro-cid-hg66rjob].is-active{background:#282a36;color:#f8f8f2;border-color:#21222c}.ctab[data-astro-cid-hg66rjob]:hover:not(.is-active){color:#cdd6f4}.ctab-panel[data-astro-cid-hg66rjob]{display:none}.ctab-panel[data-astro-cid-hg66rjob].is-active{display:block}.ctab-panel[data-astro-cid-hg66rjob] pre{margin-top:0!important;border-radius:0 6px 6px!important}
+</style></head> <body data-astro-cid-a7sruqtr> <div class="reader-app" data-astro-cid-a7sruqtr> <aside class="reader-rail" data-astro-cid-ofsbkzh7> <a href="/vibesamurai-site/" class="logo" aria-label="Vibesamurai home" data-astro-cid-ofsbkzh7>V</a> <button type="button" class="rail-toggle" id="sidebar-toggle" aria-label="Свернуть/развернуть оглавление" title="Свернуть/развернуть оглавление" data-astro-cid-ofsbkzh7> <span class="rail-toggle-icon" aria-hidden="true" data-astro-cid-ofsbkzh7></span> </button> <div class="rail-spacer" data-astro-cid-ofsbkzh7></div> <a href="/vibesamurai-site/account" class="account-btn" id="account-btn" aria-label="Аккаунт"> <span class="account-ic" id="account-ic">⌂</span> <span class="account-label" id="account-label">Войти</span> </a>  <script type="module" src="/vibesamurai-site/_astro/AccountButton.astro_astro_type_script_index_0_lang.CmD2sdn9.js"></script> </aside>  <button type="button" class="sidebar-backdrop" id="sidebar-backdrop" aria-label="Закрыть оглавление" tabindex="-1" data-astro-cid-ofsbkzh7></button>  <script type="module">const d="vs-sidebar-open",a="(max-width: 900px)";function t(e){const n=document.querySelector(".reader-app");n&&n.classList.toggle("sidebar-open",e)}function r(){return!window.matchMedia(a).matches}function s(){const e=localStorage.getItem(d),i=window.matchMedia(a).matches?!1:e!==null?e==="1":r();t(i),document.getElementById("sidebar-toggle")?.addEventListener("click",()=>{const c=!document.querySelector(".reader-app")?.classList.contains("sidebar-open");window.matchMedia(a).matches||localStorage.setItem(d,c?"1":"0"),t(c)}),document.getElementById("sidebar-backdrop")?.addEventListener("click",()=>t(!1)),document.querySelectorAll(".reader-sidebar a").forEach(o=>{o.addEventListener("click",()=>{window.matchMedia(a).matches&&t(!1)})})}document.readyState==="loading"?document.addEventListener("DOMContentLoaded",s):s();</script> <aside class="reader-sidebar" data-astro-cid-khgtvzrl> <div class="breadcrumb" data-astro-cid-khgtvzrl>Vibesamurai · Middle Path · M10</div> <h4 data-astro-cid-khgtvzrl>In this course</h4> <ul data-astro-cid-khgtvzrl> <li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m1/en" class data-astro-cid-khgtvzrl> M1 · What is agentic AI in the SDLC  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m2/en" class data-astro-cid-khgtvzrl> M2 · Architecting agent boundaries  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m3/en" class data-astro-cid-khgtvzrl> M3 · Observability and human-in-the-loop  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m4/en" class data-astro-cid-khgtvzrl> M4 · Tool inventory and permissions  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m5/en" class data-astro-cid-khgtvzrl> M5 · MCP deep dive  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m6/en" class data-astro-cid-khgtvzrl> M6 · Claude Code CLI mastery  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m7/en" class data-astro-cid-khgtvzrl> M7 · GPT-5.3 Codex CLI and OpenAI agents  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m8/en" class data-astro-cid-khgtvzrl> M8 · Cursor Composer + IDE agents  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m9/en" class data-astro-cid-khgtvzrl> M9 · Memory strategies  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m10/en" class="current" data-astro-cid-khgtvzrl> M10 · State, drift, continuity  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m11/en" class data-astro-cid-khgtvzrl> M11 · Evaluating agents: metrics over vibes  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m12/en" class data-astro-cid-khgtvzrl> M12 · Regression tests for agents  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m13/en" class data-astro-cid-khgtvzrl> M13 · Tuning: what to change when metrics don&#39;t move  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m14/en" class data-astro-cid-khgtvzrl> M14 · One agent, many steps: pipelines and orchestration  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m15/en" class data-astro-cid-khgtvzrl> M15 · Multi-agent: roles, communication, supervisor  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m16/en" class data-astro-cid-khgtvzrl> M16 · When multi-agent is overkill. Anti-patterns  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m17/en" class data-astro-cid-khgtvzrl> M17 · Production: deploying agents to live environments  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m18/en" class data-astro-cid-khgtvzrl> M18 · Security in prod: secrets, sandbox, audit  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m19/en" class data-astro-cid-khgtvzrl> M19 · Incidents &amp; post-mortems  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m20/en" class data-astro-cid-khgtvzrl> M20 · Finale: where to go after Middle  </a> </li> </ul>  </aside> <main class="reader-main" data-astro-cid-a7sruqtr> <div class="chapter-eyebrow" data-astro-cid-a7sruqtr> <span data-astro-cid-a7sruqtr>Middle Path · m10</span> <a class="lang-toggle" href="/vibesamurai-site/courses/middle/m10" aria-label="Switch to RU" data-astro-cid-a7sruqtr>RU</a> </div> <h1 class="chapter-title" data-astro-cid-a7sruqtr>M10 · State, drift, continuity</h1> <p class="chapter-subtitle" data-astro-cid-a7sruqtr>Resumable agents, durable artifacts. How to catch and correct drift. Cross-tool / cross-env state sharing.</p> <h2 id="what-this-chapter-is-about">What this chapter is about</h2>
+<p>Hey folks, welcome 👋</p>
+<p>In M9 — about memory: what the agent remembers and how we manage it. Now about <strong>state</strong> — a broader concept. Memory is part of state. But beyond memory there’s:</p>
+<ul>
+<li><strong>What the agent is doing right now</strong> (current task, current plan step)</li>
+<li><strong>What it has on hand</strong> (open files, loaded context, active tools)</li>
+<li><strong>Where it stopped</strong> (if the session was interrupted — where to resume)</li>
+<li><strong>What it is in general</strong> (version, config, permission set)</li>
+</ul>
+<p>Managing all of this is <strong>state management</strong> in agentic systems. And this is exactly where middle developers catch the meanest bugs: “worked yesterday — broken today,” “resumed from the same spot — got garbage,” “two agents made conflicting changes.” All state.</p>
+<p>In this chapter:</p>
+<ol>
+<li><strong>Resumable agents</strong> — how to continue an interrupted session without losses</li>
+<li><strong>Durable artifacts</strong> — what must exist for continuation to be possible</li>
+<li><strong>Drift</strong> — when the agent’s state diverges from reality, how to catch it</li>
+<li><strong>Cross-tool state sharing</strong> — when Claude Code, Cursor, and Codex work on the same project</li>
+</ol>
+<h2 id="resumable-agents-what-an-interrupted-session-means">Resumable agents: what an “interrupted session” means</h2>
+<p>An agent session can break for many reasons:</p>
+<ul>
+<li>You closed the terminal</li>
+<li>Token limit hit / provider rate-limited</li>
+<li>Network blip</li>
+<li>Tool crash (happens)</li>
+<li>You urgently switched to something else</li>
+<li>Daily limit on the subscription</li>
+</ul>
+<p>What happens to state at that moment? Depends on the tool. Modern sensible agents do <strong>autosave session state</strong>:</p>
+<ul>
+<li><strong>Claude Code</strong> — every session is saved in full to <code>~/.claude/projects/&#x3C;repo>/&#x3C;session-id>.jsonl</code>.</li>
+<li><strong>Codex CLI</strong> — <code>~/.codex/history/&#x3C;session-id>/</code></li>
+<li><strong>Cursor Composer</strong> — in the IDE state per project.</li>
+</ul>
+<p>Which means — you can <strong>resume</strong>. Usually <code>claude --resume</code> / <code>codex --resume</code>.</p>
+<h3 id="what-resume-restores">What resume restores</h3>
+<ul>
+<li><strong>Session context</strong> — all messages, files read, tool results</li>
+<li><strong>The active plan</strong>, if structured</li>
+<li><strong>Unfinished tool calls</strong></li>
+</ul>
+<h3 id="what-resume-does-not-restore">What resume does NOT restore</h3>
+<ul>
+<li><strong>File changes</strong> the agent made — those are already on disk (or not, if rolled back)</li>
+<li><strong>Running processes</strong> (dev servers, watchers, side effects)</li>
+<li><strong>MCP server state</strong> (if stateful, which is rare)</li>
+<li><strong>Local changes outside the session log</strong> (anything you did manually between interrupt and resume)</li>
+</ul>
+<p>So resume is “bring back the <strong>conversation</strong>,” not “bring back the <strong>world</strong>.” Important to understand.</p>
+<h2 id="durable-artifacts-what-must-remain-even-without-resume">Durable artifacts: what must remain even without resume</h2>
+<p>If you want the agent’s work to <strong>survive any failure</strong> — don’t rely only on session state. Save <strong>durable artifacts</strong> in the repo.</p>
+<h3 id="minimum-durable-set">Minimum durable set</h3>
+<ol>
+<li><strong>Plan artifact</strong> — YAML/markdown in <code>.agent/plans/</code> (M2).</li>
+<li><strong>Progress journal</strong> — list of completed steps with marks. <code>.agent/journals/2026-05-16-task-x.md</code>.</li>
+<li><strong>Commits after every <code>risk: high</code> step.</strong> Not one big commit at the end, but small atomic ones — so each can be rolled back independently.</li>
+<li><strong>CI runs.</strong> If steps relate to tests/builds — CI runs as artifact.</li>
+</ol>
+<p>If all this is in place — even <strong>without</strong> resume you can read <code>.agent/plans/x.yaml</code> + <code>.agent/journals/x.md</code> and figure out where you are, what’s done, what’s left.</p>
+<blockquote>
+<p><em>Analogy:</em> imagine a new person joins the team, no “old” people available. From your artifacts they must be able to continue. If yes — the system is durable. If not — state lives only in heads (and in agent session state), and that’s <strong>fragile</strong>.</p>
+</blockquote>
+<h2 id="drift-when-the-world-diverged-from-the-picture">Drift: when the world diverged from the picture</h2>
+<p><strong>Drift</strong> is when <strong>the agent’s picture of state doesn’t match reality</strong>. As moves pile up the model drifts from the original context, and at some point it’s cheaper to checkpoint and reset than to keep reasoning forward:</p>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="mermaid"><code><span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">flowchart LR</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    Fresh[T0: fresh&#x3C;br/>clean context] --> T1[T+N: light drift&#x3C;br/>facts still fresh]</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    T1 --> T2[T+M: serious drift&#x3C;br/>cached stale data]</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    T2 --> Check{Checkpoint?}</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    Check -->|durable artifact| Reset[Compact / reset&#x3C;br/>new session]</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    Reset -.-> Fresh</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    Check -->|no| Bad([silent divergence&#x3C;br/>quiet bugs])</span></span></code></pre>
+<p>Key idea: <strong>drift always accumulates</strong> — the question is whether you notice before it harms. Durable artifacts (plan + journal + atomic commits) are the points where you can safely reset and continue.</p>
+<p>The most common kinds:</p>
+<h3 id="1-file-drift">1. File drift</h3>
+<p>The agent thinks <code>src/auth.ts</code> has a <code>verifyToken</code> function because it read the file at session start. But you (or another agent) changed the file since. The agent works on <strong>stale context</strong>.</p>
+<p><strong>How to catch:</strong> before every serious edit the agent should <strong>re-read</strong> the file, not work from cache. In Claude Code this is built in (Read before Edit). In others — verify.</p>
+<p><strong>How to avoid:</strong> don’t work in parallel on the same file from different sessions. If you must — <code>git status</code> / <code>git diff</code> before each serious step.</p>
+<h3 id="2-schema-drift">2. Schema drift</h3>
+<p>The agent cached that table <code>users</code> has columns X, Y, Z. Actually it’s X, Y, Z, W now — a migration ran. The agent writes code on the old schema.</p>
+<p><strong>How to catch:</strong> periodically tell the agent “re-read the current DB schema.” Don’t rely on what’s memorised.</p>
+<h3 id="3-api-drift">3. API drift</h3>
+<p>The agent cached that endpoint <code>/api/users</code> returns <code>email</code>. Actually it’s <code>contact_email</code> now. All the agent’s calls break.</p>
+<p><strong>How to catch:</strong> for critical integrations — versioned schemas and conformance checks.</p>
+<h3 id="4-config-drift">4. Config drift</h3>
+<p>The agent worked on config A. You changed it to B. The agent keeps going on A (didn’t reload).</p>
+<p><strong>How to catch:</strong> config is a <strong>stateful resource</strong>, re-read on substantial transitions.</p>
+<h3 id="5-process-drift">5. Process drift</h3>
+<p>The most painful. You used to do X before Y. The team agreed: now it’s X1 → Y. The agent follows old memory and does X → Y.</p>
+<p><strong>How to catch:</strong> see M9 — pruning. Memory must be updated, otherwise it itself becomes a drift source.</p>
+<h2 id="detecting-drift-automatically-and-by-hand">Detecting drift: automatically and by hand</h2>
+<h3 id="automatically">Automatically</h3>
+<ul>
+<li><strong>Pre-flight checks.</strong> At the start of a serious step the agent runs a script that verifies basic invariants (“are tests green before my edits? Does the DB schema match expectations? Is the dependency version still X?”).</li>
+<li><strong>Hooks</strong> (M6) — a <code>PreToolUse</code> hook can verify a file’s mtime hasn’t changed since the last read.</li>
+<li><strong>CI</strong> — every PR runs tests; if they fail “not because of you,” that’s drift.</li>
+</ul>
+<h3 id="by-hand">By hand</h3>
+<ul>
+<li>Regular <strong>“situational briefings”</strong> at the start of a session. Before giving a task — ask the agent “read the current state of X, Y, Z and summarise.” If the summary differs from your expectations — drift.</li>
+<li><strong>Diff session memory vs reality</strong> — sometimes it’s worth asking directly “what do you currently think about Z?” and comparing with git/db/config.</li>
+</ul>
+<h2 id="correcting-drift">Correcting drift</h2>
+<p>When drift is detected:</p>
+<ol>
+<li><strong>Stop.</strong> Don’t keep working in that context.</li>
+<li><strong>Reset closed/cached state</strong> — close the session, start a fresh one.</li>
+<li><strong>Re-read everything current</strong> — files, configs, schemas relevant to the task.</li>
+<li><strong>Update memory.</strong> If drift came from a stale long-term entry — update it <strong>before</strong> returning to the task, not after.</li>
+<li><strong>Only then</strong> — keep working.</li>
+</ol>
+<p>This is <strong>disruptive</strong> to speed — every drift incident throws you 10–30 minutes off. So <strong>prevention</strong> (durable artifacts + regular reconciliation) is cheaper than correction.</p>
+<h2 id="cross-tool--cross-env-state-sharing">Cross-tool / cross-env state sharing</h2>
+<p>The modern reality: several different agents work on the same repo in different environments. One dev on Claude Code on macOS, another on Cursor on Windows, the CI pipeline running Codex CLI in Docker. And each “remembers” the project its own way.</p>
+<h3 id="what-must-be-shared-via-git">What must be shared (via git)</h3>
+<p>✅ <code>CLAUDE.md</code> + symlinked <code>AGENTS.md</code> + <code>.cursor/rules/</code>
+✅ <code>.claude/settings.json</code> (project-level) — for those on Claude Code
+✅ <code>.codex/config.toml</code> (project, if applicable)
+✅ <code>.mcp.json</code> — list of connected MCP servers
+✅ <code>.agent/plans/</code> and <code>.agent/journals/</code> (durable artifacts)
+✅ Hook scripts in <code>.claude/scripts/</code> or <code>.cursor/hooks/</code>
+✅ ADR files in <code>docs/adr/</code></p>
+<h3 id="what-must-not-enter-git">What MUST NOT enter git</h3>
+<p>❌ <code>.claude/settings.local.json</code> — personal toggles
+❌ <code>~/.claude/memory/</code> — user-scope memory, personal
+❌ Session history (<code>~/.claude/projects/</code>, <code>~/.codex/history/</code>)
+❌ Local secrets / <code>.env</code></p>
+<h3 id="the-problem-cross-tool-semantic-gap">The problem: cross-tool semantic gap</h3>
+<p>Cursor may not understand <code>.claude/settings.json</code>, and Claude Code doesn’t read <code>.cursor/rules/</code> by default. What to do?</p>
+<p><strong>Minimum approach:</strong> one <strong><code>AGENTS.md</code></strong> (or <code>CLAUDE.md</code>) at root as <strong>single source of truth</strong>. Symlinks to the required names. <code>.cursor/rules/</code> may contain one line <code>apply_from: ../../CLAUDE.md</code> (supported in newer Cursor versions).</p>
+<p><strong>Extended approach:</strong> a <code>.agent/sync.sh</code> script that regenerates tool-specific configs from a common source. Runs in a pre-commit hook.</p>
+<h2 id="anti-pattern-every-developer-has-their-own-agent">Anti-pattern: “every developer has their own agent”</h2>
+<p>The worst of them all. Every team member configured the agent “for themselves,” all rules in user-scope memory, in the project repo — nothing.</p>
+<p>What will happen:</p>
+<ul>
+<li>A new person joins — nothing works “as intended,” they don’t know the rules.</li>
+<li>One person on holiday — their “knowledge” goes with them.</li>
+<li>Code review of agent PRs is unpredictable: one agent writes one way, another differently, unclear if it’s “right.”</li>
+</ul>
+<p>Fix: <strong>project memory — in the repo, project settings — in the repo, project hooks — in the repo</strong>. User-scope is for <strong>personal preferences only</strong> that don’t affect the project (your commit style, say).</p>
+<h2 id="programmatic-finale-register-c">Programmatic finale (register C)</h2>
+<p>Friends.</p>
+<p>We close Part III — Memory &#x26; State.</p>
+<p>A short take on all ten modules of Parts I–III:</p>
+<blockquote>
+<p>An agent = a contributor working under a contract, observed, within explicit boundaries, with memory under version control and state that survives any failure.</p>
+</blockquote>
+<p>This is an <strong>architectural formula</strong>, not “how to configure a tool.” The specific Claude Code 2026 settings will age. Specific file names will change. The models themselves will be different.</p>
+<p>The formula won’t. Contract, observation, boundaries, memory, state — these are <strong>disciplinary elements</strong> at the heart of any decent system with agents, human or machine.</p>
+<p>In Part IV we tackle <strong>how to evaluate whether the agent did well or badly</strong> (success criteria and evaluation). Same topic, one level deeper.</p>
+<p>Train your eye, not your fingers. Your head matters more than the AI — especially when judging “does it work or not.”</p>
+<h2 id="recap">Recap</h2>
+<ul>
+<li><strong>Resume restores the conversation, not the world.</strong> Rely on durable artifacts, not just session state.</li>
+<li><strong>Durable artifacts:</strong> plans, journals, atomic commits after high-risk steps, CI runs.</li>
+<li><strong>5 drift kinds:</strong> file, schema, API, config, process. Each has its own catch.</li>
+<li><strong>Detection:</strong> pre-flight checks + hooks + regular “briefings.”</li>
+<li><strong>Correction:</strong> stop → reset → reread → update memory → continue.</li>
+<li><strong>Cross-tool sharing:</strong> in git — conventions, configs, MCP, hooks, ADR. Not in git — personal toggles, secrets, session history.</li>
+<li><strong>Anti-pattern:</strong> “every dev has their own agent” — project rules must live in the repo.</li>
+</ul>
+<h2 id="whats-next">What’s next</h2>
+<p>Part IV — <strong>Evaluation &#x26; Tuning</strong>. In <strong>M11 — Success criteria and evaluation signals</strong> we cover how to formalise “good/bad” into verifiable signals: qualitative + quantitative, automated scanning (CodeQL, secret scanning, advisory DB), evaluation pipelines.</p>
+<p>If this clicked — share Part III with anyone configuring the team’s agentic setup or fighting “unpredictable behaviour” of the agent between sessions. If you have specific drift incidents from your practice — write in the comments, your feedback really helps polish the material.</p>
+<h2 id="-further-reading">📚 Further reading</h2>
+<p>Drift and continuity are essentially a conversation about context-window management. So a short list — Anthropic’s cache/compaction and stateful agents as reference.</p>
+<p><strong>Context and compaction</strong></p>
+<ul>
+<li><strong>Anthropic — Prompt caching</strong> — <a href="https://platform.claude.com/docs/en/build-with-claude/prompt-caching">platform.claude.com/docs/en/build-with-claude/prompt-caching</a>. What exactly is cached, how compaction reuses the same prefix. Helps explain why “a small edit to CLAUDE.md” invalidates half the cache.</li>
+<li><strong>OpenTelemetry — Semantic conventions for GenAI</strong> — <a href="https://opentelemetry.io/docs/specs/semconv/gen-ai/">opentelemetry.io/docs/specs/semconv/gen-ai/</a>. Which metrics and attributes to put in traces so drift is <strong>visible</strong> in observability rather than “surfacing” through a PR incident.</li>
+</ul>
+<p><strong>Stateful agents and durable state</strong></p>
+<ul>
+<li><strong>Letta — MemGPT concept</strong> — <a href="https://docs.letta.com/concepts/memgpt/">docs.letta.com/concepts/memgpt/</a>. The reference for splitting “hot” context from “cold” archival store so resume is “remembered the world,” not “read the conversation.”</li>
+</ul>
+<blockquote>
+<p><strong>Tip:</strong> if drift isn’t a one-off but systemic — don’t start with another hook; start by making every long task write a journal into <code>.agent/journals/</code>. Half the drifts vanish.</p>
+</blockquote>
+<hr>
+<p><strong>Maps to:</strong> GH-600 §3.2 — <em>State management and resumability</em> + §3.3 — <em>Cross-environment continuity</em>
+<strong>Closes:</strong> Part III — Memory &#x26; State (M9 + M10)</p> <nav class="chapter-nav" data-astro-cid-a7sruqtr> <a href="/vibesamurai-site/courses/middle/m9/en" data-astro-cid-a7sruqtr> <span class="dir" data-astro-cid-a7sruqtr>← Back</span> <span class="title" data-astro-cid-a7sruqtr>M9 · Memory strategies</span> </a> <a href="/vibesamurai-site/courses/middle/m11/en" data-astro-cid-a7sruqtr> <span class="dir" data-astro-cid-a7sruqtr>Next →</span> <span class="title" data-astro-cid-a7sruqtr>M11 · Success criteria and evaluation signals</span> </a> </nav> </main>  </div> <script type="module">
+    import { gatingEnabled } from '../lib/supabase';
+    import { fetchChapter } from '../lib/auth';
+
+    const base = import.meta.env.BASE_URL;
+    let mermaidLib = null;
+
+    function scopeOf(root) {
+      return root === document ? document.querySelector('.reader-main') : root;
+    }
+
+    function addCopyBtns(root) {
+      const scope = scopeOf(root); if (!scope) return;
+      scope.querySelectorAll('pre').forEach((pre) => {
+        if (pre.closest('.code-tabs')) return;
+        if (pre.querySelector('.copy-btn')) return;
+        const btn = document.createElement('button');
+        btn.className = 'copy-btn';
+        btn.textContent = 'copy';
+        btn.addEventListener('click', async () => {
+          const code = pre.querySelector('code')?.textContent ?? pre.textContent ?? '';
+          await navigator.clipboard.writeText(code.trimEnd());
+          btn.textContent = '✓ copied';
+          setTimeout(() => { btn.textContent = 'copy'; }, 1600);
+        });
+        pre.appendChild(btn);
+      });
+    }
+
+    function tightenMermaidSvgs(retries = 6) {
+      let pending = false;
+      document.querySelectorAll('.mermaid svg').forEach((svg) => {
+        if (svg.dataset.tightened === '1') return;
+        try {
+          const bbox = svg.getBBox();
+          if (!bbox || bbox.width === 0) { pending = true; return; }
+          const pad = 6;
+          svg.setAttribute('viewBox',
+            `${bbox.x - pad} ${bbox.y - pad} ${bbox.width + pad * 2} ${bbox.height + pad * 2}`);
+          svg.removeAttribute('height');
+          svg.style.height = 'auto';
+          svg.style.maxWidth = '100%';
+          svg.style.display = 'block';
+          svg.dataset.tightened = '1';
+        } catch (e) { pending = true; }
+      });
+      if (pending && retries > 0) setTimeout(() => tightenMermaidSvgs(retries - 1), 120);
+    }
+
+    async function ensureMermaid() {
+      if (mermaidLib) return mermaidLib;
+      const mod = await import('https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs');
+      mermaidLib = mod.default;
+      mermaidLib.initialize({
+        startOnLoad: false, theme: 'neutral',
+        themeVariables: {
+          fontFamily: 'JetBrains Mono, ui-monospace, monospace',
+          primaryColor: '#f5f5f5', primaryBorderColor: '#222',
+          primaryTextColor: '#111', lineColor: '#444',
+        },
+        flowchart: { curve: 'basis', padding: 12, useMaxWidth: true },
+      });
+      return mermaidLib;
+    }
+
+    async function renderMermaid(root) {
+      const scope = scopeOf(root); if (!scope) return;
+      const matches = scope.querySelectorAll(
+        'pre[data-language="mermaid"], pre.language-mermaid, code.language-mermaid'
+      );
+      if (!matches.length) return;
+      matches.forEach((el) => {
+        const block = el.tagName === 'CODE' ? el.closest('pre') || el : el;
+        const codeEl = block.querySelector('code') || block;
+        const wrap = document.createElement('div');
+        wrap.className = 'mermaid';
+        wrap.textContent = codeEl.textContent;
+        block.replaceWith(wrap);
+      });
+      try {
+        const m = await ensureMermaid();
+        await m.run();
+        tightenMermaidSvgs();
+      } catch (err) {
+        console.warn('mermaid failed', err);
+        document.querySelectorAll('.mermaid:not(:has(svg))').forEach((el) => { el.style.display = 'none'; });
+      }
+    }
+
+    async function enhance(root = document) {
+      addCopyBtns(root);
+      await renderMermaid(root);
+    }
+
+    function paywallHtml(required, needLogin) {
+      const label = { beginner: 'Beginner (300 ₽)', middle: 'Beginner + Middle (500 ₽)', all: 'Весь пакет (700 ₽)' }[required] || '';
+      return `<div class="paywall">
+        <div class="paywall-ic">🔒</div>
+        <h3>Эта глава — в платном доступе</h3>
+        <p>Нужен тариф: <strong>${label}</strong>. Доступ навсегда, без подписки.</p>
+        ${needLogin ? '<p>Войди через Google и оформи доступ — продолжишь с любого устройства.</p>' : ''}
+        <a class="paywall-btn" href="${base}pricing">Открыть доступ →</a>
+        <a class="paywall-link" href="${base}account">Войти / мой аккаунт</a>
+      </div>`;
+    }
+
+    async function gatedFlow(mount) {
+      const slug = mount.dataset.slug;
+      const required = mount.dataset.required || 'beginner';
+      mount.innerHTML = '<p class="gate-msg">Проверяем доступ…</p>';
+      const res = await fetchChapter(slug);
+      if (res.ok) {
+        mount.innerHTML = res.html;
+        await enhance(mount);
+      } else if (res.status === 401) {
+        mount.innerHTML = paywallHtml(required, true);
+      } else if (res.status === 402) {
+        mount.innerHTML = paywallHtml(res.requiredTier || required, false);
+      } else {
+        mount.innerHTML = '<p class="gate-msg">Не удалось загрузить главу. Обнови страницу.</p>';
+      }
+    }
+
+    const mount = document.getElementById('gated-mount');
+    if (mount && gatingEnabled) gatedFlow(mount);
+    else enhance(document);
+  </script> </body> </html>

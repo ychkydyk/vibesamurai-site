@@ -1,0 +1,350 @@
+<!DOCTYPE html><html lang="en" data-astro-cid-a7sruqtr> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Observability and human-in-the-loop — Vibesamurai</title><meta name="description" content="The autonomy ladder, inspectable artifacts, and how to keep HITL without losing velocity."><meta property="og:title" content="Observability and human-in-the-loop"><meta property="og:type" content="article"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Inter:wght@300..800&family=JetBrains+Mono:wght@400..600&display=swap" rel="stylesheet"><link rel="stylesheet" href="/vibesamurai-site/_astro/_slug_.Cs4TX1wt.css">
+<style>.account-btn{display:inline-flex;align-items:center;gap:var(--space-2);font-family:var(--font-mono);font-size:var(--size-2);text-transform:uppercase;letter-spacing:.06em;padding:5px 10px;border:1px solid var(--rule);border-radius:999px;color:var(--text-soft);background:var(--surface);transition:border-color var(--d-fast),color var(--d-fast)}.account-btn:hover{border-color:var(--accent);color:var(--text)}.account-ic{width:18px;height:18px;display:grid;place-items:center;border-radius:50%;background:var(--accent);color:var(--accent-ink);font-weight:700;font-size:10px;line-height:1}.reader-rail .account-btn{padding:0;border:none;background:transparent}.reader-rail .account-label{display:none}.reader-rail .account-ic{width:32px;height:32px;font-size:13px}.rail-toggle{width:36px;height:36px;display:grid;place-items:center;background:var(--accent);border:1px solid var(--accent);border-radius:4px;cursor:pointer;transition:filter var(--d-fast),transform var(--d-fast);padding:0}.rail-toggle:hover{filter:brightness(1.08);transform:translateY(-1px)}.rail-toggle:active{transform:translateY(0)}.rail-toggle-icon{width:14px;height:12px;border-left:2px solid var(--accent-ink);border-right:2px solid var(--accent-ink);transition:transform var(--d-normal) var(--ease-standard)}.reader-app.sidebar-open .rail-toggle-icon{transform:rotate(0)}.reader-app:not(.sidebar-open) .rail-toggle-icon{transform:scaleX(.5)}.sidebar-backdrop{display:none;position:fixed;inset:0;background:#0000008c;z-index:140;border:0;padding:0;cursor:pointer}@media(max-width:900px){.reader-app.sidebar-open~.sidebar-backdrop{display:block}}.rail-spacer[data-astro-cid-ofsbkzh7]{flex:1}.reader-sidebar[data-astro-cid-khgtvzrl] .ru-tag[data-astro-cid-khgtvzrl]{font-style:normal;font-family:var(--font-mono);font-size:.7em;color:var(--text-mute);margin-left:4px;padding:1px 4px;border:1px solid var(--rule);border-radius:3px;text-transform:uppercase;vertical-align:middle}.chapter-eyebrow[data-astro-cid-a7sruqtr]{display:flex;justify-content:space-between;align-items:center;gap:var(--space-3)}.lang-toggle[data-astro-cid-a7sruqtr]{font-family:var(--font-mono);font-size:var(--size-2);padding:2px 8px;border:1px solid var(--rule);border-radius:4px;color:var(--text-mute);text-decoration:none;text-transform:uppercase;letter-spacing:.08em}.lang-toggle[data-astro-cid-a7sruqtr]:hover{color:var(--accent);border-color:var(--accent)}.code-tabs[data-astro-cid-hg66rjob]{margin:var(--space-5) 0}.code-tabs-nav[data-astro-cid-hg66rjob]{display:flex;gap:2px;margin-bottom:-1px;position:relative;z-index:1}.ctab[data-astro-cid-hg66rjob]{font-family:var(--font-mono);font-size:11px;text-transform:uppercase;letter-spacing:.07em;padding:5px 14px;border:1px solid #21222c;border-bottom:none;background:#1a1b23;color:#6272a4;cursor:pointer;border-radius:4px 4px 0 0;transition:color .12s,background .12s}.ctab[data-astro-cid-hg66rjob].is-active{background:#282a36;color:#f8f8f2;border-color:#21222c}.ctab[data-astro-cid-hg66rjob]:hover:not(.is-active){color:#cdd6f4}.ctab-panel[data-astro-cid-hg66rjob]{display:none}.ctab-panel[data-astro-cid-hg66rjob].is-active{display:block}.ctab-panel[data-astro-cid-hg66rjob] pre{margin-top:0!important;border-radius:0 6px 6px!important}
+</style></head> <body data-astro-cid-a7sruqtr> <div class="reader-app" data-astro-cid-a7sruqtr> <aside class="reader-rail" data-astro-cid-ofsbkzh7> <a href="/vibesamurai-site/" class="logo" aria-label="Vibesamurai home" data-astro-cid-ofsbkzh7>V</a> <button type="button" class="rail-toggle" id="sidebar-toggle" aria-label="Свернуть/развернуть оглавление" title="Свернуть/развернуть оглавление" data-astro-cid-ofsbkzh7> <span class="rail-toggle-icon" aria-hidden="true" data-astro-cid-ofsbkzh7></span> </button> <div class="rail-spacer" data-astro-cid-ofsbkzh7></div> <a href="/vibesamurai-site/account" class="account-btn" id="account-btn" aria-label="Аккаунт"> <span class="account-ic" id="account-ic">⌂</span> <span class="account-label" id="account-label">Войти</span> </a>  <script type="module" src="/vibesamurai-site/_astro/AccountButton.astro_astro_type_script_index_0_lang.CmD2sdn9.js"></script> </aside>  <button type="button" class="sidebar-backdrop" id="sidebar-backdrop" aria-label="Закрыть оглавление" tabindex="-1" data-astro-cid-ofsbkzh7></button>  <script type="module">const d="vs-sidebar-open",a="(max-width: 900px)";function t(e){const n=document.querySelector(".reader-app");n&&n.classList.toggle("sidebar-open",e)}function r(){return!window.matchMedia(a).matches}function s(){const e=localStorage.getItem(d),i=window.matchMedia(a).matches?!1:e!==null?e==="1":r();t(i),document.getElementById("sidebar-toggle")?.addEventListener("click",()=>{const c=!document.querySelector(".reader-app")?.classList.contains("sidebar-open");window.matchMedia(a).matches||localStorage.setItem(d,c?"1":"0"),t(c)}),document.getElementById("sidebar-backdrop")?.addEventListener("click",()=>t(!1)),document.querySelectorAll(".reader-sidebar a").forEach(o=>{o.addEventListener("click",()=>{window.matchMedia(a).matches&&t(!1)})})}document.readyState==="loading"?document.addEventListener("DOMContentLoaded",s):s();</script> <aside class="reader-sidebar" data-astro-cid-khgtvzrl> <div class="breadcrumb" data-astro-cid-khgtvzrl>Vibesamurai · Middle Path · M3</div> <h4 data-astro-cid-khgtvzrl>In this course</h4> <ul data-astro-cid-khgtvzrl> <li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m1/en" class data-astro-cid-khgtvzrl> M1 · What is agentic AI in the SDLC  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m2/en" class data-astro-cid-khgtvzrl> M2 · Architecting agent boundaries  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m3/en" class="current" data-astro-cid-khgtvzrl> M3 · Observability and human-in-the-loop  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m4/en" class data-astro-cid-khgtvzrl> M4 · Tool inventory and permissions  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m5/en" class data-astro-cid-khgtvzrl> M5 · MCP deep dive  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m6/en" class data-astro-cid-khgtvzrl> M6 · Claude Code CLI mastery  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m7/en" class data-astro-cid-khgtvzrl> M7 · GPT-5.3 Codex CLI and OpenAI agents  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m8/en" class data-astro-cid-khgtvzrl> M8 · Cursor Composer + IDE agents  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m9/en" class data-astro-cid-khgtvzrl> M9 · Memory strategies  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m10/en" class data-astro-cid-khgtvzrl> M10 · State, drift, continuity  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m11/en" class data-astro-cid-khgtvzrl> M11 · Evaluating agents: metrics over vibes  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m12/en" class data-astro-cid-khgtvzrl> M12 · Regression tests for agents  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m13/en" class data-astro-cid-khgtvzrl> M13 · Tuning: what to change when metrics don&#39;t move  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m14/en" class data-astro-cid-khgtvzrl> M14 · One agent, many steps: pipelines and orchestration  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m15/en" class data-astro-cid-khgtvzrl> M15 · Multi-agent: roles, communication, supervisor  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m16/en" class data-astro-cid-khgtvzrl> M16 · When multi-agent is overkill. Anti-patterns  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m17/en" class data-astro-cid-khgtvzrl> M17 · Production: deploying agents to live environments  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m18/en" class data-astro-cid-khgtvzrl> M18 · Security in prod: secrets, sandbox, audit  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m19/en" class data-astro-cid-khgtvzrl> M19 · Incidents &amp; post-mortems  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m20/en" class data-astro-cid-khgtvzrl> M20 · Finale: where to go after Middle  </a> </li> </ul>  </aside> <main class="reader-main" data-astro-cid-a7sruqtr> <div class="chapter-eyebrow" data-astro-cid-a7sruqtr> <span data-astro-cid-a7sruqtr>Middle Path · m3</span> <a class="lang-toggle" href="/vibesamurai-site/courses/middle/m3" aria-label="Switch to RU" data-astro-cid-a7sruqtr>RU</a> </div> <h1 class="chapter-title" data-astro-cid-a7sruqtr>M3 · Observability and human-in-the-loop</h1> <p class="chapter-subtitle" data-astro-cid-a7sruqtr>The autonomy ladder, inspectable artifacts, and how to keep HITL without losing velocity.</p> <h2 id="what-this-chapter-is-about">What this chapter is about</h2>
+<p>Hey folks, welcome 👋</p>
+<p>In M1 we agreed on the paradigm. In M2 — on the contract and boundaries. Now we close Part I with the third pillar: <strong>observability and human-in-the-loop</strong>.</p>
+<p>These are two topics usually merged because they answer the same question: <strong>“how much freedom do I give the agent, and how do I know what’s happening while it works?”</strong></p>
+<p>Across Part I we spend a lot of time in “I don’t trust you” mode. That’s not paranoia — that’s a sensible engineering stance towards a new tool. In Part II we’ll go further and dig into the tools themselves. But without today’s chapter — you can’t get there.</p>
+<h2 id="the-autonomy-ladder-where-do-you-want-to-stand">The autonomy ladder: where do you want to stand</h2>
+<p>Agent autonomy isn’t a binary (“manual vs autonomous”). It’s a <strong>ladder</strong> with discrete rungs. Each rung is a concrete set of permissions and a concrete set of observability requirements.</p>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>LEVEL 5  │ Full-auto + self-merge                  │ almost nobody works here</span></span>
+<span class="line"><span>LEVEL 4  │ Auto-execute + auto-PR, human-merge     │ advanced teams</span></span>
+<span class="line"><span>LEVEL 3  │ Auto-execute with approval gates         │ typical production</span></span>
+<span class="line"><span>LEVEL 2  │ Plan-first, manual approve each step    │ early integration</span></span>
+<span class="line"><span>LEVEL 1  │ Plan-only, does nothing                 │ learning start / R&#x26;D</span></span>
+<span class="line"><span>LEVEL 0  │ Read-only, explains                     │ "look and tell me"</span></span></code></pre>
+<h3 id="where-each-rung-fits">Where each rung fits</h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Situation</th><th>Level</th><th>Why</th></tr></thead><tbody><tr><td>First session with a new agent</td><td><strong>0–1</strong></td><td>You don’t know its weaknesses</td></tr><tr><td>Walking an unknown repo</td><td><strong>0</strong></td><td>Reading + explanation, no actions</td></tr><tr><td>Light refactor, tests exist</td><td><strong>3</strong></td><td>Tests are the auto-gate</td></tr><tr><td>Hotfix in prod</td><td><strong>2</strong></td><td>High risk, every step by hand</td></tr><tr><td>Routine task (format, rename, boilerplate)</td><td><strong>4</strong></td><td>Narrow scope, no room for surprises</td></tr><tr><td>Full feature with an architectural decision</td><td><strong>2–3</strong></td><td>Plan is mandatory, actions stepwise</td></tr><tr><td>Anything with secrets / prod creds</td><td><strong>0–1</strong></td><td>No alternatives</td></tr></tbody></table>
+<p>Rule: <strong>default to the lowest rung on which the task can actually be done, and climb only with a concrete reason</strong>. Low rung = less speed, more chance to catch problems early. High rung = more speed, larger blast radius.</p>
+<p>Also: <strong>the autonomy level isn’t fixed across an agent’s “career.”</strong> In one repo it can run at 4 for routine tasks and at 2 for architectural decisions. It’s a switch, not a property of the tool.</p>
+<h2 id="inspectable-artifacts-what-should-remain-after-the-agent">Inspectable artifacts: what should remain after the agent</h2>
+<p>If the agent worked — there must be <strong>enough traces</strong> so any other person (or you a week later) can reconstruct what happened <strong>without opening the chat</strong>.</p>
+<p>Minimum set of artifacts:</p>
+<h3 id="1-plan-artifact">1. Plan artifact</h3>
+<p>The YAML/JSON/markdown we discussed in M2. Saved in the repo: <code>.agent/plans/2026-05-16-add-pkce.yaml</code> or similar. Not in chat, not in a log — <strong>in the repo</strong>, so it’s in history and under version control.</p>
+<h3 id="2-action-log">2. Action log</h3>
+<p>A chronological log of everything the agent did: which tools it called, with which arguments, what the result was. Not “thought process” — exactly the actions. In modern tools this often comes out of the box:</p>
+<ul>
+<li><strong>Claude Code</strong> — <code>~/.claude/projects/&#x3C;...>/</code> stores JSONL sessions</li>
+<li><strong>Cursor</strong> — Composer history panel</li>
+<li><strong>Codex CLI</strong> — <code>--log-file</code> option</li>
+</ul>
+<p>For a production flow I usually require the action log to be exported <strong>into the repo as part of the PR</strong> (e.g. as a PR comment or attached file).</p>
+<h3 id="3-diff-artifact">3. Diff artifact</h3>
+<p>The diff itself, obviously — that’s git. But notice: the diff must match the plan. If the plan has 3 steps and the diff touches 17 files, that’s <strong>the first red flag</strong> at review.</p>
+<h3 id="4-evaluation-report">4. Evaluation report</h3>
+<p>What exactly was checked after the action and what came of it. It can be just the test output, or a separate JSON “criterion 1: passed, criterion 2: failed.” The point — <strong>the result is tied to the criterion from the plan</strong>, not to subjective “works.”</p>
+<h3 id="5-bumps--retries-log">5. Bumps &#x26; retries log</h3>
+<p>How many times the agent tried and revised the plan. An important metric — if every task takes 5+ iterations, you have a problem in the task (poorly framed), or the agent (out of its depth), or the context (insufficient).</p>
+<blockquote>
+<p><em>Principle:</em> an artifact = something that survives the session closing. If it only lives while the chat is open — it’s <strong>not an artifact, it’s noise</strong>. Noise is fine, but noise can’t be the only trace of work.</p>
+</blockquote>
+<h2 id="hitl-without-killing-velocity">HITL without killing velocity</h2>
+<p>Good human-in-the-loop isn’t “slam the brakes every step” — it’s a <strong>side bus of events</strong>: the agent works, events fly to a log / observability sink, the human steps in on signal and returns corrections to the agent. Roughly:</p>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="mermaid"><code><span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">flowchart LR</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    A[Agent&#x3C;br/>action] --> E[Emit event&#x3C;br/>log / span]</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    E --> O[(Observability&#x3C;br/>sink)]</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    O --> H{Human&#x3C;br/>review}</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    H -->|approve| Next([Continue])</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    H -->|correct| C[Correction&#x3C;br/>note / diff]</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    C -.-> A</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    A --> Next</span></span></code></pre>
+<p>Events are written <strong>always</strong> (that <em>is</em> observability), and the human steps in <strong>by rule</strong> — not on every tool-call, but on sensitive steps, anomalies, and approaching budgets. Then HITL doesn’t drag velocity.</p>
+<p>The most common objection from management and experienced colleagues:</p>
+<blockquote>
+<p>“If you have to approve every step, it’s slower than doing it yourself.”</p>
+</blockquote>
+<p>The objection is fair <strong>in the case of bad HITL</strong> and unfair in the case of good HITL. The difference comes down to three rules.</p>
+<h3 id="rule-1-approval-must-be-fast">Rule 1: approval must be fast</h3>
+<p>Approving a step = <strong>3–10 seconds</strong>, not “read 5 pages of context.” Which means:</p>
+<ul>
+<li>The plan is structured (M2)</li>
+<li>The diff is minimal (narrow steps instead of wide)</li>
+<li>The success criterion is explicit (it’s clear what to check)</li>
+<li>The approval interface is <code>(y/n)</code> level, not “open 4 tabs”</li>
+</ul>
+<p>If approval takes minutes — your flow is wrong, not your HITL.</p>
+<h3 id="rule-2-approval-should-be-batched-where-possible">Rule 2: approval should be batched where possible</h3>
+<p>Not every <strong>action</strong> needs approval. Often what’s needed is approval of a <strong>series of related actions</strong>: “run tests + fix on results + next run” = one logical step.</p>
+<p>Modern tools support this:</p>
+<ul>
+<li>Claude Code — you can approve <code>Plan + execute steps 1-3</code> in one action, then review</li>
+<li>Codex CLI — <code>auto-edit</code> mode within scope</li>
+<li>Cursor — Composer apply for a whole series of edits</li>
+</ul>
+<p>Principle: <strong>approve logical units, not atomic tool calls.</strong></p>
+<h3 id="rule-3-approval-default--no-but-no-requires-no-effort">Rule 3: approval default = “no,” but “no” requires no effort</h3>
+<p>A subtle point. Psychologically:</p>
+<ul>
+<li>If the default button is <code>[Y]</code>, the human presses Y without reading.</li>
+<li>If the default button is <code>[N]</code>, the human pauses and thinks.</li>
+</ul>
+<p>But if every “no” requires a justification essay — the human will start “pressing Y to avoid suffering.” Balance: <strong>default — N, but Y is one click after reading the plan</strong>.</p>
+<p>In most modern agent tools the default is N. If yours isn’t — change the setting or change the tool.</p>
+<h2 id="hitl-anti-patterns">HITL anti-patterns</h2>
+<h3 id="1-approval-theatre">1. “Approval theatre”</h3>
+<p>The team formally requires approval at every step, but <strong>nobody actually reads the plan</strong>. Everyone presses Y by habit. Result: the process exists, the protection doesn’t.</p>
+<p><strong>How to catch it:</strong> periodically insert a <strong>deliberately bad step</strong> into the plan (e.g. deletion of a random file) and see who notices. If nobody does — you have approval theatre.</p>
+<h3 id="2-bypass-culture">2. “Bypass culture”</h3>
+<p>Everyone knows the “magic flag” that turns off all gates (<code>--dangerously-skip-permissions</code>, <code>--auto</code>). One person started using it “because I’m in a hurry” — in two weeks the whole team works that way.</p>
+<p><strong>How to catch it:</strong> in team policy any autonomy flag above the base rung must be <strong>logged and visible across the team</strong>. Bypass is an incident, not a normal mode.</p>
+<h3 id="3-single-point-of-approval">3. “Single point of approval”</h3>
+<p>One lead approves everything. They went on holiday — the whole process froze. Or worse — they started pressing Y in a row because of the queue.</p>
+<p><strong>How to catch it:</strong> approval must be <strong>role-based</strong>, not personal. Any of a set of people can approve — but <strong>always a human</strong>, never an automation.</p>
+<h3 id="4-trust-escalation">4. “Trust escalation”</h3>
+<p>“This agent crushed the previous task — let’s give it this one too, a bigger one.” Step by step the agent gets more scope until it finally drops something important.</p>
+<p><strong>How to catch it:</strong> the autonomy level is a property of the <strong>task class</strong>, not of the agent’s “past wins.” A prod hotfix needs Level 2 even if the agent did 1000 good ones in a row.</p>
+<h2 id="metrics-worth-collecting">Metrics worth collecting</h2>
+<p>If you’re seriously building an agentic flow in a team — collect:</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Metric</th><th>What it shows</th></tr></thead><tbody><tr><td><strong>Plans/week</strong></td><td>Volume of agent work</td></tr><tr><td><strong>Plan-to-action ratio</strong></td><td>How many plans actually got to action (low = poor task framing)</td></tr><tr><td><strong>Replans per task</strong></td><td>Average plan revisions (>3 = task too big)</td></tr><tr><td><strong>Approval latency (median)</strong></td><td>Average wait for approve (>30 min = HITL drags)</td></tr><tr><td><strong>Reverts post-merge</strong></td><td>How many agent PRs were rolled back (the main “harm” metric)</td></tr><tr><td><strong>Bypass events</strong></td><td>How often the autonomy bypass was used (must be low and visible)</td></tr></tbody></table>
+<p>You don’t have to start with all of them. At minimum — <strong>reverts post-merge</strong> and <strong>bypass events</strong>. They send the “things got worse” signal fastest.</p>
+<h2 id="programmatic-finale-register-c">Programmatic finale (register C)</h2>
+<p>Friends.</p>
+<p>Part I — Foundations — is done. If you sum up everything in M1–M3 in one sentence:</p>
+<blockquote>
+<p>An agent is a contributor working under a contract with explicit boundaries, under observation, with inspectable artifacts and a negotiated degree of autonomy.</p>
+</blockquote>
+<p>All subsequent parts of the course — Tools &#x26; Environment, Production Patterns, Security, GH-600 prep — will unpack the <strong>technical implementation</strong> of that formula. Specific tools will change, specific APIs will go stale, specific rate-limit numbers will be rewritten.</p>
+<p>What won’t change:</p>
+<ul>
+<li>The contractual nature of the task</li>
+<li>The plan/action split</li>
+<li>Artifacts that survive the session</li>
+<li>The human who keeps responsibility</li>
+</ul>
+<p>The model zoo will keep growing. Tools will shuffle every quarter. Train your eye, not your fingers. Your head matters more than the AI — especially at the moment of plan approval.</p>
+<h2 id="recap">Recap</h2>
+<ul>
+<li><strong>Autonomy ladder 0–5.</strong> Default to the low rung; climb only with a concrete reason.</li>
+<li><strong>5 artifacts after the agent:</strong> plan, action log, diff, evaluation report, bumps&#x26;retries. All in the repo, not in chat.</li>
+<li><strong>HITL doesn’t drag if 3 rules hold:</strong> approval fast, batched, default = N.</li>
+<li><strong>4 HITL anti-patterns:</strong> approval theatre, bypass culture, single point of approval, trust escalation.</li>
+<li><strong>Minimum metrics:</strong> reverts post-merge + bypass events.</li>
+</ul>
+<h2 id="whats-next">What’s next</h2>
+<p>Part I is closed. In <strong>Part II — Tools &#x26; Environment</strong> we start with <strong>M4 — Tool inventory and permissions</strong>: which tools the agent actually needs for each task class, how to do least-privilege scoping, and how to audit permissions.</p>
+<p>If this clicked — share Part I with colleagues who’ll be taking GH-600 or building an agentic pipeline in a team. If you have concrete questions about observability or HITL from your practice — write in the course comments, your feedback really helps polish the material.</p>
+<h2 id="-further-reading">📚 Further reading</h2>
+<p>The topic is large, so keep three anchors: a telemetry spec, a ready observability platform, and Anthropic’s official position on HITL/auto-mode.</p>
+<p><strong>Telemetry standard for agents</strong></p>
+<ul>
+<li><strong>OpenTelemetry — Semantic conventions for GenAI</strong> — <a href="https://opentelemetry.io/docs/specs/semconv/gen-ai/">opentelemetry.io/docs/specs/semconv/gen-ai/</a>. Which spans, metrics, and attributes to put in traces for an LLM/agent system. If you’re writing a production agent — a standard worth aiming for instead of inventing your own.</li>
+</ul>
+<p><strong>Ready observability stack</strong></p>
+<ul>
+<li><strong>Langfuse — LLM Observability docs</strong> — <a href="https://langfuse.com/docs/observability/overview">langfuse.com/docs/observability/overview</a>. Open platform: traces, sessions, cost metrics, under OpenTelemetry. Convenient as a starting point, especially when you don’t want to build your own analytics.</li>
+</ul>
+<p><strong>HITL at Anthropic</strong></p>
+<ul>
+<li><strong>Anthropic — “Claude Code auto mode: a safer way to skip permissions”</strong> — <a href="https://www.anthropic.com/engineering/claude-code-auto-mode">anthropic.com/engineering/claude-code-auto-mode</a>. How Anthropic finely splits “no HITL” from “HITL by rule,” and why the second strategy is a reasonable default.</li>
+</ul>
+<blockquote>
+<p><strong>Tip:</strong> if you have a prod agent and none of these components — start with Langfuse and the base OTel convention. It’s 1–2 evenings and the blindness goes away immediately.</p>
+</blockquote>
+<hr>
+<p><strong>Maps to:</strong> GH-600 §1.3 — <em>Observability, telemetry, and human-in-the-loop patterns</em>
+<strong>Closes:</strong> Part I — Foundations (M1 + M2 + M3)</p> <nav class="chapter-nav" data-astro-cid-a7sruqtr> <a href="/vibesamurai-site/courses/middle/m2/en" data-astro-cid-a7sruqtr> <span class="dir" data-astro-cid-a7sruqtr>← Back</span> <span class="title" data-astro-cid-a7sruqtr>M2 · Architecting agent boundaries</span> </a> <a href="/vibesamurai-site/courses/middle/m4/en" data-astro-cid-a7sruqtr> <span class="dir" data-astro-cid-a7sruqtr>Next →</span> <span class="title" data-astro-cid-a7sruqtr>M4 · Tool inventory and permissions</span> </a> </nav> </main>  </div> <script type="module">
+    import { gatingEnabled } from '../lib/supabase';
+    import { fetchChapter } from '../lib/auth';
+
+    const base = import.meta.env.BASE_URL;
+    let mermaidLib = null;
+
+    function scopeOf(root) {
+      return root === document ? document.querySelector('.reader-main') : root;
+    }
+
+    function addCopyBtns(root) {
+      const scope = scopeOf(root); if (!scope) return;
+      scope.querySelectorAll('pre').forEach((pre) => {
+        if (pre.closest('.code-tabs')) return;
+        if (pre.querySelector('.copy-btn')) return;
+        const btn = document.createElement('button');
+        btn.className = 'copy-btn';
+        btn.textContent = 'copy';
+        btn.addEventListener('click', async () => {
+          const code = pre.querySelector('code')?.textContent ?? pre.textContent ?? '';
+          await navigator.clipboard.writeText(code.trimEnd());
+          btn.textContent = '✓ copied';
+          setTimeout(() => { btn.textContent = 'copy'; }, 1600);
+        });
+        pre.appendChild(btn);
+      });
+    }
+
+    function tightenMermaidSvgs(retries = 6) {
+      let pending = false;
+      document.querySelectorAll('.mermaid svg').forEach((svg) => {
+        if (svg.dataset.tightened === '1') return;
+        try {
+          const bbox = svg.getBBox();
+          if (!bbox || bbox.width === 0) { pending = true; return; }
+          const pad = 6;
+          svg.setAttribute('viewBox',
+            `${bbox.x - pad} ${bbox.y - pad} ${bbox.width + pad * 2} ${bbox.height + pad * 2}`);
+          svg.removeAttribute('height');
+          svg.style.height = 'auto';
+          svg.style.maxWidth = '100%';
+          svg.style.display = 'block';
+          svg.dataset.tightened = '1';
+        } catch (e) { pending = true; }
+      });
+      if (pending && retries > 0) setTimeout(() => tightenMermaidSvgs(retries - 1), 120);
+    }
+
+    async function ensureMermaid() {
+      if (mermaidLib) return mermaidLib;
+      const mod = await import('https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs');
+      mermaidLib = mod.default;
+      mermaidLib.initialize({
+        startOnLoad: false, theme: 'neutral',
+        themeVariables: {
+          fontFamily: 'JetBrains Mono, ui-monospace, monospace',
+          primaryColor: '#f5f5f5', primaryBorderColor: '#222',
+          primaryTextColor: '#111', lineColor: '#444',
+        },
+        flowchart: { curve: 'basis', padding: 12, useMaxWidth: true },
+      });
+      return mermaidLib;
+    }
+
+    async function renderMermaid(root) {
+      const scope = scopeOf(root); if (!scope) return;
+      const matches = scope.querySelectorAll(
+        'pre[data-language="mermaid"], pre.language-mermaid, code.language-mermaid'
+      );
+      if (!matches.length) return;
+      matches.forEach((el) => {
+        const block = el.tagName === 'CODE' ? el.closest('pre') || el : el;
+        const codeEl = block.querySelector('code') || block;
+        const wrap = document.createElement('div');
+        wrap.className = 'mermaid';
+        wrap.textContent = codeEl.textContent;
+        block.replaceWith(wrap);
+      });
+      try {
+        const m = await ensureMermaid();
+        await m.run();
+        tightenMermaidSvgs();
+      } catch (err) {
+        console.warn('mermaid failed', err);
+        document.querySelectorAll('.mermaid:not(:has(svg))').forEach((el) => { el.style.display = 'none'; });
+      }
+    }
+
+    async function enhance(root = document) {
+      addCopyBtns(root);
+      await renderMermaid(root);
+    }
+
+    function paywallHtml(required, needLogin) {
+      const label = { beginner: 'Beginner (300 ₽)', middle: 'Beginner + Middle (500 ₽)', all: 'Весь пакет (700 ₽)' }[required] || '';
+      return `<div class="paywall">
+        <div class="paywall-ic">🔒</div>
+        <h3>Эта глава — в платном доступе</h3>
+        <p>Нужен тариф: <strong>${label}</strong>. Доступ навсегда, без подписки.</p>
+        ${needLogin ? '<p>Войди через Google и оформи доступ — продолжишь с любого устройства.</p>' : ''}
+        <a class="paywall-btn" href="${base}pricing">Открыть доступ →</a>
+        <a class="paywall-link" href="${base}account">Войти / мой аккаунт</a>
+      </div>`;
+    }
+
+    async function gatedFlow(mount) {
+      const slug = mount.dataset.slug;
+      const required = mount.dataset.required || 'beginner';
+      mount.innerHTML = '<p class="gate-msg">Проверяем доступ…</p>';
+      const res = await fetchChapter(slug);
+      if (res.ok) {
+        mount.innerHTML = res.html;
+        await enhance(mount);
+      } else if (res.status === 401) {
+        mount.innerHTML = paywallHtml(required, true);
+      } else if (res.status === 402) {
+        mount.innerHTML = paywallHtml(res.requiredTier || required, false);
+      } else {
+        mount.innerHTML = '<p class="gate-msg">Не удалось загрузить главу. Обнови страницу.</p>';
+      }
+    }
+
+    const mount = document.getElementById('gated-mount');
+    if (mount && gatingEnabled) gatedFlow(mount);
+    else enhance(document);
+  </script> </body> </html>

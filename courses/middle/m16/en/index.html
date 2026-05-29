@@ -1,0 +1,363 @@
+<!DOCTYPE html><html lang="en" data-astro-cid-a7sruqtr> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>When multi-agent is overkill. Anti-patterns — Vibesamurai</title><meta name="description" content="The other side of M15: where multi-agent isn't needed, how to convince yourself or the team not to build it."><meta property="og:title" content="When multi-agent is overkill. Anti-patterns"><meta property="og:type" content="article"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Inter:wght@300..800&family=JetBrains+Mono:wght@400..600&display=swap" rel="stylesheet"><link rel="stylesheet" href="/vibesamurai-site/_astro/_slug_.Cs4TX1wt.css">
+<style>.account-btn{display:inline-flex;align-items:center;gap:var(--space-2);font-family:var(--font-mono);font-size:var(--size-2);text-transform:uppercase;letter-spacing:.06em;padding:5px 10px;border:1px solid var(--rule);border-radius:999px;color:var(--text-soft);background:var(--surface);transition:border-color var(--d-fast),color var(--d-fast)}.account-btn:hover{border-color:var(--accent);color:var(--text)}.account-ic{width:18px;height:18px;display:grid;place-items:center;border-radius:50%;background:var(--accent);color:var(--accent-ink);font-weight:700;font-size:10px;line-height:1}.reader-rail .account-btn{padding:0;border:none;background:transparent}.reader-rail .account-label{display:none}.reader-rail .account-ic{width:32px;height:32px;font-size:13px}.rail-toggle{width:36px;height:36px;display:grid;place-items:center;background:var(--accent);border:1px solid var(--accent);border-radius:4px;cursor:pointer;transition:filter var(--d-fast),transform var(--d-fast);padding:0}.rail-toggle:hover{filter:brightness(1.08);transform:translateY(-1px)}.rail-toggle:active{transform:translateY(0)}.rail-toggle-icon{width:14px;height:12px;border-left:2px solid var(--accent-ink);border-right:2px solid var(--accent-ink);transition:transform var(--d-normal) var(--ease-standard)}.reader-app.sidebar-open .rail-toggle-icon{transform:rotate(0)}.reader-app:not(.sidebar-open) .rail-toggle-icon{transform:scaleX(.5)}.sidebar-backdrop{display:none;position:fixed;inset:0;background:#0000008c;z-index:140;border:0;padding:0;cursor:pointer}@media(max-width:900px){.reader-app.sidebar-open~.sidebar-backdrop{display:block}}.rail-spacer[data-astro-cid-ofsbkzh7]{flex:1}.reader-sidebar[data-astro-cid-khgtvzrl] .ru-tag[data-astro-cid-khgtvzrl]{font-style:normal;font-family:var(--font-mono);font-size:.7em;color:var(--text-mute);margin-left:4px;padding:1px 4px;border:1px solid var(--rule);border-radius:3px;text-transform:uppercase;vertical-align:middle}.chapter-eyebrow[data-astro-cid-a7sruqtr]{display:flex;justify-content:space-between;align-items:center;gap:var(--space-3)}.lang-toggle[data-astro-cid-a7sruqtr]{font-family:var(--font-mono);font-size:var(--size-2);padding:2px 8px;border:1px solid var(--rule);border-radius:4px;color:var(--text-mute);text-decoration:none;text-transform:uppercase;letter-spacing:.08em}.lang-toggle[data-astro-cid-a7sruqtr]:hover{color:var(--accent);border-color:var(--accent)}.code-tabs[data-astro-cid-hg66rjob]{margin:var(--space-5) 0}.code-tabs-nav[data-astro-cid-hg66rjob]{display:flex;gap:2px;margin-bottom:-1px;position:relative;z-index:1}.ctab[data-astro-cid-hg66rjob]{font-family:var(--font-mono);font-size:11px;text-transform:uppercase;letter-spacing:.07em;padding:5px 14px;border:1px solid #21222c;border-bottom:none;background:#1a1b23;color:#6272a4;cursor:pointer;border-radius:4px 4px 0 0;transition:color .12s,background .12s}.ctab[data-astro-cid-hg66rjob].is-active{background:#282a36;color:#f8f8f2;border-color:#21222c}.ctab[data-astro-cid-hg66rjob]:hover:not(.is-active){color:#cdd6f4}.ctab-panel[data-astro-cid-hg66rjob]{display:none}.ctab-panel[data-astro-cid-hg66rjob].is-active{display:block}.ctab-panel[data-astro-cid-hg66rjob] pre{margin-top:0!important;border-radius:0 6px 6px!important}
+</style></head> <body data-astro-cid-a7sruqtr> <div class="reader-app" data-astro-cid-a7sruqtr> <aside class="reader-rail" data-astro-cid-ofsbkzh7> <a href="/vibesamurai-site/" class="logo" aria-label="Vibesamurai home" data-astro-cid-ofsbkzh7>V</a> <button type="button" class="rail-toggle" id="sidebar-toggle" aria-label="Свернуть/развернуть оглавление" title="Свернуть/развернуть оглавление" data-astro-cid-ofsbkzh7> <span class="rail-toggle-icon" aria-hidden="true" data-astro-cid-ofsbkzh7></span> </button> <div class="rail-spacer" data-astro-cid-ofsbkzh7></div> <a href="/vibesamurai-site/account" class="account-btn" id="account-btn" aria-label="Аккаунт"> <span class="account-ic" id="account-ic">⌂</span> <span class="account-label" id="account-label">Войти</span> </a>  <script type="module" src="/vibesamurai-site/_astro/AccountButton.astro_astro_type_script_index_0_lang.CmD2sdn9.js"></script> </aside>  <button type="button" class="sidebar-backdrop" id="sidebar-backdrop" aria-label="Закрыть оглавление" tabindex="-1" data-astro-cid-ofsbkzh7></button>  <script type="module">const d="vs-sidebar-open",a="(max-width: 900px)";function t(e){const n=document.querySelector(".reader-app");n&&n.classList.toggle("sidebar-open",e)}function r(){return!window.matchMedia(a).matches}function s(){const e=localStorage.getItem(d),i=window.matchMedia(a).matches?!1:e!==null?e==="1":r();t(i),document.getElementById("sidebar-toggle")?.addEventListener("click",()=>{const c=!document.querySelector(".reader-app")?.classList.contains("sidebar-open");window.matchMedia(a).matches||localStorage.setItem(d,c?"1":"0"),t(c)}),document.getElementById("sidebar-backdrop")?.addEventListener("click",()=>t(!1)),document.querySelectorAll(".reader-sidebar a").forEach(o=>{o.addEventListener("click",()=>{window.matchMedia(a).matches&&t(!1)})})}document.readyState==="loading"?document.addEventListener("DOMContentLoaded",s):s();</script> <aside class="reader-sidebar" data-astro-cid-khgtvzrl> <div class="breadcrumb" data-astro-cid-khgtvzrl>Vibesamurai · Middle Path · M16</div> <h4 data-astro-cid-khgtvzrl>In this course</h4> <ul data-astro-cid-khgtvzrl> <li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m1/en" class data-astro-cid-khgtvzrl> M1 · What is agentic AI in the SDLC  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m2/en" class data-astro-cid-khgtvzrl> M2 · Architecting agent boundaries  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m3/en" class data-astro-cid-khgtvzrl> M3 · Observability and human-in-the-loop  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m4/en" class data-astro-cid-khgtvzrl> M4 · Tool inventory and permissions  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m5/en" class data-astro-cid-khgtvzrl> M5 · MCP deep dive  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m6/en" class data-astro-cid-khgtvzrl> M6 · Claude Code CLI mastery  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m7/en" class data-astro-cid-khgtvzrl> M7 · GPT-5.3 Codex CLI and OpenAI agents  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m8/en" class data-astro-cid-khgtvzrl> M8 · Cursor Composer + IDE agents  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m9/en" class data-astro-cid-khgtvzrl> M9 · Memory strategies  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m10/en" class data-astro-cid-khgtvzrl> M10 · State, drift, continuity  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m11/en" class data-astro-cid-khgtvzrl> M11 · Evaluating agents: metrics over vibes  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m12/en" class data-astro-cid-khgtvzrl> M12 · Regression tests for agents  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m13/en" class data-astro-cid-khgtvzrl> M13 · Tuning: what to change when metrics don&#39;t move  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m14/en" class data-astro-cid-khgtvzrl> M14 · One agent, many steps: pipelines and orchestration  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m15/en" class data-astro-cid-khgtvzrl> M15 · Multi-agent: roles, communication, supervisor  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m16/en" class="current" data-astro-cid-khgtvzrl> M16 · When multi-agent is overkill. Anti-patterns  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m17/en" class data-astro-cid-khgtvzrl> M17 · Production: deploying agents to live environments  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m18/en" class data-astro-cid-khgtvzrl> M18 · Security in prod: secrets, sandbox, audit  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m19/en" class data-astro-cid-khgtvzrl> M19 · Incidents &amp; post-mortems  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m20/en" class data-astro-cid-khgtvzrl> M20 · Finale: where to go after Middle  </a> </li> </ul>  </aside> <main class="reader-main" data-astro-cid-a7sruqtr> <div class="chapter-eyebrow" data-astro-cid-a7sruqtr> <span data-astro-cid-a7sruqtr>Middle Path · m16</span> <a class="lang-toggle" href="/vibesamurai-site/courses/middle/m16" aria-label="Switch to RU" data-astro-cid-a7sruqtr>RU</a> </div> <h1 class="chapter-title" data-astro-cid-a7sruqtr>M16 · When multi-agent is overkill. Anti-patterns</h1> <p class="chapter-subtitle" data-astro-cid-a7sruqtr>The other side of M15: where multi-agent isn&#39;t needed, how to convince yourself or the team not to build it.</p> <h2 id="hook">Hook</h2>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>WHAT YOU WANT:                  WHAT YOU GET:</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>"A multi-agent system     →     7 subagents, 4 buses, 3 prompts</span></span>
+<span class="line"><span> will be smarter than           per each, nobody does anything,</span></span>
+<span class="line"><span> a single one"                  $200/day on the API,</span></span>
+<span class="line"><span>                                team tired of debugging</span></span></code></pre>
+<p>Hey folks, welcome 👋</p>
+<p>This chapter is the <strong>flip side</strong> of M15. M15 was <strong>“how to build,”</strong> M16 is <strong>“when not to.”</strong> And — spoiler — that’s <strong>most</strong> of the time.</p>
+<p>I’ve personally seen <strong>dozens</strong> of projects where people started with multi-agent for aesthetic reasons (“sounds cool”), and <strong>half</strong> of them later came for advice with “help me unpack this, I don’t even know what’s where anymore.” This chapter is the <strong>vaccine</strong> against that.</p>
+<p>An hour. This is a <strong>strong</strong> chapter, and it <strong>closes</strong> Part V.</p>
+<h2 id="concept-multi-agent--a-distributed-system">Concept: multi-agent = a distributed system</h2>
+<p>Anyone who’s worked with <strong>distributed systems</strong> in regular dev knows this line:</p>
+<blockquote>
+<p><em>“Microservices are a solution that creates more problems than it solves, <strong>except</strong> in specific cases.”</em></p>
+</blockquote>
+<p>With multi-agent — <strong>the same</strong>. Multi-agent is a <strong>distributed system</strong> of agents. And <strong>all</strong> the problems of distributed systems are <strong>cubed</strong> here:</p>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>┌─────────────────────────────────────────────────────┐</span></span>
+<span class="line"><span>│  Usual distributed-systems problems:                │</span></span>
+<span class="line"><span>│  - Network failures                                 │</span></span>
+<span class="line"><span>│  - Eventual consistency                             │</span></span>
+<span class="line"><span>│  - Partial failures                                 │</span></span>
+<span class="line"><span>│  - Debugging complexity                             │</span></span>
+<span class="line"><span>│                                                     │</span></span>
+<span class="line"><span>│  + multi-agent adds:                                │</span></span>
+<span class="line"><span>│  - Non-determinism of each agent                    │</span></span>
+<span class="line"><span>│  - LLM-cost amplification                           │</span></span>
+<span class="line"><span>│  - Coordination overhead                            │</span></span>
+<span class="line"><span>│  - "Whose context is right?" — constantly           │</span></span>
+<span class="line"><span>└─────────────────────────────────────────────────────┘</span></span></code></pre>
+<p>So: <strong>pipeline first (M14).</strong> Multi-agent — <strong>only</strong> when a pipeline <strong>demonstrably</strong> can’t cope.</p>
+<h2 id="signals-that-multi-agent-is-not-needed">Signals that multi-agent is <strong>NOT</strong> needed</h2>
+<p>A “can we skip multi-agent” checklist. If <strong>any one</strong> answer is yes — <strong>don’t build</strong>.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Signal</th><th>What it means</th></tr></thead><tbody><tr><td><strong>One-person task</strong></td><td>If you’re solo and the work fits in a day — a pipeline is enough</td></tr><tr><td><strong>Context fits in 200K tokens</strong></td><td>Nobody is <strong>forced</strong> to split contexts</td></tr><tr><td><strong>No real parallelism</strong></td><td>If steps are <strong>sequential</strong> by meaning — pipeline</td></tr><tr><td><strong>All “roles” handled well by one model</strong></td><td>Different models is a common argument; if one handles all — don’t split</td></tr><tr><td><strong>No autonomy requirement</strong></td><td>If a human reviews after each major step — pipeline is enough</td></tr><tr><td><strong>Tight budget</strong></td><td>Multi-agent costs <strong>multiples</strong> more on the API</td></tr><tr><td><strong>Team &#x3C; 3 people</strong></td><td>Maintaining multi-agent is a <strong>job</strong> for a dedicated engineer</td></tr><tr><td><strong>MVP stage</strong></td><td>On MVP — you <strong>never</strong> need multi-agent, too early to over-engineer</td></tr></tbody></table>
+<p>In reality — that’s <strong>80 % of cases</strong>. If the task lands in <strong>most</strong> of these — <strong>strictly pipeline</strong>.</p>
+<h2 id="the-main-anti-patterns">The main anti-patterns</h2>
+<h3 id="anti-pattern-1-cargo-cult-multi-agent">Anti-pattern 1. “Cargo cult multi-agent”</h3>
+<p>Read an article “how we automated SRE on 7 agents.” Decided — “we need it too.” Didn’t figure out <strong>why</strong> the article picked 7.</p>
+<p><strong>Signs:</strong></p>
+<ul>
+<li>You can’t briefly explain <strong>why exactly</strong> 5 (or 7) agents and not 2</li>
+<li>You can’t point to a <strong>number</strong> that improves with multi-agent vs pipeline</li>
+<li>The architecture “looks like” successful case studies</li>
+</ul>
+<p><strong>Cure:</strong> the <strong>“one-for-one” rule</strong> — name <strong>one</strong> concrete workflow where <strong>multi-agent is objectively</strong> faster/better than a pipeline. Can’t name one — don’t build.</p>
+<h3 id="anti-pattern-2-a-role-per-agent">Anti-pattern 2. “A role per agent”</h3>
+<p>The temptation: “we have planner, coder, tester, reviewer, doc-writer, release-manager — let each be its own agent.” <strong>No, let them not.</strong></p>
+<p><strong>Signs:</strong></p>
+<ul>
+<li>5+ subagents, each doing a <strong>narrow</strong> function (one-two commands)</li>
+<li>80 % of their time is <strong>waiting</strong> for each other</li>
+<li>The task burns <strong>3× more tokens</strong> than one-shot</li>
+</ul>
+<p><strong>Cure:</strong> <strong>merge roles</strong>. planner+architect = one role (same context). coder+formatter = one role (same tools). If there’s no <strong>real</strong> reason to split — <strong>don’t split</strong>.</p>
+<h3 id="anti-pattern-3-the-agent-must-have-full-autonomy">Anti-pattern 3. “The agent must have full autonomy”</h3>
+<p>“We want the system to <strong>handle everything itself</strong>, no human.” <strong>Sounds</strong> pretty, <strong>in reality</strong> — path to problems.</p>
+<p><strong>Signs:</strong></p>
+<ul>
+<li>No human integration points in the pipeline</li>
+<li>“Supervisor decides when to escalate”</li>
+<li>Budgets on “time / iterations / tokens” <strong>not strictly defined</strong></li>
+</ul>
+<p><strong>Cure:</strong> see M3 — <strong>HITL is mandatory</strong> at critical steps. Even the most advanced production agents in 2026 <strong>still</strong> require a human on:</p>
+<ul>
+<li>merge to main</li>
+<li>deploy to prod</li>
+<li>changes to permissions / billing</li>
+<li>decisions with <strong>irreversible</strong> consequences</li>
+</ul>
+<h3 id="anti-pattern-4-multiple-supervisors">Anti-pattern 4. “Multiple supervisors”</h3>
+<p>“A master supervisor runs sub-supervisors that run workers.” <strong>Hierarchy of hierarchies.</strong></p>
+<p><strong>Signs:</strong></p>
+<ul>
+<li>Depth > 3</li>
+<li>One supervisor pulls another supervisor</li>
+<li>In diagnostics it’s unclear <strong>whose</strong> fault the final outcome is</li>
+</ul>
+<p><strong>Cure:</strong> <strong>flat hierarchy</strong>. One supervisor, up to 5 workers. If it <strong>truly</strong> doesn’t fit — these aren’t <strong>multi-agent</strong>, these are <strong>separate products</strong> to be built <strong>separately</strong> and linked via API/queue.</p>
+<h3 id="anti-pattern-5-free-communication--let-them-sort-it-out">Anti-pattern 5. “Free communication — let them sort it out”</h3>
+<p>“I’ll give them shared memory, let them write to each other however.” Ends in <strong>infinite</strong> dialogue without a result.</p>
+<p><strong>Signs:</strong></p>
+<ul>
+<li>No message format</li>
+<li>No rules about <strong>when</strong> the agent should <strong>stop</strong> talking</li>
+<li>The log shows “agents talked about it for 47 messages, no conclusion”</li>
+</ul>
+<p><strong>Cure:</strong> a <strong>hard protocol</strong> (JSON Schema), <strong>hard limits</strong> (max N messages per discussion), a <strong>mandatory supervisor</strong> to take the final call.</p>
+<h3 id="anti-pattern-6-build-first-measure-later">Anti-pattern 6. “Build first, measure later”</h3>
+<p>Half a year of work, a multi-stage system — and <strong>nobody</strong> compared with a <strong>simple</strong> pipeline.</p>
+<p><strong>Signs:</strong></p>
+<ul>
+<li>No A/B benchmark vs single-agent / pipeline</li>
+<li>“Improvement” metrics are subjective (“the team is happy”)</li>
+<li>When asked “why” — generic words about “scalability”</li>
+</ul>
+<p><strong>Cure:</strong> <strong>before</strong> project start — a <strong>harness</strong> (M12) on <strong>3 representative</strong> tasks. Run on single-agent, pipeline, multi-agent. <strong>Compare.</strong> If multi-agent isn’t <strong>significantly</strong> better — <strong>don’t build</strong>.</p>
+<h3 id="anti-pattern-7-multi-agent-for-economy-of-scale">Anti-pattern 7. “Multi-agent for economy of scale”</h3>
+<p>“If we have 1000 tasks/day — multi-agent will pay off.” <strong>Not necessarily.</strong></p>
+<p><strong>Signs:</strong></p>
+<ul>
+<li>The argument leans on “scale”</li>
+<li>1000 tasks/day = 1 task every 1.4 minutes</li>
+<li>Multi-agent per task — 15–30 minutes of wall-clock due to coordination overhead</li>
+</ul>
+<p><strong>Cure:</strong> for <strong>mass</strong> tasks it’s often cheaper to run a <strong>parallel pipeline</strong> (N pipelines at once) than multi-agent. Simpler and cheaper.</p>
+<h2 id="a-big-b-insert--a-real-case">A big B insert — a real case</h2>
+<p>Story from my own life. A client had a PR factory idea: “let’s make a supervisor that dispatches tasks from Linear to 5 worker agents, and they <strong>autonomously</strong> open PRs, pass review, merge.” On paper — <strong>pretty</strong>. In a deck — <strong>impressive</strong>.</p>
+<p>We started building. <strong>Three months</strong> of work by a team of 4:</p>
+<ul>
+<li>supervisor — Opus 4.6, special prompt</li>
+<li>coder-worker — Sonnet 4.6, repo access</li>
+<li>test-worker — Sonnet 4.6, sandbox</li>
+<li>reviewer-worker — Opus 4.6, read-only + comments</li>
+<li>release-worker — Haiku 4.5, only merges approved</li>
+<li>shared bus — Redis + Postgres for state</li>
+<li>monitoring — Grafana, dashboards per agent</li>
+</ul>
+<p><strong>Dev infra cost:</strong> 4 person-months. <strong>Production API cost (first week):</strong> $1200.</p>
+<p><strong>What worked:</strong> simple features (CRUD endpoint, small bug fixes) — yes, ran itself.</p>
+<p><strong>What didn’t:</strong></p>
+<ul>
+<li>Any non-trivial task (migration, security-sensitive, refactor) — <strong>deadlocked</strong> between coder and reviewer</li>
+<li>$200–300/day on agent “discussions”</li>
+<li>Team <strong>constantly</strong> monitoring “did it hang”</li>
+<li>For every complex case — <strong>still</strong> called a human</li>
+<li>After 2 months <strong>it turned out</strong> a pipeline (planner→coder→tester, no reviewer-agent, human review) did the same at <strong>a quarter</strong> of the cost</li>
+</ul>
+<p><strong>What stayed:</strong> a simplified pipeline + one subagent for tests. Multi-agent infra — ripped out.</p>
+<p><strong>Full menu</strong> of the lesson: we built a <strong>complex</strong> tool because it <strong>sounded cool</strong>. No harness <strong>before</strong> the project. No A/B comparison. Believing “we’re building the future.”</p>
+<p>I’m <strong>not against</strong> multi-agent in principle. I’m against multi-agent <strong>before</strong> the pipeline is exhausted. And against multi-agent <strong>without a benchmark</strong> proving the win.</p>
+<h2 id="when-multi-agent-really-pays-off">When multi-agent <strong>REALLY</strong> pays off</h2>
+<p>So I don’t sound like I’m <strong>categorically</strong> against. Cases <strong>where</strong> multi-agent <strong>is justified</strong>:</p>
+<h3 id="1-long-autonomous-processes-247">1. Long autonomous processes (24/7)</h3>
+<p>E.g. an <strong>on-call assistant</strong> — answers alerts, diagnoses, escalates. Here you <strong>really</strong> need:</p>
+<ul>
+<li>Parallel processes (several alerts at once)</li>
+<li>Different roles (triage, investigator, human communicator)</li>
+<li>Long uptime</li>
+</ul>
+<h3 id="2-adversarial-workflows-generation--critique">2. Adversarial workflows (generation + critique)</h3>
+<p>E.g. <strong>content review</strong> — one agent generates, another <strong>independently</strong> critiques. If they share context and model, the critic has the same blind spot as the generator.</p>
+<h3 id="3-real-model-specialisation">3. Real model specialisation</h3>
+<p>E.g. text by one model (Claude), code by another (Codex), images by a third (Midjourney via API). Here multi-agent is <strong>natural</strong> — you can’t merge them into one.</p>
+<h3 id="4-high-parallelism-with-independent-tasks">4. High parallelism with independent tasks</h3>
+<p>E.g. processing 10 000 PDFs — 10 workers in parallel on dispatched tasks. <strong>Pure</strong> parallelism, no coordination among workers.</p>
+<p>In these cases multi-agent is a <strong>natural</strong> solution. Elsewhere — <strong>overkill</strong>.</p>
+<h2 id="checklist-deciding-to-build-multi-agent">Checklist “deciding to build multi-agent”</h2>
+<p>Before starting — walk through:</p>
+<ul class="contains-task-list">
+<li class="task-list-item"><input type="checkbox" disabled> Pipeline (M14) <strong>demonstrably</strong> doesn’t cope — there’s a <strong>benchmark</strong></li>
+<li class="task-list-item"><input type="checkbox" disabled> I can explain <strong>in one sentence</strong> <strong>why exactly</strong> multi-agent (not “scales,” <strong>concretely</strong>)</li>
+<li class="task-list-item"><input type="checkbox" disabled> I have <strong>budget discipline</strong> — iterations, time, tokens</li>
+<li class="task-list-item"><input type="checkbox" disabled> I have a <strong>harness</strong> (M12) to measure progress on</li>
+<li class="task-list-item"><input type="checkbox" disabled> I have a <strong>communication format</strong> (JSON Schema)</li>
+<li class="task-list-item"><input type="checkbox" disabled> I have <strong>HITL points</strong> at critical steps</li>
+<li class="task-list-item"><input type="checkbox" disabled> I know <strong>who</strong> on the team will own the multi-agent infra</li>
+<li class="task-list-item"><input type="checkbox" disabled> I’m <strong>ready</strong> to roll all of this back if the benchmark doesn’t show a win</li>
+</ul>
+<p><strong>All boxes — yes</strong> → build. <strong>Any one — no</strong> → not yet.</p>
+<h2 id="finale--register-c">Finale — register C</h2>
+<p>Part V overall is about <strong>what you can avoid building</strong>. It’s <strong>counterintuitive</strong>: a course is supposed to “teach technology,” and here I’m <strong>teaching not to build</strong>. But the honest position is this: 80 % of the industry in 2026 <strong>over-invests</strong> in multi-agent. Months of teams burned, millions of dollars, and they <strong>come back to simple</strong>.</p>
+<p>That doesn’t mean multi-agent is <strong>useless</strong>. It means it has a <strong>narrow</strong> zone of applicability, and the <strong>entry threshold</strong> is <strong>high</strong>. If you’re <strong>inside</strong> — you have a <strong>big budget</strong>, a <strong>big team</strong>, <strong>big pain</strong>. That’s <strong>rare</strong>.</p>
+<p>The principle I apply <strong>everywhere</strong>, not just to multi-agent — <strong>YAGNI</strong> (You Aren’t Gonna Need It). If you’re <strong>not sure</strong> you <strong>need</strong> a complex thing — you <strong>probably don’t</strong>. In six months it turns out you got <strong>just fine</strong> without it — and you’ll <strong>thank</strong> yourself for <strong>not building</strong> it.</p>
+<p>That’s an engineer’s <strong>maturity</strong>: <strong>not</strong> what they can build, but what they <strong>chose</strong> not to. <strong>The full package</strong> is <strong>knowing how to do complex</strong> and <strong>not doing it</strong> when it’s not needed. <strong>Not perfect, but actually works.</strong></p>
+<h2 id="recap">Recap</h2>
+<ul>
+<li><strong>Multi-agent = distributed system.</strong> All its problems + LLM non-determinism.</li>
+<li><strong>80 % of cases — a pipeline suffices.</strong> The “not needed” signals are spot-on.</li>
+<li><strong>Anti-patterns:</strong> cargo cult, fine-grained split, full autonomy, free-form communication, no budgets, no benchmark.</li>
+</ul>
+<h2 id="vibe-samurai">Vibe Samurai</h2>
+<aside class="skeptic">
+<p><strong>🥷 Vibe Samurai asks:</strong>
+“So why did I <strong>even need</strong> Part V? If most of the time you shouldn’t build multi-agent — maybe I shouldn’t have read it?”</p>
+<p><strong>Answer:</strong> Because <strong>a vaccine only works</strong> if you know <strong>what</strong> you’re vaccinated against. I wrote M15 so you <strong>understand</strong> how multi-agent is structured — otherwise at work someone <strong>tells you</strong> “let’s build it” and you <strong>can’t</strong> push back <strong>technically</strong>. M16 is a <strong>shield</strong>: you know <strong>where</strong> the traps are and <strong>can prove</strong> that simple is better. In my experience — <strong>the most valuable</strong> thing in the Middle track is <strong>knowing how to say no</strong> to complexity when the team <strong>wants</strong> complexity. <strong>Not perfect, but actually works.</strong></p>
+</aside>
+<h2 id="whats-next">What’s next</h2>
+<p>We open <strong>Part VI</strong> — the final part of Middle. <strong>M17 — Production: deploying agents to live environments</strong> — about how an agent system written locally <strong>lands in production</strong>, and what that changes. Persistence, observability, security in prod, blameless post-mortems.</p>
+<p>If this clicked — share with anyone <strong>right now</strong> persuading the team to build multi-agent. If you’ve had such a case “built it, didn’t pay off” — tell me in the comments, we badly need live stories. Your feedback really helps polish the material.</p>
+<h2 id="-further-reading">📚 Further reading</h2>
+<p>This chapter is mine, but the “multi-agent or not” debate in the industry is live and both sides have arguments. Read both — you’ll know who’s arguing about what.</p>
+<p><strong>“Don’t build multi-agents” — argument A</strong></p>
+<ul>
+<li><strong>Cognition — Don’t Build Multi-Agents</strong> — the post that started the debate; key thought: context management breaks when the task is split across agents: <a href="https://cognition.ai/blog/dont-build-multi-agents">cognition.ai/blog/dont-build-multi-agents</a>.</li>
+<li><strong>LangChain — How and when to build multi-agent systems</strong> — a more pragmatic take from the LangGraph team: when multi-agent <strong>does</strong> make sense, when not: <a href="https://blog.langchain.com/how-and-when-to-build-multi-agent-systems/">blog.langchain.com/how-and-when-to-build-multi-agent-systems</a>.</li>
+</ul>
+<p><strong>“Build, but carefully” — argument B</strong></p>
+<ul>
+<li><strong>Anthropic — How we built our multi-agent research system</strong> — a case where multi-agent gave +90 % over single-agent baseline, with an honest discussion of cost and pitfalls: <a href="https://www.anthropic.com/engineering/multi-agent-research-system">anthropic.com/engineering/multi-agent-research-system</a>.</li>
+<li><strong>Inside the Multi-Agent Debate (Shivanand Roy / Medium)</strong> — a compact side-by-side of the Cognition and Anthropic positions: <a href="https://snrspeaks.medium.com/inside-the-multi-agent-debate-why-cognition-labs-says-dont-and-anthropic-says-do-carefully-7b8a253e0b1e">snrspeaks.medium.com/inside-the-multi-agent-debate-why-cognition-labs-says-dont-and-anthropic-says-do-carefully-7b8a253e0b1e</a>.</li>
+</ul>
+<blockquote>
+<p><strong>Tip:</strong> if you’ve read both sides and <strong>still</strong> want multi-agent — say the <strong>price</strong> out loud (latency, debugging, state). If a concrete number makes you uncomfortable — that’s the honest answer.</p>
+</blockquote> <nav class="chapter-nav" data-astro-cid-a7sruqtr> <a href="/vibesamurai-site/courses/middle/m15/en" data-astro-cid-a7sruqtr> <span class="dir" data-astro-cid-a7sruqtr>← Back</span> <span class="title" data-astro-cid-a7sruqtr>M15 · Multi-agent: roles, communication, supervisor</span> </a> <a href="/vibesamurai-site/courses/middle/m17/en" data-astro-cid-a7sruqtr> <span class="dir" data-astro-cid-a7sruqtr>Next →</span> <span class="title" data-astro-cid-a7sruqtr>M17 · Production: deploying agents to live environments</span> </a> </nav> </main>  </div> <script type="module">
+    import { gatingEnabled } from '../lib/supabase';
+    import { fetchChapter } from '../lib/auth';
+
+    const base = import.meta.env.BASE_URL;
+    let mermaidLib = null;
+
+    function scopeOf(root) {
+      return root === document ? document.querySelector('.reader-main') : root;
+    }
+
+    function addCopyBtns(root) {
+      const scope = scopeOf(root); if (!scope) return;
+      scope.querySelectorAll('pre').forEach((pre) => {
+        if (pre.closest('.code-tabs')) return;
+        if (pre.querySelector('.copy-btn')) return;
+        const btn = document.createElement('button');
+        btn.className = 'copy-btn';
+        btn.textContent = 'copy';
+        btn.addEventListener('click', async () => {
+          const code = pre.querySelector('code')?.textContent ?? pre.textContent ?? '';
+          await navigator.clipboard.writeText(code.trimEnd());
+          btn.textContent = '✓ copied';
+          setTimeout(() => { btn.textContent = 'copy'; }, 1600);
+        });
+        pre.appendChild(btn);
+      });
+    }
+
+    function tightenMermaidSvgs(retries = 6) {
+      let pending = false;
+      document.querySelectorAll('.mermaid svg').forEach((svg) => {
+        if (svg.dataset.tightened === '1') return;
+        try {
+          const bbox = svg.getBBox();
+          if (!bbox || bbox.width === 0) { pending = true; return; }
+          const pad = 6;
+          svg.setAttribute('viewBox',
+            `${bbox.x - pad} ${bbox.y - pad} ${bbox.width + pad * 2} ${bbox.height + pad * 2}`);
+          svg.removeAttribute('height');
+          svg.style.height = 'auto';
+          svg.style.maxWidth = '100%';
+          svg.style.display = 'block';
+          svg.dataset.tightened = '1';
+        } catch (e) { pending = true; }
+      });
+      if (pending && retries > 0) setTimeout(() => tightenMermaidSvgs(retries - 1), 120);
+    }
+
+    async function ensureMermaid() {
+      if (mermaidLib) return mermaidLib;
+      const mod = await import('https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs');
+      mermaidLib = mod.default;
+      mermaidLib.initialize({
+        startOnLoad: false, theme: 'neutral',
+        themeVariables: {
+          fontFamily: 'JetBrains Mono, ui-monospace, monospace',
+          primaryColor: '#f5f5f5', primaryBorderColor: '#222',
+          primaryTextColor: '#111', lineColor: '#444',
+        },
+        flowchart: { curve: 'basis', padding: 12, useMaxWidth: true },
+      });
+      return mermaidLib;
+    }
+
+    async function renderMermaid(root) {
+      const scope = scopeOf(root); if (!scope) return;
+      const matches = scope.querySelectorAll(
+        'pre[data-language="mermaid"], pre.language-mermaid, code.language-mermaid'
+      );
+      if (!matches.length) return;
+      matches.forEach((el) => {
+        const block = el.tagName === 'CODE' ? el.closest('pre') || el : el;
+        const codeEl = block.querySelector('code') || block;
+        const wrap = document.createElement('div');
+        wrap.className = 'mermaid';
+        wrap.textContent = codeEl.textContent;
+        block.replaceWith(wrap);
+      });
+      try {
+        const m = await ensureMermaid();
+        await m.run();
+        tightenMermaidSvgs();
+      } catch (err) {
+        console.warn('mermaid failed', err);
+        document.querySelectorAll('.mermaid:not(:has(svg))').forEach((el) => { el.style.display = 'none'; });
+      }
+    }
+
+    async function enhance(root = document) {
+      addCopyBtns(root);
+      await renderMermaid(root);
+    }
+
+    function paywallHtml(required, needLogin) {
+      const label = { beginner: 'Beginner (300 ₽)', middle: 'Beginner + Middle (500 ₽)', all: 'Весь пакет (700 ₽)' }[required] || '';
+      return `<div class="paywall">
+        <div class="paywall-ic">🔒</div>
+        <h3>Эта глава — в платном доступе</h3>
+        <p>Нужен тариф: <strong>${label}</strong>. Доступ навсегда, без подписки.</p>
+        ${needLogin ? '<p>Войди через Google и оформи доступ — продолжишь с любого устройства.</p>' : ''}
+        <a class="paywall-btn" href="${base}pricing">Открыть доступ →</a>
+        <a class="paywall-link" href="${base}account">Войти / мой аккаунт</a>
+      </div>`;
+    }
+
+    async function gatedFlow(mount) {
+      const slug = mount.dataset.slug;
+      const required = mount.dataset.required || 'beginner';
+      mount.innerHTML = '<p class="gate-msg">Проверяем доступ…</p>';
+      const res = await fetchChapter(slug);
+      if (res.ok) {
+        mount.innerHTML = res.html;
+        await enhance(mount);
+      } else if (res.status === 401) {
+        mount.innerHTML = paywallHtml(required, true);
+      } else if (res.status === 402) {
+        mount.innerHTML = paywallHtml(res.requiredTier || required, false);
+      } else {
+        mount.innerHTML = '<p class="gate-msg">Не удалось загрузить главу. Обнови страницу.</p>';
+      }
+    }
+
+    const mount = document.getElementById('gated-mount');
+    if (mount && gatingEnabled) gatedFlow(mount);
+    else enhance(document);
+  </script> </body> </html>

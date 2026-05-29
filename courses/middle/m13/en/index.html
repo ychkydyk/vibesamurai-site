@@ -1,0 +1,378 @@
+<!DOCTYPE html><html lang="en" data-astro-cid-a7sruqtr> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Tuning: what to change when metrics don&#39;t move — Vibesamurai</title><meta name="description" content="The improvement ladder — from prompt to architecture. The order to tune in, and where definitely NOT to start."><meta property="og:title" content="Tuning: what to change when metrics don't move"><meta property="og:type" content="article"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Inter:wght@300..800&family=JetBrains+Mono:wght@400..600&display=swap" rel="stylesheet"><link rel="stylesheet" href="/vibesamurai-site/_astro/_slug_.Cs4TX1wt.css">
+<style>.account-btn{display:inline-flex;align-items:center;gap:var(--space-2);font-family:var(--font-mono);font-size:var(--size-2);text-transform:uppercase;letter-spacing:.06em;padding:5px 10px;border:1px solid var(--rule);border-radius:999px;color:var(--text-soft);background:var(--surface);transition:border-color var(--d-fast),color var(--d-fast)}.account-btn:hover{border-color:var(--accent);color:var(--text)}.account-ic{width:18px;height:18px;display:grid;place-items:center;border-radius:50%;background:var(--accent);color:var(--accent-ink);font-weight:700;font-size:10px;line-height:1}.reader-rail .account-btn{padding:0;border:none;background:transparent}.reader-rail .account-label{display:none}.reader-rail .account-ic{width:32px;height:32px;font-size:13px}.rail-toggle{width:36px;height:36px;display:grid;place-items:center;background:var(--accent);border:1px solid var(--accent);border-radius:4px;cursor:pointer;transition:filter var(--d-fast),transform var(--d-fast);padding:0}.rail-toggle:hover{filter:brightness(1.08);transform:translateY(-1px)}.rail-toggle:active{transform:translateY(0)}.rail-toggle-icon{width:14px;height:12px;border-left:2px solid var(--accent-ink);border-right:2px solid var(--accent-ink);transition:transform var(--d-normal) var(--ease-standard)}.reader-app.sidebar-open .rail-toggle-icon{transform:rotate(0)}.reader-app:not(.sidebar-open) .rail-toggle-icon{transform:scaleX(.5)}.sidebar-backdrop{display:none;position:fixed;inset:0;background:#0000008c;z-index:140;border:0;padding:0;cursor:pointer}@media(max-width:900px){.reader-app.sidebar-open~.sidebar-backdrop{display:block}}.rail-spacer[data-astro-cid-ofsbkzh7]{flex:1}.reader-sidebar[data-astro-cid-khgtvzrl] .ru-tag[data-astro-cid-khgtvzrl]{font-style:normal;font-family:var(--font-mono);font-size:.7em;color:var(--text-mute);margin-left:4px;padding:1px 4px;border:1px solid var(--rule);border-radius:3px;text-transform:uppercase;vertical-align:middle}.chapter-eyebrow[data-astro-cid-a7sruqtr]{display:flex;justify-content:space-between;align-items:center;gap:var(--space-3)}.lang-toggle[data-astro-cid-a7sruqtr]{font-family:var(--font-mono);font-size:var(--size-2);padding:2px 8px;border:1px solid var(--rule);border-radius:4px;color:var(--text-mute);text-decoration:none;text-transform:uppercase;letter-spacing:.08em}.lang-toggle[data-astro-cid-a7sruqtr]:hover{color:var(--accent);border-color:var(--accent)}.code-tabs[data-astro-cid-hg66rjob]{margin:var(--space-5) 0}.code-tabs-nav[data-astro-cid-hg66rjob]{display:flex;gap:2px;margin-bottom:-1px;position:relative;z-index:1}.ctab[data-astro-cid-hg66rjob]{font-family:var(--font-mono);font-size:11px;text-transform:uppercase;letter-spacing:.07em;padding:5px 14px;border:1px solid #21222c;border-bottom:none;background:#1a1b23;color:#6272a4;cursor:pointer;border-radius:4px 4px 0 0;transition:color .12s,background .12s}.ctab[data-astro-cid-hg66rjob].is-active{background:#282a36;color:#f8f8f2;border-color:#21222c}.ctab[data-astro-cid-hg66rjob]:hover:not(.is-active){color:#cdd6f4}.ctab-panel[data-astro-cid-hg66rjob]{display:none}.ctab-panel[data-astro-cid-hg66rjob].is-active{display:block}.ctab-panel[data-astro-cid-hg66rjob] pre{margin-top:0!important;border-radius:0 6px 6px!important}
+</style></head> <body data-astro-cid-a7sruqtr> <div class="reader-app" data-astro-cid-a7sruqtr> <aside class="reader-rail" data-astro-cid-ofsbkzh7> <a href="/vibesamurai-site/" class="logo" aria-label="Vibesamurai home" data-astro-cid-ofsbkzh7>V</a> <button type="button" class="rail-toggle" id="sidebar-toggle" aria-label="Свернуть/развернуть оглавление" title="Свернуть/развернуть оглавление" data-astro-cid-ofsbkzh7> <span class="rail-toggle-icon" aria-hidden="true" data-astro-cid-ofsbkzh7></span> </button> <div class="rail-spacer" data-astro-cid-ofsbkzh7></div> <a href="/vibesamurai-site/account" class="account-btn" id="account-btn" aria-label="Аккаунт"> <span class="account-ic" id="account-ic">⌂</span> <span class="account-label" id="account-label">Войти</span> </a>  <script type="module" src="/vibesamurai-site/_astro/AccountButton.astro_astro_type_script_index_0_lang.CmD2sdn9.js"></script> </aside>  <button type="button" class="sidebar-backdrop" id="sidebar-backdrop" aria-label="Закрыть оглавление" tabindex="-1" data-astro-cid-ofsbkzh7></button>  <script type="module">const d="vs-sidebar-open",a="(max-width: 900px)";function t(e){const n=document.querySelector(".reader-app");n&&n.classList.toggle("sidebar-open",e)}function r(){return!window.matchMedia(a).matches}function s(){const e=localStorage.getItem(d),i=window.matchMedia(a).matches?!1:e!==null?e==="1":r();t(i),document.getElementById("sidebar-toggle")?.addEventListener("click",()=>{const c=!document.querySelector(".reader-app")?.classList.contains("sidebar-open");window.matchMedia(a).matches||localStorage.setItem(d,c?"1":"0"),t(c)}),document.getElementById("sidebar-backdrop")?.addEventListener("click",()=>t(!1)),document.querySelectorAll(".reader-sidebar a").forEach(o=>{o.addEventListener("click",()=>{window.matchMedia(a).matches&&t(!1)})})}document.readyState==="loading"?document.addEventListener("DOMContentLoaded",s):s();</script> <aside class="reader-sidebar" data-astro-cid-khgtvzrl> <div class="breadcrumb" data-astro-cid-khgtvzrl>Vibesamurai · Middle Path · M13</div> <h4 data-astro-cid-khgtvzrl>In this course</h4> <ul data-astro-cid-khgtvzrl> <li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m1/en" class data-astro-cid-khgtvzrl> M1 · What is agentic AI in the SDLC  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m2/en" class data-astro-cid-khgtvzrl> M2 · Architecting agent boundaries  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m3/en" class data-astro-cid-khgtvzrl> M3 · Observability and human-in-the-loop  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m4/en" class data-astro-cid-khgtvzrl> M4 · Tool inventory and permissions  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m5/en" class data-astro-cid-khgtvzrl> M5 · MCP deep dive  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m6/en" class data-astro-cid-khgtvzrl> M6 · Claude Code CLI mastery  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m7/en" class data-astro-cid-khgtvzrl> M7 · GPT-5.3 Codex CLI and OpenAI agents  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m8/en" class data-astro-cid-khgtvzrl> M8 · Cursor Composer + IDE agents  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m9/en" class data-astro-cid-khgtvzrl> M9 · Memory strategies  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m10/en" class data-astro-cid-khgtvzrl> M10 · State, drift, continuity  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m11/en" class data-astro-cid-khgtvzrl> M11 · Evaluating agents: metrics over vibes  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m12/en" class data-astro-cid-khgtvzrl> M12 · Regression tests for agents  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m13/en" class="current" data-astro-cid-khgtvzrl> M13 · Tuning: what to change when metrics don&#39;t move  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m14/en" class data-astro-cid-khgtvzrl> M14 · One agent, many steps: pipelines and orchestration  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m15/en" class data-astro-cid-khgtvzrl> M15 · Multi-agent: roles, communication, supervisor  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m16/en" class data-astro-cid-khgtvzrl> M16 · When multi-agent is overkill. Anti-patterns  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m17/en" class data-astro-cid-khgtvzrl> M17 · Production: deploying agents to live environments  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m18/en" class data-astro-cid-khgtvzrl> M18 · Security in prod: secrets, sandbox, audit  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m19/en" class data-astro-cid-khgtvzrl> M19 · Incidents &amp; post-mortems  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m20/en" class data-astro-cid-khgtvzrl> M20 · Finale: where to go after Middle  </a> </li> </ul>  </aside> <main class="reader-main" data-astro-cid-a7sruqtr> <div class="chapter-eyebrow" data-astro-cid-a7sruqtr> <span data-astro-cid-a7sruqtr>Middle Path · m13</span> <a class="lang-toggle" href="/vibesamurai-site/courses/middle/m13" aria-label="Switch to RU" data-astro-cid-a7sruqtr>RU</a> </div> <h1 class="chapter-title" data-astro-cid-a7sruqtr>M13 · Tuning: what to change when metrics don&#39;t move</h1> <p class="chapter-subtitle" data-astro-cid-a7sruqtr>The improvement ladder — from prompt to architecture. The order to tune in, and where definitely NOT to start.</p> <h2 id="hook">Hook</h2>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>BAD:                              GOOD:</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>Pass rate 65% →           →       Pass rate 65% →</span></span>
+<span class="line"><span>"I'll try a different model"      1. Prompt (5 min)</span></span>
+<span class="line"><span>                                  2. Context (15 min)</span></span>
+<span class="line"><span>                                  3. Task decomposition (1h)</span></span>
+<span class="line"><span>                                  4. Tools / hooks</span></span>
+<span class="line"><span>                                  5. Model (last)</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>a coin toss                       systematic</span></span></code></pre>
+<p>Hey folks, welcome 👋</p>
+<p>This chapter <strong>closes Part IV</strong>. You already have <strong>metrics</strong> (M11) and a <strong>harness</strong> (M12). Pass rate sits <strong>between</strong> “what we’d like” and “<strong>reality</strong>.” This chapter is the <strong>order of operations</strong> to lift that gap.</p>
+<p>Trap number one here: people <strong>start</strong> with what they <strong>heard about</strong> — “let’s try GPT-5,” “let’s flip reasoning mode,” “maybe twiddle temperature.” That’s <strong>not optimal</strong>. Most wins are <strong>cheaper</strong> and <strong>earlier</strong> on the ladder.</p>
+<p>An hour. Structured, no fluff.</p>
+<h2 id="concept-the-improvement-ladder-cheap--expensive">Concept: the improvement ladder (cheap → expensive)</h2>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>┌─────────────────────────────────────────────────────┐</span></span>
+<span class="line"><span>│  1. Prompt          5 minutes        (cheapest)     │</span></span>
+<span class="line"><span>│  2. Context         15–30 minutes                   │</span></span>
+<span class="line"><span>│  3. Decomposition    1–3 hours                      │</span></span>
+<span class="line"><span>│  4. Tools and hooks  several hours                  │</span></span>
+<span class="line"><span>│  5. Memory and state days                           │</span></span>
+<span class="line"><span>│  6. Model            hours (tests) + $$             │</span></span>
+<span class="line"><span>│  7. Architecture     weeks                          │</span></span>
+<span class="line"><span>└─────────────────────────────────────────────────────┘</span></span></code></pre>
+<p>Rule: <strong>first</strong> run through 1–3, <strong>then</strong> touch 4+. If 1–3 didn’t fix it — that’s a <strong>signal</strong> that the task is either poorly framed or <strong>outside</strong> the agent’s zone.</p>
+<h2 id="step-1-prompt-5-minutes">Step 1. Prompt (5 minutes)</h2>
+<p>If pass rate is 50–70 % — in <strong>half the cases</strong> the culprit is the <strong>request</strong>, not the model. Take 3 failing cases. Read the prompt <strong>by eye</strong>. Ask yourself:</p>
+<ul>
+<li>Is there <strong>WHAT + WHERE + HOW WE KNOW IT’S DONE</strong> (the B3 formula)?</li>
+<li>Is <strong>what NOT to touch</strong> stated?</li>
+<li>Did you request a <strong>plan before code</strong> (for non-trivial tasks)?</li>
+<li>Is the <strong>output format</strong> specified where it matters?</li>
+</ul>
+<p><strong>Simple experiment:</strong> rewrite the prompt <strong>carefully</strong>. Run <strong>only</strong> that case — 3 more times. If it passes — the problem was the prompt.</p>
+<h3 id="what-changes-at-this-level">What changes at this level</h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Symptom</th><th>Prompt fix</th></tr></thead><tbody><tr><td>Agent edits the wrong place</td><td>Add “Do not modify files outside <code>&#x3C;dir></code>”</td></tr><tr><td>Makes “bonus” edits</td><td>Add “Only the requested changes, leave the rest alone”</td></tr><tr><td>Misses requirements</td><td>Sharpen “how we know it’s done,” add unit tests</td></tr><tr><td>Wastes context on chat</td><td>”No preamble, answer to the point”</td></tr></tbody></table>
+<p><strong>This is the cheapest level.</strong> Most “everything got worse” is fixed here.</p>
+<h2 id="step-2-context-1530-minutes">Step 2. Context (15–30 minutes)</h2>
+<p>If the prompt is fine and the agent still misses — it’s <strong>short on context</strong>. What “short” means:</p>
+<ul>
+<li>CLAUDE.md doesn’t describe the project’s <strong>conventions</strong></li>
+<li>CLAUDE.md has <strong>too many</strong> conventions, and important ones <strong>drown</strong> in noise</li>
+<li>The agent doesn’t see <strong>related files</strong> (only <code>users.ts</code>, not <code>users.test.ts</code>)</li>
+<li>The agent <strong>sees</strong> the wrong thing (reads <code>node_modules/</code>)</li>
+</ul>
+<h3 id="concrete-moves">Concrete moves</h3>
+<p><strong>1. Clean CLAUDE.md</strong> — drop anything that <strong>doesn’t help in 90 % of tasks</strong>. The ideal CLAUDE.md is 2–3 pages, not 20.</p>
+<p><strong>2. Hint prompt in the case</strong> — if the task is about auth, name relevant files explicitly:</p>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="markdown"><code><span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">Relevant files (for context):</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">- src/auth/login.ts</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">- src/auth/types.ts</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">- tests/auth/login.test.ts</span></span></code></pre>
+<p>The agent <strong>reads</strong> them upfront instead of <strong>guessing</strong>.</p>
+<p><strong>3. Negative context</strong> — what <strong>not</strong> to read:</p>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="markdown"><code><span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">Don't read node_modules/, .next/, .git/. Not relevant.</span></span></code></pre>
+<p><strong>4. Workflow doc</strong> — in CLAUDE.md add “how we do X”:</p>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="markdown"><code><span class="line"><span style="color:#BD93F9;--shiki-light-font-weight:bold;--shiki-dark:#BD93F9;--shiki-dark-font-weight:bold">## Adding a new endpoint</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">1. Add route handler in src/api/&#x3C;resource>.ts</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">2. Add types in src/types/&#x3C;resource>.ts</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">3. Add test in tests/api/&#x3C;resource>.test.ts</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">4. Run </span><span style="color:#50FA7B;--shiki-dark:#50FA7B">`npm test`</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2"> to verify</span></span></code></pre>
+<p>That’s <strong>process</strong>, not code. The agent uses it as a <strong>recipe</strong>.</p>
+<h2 id="step-3-task-decomposition-13-hours">Step 3. Task decomposition (1–3 hours)</h2>
+<p>If the task is big (refactor 5 files, migration, a half-day feature) and <strong>consistently</strong> fails — it’s <strong>too big</strong> for one shot.</p>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>BAD (one-shot):</span></span>
+<span class="line"><span>"Rewrite authentication to JWT,</span></span>
+<span class="line"><span> update all 12 endpoints,</span></span>
+<span class="line"><span> DB migration"</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>GOOD (in stages):</span></span>
+<span class="line"><span>1. "First show me the plan — which files,</span></span>
+<span class="line"><span>    what to change, in what order."</span></span>
+<span class="line"><span>2. "Do the DB migration and tests for it."  → verify → commit</span></span>
+<span class="line"><span>3. "Build the JWT util module + tests."     → verify → commit</span></span>
+<span class="line"><span>4. "Move endpoints to JWT (batches of 3)."  → ...</span></span></code></pre>
+<p>Each step is a <strong>separate</strong> mini-case with its <strong>own</strong> acceptance criteria.</p>
+<h3 id="when-decomposition-really-helps">When decomposition really helps</h3>
+<ul>
+<li>Task > 30 minutes of agent time</li>
+<li>Several <strong>independent</strong> subtasks (separable)</li>
+<li>High <strong>risk</strong> (security, DB migration) — you want <strong>to verify</strong> between steps</li>
+</ul>
+<h3 id="when-decomposition-wont-help">When decomposition <strong>won’t</strong> help</h3>
+<ul>
+<li>The task is <strong>tightly coupled</strong> (you can’t separate a piece without breaking the rest)</li>
+<li>Each step <strong>on its own</strong> needs the context of all the others</li>
+</ul>
+<p>Here you need <strong>something else</strong> — see step 5 (memory) or 7 (architecture).</p>
+<h2 id="step-4-tools-and-hooks-several-hours">Step 4. Tools and hooks (several hours)</h2>
+<p>If the task is right, context is fine, decomposition is in place — but pass rate is still low — look at the <strong>tooling</strong>.</p>
+<h3 id="moves">Moves</h3>
+<p><strong>1. Provide missing tools</strong> — e.g. an MCP for a specific DB, or a linting script. The agent misses more often where a <strong>convenient tool</strong> is missing.</p>
+<p><strong>2. Hooks for hygiene</strong> (see M4):</p>
+<ul>
+<li><code>PreToolUse</code> — block dangerous operations</li>
+<li><code>PostToolUse</code> — auto-format, auto-test after edit</li>
+<li><code>Stop</code> — final validation before “done”</li>
+</ul>
+<p>For example, a hook that <strong>after every edit</strong> runs <code>tsc --noEmit</code> and <strong>returns errors to the agent</strong> — forces fixing <strong>immediately</strong>, not “later.”</p>
+<p><strong>3. Subagents</strong> for clearly bounded subtasks — e.g. a <code>test-runner</code> subagent that <strong>only</strong> runs tests and reports failures. Frees the main agent’s context.</p>
+<h2 id="step-5-memory-and-state-days">Step 5. Memory and state (days)</h2>
+<p>If the task is <strong>multi-session</strong> — the agent <strong>forgets</strong> its own decisions between runs. That’s <strong>state drift</strong> from M10.</p>
+<p>Moves:</p>
+<ul>
+<li>Decision journals in <code>.agent/journals/</code></li>
+<li>A plan file the agent updates</li>
+<li>Externalised state (M10)</li>
+</ul>
+<p>Not “the model is dumb” — <strong>state plumbing</strong> is missing. Infrastructure work taking days.</p>
+<h2 id="step-6-model-hours-">Step 6. Model (hours + $$)</h2>
+<p><strong>Only now</strong> — model switching. Not earlier.</p>
+<h3 id="when-the-model-actually-helps">When the model actually helps</h3>
+<ul>
+<li>1–5 are wrung out, pass rate hits a ceiling</li>
+<li>The task is <strong>fundamentally</strong> hard (system design, non-trivial math, long context)</li>
+<li>Different models have <strong>different strengths</strong> (Sonnet — frontend, Opus — architecture, Codex — refactor)</li>
+</ul>
+<h3 id="ab-protocol">A/B protocol</h3>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>1. Pin the current model_id (e.g. claude-sonnet-4-6)</span></span>
+<span class="line"><span>2. Run the harness 3 times → mean pass rate, std</span></span>
+<span class="line"><span>3. Switch to a candidate (claude-opus-4-7)</span></span>
+<span class="line"><span>4. Run 3 times → mean, std</span></span>
+<span class="line"><span>5. Compare. If delta > 2σ — significant.</span></span></code></pre>
+<p><strong>Without 3 runs</strong> the difference may just be <strong>noise</strong>. I’ve cheered “new model is better” several times, run again, got worse. <strong>Variance.</strong></p>
+<h3 id="when-the-model-wont-help">When the model <strong>won’t</strong> help</h3>
+<ul>
+<li>1–3 still have juice to squeeze</li>
+<li>The task is in a <strong>weakness zone</strong> of both models (e.g. medical diagnoses — no model is currently reliable)</li>
+<li>The <strong>wrong metric</strong> (you measure tokens, not outcome)</li>
+</ul>
+<h2 id="step-7-architecture-weeks">Step 7. Architecture (weeks)</h2>
+<p>The most expensive level. Get here only when <strong>everything else</strong> is genuinely exhausted.</p>
+<p>Signs:</p>
+<ul>
+<li>Pass rate stalls at 60–70 % <strong>on any</strong> model and any prompt</li>
+<li>The task <strong>fundamentally</strong> doesn’t fit one agent</li>
+<li>You need <strong>specialised</strong> agents for different roles</li>
+</ul>
+<p>That’s <strong>multi-agent</strong> territory, Part V (M14–M16). Decomposing the task into roles (planner / executor / reviewer / etc.), orchestration, inter-agent communication.</p>
+<h2 id="a-short-aside">A short aside ⚡</h2>
+<p>The most common course-chat conversation:</p>
+<blockquote>
+<p>“I tried GPT-5, didn’t help. Maybe try Sonnet? Or Gemini?”</p>
+</blockquote>
+<p>— Did you <strong>rewrite the prompt</strong>? — No. — Did you clean context? — No. — Did you decompose the task? — No.</p>
+<p>This is <strong>typical</strong>. People <strong>immediately</strong> jump to “let me try a different model” because it <strong>sounds</strong> simpler than “reframe the request.” In fact it’s the <strong>most expensive and slowest</strong> change. And in 70 % of cases it <strong>doesn’t help</strong>, because the problem is <strong>earlier in the chain</strong>.</p>
+<p>That’s why in the Middle track I’m so insistent — <strong>prompt first</strong>, then context, then decomposition. It’s <strong>not dogma</strong>, it’s <strong>arithmetic</strong>.</p>
+<h2 id="example-tuning-pipeline-on-one-task">Example: tuning pipeline on one task</h2>
+<h3 id="starting-point">Starting point</h3>
+<p>Case: “refactor controller” (see M12). Current pass rate 60 %. I want 85 %.</p>
+<h3 id="step-1--prompt-15-minutes">Step 1 — prompt (15 minutes)</h3>
+<p>Re-read my prompt.md. Noticed:</p>
+<ul>
+<li>Didn’t say <strong>which style</strong> of validator (class-based vs functional)</li>
+<li>Didn’t say whether to <strong>keep</strong> existing comments in createUser</li>
+</ul>
+<p>Added two sentences. 3 runs → <strong>70 %</strong>. Helped, modestly.</p>
+<h3 id="step-2--context-20-minutes">Step 2 — context (20 minutes)</h3>
+<p>Noticed the agent didn’t open <code>src/validators/</code> (where <strong>other</strong> validators with conventions already live).</p>
+<p>Added to prompt.md:</p>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>Relevant files:</span></span>
+<span class="line"><span>- src/validators/productValidator.ts (style reference)</span></span></code></pre>
+<p>3 runs → <strong>80 %</strong>. Solid improvement.</p>
+<h3 id="step-3--decomposition-10-minutes">Step 3 — decomposition (10 minutes)</h3>
+<p>Internally split the instruction into 2 steps:</p>
+<ol>
+<li>Create <code>userValidator.ts</code> with <strong>full</strong> contents.</li>
+<li>Update <code>createUser</code> to use the validator.</li>
+</ol>
+<p>3 runs → <strong>88 %</strong>. <strong>Goal hit.</strong></p>
+<p><strong>Didn’t need</strong> to swap models. Didn’t need hooks. <strong>Full package</strong> on the first three levels.</p>
+<h2 id="tuning-anti-patterns">Tuning anti-patterns</h2>
+<h3 id="1-one-big-experiment">1. “One big experiment”</h3>
+<p>“I changed the prompt, added hooks, and switched the model — got better.” What <strong>exactly</strong> helped? <strong>Unknown.</strong> Cargo cult.</p>
+<p><strong>Cure:</strong> change <strong>one thing at a time</strong>. Measure after each. Boring, but <strong>you know</strong> what worked.</p>
+<h3 id="2-tuning-on-a-random-sample">2. Tuning on a random sample</h3>
+<p>“Ran 1 case, got worse — rolled back.” One case is <strong>noise</strong>.</p>
+<p><strong>Cure:</strong> minimum 3 runs, minimum 10 cases in the suite.</p>
+<h3 id="3-promo-bias">3. Promo bias</h3>
+<p>“Anthropic shipped a new model, +30 % in their marketing.” In <strong>their</strong> benchmarks. On <strong>their</strong> tasks. On <strong>yours</strong> it might be +5 %, −5 %, or exactly the same.</p>
+<p><strong>Cure:</strong> trust <strong>your</strong> harness. Marketing is a <strong>signal to try</strong>, not a <strong>fact</strong>.</p>
+<h3 id="4-twist-every-knob-at-once">4. “Twist every knob at once”</h3>
+<p>“I have a proxy, hooks, a custom MCP, a jailbreak prompt, and temperature 0.3” — and pass rate 55 %. What <strong>of these</strong> actually works?</p>
+<p><strong>Cure:</strong> <strong>minimalism</strong> in config. If the <strong>baseline</strong> gives 60 % and you want 85 % — squeeze <strong>1–3</strong>. Don’t pile on.</p>
+<h3 id="5-optimising-against-the-harness">5. Optimising against the harness</h3>
+<p>Over time your harness becomes a <strong>“game”</strong>: you optimise against it. Pass rate grows, reality <strong>doesn’t</strong> improve.</p>
+<p><strong>Cure:</strong> periodically <strong>update</strong> the harness with cases from <strong>actual screw-ups</strong>. Overfit defence.</p>
+<h2 id="finale--register-c">Finale — register C</h2>
+<p>Step back across Part IV — it’s about the <strong>shift from “art” to “craft”</strong>. Without metrics, agent work is <strong>art</strong> based on feelings. With metrics it’s a <strong>craft</strong> with a <strong>process</strong>, <strong>behaviour</strong>, <strong>trends</strong>.</p>
+<p>This doesn’t kill intuition. <strong>Intuition + data</strong> = <strong>strong</strong>. Intuition without data = a <strong>hallucination</strong> you trust. Data without intuition = a <strong>robot</strong> that doesn’t see <strong>meaning</strong>.</p>
+<p>Tuning isn’t <strong>magic</strong>. It’s <strong>discipline</strong>: you know where to look; you know what order to touch in; you know how to <strong>measure</strong> whether it helped. Six months of this practice — you’re a <strong>professional</strong>, someone with <strong>a process</strong>, not “by mood.”</p>
+<p>That’s <strong>Middle level</strong> in agent work. Next — <strong>Multi-agent</strong>, where we build <strong>systems</strong> of agents, not just tune one.</p>
+<h2 id="recap">Recap</h2>
+<ul>
+<li><strong>Improvement ladder:</strong> prompt → context → decomposition → tools/hooks → memory → model → architecture. <strong>In that order.</strong></li>
+<li><strong>Cheap first, expensive last.</strong> 70 % of wins sit on the first three rungs.</li>
+<li><strong>A/B everything you change.</strong> One variable at a time, minimum 3 runs, harness as reference.</li>
+</ul>
+<h2 id="vibe-samurai">Vibe Samurai</h2>
+<aside class="skeptic">
+<p><strong>🥷 Vibe Samurai asks:</strong>
+“All interesting, but I <strong>feel</strong> the new model is better. Why do I need your harness — I can already tell.”</p>
+<p><strong>Answer:</strong> “I feel” is the <strong>first rung</strong> in the conversation serious developers have with themselves every week. <strong>“I feel it’s better”</strong> is a healthy <strong>impulse</strong>. <strong>“I have numbers and I know it’s better”</strong> is a position <strong>hard to dispute</strong> (with the team, and two weeks later when you want to roll back). I’ve been on both sides: on “I feel” — lost time, on “I have numbers” — saved time. <strong>Cost of the harness</strong> — three hours. <strong>Cost of a mistake without it</strong> — weeks on the wrong model. Math holds. <strong>Not perfect, but actually works.</strong></p>
+</aside>
+<h2 id="whats-next">What’s next</h2>
+<p>In <strong>Part V (M14–M16)</strong> we step into <strong>multi-agent</strong> — systems where multiple agents <strong>work together</strong>. When it’s needed, when it’s <strong>overkill</strong>, how to organise communication, how to <strong>avoid</strong> chaos.</p>
+<p>In <strong>M14 — One agent, many steps: pipelines and orchestration</strong> we’ll take <strong>one</strong> agent and build a <strong>pipeline</strong> — a sequence of specialised calls, each with its own role. The <strong>first rung</strong> before multi-agent.</p>
+<p>If this clicked — share with anyone who “tunes the agent but doesn’t know what to touch.” If you have your own tuning case — tell me in the comments, we’ll unpack the order. Your feedback really helps polish the material.</p>
+<h2 id="-further-reading">📚 Further reading</h2>
+<p>The “improvement ladder” is my own scheme, but every rung sits on well-written third-party material. If a specific rung is stuck — open the matching source.</p>
+<p><strong>Prompt and context — first rungs</strong></p>
+<ul>
+<li><strong>Anthropic — Prompting best practices</strong> — the official guide worth re-reading quarterly: <a href="https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/claude-prompting-best-practices">platform.claude.com/docs/en/build-with-claude/prompt-engineering/claude-prompting-best-practices</a>.</li>
+<li><strong>Effective context engineering for AI agents</strong> — Anthropic Engineering post, exactly about “what to put in context and in what shape”: <a href="https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents">anthropic.com/engineering/effective-context-engineering-for-ai-agents</a>.</li>
+<li><strong>prompt-eng-interactive-tutorial</strong> — Anthropic’s interactive trainer, useful if you haven’t written prompts “by hand” in a while: <a href="https://github.com/anthropics/prompt-eng-interactive-tutorial">github.com/anthropics/prompt-eng-interactive-tutorial</a>.</li>
+</ul>
+<p><strong>Tools, speed, and architecture — upper rungs</strong></p>
+<ul>
+<li><strong>Building agents with the Claude Agent SDK</strong> — what to change when the prompt is wrung out and you need to dig into tool/loop architecture: <a href="https://www.anthropic.com/engineering/building-agents-with-the-claude-agent-sdk">anthropic.com/engineering/building-agents-with-the-claude-agent-sdk</a>.</li>
+<li><strong>SWE-bench leaderboards</strong> — real reference for which model/architecture lives where; useful before “changing the model”: <a href="https://www.swebench.com/">swebench.com</a>.</li>
+</ul>
+<blockquote>
+<p><strong>Tip:</strong> before reading any prompt-engineering guide, <strong>freeze</strong> your current prompt into a dated file. A month from now it’s your most honest teacher — you’ll see what changed, what helped, what didn’t.</p>
+</blockquote> <nav class="chapter-nav" data-astro-cid-a7sruqtr> <a href="/vibesamurai-site/courses/middle/m12/en" data-astro-cid-a7sruqtr> <span class="dir" data-astro-cid-a7sruqtr>← Back</span> <span class="title" data-astro-cid-a7sruqtr>M12 · Regression tests for agents</span> </a> <a href="/vibesamurai-site/courses/middle/m14/en" data-astro-cid-a7sruqtr> <span class="dir" data-astro-cid-a7sruqtr>Next →</span> <span class="title" data-astro-cid-a7sruqtr>M14 · One agent, many steps: pipelines and orchestration</span> </a> </nav> </main>  </div> <script type="module">
+    import { gatingEnabled } from '../lib/supabase';
+    import { fetchChapter } from '../lib/auth';
+
+    const base = import.meta.env.BASE_URL;
+    let mermaidLib = null;
+
+    function scopeOf(root) {
+      return root === document ? document.querySelector('.reader-main') : root;
+    }
+
+    function addCopyBtns(root) {
+      const scope = scopeOf(root); if (!scope) return;
+      scope.querySelectorAll('pre').forEach((pre) => {
+        if (pre.closest('.code-tabs')) return;
+        if (pre.querySelector('.copy-btn')) return;
+        const btn = document.createElement('button');
+        btn.className = 'copy-btn';
+        btn.textContent = 'copy';
+        btn.addEventListener('click', async () => {
+          const code = pre.querySelector('code')?.textContent ?? pre.textContent ?? '';
+          await navigator.clipboard.writeText(code.trimEnd());
+          btn.textContent = '✓ copied';
+          setTimeout(() => { btn.textContent = 'copy'; }, 1600);
+        });
+        pre.appendChild(btn);
+      });
+    }
+
+    function tightenMermaidSvgs(retries = 6) {
+      let pending = false;
+      document.querySelectorAll('.mermaid svg').forEach((svg) => {
+        if (svg.dataset.tightened === '1') return;
+        try {
+          const bbox = svg.getBBox();
+          if (!bbox || bbox.width === 0) { pending = true; return; }
+          const pad = 6;
+          svg.setAttribute('viewBox',
+            `${bbox.x - pad} ${bbox.y - pad} ${bbox.width + pad * 2} ${bbox.height + pad * 2}`);
+          svg.removeAttribute('height');
+          svg.style.height = 'auto';
+          svg.style.maxWidth = '100%';
+          svg.style.display = 'block';
+          svg.dataset.tightened = '1';
+        } catch (e) { pending = true; }
+      });
+      if (pending && retries > 0) setTimeout(() => tightenMermaidSvgs(retries - 1), 120);
+    }
+
+    async function ensureMermaid() {
+      if (mermaidLib) return mermaidLib;
+      const mod = await import('https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs');
+      mermaidLib = mod.default;
+      mermaidLib.initialize({
+        startOnLoad: false, theme: 'neutral',
+        themeVariables: {
+          fontFamily: 'JetBrains Mono, ui-monospace, monospace',
+          primaryColor: '#f5f5f5', primaryBorderColor: '#222',
+          primaryTextColor: '#111', lineColor: '#444',
+        },
+        flowchart: { curve: 'basis', padding: 12, useMaxWidth: true },
+      });
+      return mermaidLib;
+    }
+
+    async function renderMermaid(root) {
+      const scope = scopeOf(root); if (!scope) return;
+      const matches = scope.querySelectorAll(
+        'pre[data-language="mermaid"], pre.language-mermaid, code.language-mermaid'
+      );
+      if (!matches.length) return;
+      matches.forEach((el) => {
+        const block = el.tagName === 'CODE' ? el.closest('pre') || el : el;
+        const codeEl = block.querySelector('code') || block;
+        const wrap = document.createElement('div');
+        wrap.className = 'mermaid';
+        wrap.textContent = codeEl.textContent;
+        block.replaceWith(wrap);
+      });
+      try {
+        const m = await ensureMermaid();
+        await m.run();
+        tightenMermaidSvgs();
+      } catch (err) {
+        console.warn('mermaid failed', err);
+        document.querySelectorAll('.mermaid:not(:has(svg))').forEach((el) => { el.style.display = 'none'; });
+      }
+    }
+
+    async function enhance(root = document) {
+      addCopyBtns(root);
+      await renderMermaid(root);
+    }
+
+    function paywallHtml(required, needLogin) {
+      const label = { beginner: 'Beginner (300 ₽)', middle: 'Beginner + Middle (500 ₽)', all: 'Весь пакет (700 ₽)' }[required] || '';
+      return `<div class="paywall">
+        <div class="paywall-ic">🔒</div>
+        <h3>Эта глава — в платном доступе</h3>
+        <p>Нужен тариф: <strong>${label}</strong>. Доступ навсегда, без подписки.</p>
+        ${needLogin ? '<p>Войди через Google и оформи доступ — продолжишь с любого устройства.</p>' : ''}
+        <a class="paywall-btn" href="${base}pricing">Открыть доступ →</a>
+        <a class="paywall-link" href="${base}account">Войти / мой аккаунт</a>
+      </div>`;
+    }
+
+    async function gatedFlow(mount) {
+      const slug = mount.dataset.slug;
+      const required = mount.dataset.required || 'beginner';
+      mount.innerHTML = '<p class="gate-msg">Проверяем доступ…</p>';
+      const res = await fetchChapter(slug);
+      if (res.ok) {
+        mount.innerHTML = res.html;
+        await enhance(mount);
+      } else if (res.status === 401) {
+        mount.innerHTML = paywallHtml(required, true);
+      } else if (res.status === 402) {
+        mount.innerHTML = paywallHtml(res.requiredTier || required, false);
+      } else {
+        mount.innerHTML = '<p class="gate-msg">Не удалось загрузить главу. Обнови страницу.</p>';
+      }
+    }
+
+    const mount = document.getElementById('gated-mount');
+    if (mount && gatingEnabled) gatedFlow(mount);
+    else enhance(document);
+  </script> </body> </html>

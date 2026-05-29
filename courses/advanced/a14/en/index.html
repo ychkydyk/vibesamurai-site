@@ -1,0 +1,275 @@
+<!DOCTYPE html><html lang="en" data-astro-cid-a7sruqtr> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Local LLMs on 8GB VRAM — Vibesamurai</title><meta name="description" content="llama.cpp b9050 + Qwen3.5-21B-Deckard IQ4_XS on a 4070 8GB + 64GB RAM, ~5 t/s, OpenAI-compatible API on 127.0.0.1:8080. When it's enough, when it isn't."><meta property="og:title" content="Local LLMs on 8GB VRAM"><meta property="og:type" content="article"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Inter:wght@300..800&family=JetBrains+Mono:wght@400..600&display=swap" rel="stylesheet"><link rel="stylesheet" href="/vibesamurai-site/_astro/_slug_.Cs4TX1wt.css">
+<style>.account-btn{display:inline-flex;align-items:center;gap:var(--space-2);font-family:var(--font-mono);font-size:var(--size-2);text-transform:uppercase;letter-spacing:.06em;padding:5px 10px;border:1px solid var(--rule);border-radius:999px;color:var(--text-soft);background:var(--surface);transition:border-color var(--d-fast),color var(--d-fast)}.account-btn:hover{border-color:var(--accent);color:var(--text)}.account-ic{width:18px;height:18px;display:grid;place-items:center;border-radius:50%;background:var(--accent);color:var(--accent-ink);font-weight:700;font-size:10px;line-height:1}.reader-rail .account-btn{padding:0;border:none;background:transparent}.reader-rail .account-label{display:none}.reader-rail .account-ic{width:32px;height:32px;font-size:13px}.rail-toggle{width:36px;height:36px;display:grid;place-items:center;background:var(--accent);border:1px solid var(--accent);border-radius:4px;cursor:pointer;transition:filter var(--d-fast),transform var(--d-fast);padding:0}.rail-toggle:hover{filter:brightness(1.08);transform:translateY(-1px)}.rail-toggle:active{transform:translateY(0)}.rail-toggle-icon{width:14px;height:12px;border-left:2px solid var(--accent-ink);border-right:2px solid var(--accent-ink);transition:transform var(--d-normal) var(--ease-standard)}.reader-app.sidebar-open .rail-toggle-icon{transform:rotate(0)}.reader-app:not(.sidebar-open) .rail-toggle-icon{transform:scaleX(.5)}.sidebar-backdrop{display:none;position:fixed;inset:0;background:#0000008c;z-index:140;border:0;padding:0;cursor:pointer}@media(max-width:900px){.reader-app.sidebar-open~.sidebar-backdrop{display:block}}.rail-spacer[data-astro-cid-ofsbkzh7]{flex:1}.reader-sidebar[data-astro-cid-khgtvzrl] .ru-tag[data-astro-cid-khgtvzrl]{font-style:normal;font-family:var(--font-mono);font-size:.7em;color:var(--text-mute);margin-left:4px;padding:1px 4px;border:1px solid var(--rule);border-radius:3px;text-transform:uppercase;vertical-align:middle}.chapter-eyebrow[data-astro-cid-a7sruqtr]{display:flex;justify-content:space-between;align-items:center;gap:var(--space-3)}.lang-toggle[data-astro-cid-a7sruqtr]{font-family:var(--font-mono);font-size:var(--size-2);padding:2px 8px;border:1px solid var(--rule);border-radius:4px;color:var(--text-mute);text-decoration:none;text-transform:uppercase;letter-spacing:.08em}.lang-toggle[data-astro-cid-a7sruqtr]:hover{color:var(--accent);border-color:var(--accent)}.code-tabs[data-astro-cid-hg66rjob]{margin:var(--space-5) 0}.code-tabs-nav[data-astro-cid-hg66rjob]{display:flex;gap:2px;margin-bottom:-1px;position:relative;z-index:1}.ctab[data-astro-cid-hg66rjob]{font-family:var(--font-mono);font-size:11px;text-transform:uppercase;letter-spacing:.07em;padding:5px 14px;border:1px solid #21222c;border-bottom:none;background:#1a1b23;color:#6272a4;cursor:pointer;border-radius:4px 4px 0 0;transition:color .12s,background .12s}.ctab[data-astro-cid-hg66rjob].is-active{background:#282a36;color:#f8f8f2;border-color:#21222c}.ctab[data-astro-cid-hg66rjob]:hover:not(.is-active){color:#cdd6f4}.ctab-panel[data-astro-cid-hg66rjob]{display:none}.ctab-panel[data-astro-cid-hg66rjob].is-active{display:block}.ctab-panel[data-astro-cid-hg66rjob] pre{margin-top:0!important;border-radius:0 6px 6px!important}
+</style></head> <body data-astro-cid-a7sruqtr> <div class="reader-app" data-astro-cid-a7sruqtr> <aside class="reader-rail" data-astro-cid-ofsbkzh7> <a href="/vibesamurai-site/" class="logo" aria-label="Vibesamurai home" data-astro-cid-ofsbkzh7>V</a> <button type="button" class="rail-toggle" id="sidebar-toggle" aria-label="Свернуть/развернуть оглавление" title="Свернуть/развернуть оглавление" data-astro-cid-ofsbkzh7> <span class="rail-toggle-icon" aria-hidden="true" data-astro-cid-ofsbkzh7></span> </button> <div class="rail-spacer" data-astro-cid-ofsbkzh7></div> <a href="/vibesamurai-site/account" class="account-btn" id="account-btn" aria-label="Аккаунт"> <span class="account-ic" id="account-ic">⌂</span> <span class="account-label" id="account-label">Войти</span> </a>  <script type="module" src="/vibesamurai-site/_astro/AccountButton.astro_astro_type_script_index_0_lang.CmD2sdn9.js"></script> </aside>  <button type="button" class="sidebar-backdrop" id="sidebar-backdrop" aria-label="Закрыть оглавление" tabindex="-1" data-astro-cid-ofsbkzh7></button>  <script type="module">const d="vs-sidebar-open",a="(max-width: 900px)";function t(e){const n=document.querySelector(".reader-app");n&&n.classList.toggle("sidebar-open",e)}function r(){return!window.matchMedia(a).matches}function s(){const e=localStorage.getItem(d),i=window.matchMedia(a).matches?!1:e!==null?e==="1":r();t(i),document.getElementById("sidebar-toggle")?.addEventListener("click",()=>{const c=!document.querySelector(".reader-app")?.classList.contains("sidebar-open");window.matchMedia(a).matches||localStorage.setItem(d,c?"1":"0"),t(c)}),document.getElementById("sidebar-backdrop")?.addEventListener("click",()=>t(!1)),document.querySelectorAll(".reader-sidebar a").forEach(o=>{o.addEventListener("click",()=>{window.matchMedia(a).matches&&t(!1)})})}document.readyState==="loading"?document.addEventListener("DOMContentLoaded",s):s();</script> <aside class="reader-sidebar" data-astro-cid-khgtvzrl> <div class="breadcrumb" data-astro-cid-khgtvzrl>Vibesamurai · Advanced Path · A14</div> <h4 data-astro-cid-khgtvzrl>In this course</h4> <ul data-astro-cid-khgtvzrl> <li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a1/en" class data-astro-cid-khgtvzrl> A1 · AI studio stack — May 2026  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a2/en" class data-astro-cid-khgtvzrl> A2 · Multi-modal pipeline architecture  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a3/en" class data-astro-cid-khgtvzrl> A3 · Local vs Cloud matrix  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a4/en" class data-astro-cid-khgtvzrl> A4 · Design system as a contract  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a5/en" class data-astro-cid-khgtvzrl> A5 · Image generation for a brand  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a6/en" class data-astro-cid-khgtvzrl> A6 · Marketplace + product photoshoot  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a7/en" class data-astro-cid-khgtvzrl> A7 · Video generation pipelines  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a8/en" class data-astro-cid-khgtvzrl> A8 · Identity-preserving generation  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a9/en" class data-astro-cid-khgtvzrl> A9 · TouchDesigner + StreamDiffusion  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a10/en" class data-astro-cid-khgtvzrl> A10 · Audio-reactive AV installations  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a11/en" class data-astro-cid-khgtvzrl> A11 · Interactive booths: STT+LLM+TTS+CV  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a12/en" class data-astro-cid-khgtvzrl> A12 · Telemetry → control loop  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a13/en" class data-astro-cid-khgtvzrl> A13 · Private RAG for an archive  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a14/en" class="current" data-astro-cid-khgtvzrl> A14 · Local LLMs on 8GB VRAM  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a15/en" class data-astro-cid-khgtvzrl> A15 · RunPod Flash + vLLM  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a16/en" class data-astro-cid-khgtvzrl> A16 · Custom MCP servers  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a17/en" class data-astro-cid-khgtvzrl> A17 · Token economics across modalities  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a18/en" class data-astro-cid-khgtvzrl> A18 · Eval for creative output  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a19/en" class data-astro-cid-khgtvzrl> A19 · Security in a creative studio  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a20/en" class data-astro-cid-khgtvzrl> A20 · Capstone: launching the studio  </a> </li> </ul>  </aside> <main class="reader-main" data-astro-cid-a7sruqtr> <div class="chapter-eyebrow" data-astro-cid-a7sruqtr> <span data-astro-cid-a7sruqtr>Advanced Path · a14</span> <a class="lang-toggle" href="/vibesamurai-site/courses/advanced/a14" aria-label="Switch to RU" data-astro-cid-a7sruqtr>RU</a> </div> <h1 class="chapter-title" data-astro-cid-a7sruqtr>A14 · Local LLMs on 8GB VRAM</h1> <p class="chapter-subtitle" data-astro-cid-a7sruqtr>llama.cpp b9050 + Qwen3.5-21B-Deckard IQ4_XS on a 4070 8GB + 64GB RAM, ~5 t/s, OpenAI-compatible API on 127.0.0.1:8080. When it&#39;s enough, when it isn&#39;t.</p> <h2 id="what-were-building">What we’re building</h2>
+<p>A local LLM node on consumer hardware (8 GB VRAM + 64 GB RAM): run a 21B model in IQ4_XS quantisation, serve an OpenAI-compatible API on <code>127.0.0.1:8080</code>, and use it for the routine tasks (classification, curation, filtering before Sonnet).</p>
+<h2 id="base-stack">Base stack</h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Component</th><th>Version</th><th>Why</th></tr></thead><tbody><tr><td>llama.cpp</td><td>b9050+</td><td>Inference engine with RAM offload</td></tr><tr><td>Qwen3.5-21B-Deckard</td><td>IQ4_XS, 11.8 GB</td><td>Model with reasonable quality on consumer hardware</td></tr><tr><td>OpenAI API endpoint</td><td><code>127.0.0.1:8080</code></td><td>Compatibility with any OpenAI SDK</td></tr><tr><td>Local disk</td><td>E:\LLM\</td><td>gguf file storage</td></tr></tbody></table>
+<p>Without llama.cpp, 21B doesn’t fit on 8 GB VRAM — RAM offload is required, and that needs a lot of system RAM. 32 GB is tight, 64 GB is comfortable.</p>
+<h2 id="iq4_xs-why-this-quantisation">IQ4_XS: why this quantisation</h2>
+<p>Quantisation compresses weights from 16-bit float to 4-bit (or less). IQ4_XS is an i-quant at 4 bits (extra small), the balance point between size and quality.</p>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>Q8_0   ────► 22 GB   quality ~100%   doesn't fit on 8GB+64GB</span></span>
+<span class="line"><span>Q6_K   ────► 17 GB   quality ~98%    doesn't fit</span></span>
+<span class="line"><span>Q5_K_M ────► 15 GB   quality ~96%    tight, slow</span></span>
+<span class="line"><span>IQ4_XS ────► 11.8 GB quality ~92%    fine, 5 t/s    ← our pick</span></span>
+<span class="line"><span>IQ3_M  ────►  9.4 GB quality ~85%    faster but noticeable quality drop</span></span></code></pre>
+<p>For classification / filtering / curation 92 % is more than enough. Final text always goes to Sonnet / Opus.</p>
+<h2 id="running-llama-server">Running llama-server</h2>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="powershell"><code><span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">&#x26; </span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">E:\LLM\llama.cpp\build\bin\Release\llama-server.exe</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2"> `</span></span>
+<span class="line"><span style="color:#FF79C6;--shiki-dark:#FF79C6">    --</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">model </span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">E:\LLM\models\qwen3.5-21b-deckard-iq4_xs.gguf</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2"> `</span></span>
+<span class="line"><span style="color:#FF79C6;--shiki-dark:#FF79C6">    --</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">host </span><span style="color:#BD93F9;--shiki-dark:#BD93F9">127.0</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">.</span><span style="color:#BD93F9;--shiki-dark:#BD93F9">0.1</span><span style="color:#FF79C6;--shiki-dark:#FF79C6"> --</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">port </span><span style="color:#BD93F9;--shiki-dark:#BD93F9">8080</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2"> `</span></span>
+<span class="line"><span style="color:#FF79C6;--shiki-dark:#FF79C6">    --</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">ctx</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">-</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">size </span><span style="color:#BD93F9;--shiki-dark:#BD93F9">16384</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2"> `</span></span>
+<span class="line"><span style="color:#FF79C6;--shiki-dark:#FF79C6">    --</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">n</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">-</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">gpu</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">-</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">layers </span><span style="color:#BD93F9;--shiki-dark:#BD93F9">28</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2"> `</span></span>
+<span class="line"><span style="color:#FF79C6;--shiki-dark:#FF79C6">    --</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">threads </span><span style="color:#BD93F9;--shiki-dark:#BD93F9">12</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2"> `</span></span>
+<span class="line"><span style="color:#FF79C6;--shiki-dark:#FF79C6">    --</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">batch</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">-</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">size </span><span style="color:#BD93F9;--shiki-dark:#BD93F9">512</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2"> `</span></span>
+<span class="line"><span style="color:#FF79C6;--shiki-dark:#FF79C6">    --</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">parallel </span><span style="color:#BD93F9;--shiki-dark:#BD93F9">1</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2"> `</span></span>
+<span class="line"><span style="color:#FF79C6;--shiki-dark:#FF79C6">    --</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">no</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">-</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">mmap</span></span></code></pre>
+<p>Parameters:</p>
+<ul>
+<li><code>--n-gpu-layers 28</code> — layers on GPU; the rest in RAM. 28 is the empirical max for a 4070 8 GB on IQ4_XS;</li>
+<li><code>--ctx-size 16384</code> — 16k context;</li>
+<li><code>--no-mmap</code> — on Windows sometimes improves stability under offload;</li>
+<li><code>--host 127.0.0.1</code> — mandatory (never <code>0.0.0.0</code>, rule <code>feedback_no_wildcard_http_server</code>).</li>
+</ul>
+<h2 id="openai-compatible-api">OpenAI-compatible API</h2>
+<p><code>llama-server</code> returns <code>/v1/chat/completions</code> in OpenAI format. Any client works without modification:</p>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="python"><code><span class="line"><span style="color:#FF79C6;--shiki-dark:#FF79C6">from</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2"> openai </span><span style="color:#FF79C6;--shiki-dark:#FF79C6">import</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2"> OpenAI</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">client </span><span style="color:#FF79C6;--shiki-dark:#FF79C6">=</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2"> OpenAI(</span><span style="color:#FFB86C;--shiki-light-font-style:italic;--shiki-dark:#FFB86C;--shiki-dark-font-style:italic">base_url</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">=</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">http://127.0.0.1:8080/v1</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">, </span><span style="color:#FFB86C;--shiki-light-font-style:italic;--shiki-dark:#FFB86C;--shiki-dark-font-style:italic">api_key</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">=</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">not-needed</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">resp </span><span style="color:#FF79C6;--shiki-dark:#FF79C6">=</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2"> client.chat.completions.create(</span></span>
+<span class="line"><span style="color:#FFB86C;--shiki-light-font-style:italic;--shiki-dark:#FFB86C;--shiki-dark-font-style:italic">    model</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">=</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">qwen3.5-21b-deckard</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">,</span></span>
+<span class="line"><span style="color:#FFB86C;--shiki-light-font-style:italic;--shiki-dark:#FFB86C;--shiki-dark-font-style:italic">    messages</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">=</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">[</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">        {</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">role</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">: </span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">system</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">, </span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">content</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">: </span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">You curate content. Answer YES/NO.</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">},</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">        {</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">role</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">: </span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">user</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">, </span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">content</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">: </span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">Is this a gaming post? 'A new game came out today...'</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">},</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    ],</span></span>
+<span class="line"><span style="color:#FFB86C;--shiki-light-font-style:italic;--shiki-dark:#FFB86C;--shiki-dark-font-style:italic">    temperature</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">=</span><span style="color:#BD93F9;--shiki-dark:#BD93F9">0.0</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">,</span></span>
+<span class="line"><span style="color:#FFB86C;--shiki-light-font-style:italic;--shiki-dark:#FFB86C;--shiki-dark-font-style:italic">    max_tokens</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">=</span><span style="color:#BD93F9;--shiki-dark:#BD93F9">10</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">,</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">)</span></span>
+<span class="line"><span style="color:#8BE9FD;--shiki-dark:#8BE9FD">print</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">(resp.choices[</span><span style="color:#BD93F9;--shiki-dark:#BD93F9">0</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">].message.content)  </span><span style="color:#6272A4;--shiki-dark:#6272A4"># → "YES"</span></span></code></pre>
+<p>Which is why switching from Claude API to a local model is one URL.</p>
+<h2 id="real-case-curation-and-filtering">Real case: curation and filtering</h2>
+<p>From memory <code>feedback_local_qwen_for_analysis</code>: for curation / classification / verification use Qwen3.5-21B on <code>127.0.0.1:8080</code>, not Claude API.</p>
+<p>Scenarios where the local Qwen is the default:</p>
+<ul>
+<li>post classification (category, tone, presence of links);</li>
+<li>pre-RAG filtering (see A13: “is the context enough?”);</li>
+<li>fact verification (extract + cross-check inside the document);</li>
+<li>summarisation up to 500 words;</li>
+<li>a draft generation for later polishing in Sonnet.</li>
+</ul>
+<p>Final text for the client, important decisions, brand creative — Sonnet / Opus.</p>
+<h2 id="performance">Performance</h2>
+<p>On a 4070 8 GB + 64 GB RAM + Qwen3.5-21B IQ4_XS:</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Metric</th><th>Value</th></tr></thead><tbody><tr><td>Tokens/sec (output)</td><td>~5 t/s</td></tr><tr><td>Prompt eval (16k tokens)</td><td>~30 seconds</td></tr><tr><td>First-token latency</td><td>1–2 s</td></tr><tr><td>Stability</td><td>24/7 with proper cooling</td></tr></tbody></table>
+<p>5 t/s is slow for interactive UIs but <strong>fine for batch processing</strong>: 1000 posts × 200 tokens per answer = ~40 000 tokens / 5 t/s = ~133 minutes per batch. Run overnight or in the background.</p>
+<h2 id="when-local-isnt-enough">When local isn’t enough</h2>
+<ul>
+<li><strong>Final creative text</strong> — brand copy, KP, contracts. The 92 % quality of IQ4_XS is noticeable here.</li>
+<li><strong>Hard reasoning</strong> — multi-step reasoning, mathematics, code generation for production.</li>
+<li><strong>Real-time requests under load</strong> — 5 t/s won’t survive even 10 concurrent users.</li>
+<li><strong>Fresh facts</strong> — the model is frozen. For freshness, layer RAG (see A13) or Sonnet with search.</li>
+</ul>
+<h2 id="pitfalls">Pitfalls</h2>
+<ul>
+<li><strong>OOM on first start</strong> — too many <code>--n-gpu-layers</code>. Reduce until it fits.</li>
+<li><strong>16k context is realistically ~70 % usable</strong> — the model behaves correctly up to ~10k input tokens. Above that — degradation.</li>
+<li><strong><code>--no-mmap</code> on non-Windows</strong> — actually slows things down. The flag is platform-dependent.</li>
+<li><strong>Long-form generation</strong> — the model loops or hallucinates after ~1500 output tokens. Split the task.</li>
+<li><strong>gguf file from an untrusted source</strong> — potential supply chain risk. Download only from official HF repos.</li>
+</ul>
+<h2 id="recap">Recap</h2>
+<ul>
+<li>llama.cpp + Qwen3.5-21B-Deckard IQ4_XS on a 4070 8 GB + 64 GB RAM = ~5 t/s.</li>
+<li>OpenAI-compatible API on <code>127.0.0.1:8080</code> — one URL for SDK compatibility.</li>
+<li>Local node — for curation, classification, filtering, summarisation.</li>
+<li>Final, creative, hard reasoning — Sonnet / Opus.</li>
+<li>5 t/s fits batch processing, not interactive UIs.</li>
+</ul>
+<h2 id="further-reading">Further reading</h2>
+<ul>
+<li><strong>llama.cpp</strong> — <a href="https://github.com/ggerganov/llama.cpp">github.com/ggerganov/llama.cpp</a>. Inference engine; <code>llama-server</code> for OpenAI API.</li>
+<li><strong>Qwen3.5 series</strong> — <a href="https://github.com/QwenLM/Qwen">github.com/QwenLM/Qwen</a>. Family of open-weight models; DavidAU quantised variants on HF.</li>
+<li><strong>Hugging Face — quantisation guide</strong> — <a href="https://huggingface.co/docs/transformers/main/en/quantization/overview">huggingface.co/docs/transformers/main/en/quantization</a>. IQ vs Q vs K-quant — when which makes sense.</li>
+<li><strong>Memory: project_local_qwen35</strong> — exact configuration of the live local Qwen deployment.</li>
+</ul> <nav class="chapter-nav" data-astro-cid-a7sruqtr> <a href="/vibesamurai-site/courses/advanced/a13/en" data-astro-cid-a7sruqtr> <span class="dir" data-astro-cid-a7sruqtr>← Back</span> <span class="title" data-astro-cid-a7sruqtr>A13 · Private RAG for an archive</span> </a> <a href="/vibesamurai-site/courses/advanced/a15/en" data-astro-cid-a7sruqtr> <span class="dir" data-astro-cid-a7sruqtr>Next →</span> <span class="title" data-astro-cid-a7sruqtr>A15 · RunPod Flash + vLLM</span> </a> </nav> </main>  </div> <script type="module">
+    import { gatingEnabled } from '../lib/supabase';
+    import { fetchChapter } from '../lib/auth';
+
+    const base = import.meta.env.BASE_URL;
+    let mermaidLib = null;
+
+    function scopeOf(root) {
+      return root === document ? document.querySelector('.reader-main') : root;
+    }
+
+    function addCopyBtns(root) {
+      const scope = scopeOf(root); if (!scope) return;
+      scope.querySelectorAll('pre').forEach((pre) => {
+        if (pre.closest('.code-tabs')) return;
+        if (pre.querySelector('.copy-btn')) return;
+        const btn = document.createElement('button');
+        btn.className = 'copy-btn';
+        btn.textContent = 'copy';
+        btn.addEventListener('click', async () => {
+          const code = pre.querySelector('code')?.textContent ?? pre.textContent ?? '';
+          await navigator.clipboard.writeText(code.trimEnd());
+          btn.textContent = '✓ copied';
+          setTimeout(() => { btn.textContent = 'copy'; }, 1600);
+        });
+        pre.appendChild(btn);
+      });
+    }
+
+    function tightenMermaidSvgs(retries = 6) {
+      let pending = false;
+      document.querySelectorAll('.mermaid svg').forEach((svg) => {
+        if (svg.dataset.tightened === '1') return;
+        try {
+          const bbox = svg.getBBox();
+          if (!bbox || bbox.width === 0) { pending = true; return; }
+          const pad = 6;
+          svg.setAttribute('viewBox',
+            `${bbox.x - pad} ${bbox.y - pad} ${bbox.width + pad * 2} ${bbox.height + pad * 2}`);
+          svg.removeAttribute('height');
+          svg.style.height = 'auto';
+          svg.style.maxWidth = '100%';
+          svg.style.display = 'block';
+          svg.dataset.tightened = '1';
+        } catch (e) { pending = true; }
+      });
+      if (pending && retries > 0) setTimeout(() => tightenMermaidSvgs(retries - 1), 120);
+    }
+
+    async function ensureMermaid() {
+      if (mermaidLib) return mermaidLib;
+      const mod = await import('https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs');
+      mermaidLib = mod.default;
+      mermaidLib.initialize({
+        startOnLoad: false, theme: 'neutral',
+        themeVariables: {
+          fontFamily: 'JetBrains Mono, ui-monospace, monospace',
+          primaryColor: '#f5f5f5', primaryBorderColor: '#222',
+          primaryTextColor: '#111', lineColor: '#444',
+        },
+        flowchart: { curve: 'basis', padding: 12, useMaxWidth: true },
+      });
+      return mermaidLib;
+    }
+
+    async function renderMermaid(root) {
+      const scope = scopeOf(root); if (!scope) return;
+      const matches = scope.querySelectorAll(
+        'pre[data-language="mermaid"], pre.language-mermaid, code.language-mermaid'
+      );
+      if (!matches.length) return;
+      matches.forEach((el) => {
+        const block = el.tagName === 'CODE' ? el.closest('pre') || el : el;
+        const codeEl = block.querySelector('code') || block;
+        const wrap = document.createElement('div');
+        wrap.className = 'mermaid';
+        wrap.textContent = codeEl.textContent;
+        block.replaceWith(wrap);
+      });
+      try {
+        const m = await ensureMermaid();
+        await m.run();
+        tightenMermaidSvgs();
+      } catch (err) {
+        console.warn('mermaid failed', err);
+        document.querySelectorAll('.mermaid:not(:has(svg))').forEach((el) => { el.style.display = 'none'; });
+      }
+    }
+
+    async function enhance(root = document) {
+      addCopyBtns(root);
+      await renderMermaid(root);
+    }
+
+    function paywallHtml(required, needLogin) {
+      const label = { beginner: 'Beginner (300 ₽)', middle: 'Beginner + Middle (500 ₽)', all: 'Весь пакет (700 ₽)' }[required] || '';
+      return `<div class="paywall">
+        <div class="paywall-ic">🔒</div>
+        <h3>Эта глава — в платном доступе</h3>
+        <p>Нужен тариф: <strong>${label}</strong>. Доступ навсегда, без подписки.</p>
+        ${needLogin ? '<p>Войди через Google и оформи доступ — продолжишь с любого устройства.</p>' : ''}
+        <a class="paywall-btn" href="${base}pricing">Открыть доступ →</a>
+        <a class="paywall-link" href="${base}account">Войти / мой аккаунт</a>
+      </div>`;
+    }
+
+    async function gatedFlow(mount) {
+      const slug = mount.dataset.slug;
+      const required = mount.dataset.required || 'beginner';
+      mount.innerHTML = '<p class="gate-msg">Проверяем доступ…</p>';
+      const res = await fetchChapter(slug);
+      if (res.ok) {
+        mount.innerHTML = res.html;
+        await enhance(mount);
+      } else if (res.status === 401) {
+        mount.innerHTML = paywallHtml(required, true);
+      } else if (res.status === 402) {
+        mount.innerHTML = paywallHtml(res.requiredTier || required, false);
+      } else {
+        mount.innerHTML = '<p class="gate-msg">Не удалось загрузить главу. Обнови страницу.</p>';
+      }
+    }
+
+    const mount = document.getElementById('gated-mount');
+    if (mount && gatingEnabled) gatedFlow(mount);
+    else enhance(document);
+  </script> </body> </html>

@@ -1,0 +1,431 @@
+<!DOCTYPE html><html lang="en" data-astro-cid-a7sruqtr> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>One agent, many steps: pipelines and orchestration — Vibesamurai</title><meta name="description" content="Decomposing a big task into a sequence of calls. When subagents, when an external orchestrator."><meta property="og:title" content="One agent, many steps: pipelines and orchestration"><meta property="og:type" content="article"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Inter:wght@300..800&family=JetBrains+Mono:wght@400..600&display=swap" rel="stylesheet"><link rel="stylesheet" href="/vibesamurai-site/_astro/_slug_.Cs4TX1wt.css">
+<style>.account-btn{display:inline-flex;align-items:center;gap:var(--space-2);font-family:var(--font-mono);font-size:var(--size-2);text-transform:uppercase;letter-spacing:.06em;padding:5px 10px;border:1px solid var(--rule);border-radius:999px;color:var(--text-soft);background:var(--surface);transition:border-color var(--d-fast),color var(--d-fast)}.account-btn:hover{border-color:var(--accent);color:var(--text)}.account-ic{width:18px;height:18px;display:grid;place-items:center;border-radius:50%;background:var(--accent);color:var(--accent-ink);font-weight:700;font-size:10px;line-height:1}.reader-rail .account-btn{padding:0;border:none;background:transparent}.reader-rail .account-label{display:none}.reader-rail .account-ic{width:32px;height:32px;font-size:13px}.rail-toggle{width:36px;height:36px;display:grid;place-items:center;background:var(--accent);border:1px solid var(--accent);border-radius:4px;cursor:pointer;transition:filter var(--d-fast),transform var(--d-fast);padding:0}.rail-toggle:hover{filter:brightness(1.08);transform:translateY(-1px)}.rail-toggle:active{transform:translateY(0)}.rail-toggle-icon{width:14px;height:12px;border-left:2px solid var(--accent-ink);border-right:2px solid var(--accent-ink);transition:transform var(--d-normal) var(--ease-standard)}.reader-app.sidebar-open .rail-toggle-icon{transform:rotate(0)}.reader-app:not(.sidebar-open) .rail-toggle-icon{transform:scaleX(.5)}.sidebar-backdrop{display:none;position:fixed;inset:0;background:#0000008c;z-index:140;border:0;padding:0;cursor:pointer}@media(max-width:900px){.reader-app.sidebar-open~.sidebar-backdrop{display:block}}.rail-spacer[data-astro-cid-ofsbkzh7]{flex:1}.reader-sidebar[data-astro-cid-khgtvzrl] .ru-tag[data-astro-cid-khgtvzrl]{font-style:normal;font-family:var(--font-mono);font-size:.7em;color:var(--text-mute);margin-left:4px;padding:1px 4px;border:1px solid var(--rule);border-radius:3px;text-transform:uppercase;vertical-align:middle}.chapter-eyebrow[data-astro-cid-a7sruqtr]{display:flex;justify-content:space-between;align-items:center;gap:var(--space-3)}.lang-toggle[data-astro-cid-a7sruqtr]{font-family:var(--font-mono);font-size:var(--size-2);padding:2px 8px;border:1px solid var(--rule);border-radius:4px;color:var(--text-mute);text-decoration:none;text-transform:uppercase;letter-spacing:.08em}.lang-toggle[data-astro-cid-a7sruqtr]:hover{color:var(--accent);border-color:var(--accent)}.code-tabs[data-astro-cid-hg66rjob]{margin:var(--space-5) 0}.code-tabs-nav[data-astro-cid-hg66rjob]{display:flex;gap:2px;margin-bottom:-1px;position:relative;z-index:1}.ctab[data-astro-cid-hg66rjob]{font-family:var(--font-mono);font-size:11px;text-transform:uppercase;letter-spacing:.07em;padding:5px 14px;border:1px solid #21222c;border-bottom:none;background:#1a1b23;color:#6272a4;cursor:pointer;border-radius:4px 4px 0 0;transition:color .12s,background .12s}.ctab[data-astro-cid-hg66rjob].is-active{background:#282a36;color:#f8f8f2;border-color:#21222c}.ctab[data-astro-cid-hg66rjob]:hover:not(.is-active){color:#cdd6f4}.ctab-panel[data-astro-cid-hg66rjob]{display:none}.ctab-panel[data-astro-cid-hg66rjob].is-active{display:block}.ctab-panel[data-astro-cid-hg66rjob] pre{margin-top:0!important;border-radius:0 6px 6px!important}
+</style></head> <body data-astro-cid-a7sruqtr> <div class="reader-app" data-astro-cid-a7sruqtr> <aside class="reader-rail" data-astro-cid-ofsbkzh7> <a href="/vibesamurai-site/" class="logo" aria-label="Vibesamurai home" data-astro-cid-ofsbkzh7>V</a> <button type="button" class="rail-toggle" id="sidebar-toggle" aria-label="Свернуть/развернуть оглавление" title="Свернуть/развернуть оглавление" data-astro-cid-ofsbkzh7> <span class="rail-toggle-icon" aria-hidden="true" data-astro-cid-ofsbkzh7></span> </button> <div class="rail-spacer" data-astro-cid-ofsbkzh7></div> <a href="/vibesamurai-site/account" class="account-btn" id="account-btn" aria-label="Аккаунт"> <span class="account-ic" id="account-ic">⌂</span> <span class="account-label" id="account-label">Войти</span> </a>  <script type="module" src="/vibesamurai-site/_astro/AccountButton.astro_astro_type_script_index_0_lang.CmD2sdn9.js"></script> </aside>  <button type="button" class="sidebar-backdrop" id="sidebar-backdrop" aria-label="Закрыть оглавление" tabindex="-1" data-astro-cid-ofsbkzh7></button>  <script type="module">const d="vs-sidebar-open",a="(max-width: 900px)";function t(e){const n=document.querySelector(".reader-app");n&&n.classList.toggle("sidebar-open",e)}function r(){return!window.matchMedia(a).matches}function s(){const e=localStorage.getItem(d),i=window.matchMedia(a).matches?!1:e!==null?e==="1":r();t(i),document.getElementById("sidebar-toggle")?.addEventListener("click",()=>{const c=!document.querySelector(".reader-app")?.classList.contains("sidebar-open");window.matchMedia(a).matches||localStorage.setItem(d,c?"1":"0"),t(c)}),document.getElementById("sidebar-backdrop")?.addEventListener("click",()=>t(!1)),document.querySelectorAll(".reader-sidebar a").forEach(o=>{o.addEventListener("click",()=>{window.matchMedia(a).matches&&t(!1)})})}document.readyState==="loading"?document.addEventListener("DOMContentLoaded",s):s();</script> <aside class="reader-sidebar" data-astro-cid-khgtvzrl> <div class="breadcrumb" data-astro-cid-khgtvzrl>Vibesamurai · Middle Path · M14</div> <h4 data-astro-cid-khgtvzrl>In this course</h4> <ul data-astro-cid-khgtvzrl> <li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m1/en" class data-astro-cid-khgtvzrl> M1 · What is agentic AI in the SDLC  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m2/en" class data-astro-cid-khgtvzrl> M2 · Architecting agent boundaries  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m3/en" class data-astro-cid-khgtvzrl> M3 · Observability and human-in-the-loop  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m4/en" class data-astro-cid-khgtvzrl> M4 · Tool inventory and permissions  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m5/en" class data-astro-cid-khgtvzrl> M5 · MCP deep dive  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m6/en" class data-astro-cid-khgtvzrl> M6 · Claude Code CLI mastery  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m7/en" class data-astro-cid-khgtvzrl> M7 · GPT-5.3 Codex CLI and OpenAI agents  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m8/en" class data-astro-cid-khgtvzrl> M8 · Cursor Composer + IDE agents  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m9/en" class data-astro-cid-khgtvzrl> M9 · Memory strategies  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m10/en" class data-astro-cid-khgtvzrl> M10 · State, drift, continuity  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m11/en" class data-astro-cid-khgtvzrl> M11 · Evaluating agents: metrics over vibes  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m12/en" class data-astro-cid-khgtvzrl> M12 · Regression tests for agents  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m13/en" class data-astro-cid-khgtvzrl> M13 · Tuning: what to change when metrics don&#39;t move  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m14/en" class="current" data-astro-cid-khgtvzrl> M14 · One agent, many steps: pipelines and orchestration  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m15/en" class data-astro-cid-khgtvzrl> M15 · Multi-agent: roles, communication, supervisor  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m16/en" class data-astro-cid-khgtvzrl> M16 · When multi-agent is overkill. Anti-patterns  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m17/en" class data-astro-cid-khgtvzrl> M17 · Production: deploying agents to live environments  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m18/en" class data-astro-cid-khgtvzrl> M18 · Security in prod: secrets, sandbox, audit  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m19/en" class data-astro-cid-khgtvzrl> M19 · Incidents &amp; post-mortems  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m20/en" class data-astro-cid-khgtvzrl> M20 · Finale: where to go after Middle  </a> </li> </ul>  </aside> <main class="reader-main" data-astro-cid-a7sruqtr> <div class="chapter-eyebrow" data-astro-cid-a7sruqtr> <span data-astro-cid-a7sruqtr>Middle Path · m14</span> <a class="lang-toggle" href="/vibesamurai-site/courses/middle/m14" aria-label="Switch to RU" data-astro-cid-a7sruqtr>RU</a> </div> <h1 class="chapter-title" data-astro-cid-a7sruqtr>M14 · One agent, many steps: pipelines and orchestration</h1> <p class="chapter-subtitle" data-astro-cid-a7sruqtr>Decomposing a big task into a sequence of calls. When subagents, when an external orchestrator.</p> <h2 id="hook">Hook</h2>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>ONE-SHOT:                         PIPELINE:</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>big task                          plan → execute → review</span></span>
+<span class="line"><span>   ↓                                ↓        ↓        ↓</span></span>
+<span class="line"><span>[Claude does everything           specialised specialised specialised</span></span>
+<span class="line"><span> in one giant call]                subagent   subagent   subagent</span></span>
+<span class="line"><span>                                    ↓        ↓        ↓</span></span>
+<span class="line"><span>   ↓                              clean outputs, narrow scope,</span></span>
+<span class="line"><span>result: ok-ish,                   easy to debug each stage</span></span>
+<span class="line"><span>hard to debug</span></span></code></pre>
+<p>Hey folks, welcome 👋</p>
+<p>This chapter opens <strong>Part V — Multi-Agent</strong>. Before we build systems of several <strong>independent</strong> agents (that’s M15), you need to master a <strong>simpler</strong> tool: a <strong>pipeline inside one agent</strong>.</p>
+<p>Most of what people call “multi-agent” in reality is <strong>a pipeline</strong>. Several roles, <strong>one</strong> orchestrator, a clear flow. That’s <strong>much simpler</strong> and <strong>cheaper</strong> to build than real multi-agent. And in 80 % of cases — <strong>it’s enough</strong>.</p>
+<p>An hour. After this chapter you can split a 30-minute task into 4 × 7-minute steps and <strong>debug</strong> each independently.</p>
+<h2 id="concept-a-pipeline--one-developer-in-several-hats">Concept: a pipeline = “one developer in several hats”</h2>
+<p>Picture this task: <strong>“add a feature with tests and docs.”</strong></p>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>ONE-SHOT (one big prompt):</span></span>
+<span class="line"><span>"Build feature X, add tests, update the docs"</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>→ the agent tries everything at once</span></span>
+<span class="line"><span>→ context is stuffed, focus diluted</span></span>
+<span class="line"><span>→ often one of the three lands worse</span></span></code></pre>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>PIPELINE (3 steps, same agent):</span></span>
+<span class="line"><span>Step 1. Planner       : "Give me an implementation plan, no code"</span></span>
+<span class="line"><span>Step 2. Implementer   : "Write code for this plan"</span></span>
+<span class="line"><span>Step 3. Test engineer : "Write tests for this code"</span></span>
+<span class="line"><span>Step 4. Doc writer    : "Update docs/README for this feature"</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>→ each step is focused</span></span>
+<span class="line"><span>→ output of one = input of the next</span></span>
+<span class="line"><span>→ you can verify between steps</span></span>
+<span class="line"><span>→ you can roll back only the problem step</span></span></code></pre>
+<p>It’s the <strong>same</strong> agent, same model. The difference is in the <strong>workflow structure</strong>. A bit more “architectural,” the pipeline is a DAG with parallel branches after a shared plan:</p>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="mermaid"><code><span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">flowchart LR</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    Plan[Planner&#x3C;br/>spec / plan.md] --> Impl[Implementer&#x3C;br/>src/]</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    Impl --> Tests[Test engineer&#x3C;br/>tests/]</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    Impl --> Lint[Lint / typecheck]</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    Impl --> Docs[Doc writer&#x3C;br/>docs/]</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    Tests --> Review[Reviewer&#x3C;br/>PR description]</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    Lint --> Review</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    Docs --> Review</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    Review --> Ship([Ship / merge])</span></span></code></pre>
+<p>Some steps are independent (tests / lint / docs) and can run in parallel — that’s the “orchestration” pipelines exist for.</p>
+<h2 id="when-you-need-a-pipeline">When you need a pipeline</h2>
+<p>Signals it’s <strong>time</strong> to split into a pipeline:</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Symptom</th><th>Signal</th></tr></thead><tbody><tr><td>Task > 20–30 minutes of agent time</td><td>yes</td></tr><tr><td>Several <strong>different</strong> kinds of work (plan + code + tests + docs)</td><td>yes</td></tr><tr><td>One kind is <strong>consistently</strong> worse than the others</td><td>yes</td></tr><tr><td>Context stuffed midway</td><td>yes</td></tr><tr><td>You want to verify <strong>between stages</strong></td><td>yes</td></tr></tbody></table>
+<p>If <strong>none</strong> apply — stay on one-shot. Don’t multiply entities.</p>
+<h2 id="three-ways-to-do-a-pipeline">Three ways to do a pipeline</h2>
+<h3 id="way-1-sequential-prompts-manual">Way 1. Sequential prompts (manual)</h3>
+<p>The simplest. <strong>You</strong> kick off steps in order:</p>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>Session 1: "Give me an implementation plan for feature Y, no code"</span></span>
+<span class="line"><span>            → read, approve, save to .agent/plans/feature-y.md</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>Session 2: "Implement code per .agent/plans/feature-y.md"</span></span>
+<span class="line"><span>            → review the diff, commit</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>Session 3: "Write tests for this code"</span></span>
+<span class="line"><span>            → tests/, run</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>Session 4: "Update README + docs/api.md for this feature"</span></span></code></pre>
+<p><strong>Plus:</strong> full control, can stop anywhere.
+<strong>Minus:</strong> manual switching, extra clicks.</p>
+<h3 id="way-2-subagents-claude-code-feature">Way 2. Subagents (Claude Code feature)</h3>
+<p>In Claude Code you can define <strong>specialised subagents</strong> via <code>.claude/agents/&#x3C;name>.md</code>. Each subagent is a <strong>separate</strong> Claude with its <strong>own</strong> prompt and <strong>own</strong> permissions.</p>
+<p><code>.claude/agents/planner.md</code>:</p>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="markdown"><code><span class="line"><span style="color:#6272A4;--shiki-dark:#6272A4">---</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">name: planner</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">description: Plans implementation steps. Does NOT write code.</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">tools: [Read, Glob, Grep]</span></span>
+<span class="line"><span style="color:#BD93F9;--shiki-light-font-weight:bold;--shiki-dark:#BD93F9;--shiki-dark-font-weight:bold">---</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">You are a planning agent. Given a feature request, output:</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">1. A numbered list of implementation steps</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">2. Files to be modified</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">3. Risks and dependencies</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">Do NOT write code. Do NOT call Edit or Write tools.</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">Save your plan to .agent/plans/&#x3C;feature-slug>.md before returning.</span></span></code></pre>
+<p><code>.claude/agents/test-engineer.md</code>:</p>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="markdown"><code><span class="line"><span style="color:#6272A4;--shiki-dark:#6272A4">---</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">name: test-engineer</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">description: Writes tests for existing code. Does NOT modify implementation.</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">tools: [Read, Edit, Write, Bash]</span></span>
+<span class="line"><span style="color:#BD93F9;--shiki-light-font-weight:bold;--shiki-dark:#BD93F9;--shiki-dark-font-weight:bold">---</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">You are a test engineer. Read the implementation file and:</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">1. Identify test cases (happy path + edge cases + error paths)</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">2. Write tests in the project's existing test framework</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">3. Run them and report pass/fail</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">Do NOT modify any file outside of tests/.</span></span></code></pre>
+<p>The main agent <strong>invokes</strong> the subagent:</p>
+<blockquote>
+<p>“Use the planner subagent to design the plan for feature X. Then implement against the plan yourself. Then hand off to test-engineer.”</p>
+</blockquote>
+<p><strong>Plus:</strong> subagents have <strong>narrow</strong> rights (security), <strong>focused</strong> on the role.
+<strong>Minus:</strong> setup; documentation needs maintenance.</p>
+<h3 id="way-3-external-orchestrator-script">Way 3. External orchestrator (script)</h3>
+<p><code>pipeline.sh</code>:</p>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#6272A4;--shiki-dark:#6272A4">#!/usr/bin/env bash</span></span>
+<span class="line"><span style="color:#8BE9FD;--shiki-dark:#8BE9FD">set</span><span style="color:#BD93F9;--shiki-dark:#BD93F9"> -e</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#BD93F9;--shiki-dark:#BD93F9">FEATURE</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">=</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#FFB86C;--shiki-light-font-style:italic;--shiki-dark:#FFB86C;--shiki-dark-font-style:italic">$1</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span></span>
+<span class="line"><span style="color:#BD93F9;--shiki-dark:#BD93F9">SLUG</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">=</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">$(</span><span style="color:#8BE9FD;--shiki-dark:#8BE9FD">echo</span><span style="color:#E9F284;--shiki-dark:#E9F284"> "</span><span style="color:#BD93F9;--shiki-dark:#BD93F9">$FEATURE</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#FF79C6;--shiki-dark:#FF79C6"> |</span><span style="color:#50FA7B;--shiki-dark:#50FA7B"> tr</span><span style="color:#E9F284;--shiki-dark:#E9F284"> '</span><span style="color:#E9F284;--shiki-dark:#E9F284"> '</span><span style="color:#E9F284;--shiki-dark:#E9F284"> '</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">-</span><span style="color:#E9F284;--shiki-dark:#E9F284">'</span><span style="color:#FF79C6;--shiki-dark:#FF79C6"> |</span><span style="color:#50FA7B;--shiki-dark:#50FA7B"> tr</span><span style="color:#E9F284;--shiki-dark:#E9F284"> '</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">[:upper:]</span><span style="color:#E9F284;--shiki-dark:#E9F284">'</span><span style="color:#E9F284;--shiki-dark:#E9F284"> '</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">[:lower:]</span><span style="color:#E9F284;--shiki-dark:#E9F284">'</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">)</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6272A4;--shiki-dark:#6272A4"># Step 1. Plan</span></span>
+<span class="line"><span style="color:#50FA7B;--shiki-dark:#50FA7B">claude</span><span style="color:#BD93F9;--shiki-dark:#BD93F9"> --print</span><span style="color:#E9F284;--shiki-dark:#E9F284"> "</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">Plan implementation for feature: </span><span style="color:#BD93F9;--shiki-dark:#BD93F9">$FEATURE</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">. </span><span style="color:#FF79C6;--shiki-dark:#FF79C6">\</span></span>
+<span class="line"><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">Output to .agent/plans/</span><span style="color:#BD93F9;--shiki-dark:#BD93F9">$SLUG</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">.md, then exit.</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#FF79C6;--shiki-dark:#FF79C6"> \</span></span>
+<span class="line"><span style="color:#FF79C6;--shiki-dark:#FF79C6">  ></span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C"> .agent/runs/</span><span style="color:#BD93F9;--shiki-dark:#BD93F9">$SLUG</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">-plan.log</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6272A4;--shiki-dark:#6272A4"># Step 2. Implementation</span></span>
+<span class="line"><span style="color:#50FA7B;--shiki-dark:#50FA7B">claude</span><span style="color:#BD93F9;--shiki-dark:#BD93F9"> --print</span><span style="color:#E9F284;--shiki-dark:#E9F284"> "</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">Implement feature according to .agent/plans/</span><span style="color:#BD93F9;--shiki-dark:#BD93F9">$SLUG</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">.md. </span><span style="color:#FF79C6;--shiki-dark:#FF79C6">\</span></span>
+<span class="line"><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">Do not modify tests/.</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#FF79C6;--shiki-dark:#FF79C6"> \</span></span>
+<span class="line"><span style="color:#FF79C6;--shiki-dark:#FF79C6">  ></span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C"> .agent/runs/</span><span style="color:#BD93F9;--shiki-dark:#BD93F9">$SLUG</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">-impl.log</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6272A4;--shiki-dark:#6272A4"># Step 3. Tests</span></span>
+<span class="line"><span style="color:#50FA7B;--shiki-dark:#50FA7B">claude</span><span style="color:#BD93F9;--shiki-dark:#BD93F9"> --print</span><span style="color:#E9F284;--shiki-dark:#E9F284"> "</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">Write tests for the implementation. </span><span style="color:#FF79C6;--shiki-dark:#FF79C6">\</span></span>
+<span class="line"><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">Read .agent/plans/</span><span style="color:#BD93F9;--shiki-dark:#BD93F9">$SLUG</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">.md for context.</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#FF79C6;--shiki-dark:#FF79C6"> \</span></span>
+<span class="line"><span style="color:#FF79C6;--shiki-dark:#FF79C6">  ></span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C"> .agent/runs/</span><span style="color:#BD93F9;--shiki-dark:#BD93F9">$SLUG</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">-tests.log</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6272A4;--shiki-dark:#6272A4"># Step 4. Docs</span></span>
+<span class="line"><span style="color:#50FA7B;--shiki-dark:#50FA7B">claude</span><span style="color:#BD93F9;--shiki-dark:#BD93F9"> --print</span><span style="color:#E9F284;--shiki-dark:#E9F284"> "</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">Update README and docs/ based on the new feature. </span><span style="color:#FF79C6;--shiki-dark:#FF79C6">\</span></span>
+<span class="line"><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">Read .agent/plans/</span><span style="color:#BD93F9;--shiki-dark:#BD93F9">$SLUG</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">.md for context.</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#FF79C6;--shiki-dark:#FF79C6"> \</span></span>
+<span class="line"><span style="color:#FF79C6;--shiki-dark:#FF79C6">  ></span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C"> .agent/runs/</span><span style="color:#BD93F9;--shiki-dark:#BD93F9">$SLUG</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">-docs.log</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6272A4;--shiki-dark:#6272A4"># Step 5. Final check</span></span>
+<span class="line"><span style="color:#50FA7B;--shiki-dark:#50FA7B">npm</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C"> test</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2"> &#x26;&#x26; </span><span style="color:#8BE9FD;--shiki-dark:#8BE9FD">echo</span><span style="color:#E9F284;--shiki-dark:#E9F284"> "</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">Pipeline OK</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span></span></code></pre>
+<p><strong>Plus:</strong> automation, repeatability, CI-friendly.
+<strong>Minus:</strong> brittle (one step falls — everything collapses), doesn’t capture interactive nuance.</p>
+<h2 id="passing-state-between-steps">Passing state between steps</h2>
+<p>The key question: <strong>how</strong> does step 2 know what step 1 <strong>did</strong>?</p>
+<h3 id="way-a-file-artifact-most-reliable">Way A. File artifact (most reliable)</h3>
+<p>Step 1 writes <strong>plan.md</strong>. Step 2 <strong>reads</strong> plan.md. Step 3 reads plan.md + sees what step 2 <strong>committed</strong>.</p>
+<p>These are the <strong>durable artifacts</strong> from M10. The file is the <strong>common language</strong> between steps.</p>
+<h3 id="way-b-through-prompt-via-context">Way B. Through-prompt (via context)</h3>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#BD93F9;--shiki-dark:#BD93F9">PLAN</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">=</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">$(</span><span style="color:#50FA7B;--shiki-dark:#50FA7B">cat</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C"> .agent/plans/</span><span style="color:#BD93F9;--shiki-dark:#BD93F9">$SLUG</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">.md</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">)</span></span>
+<span class="line"><span style="color:#50FA7B;--shiki-dark:#50FA7B">claude</span><span style="color:#BD93F9;--shiki-dark:#BD93F9"> --print</span><span style="color:#E9F284;--shiki-dark:#E9F284"> "</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">Plan: </span><span style="color:#BD93F9;--shiki-dark:#BD93F9">$PLAN</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">. Now implement.</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span></span></code></pre>
+<p>Works, but <strong>spends</strong> input context every time. For long plans — the artifact is better.</p>
+<h3 id="way-c-through-git">Way C. Through git</h3>
+<p>Step 1 commits, step 2 reads <code>git log</code> and knows what was done.</p>
+<p>This works when the <strong>result</strong> of a step is <strong>code</strong>, not a plan.</p>
+<h2 id="example-pipeline-for-add-an-endpoint-with-tests">Example: pipeline for “add an endpoint with tests”</h2>
+<h3 id="agentplansfeature-pipelinemd-after-step-1"><code>.agent/plans/feature-pipeline.md</code> (after step 1)</h3>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="markdown"><code><span class="line"><span style="color:#BD93F9;--shiki-light-font-weight:bold;--shiki-dark:#BD93F9;--shiki-dark-font-weight:bold"># Feature: Add /api/users/me endpoint</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#BD93F9;--shiki-light-font-weight:bold;--shiki-dark:#BD93F9;--shiki-dark-font-weight:bold">## Plan</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">1. Add route handler in src/api/users.ts:</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">   - GET /api/users/me</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">   - Reads session from req.cookies.sessionId</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">   - Returns user object (without password_hash)</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">2. Add types in src/types/user.ts</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">3. Add unit test in tests/api/users.test.ts</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">4. Update docs/api.md</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#BD93F9;--shiki-light-font-weight:bold;--shiki-dark:#BD93F9;--shiki-dark-font-weight:bold">## Files</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">- Modify: src/api/users.ts, src/types/user.ts, docs/api.md</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">- Create: tests/api/users.test.ts (if not exists)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#BD93F9;--shiki-light-font-weight:bold;--shiki-dark:#BD93F9;--shiki-dark-font-weight:bold">## Risks</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">- Need to handle missing session (return 401)</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">- Don't leak password_hash field in the serializer</span></span></code></pre>
+<h3 id="step-2-implementation">Step 2 (implementation)</h3>
+<p>The agent <strong>reads</strong> the plan and <strong>writes</strong> code to it. It doesn’t “invent its own plan” — it <strong>follows</strong> plan.md. Result: commit “implement /api/users/me.”</p>
+<h3 id="step-3-tests">Step 3 (tests)</h3>
+<p>The agent reads plan + new code. Writes tests, <strong>runs them</strong>, iterates to green.</p>
+<h3 id="step-4-docs">Step 4 (docs)</h3>
+<p>The agent reads plan + code + tests. Updates <code>docs/api.md</code>. Final commit.</p>
+<p><strong>Each</strong> step — 5–10 minutes. <strong>Each</strong> commit — a rollback point. <strong>Each</strong> problem area — isolated.</p>
+<h2 id="pipeline-anti-patterns">Pipeline anti-patterns</h2>
+<h3 id="1-too-many-steps">1. Too many steps</h3>
+<p>“Plan → file tree → types → handler → tests → docs → changelog → release notes.” Half the steps <strong>add no value</strong>.</p>
+<p><strong>Cure:</strong> merge until <strong>each step</strong> has <strong>obvious</strong> value.</p>
+<h3 id="2-steps-without-artifacts">2. Steps without artifacts</h3>
+<p>Step 1 “thought it through,” wrote nothing. Step 2 <strong>doesn’t know</strong> what was decided.</p>
+<p><strong>Cure:</strong> <strong>every</strong> step writes its result <strong>to a file</strong>. No file — step <strong>not done</strong>.</p>
+<h3 id="3-misaligned-permissions">3. Misaligned permissions</h3>
+<p>A “planner” subagent has full rights. Why? It doesn’t write code.</p>
+<p><strong>Cure:</strong> <strong>minimum rights</strong> per role. Planner — read-only. Test-engineer — write only in <code>tests/</code>. Implementer — write in <code>src/</code>, not in <code>tests/</code>.</p>
+<h3 id="4-silent-failure-midway">4. Silent failure midway</h3>
+<p>Step 3 failed, the script kept going. Step 4 got a <strong>broken</strong> input.</p>
+<p><strong>Cure:</strong> <code>set -e</code> in the script, check <code>npm test</code> or similar between steps. <strong>Hard fail-fast.</strong></p>
+<h3 id="5-pipeline-where-one-shot-is-enough">5. Pipeline where one-shot is enough</h3>
+<p>“Let me build a beautiful pipeline for adding one line to the README.” <strong>Overkill.</strong></p>
+<p><strong>Cure:</strong> pipeline — for <strong>big</strong> tasks (see signals above). A simple commit doesn’t need infrastructure.</p>
+<h2 id="subagent-vs-external-orchestrator-which-to-pick">Subagent vs external orchestrator: which to pick</h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Criterion</th><th>Subagents</th><th>External script</th></tr></thead><tbody><tr><td><strong>Interactive work</strong></td><td>good</td><td>bad</td></tr><tr><td><strong>CI/CD</strong></td><td>bad</td><td>good</td></tr><tr><td><strong>Setup complexity</strong></td><td>medium</td><td>medium</td></tr><tr><td><strong>Permission isolation</strong></td><td>strong</td><td>medium</td></tr><tr><td><strong>Team visibility</strong></td><td>via <code>.claude/agents/</code> in repo</td><td>via CI logs</td></tr><tr><td><strong>Flexibility</strong></td><td>medium</td><td>max</td></tr></tbody></table>
+<p><strong>Rule:</strong> for <strong>everyday</strong> work — subagents. For <strong>CI / data refresh / mass tasks</strong> — an external script.</p>
+<h2 id="practice-6090-minutes">Practice (60–90 minutes)</h2>
+<h3 id="task-1-30-minutes--sequential-prompts-manually">Task 1 (30 minutes) — sequential prompts manually</h3>
+<p>Take a task you usually run one-shot and split into 3–4 prompts. Run them one by one, between steps — <code>git status</code>, <code>git diff</code>, commit.</p>
+<p>Compare: is it easier to understand what’s happening <strong>at each</strong> stage?</p>
+<h3 id="task-2-30-minutes--set-up-2-subagents">Task 2 (30 minutes) — set up 2 subagents</h3>
+<p>In the project:</p>
+<ul>
+<li><code>.claude/agents/planner.md</code> (read-only, outputs a plan)</li>
+<li><code>.claude/agents/test-engineer.md</code> (only <code>tests/</code>)</li>
+</ul>
+<p>In one session: “Use planner to design the plan for X. Then implement. Then hand to test-engineer.”</p>
+<h3 id="optional-60-minutes--pipeline-in-ci">Optional (60 minutes) — pipeline in CI</h3>
+<p>Write <code>evals/pipeline-test.sh</code> for one of your tasks. Wire it into CI. That’s the <strong>full</strong> automated pipeline + regression on top.</p>
+<h2 id="recap">Recap</h2>
+<ul>
+<li><strong>Pipeline = decomposition of a big task into roles.</strong> One agent, different hats, <strong>a shared artifact</strong>.</li>
+<li><strong>Three ways:</strong> manually, via subagents, via a script. Pick by scenario.</li>
+<li><strong>File artifact = common language between steps.</strong> Without it — blind steps.</li>
+</ul>
+<h2 id="vibe-samurai">Vibe Samurai</h2>
+<aside class="skeptic">
+<p><strong>🥷 Vibe Samurai asks:</strong>
+“That’s overhead! I can do it all in one prompt. Why do I need 4 subagents?”</p>
+<p><strong>Answer:</strong> For <strong>simple</strong> tasks — yes, you don’t. A pipeline starts to pay off when the task is <strong>>30 minutes of agent time</strong>, or when <strong>errors at one stage</strong> keep you from <strong>diagnosing</strong> what happened. Without a pipeline — “it kind of all happened, but one piece is weird”; with a pipeline — “<strong>aha</strong>, step 3 had test failures, steps 1–2 are fine.” It’s <strong>not for show</strong>, it’s for <strong>diagnosis</strong>. And — <strong>don’t multiply entities preemptively</strong>: move to a pipeline when <strong>one-shot actually stops</strong> coping, not “just in case.” <strong>Not perfect, but actually works.</strong></p>
+</aside>
+<h2 id="whats-next">What’s next</h2>
+<p>In <strong>M15 — Multi-agent: roles, communication, supervisor</strong> — the next rung. When the task is such that <strong>one</strong> agent (even in a pipeline) <strong>isn’t enough</strong>, and you need <strong>several</strong> parallel or specialised ones. How to organise communication, how to avoid the “every dev has their own agent” issue from M10, when a supervisor is needed and when it’s overkill.</p>
+<p>If this clicked — share with anyone who wants “multi-agent” but doesn’t grasp how a pipeline differs. If you have your own pipeline — tell me in the comments, we’ll unpack the structure. Your feedback really helps polish the material.</p>
+<h2 id="-further-reading">📚 Further reading</h2>
+<p>Pipelines is the topic where “there are more words than code.” So keep three sources real software is built on: LangGraph (DAG execution), DSPy (declarative pipelines), and Anthropic’s pattern unpacking.</p>
+<p><strong>Pipeline and agent patterns</strong></p>
+<ul>
+<li><strong>Anthropic — “Building effective agents”</strong> — <a href="https://www.anthropic.com/research/building-effective-agents">anthropic.com/research/building-effective-agents</a>. <code>Prompt chaining</code>, <code>routing</code>, <code>parallelization</code>, <code>orchestrator-workers</code> — exactly the patterns we worked today. The shortest, most honest read on the topic.</li>
+</ul>
+<p><strong>Orchestration frameworks</strong></p>
+<ul>
+<li><strong>LangGraph — Overview</strong> — <a href="https://docs.langchain.com/oss/python/langgraph/overview">docs.langchain.com/oss/python/langgraph/overview</a>. DAG orchestrator from LangChain with durable execution and HITL out of the box. If you build a CI/CD pipeline around an agent — the default candidate.</li>
+<li><strong>DSPy (Stanford)</strong> — <a href="https://dspy.ai/">dspy.ai</a>. Declarative signatures and program compilation from modules; a fundamentally different angle on the same “many steps, each focused” problem.</li>
+</ul>
+<p><strong>Claude Code in place</strong></p>
+<ul>
+<li><strong>Anthropic — Subagents</strong> — <a href="https://docs.anthropic.com/en/docs/claude-code/sub-agents">docs.anthropic.com/en/docs/claude-code/sub-agents</a>. A way to assemble a pipeline inside Claude Code, without an external orchestrator and docker-compose.</li>
+</ul>
+<blockquote>
+<p><strong>Tip:</strong> don’t jump straight to LangGraph/DSPy if your task fits inside <code>.claude/agents/</code>. A pipeline through subagents is the cheapest start; an external framework adds more complexity than win.</p>
+</blockquote> <nav class="chapter-nav" data-astro-cid-a7sruqtr> <a href="/vibesamurai-site/courses/middle/m13/en" data-astro-cid-a7sruqtr> <span class="dir" data-astro-cid-a7sruqtr>← Back</span> <span class="title" data-astro-cid-a7sruqtr>M13 · Tuning: what to change when metrics don&#39;t move</span> </a> <a href="/vibesamurai-site/courses/middle/m15/en" data-astro-cid-a7sruqtr> <span class="dir" data-astro-cid-a7sruqtr>Next →</span> <span class="title" data-astro-cid-a7sruqtr>M15 · Multi-agent: roles, communication, supervisor</span> </a> </nav> </main>  </div> <script type="module">
+    import { gatingEnabled } from '../lib/supabase';
+    import { fetchChapter } from '../lib/auth';
+
+    const base = import.meta.env.BASE_URL;
+    let mermaidLib = null;
+
+    function scopeOf(root) {
+      return root === document ? document.querySelector('.reader-main') : root;
+    }
+
+    function addCopyBtns(root) {
+      const scope = scopeOf(root); if (!scope) return;
+      scope.querySelectorAll('pre').forEach((pre) => {
+        if (pre.closest('.code-tabs')) return;
+        if (pre.querySelector('.copy-btn')) return;
+        const btn = document.createElement('button');
+        btn.className = 'copy-btn';
+        btn.textContent = 'copy';
+        btn.addEventListener('click', async () => {
+          const code = pre.querySelector('code')?.textContent ?? pre.textContent ?? '';
+          await navigator.clipboard.writeText(code.trimEnd());
+          btn.textContent = '✓ copied';
+          setTimeout(() => { btn.textContent = 'copy'; }, 1600);
+        });
+        pre.appendChild(btn);
+      });
+    }
+
+    function tightenMermaidSvgs(retries = 6) {
+      let pending = false;
+      document.querySelectorAll('.mermaid svg').forEach((svg) => {
+        if (svg.dataset.tightened === '1') return;
+        try {
+          const bbox = svg.getBBox();
+          if (!bbox || bbox.width === 0) { pending = true; return; }
+          const pad = 6;
+          svg.setAttribute('viewBox',
+            `${bbox.x - pad} ${bbox.y - pad} ${bbox.width + pad * 2} ${bbox.height + pad * 2}`);
+          svg.removeAttribute('height');
+          svg.style.height = 'auto';
+          svg.style.maxWidth = '100%';
+          svg.style.display = 'block';
+          svg.dataset.tightened = '1';
+        } catch (e) { pending = true; }
+      });
+      if (pending && retries > 0) setTimeout(() => tightenMermaidSvgs(retries - 1), 120);
+    }
+
+    async function ensureMermaid() {
+      if (mermaidLib) return mermaidLib;
+      const mod = await import('https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs');
+      mermaidLib = mod.default;
+      mermaidLib.initialize({
+        startOnLoad: false, theme: 'neutral',
+        themeVariables: {
+          fontFamily: 'JetBrains Mono, ui-monospace, monospace',
+          primaryColor: '#f5f5f5', primaryBorderColor: '#222',
+          primaryTextColor: '#111', lineColor: '#444',
+        },
+        flowchart: { curve: 'basis', padding: 12, useMaxWidth: true },
+      });
+      return mermaidLib;
+    }
+
+    async function renderMermaid(root) {
+      const scope = scopeOf(root); if (!scope) return;
+      const matches = scope.querySelectorAll(
+        'pre[data-language="mermaid"], pre.language-mermaid, code.language-mermaid'
+      );
+      if (!matches.length) return;
+      matches.forEach((el) => {
+        const block = el.tagName === 'CODE' ? el.closest('pre') || el : el;
+        const codeEl = block.querySelector('code') || block;
+        const wrap = document.createElement('div');
+        wrap.className = 'mermaid';
+        wrap.textContent = codeEl.textContent;
+        block.replaceWith(wrap);
+      });
+      try {
+        const m = await ensureMermaid();
+        await m.run();
+        tightenMermaidSvgs();
+      } catch (err) {
+        console.warn('mermaid failed', err);
+        document.querySelectorAll('.mermaid:not(:has(svg))').forEach((el) => { el.style.display = 'none'; });
+      }
+    }
+
+    async function enhance(root = document) {
+      addCopyBtns(root);
+      await renderMermaid(root);
+    }
+
+    function paywallHtml(required, needLogin) {
+      const label = { beginner: 'Beginner (300 ₽)', middle: 'Beginner + Middle (500 ₽)', all: 'Весь пакет (700 ₽)' }[required] || '';
+      return `<div class="paywall">
+        <div class="paywall-ic">🔒</div>
+        <h3>Эта глава — в платном доступе</h3>
+        <p>Нужен тариф: <strong>${label}</strong>. Доступ навсегда, без подписки.</p>
+        ${needLogin ? '<p>Войди через Google и оформи доступ — продолжишь с любого устройства.</p>' : ''}
+        <a class="paywall-btn" href="${base}pricing">Открыть доступ →</a>
+        <a class="paywall-link" href="${base}account">Войти / мой аккаунт</a>
+      </div>`;
+    }
+
+    async function gatedFlow(mount) {
+      const slug = mount.dataset.slug;
+      const required = mount.dataset.required || 'beginner';
+      mount.innerHTML = '<p class="gate-msg">Проверяем доступ…</p>';
+      const res = await fetchChapter(slug);
+      if (res.ok) {
+        mount.innerHTML = res.html;
+        await enhance(mount);
+      } else if (res.status === 401) {
+        mount.innerHTML = paywallHtml(required, true);
+      } else if (res.status === 402) {
+        mount.innerHTML = paywallHtml(res.requiredTier || required, false);
+      } else {
+        mount.innerHTML = '<p class="gate-msg">Не удалось загрузить главу. Обнови страницу.</p>';
+      }
+    }
+
+    const mount = document.getElementById('gated-mount');
+    if (mount && gatingEnabled) gatedFlow(mount);
+    else enhance(document);
+  </script> </body> </html>

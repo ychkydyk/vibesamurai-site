@@ -1,0 +1,391 @@
+<!DOCTYPE html><html lang="en" data-astro-cid-a7sruqtr> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Cursor Composer + IDE agents (Cline, Aider, Windsurf) — Vibesamurai</title><meta name="description" content="Composer-1 patterns, .cursorrules, when IDE agent vs CLI agent, a comparison table of four IDE agents."><meta property="og:title" content="Cursor Composer + IDE agents (Cline, Aider, Windsurf)"><meta property="og:type" content="article"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Inter:wght@300..800&family=JetBrains+Mono:wght@400..600&display=swap" rel="stylesheet"><link rel="stylesheet" href="/vibesamurai-site/_astro/_slug_.Cs4TX1wt.css">
+<style>.account-btn{display:inline-flex;align-items:center;gap:var(--space-2);font-family:var(--font-mono);font-size:var(--size-2);text-transform:uppercase;letter-spacing:.06em;padding:5px 10px;border:1px solid var(--rule);border-radius:999px;color:var(--text-soft);background:var(--surface);transition:border-color var(--d-fast),color var(--d-fast)}.account-btn:hover{border-color:var(--accent);color:var(--text)}.account-ic{width:18px;height:18px;display:grid;place-items:center;border-radius:50%;background:var(--accent);color:var(--accent-ink);font-weight:700;font-size:10px;line-height:1}.reader-rail .account-btn{padding:0;border:none;background:transparent}.reader-rail .account-label{display:none}.reader-rail .account-ic{width:32px;height:32px;font-size:13px}.rail-toggle{width:36px;height:36px;display:grid;place-items:center;background:var(--accent);border:1px solid var(--accent);border-radius:4px;cursor:pointer;transition:filter var(--d-fast),transform var(--d-fast);padding:0}.rail-toggle:hover{filter:brightness(1.08);transform:translateY(-1px)}.rail-toggle:active{transform:translateY(0)}.rail-toggle-icon{width:14px;height:12px;border-left:2px solid var(--accent-ink);border-right:2px solid var(--accent-ink);transition:transform var(--d-normal) var(--ease-standard)}.reader-app.sidebar-open .rail-toggle-icon{transform:rotate(0)}.reader-app:not(.sidebar-open) .rail-toggle-icon{transform:scaleX(.5)}.sidebar-backdrop{display:none;position:fixed;inset:0;background:#0000008c;z-index:140;border:0;padding:0;cursor:pointer}@media(max-width:900px){.reader-app.sidebar-open~.sidebar-backdrop{display:block}}.rail-spacer[data-astro-cid-ofsbkzh7]{flex:1}.reader-sidebar[data-astro-cid-khgtvzrl] .ru-tag[data-astro-cid-khgtvzrl]{font-style:normal;font-family:var(--font-mono);font-size:.7em;color:var(--text-mute);margin-left:4px;padding:1px 4px;border:1px solid var(--rule);border-radius:3px;text-transform:uppercase;vertical-align:middle}.chapter-eyebrow[data-astro-cid-a7sruqtr]{display:flex;justify-content:space-between;align-items:center;gap:var(--space-3)}.lang-toggle[data-astro-cid-a7sruqtr]{font-family:var(--font-mono);font-size:var(--size-2);padding:2px 8px;border:1px solid var(--rule);border-radius:4px;color:var(--text-mute);text-decoration:none;text-transform:uppercase;letter-spacing:.08em}.lang-toggle[data-astro-cid-a7sruqtr]:hover{color:var(--accent);border-color:var(--accent)}.code-tabs[data-astro-cid-hg66rjob]{margin:var(--space-5) 0}.code-tabs-nav[data-astro-cid-hg66rjob]{display:flex;gap:2px;margin-bottom:-1px;position:relative;z-index:1}.ctab[data-astro-cid-hg66rjob]{font-family:var(--font-mono);font-size:11px;text-transform:uppercase;letter-spacing:.07em;padding:5px 14px;border:1px solid #21222c;border-bottom:none;background:#1a1b23;color:#6272a4;cursor:pointer;border-radius:4px 4px 0 0;transition:color .12s,background .12s}.ctab[data-astro-cid-hg66rjob].is-active{background:#282a36;color:#f8f8f2;border-color:#21222c}.ctab[data-astro-cid-hg66rjob]:hover:not(.is-active){color:#cdd6f4}.ctab-panel[data-astro-cid-hg66rjob]{display:none}.ctab-panel[data-astro-cid-hg66rjob].is-active{display:block}.ctab-panel[data-astro-cid-hg66rjob] pre{margin-top:0!important;border-radius:0 6px 6px!important}
+</style></head> <body data-astro-cid-a7sruqtr> <div class="reader-app" data-astro-cid-a7sruqtr> <aside class="reader-rail" data-astro-cid-ofsbkzh7> <a href="/vibesamurai-site/" class="logo" aria-label="Vibesamurai home" data-astro-cid-ofsbkzh7>V</a> <button type="button" class="rail-toggle" id="sidebar-toggle" aria-label="Свернуть/развернуть оглавление" title="Свернуть/развернуть оглавление" data-astro-cid-ofsbkzh7> <span class="rail-toggle-icon" aria-hidden="true" data-astro-cid-ofsbkzh7></span> </button> <div class="rail-spacer" data-astro-cid-ofsbkzh7></div> <a href="/vibesamurai-site/account" class="account-btn" id="account-btn" aria-label="Аккаунт"> <span class="account-ic" id="account-ic">⌂</span> <span class="account-label" id="account-label">Войти</span> </a>  <script type="module" src="/vibesamurai-site/_astro/AccountButton.astro_astro_type_script_index_0_lang.CmD2sdn9.js"></script> </aside>  <button type="button" class="sidebar-backdrop" id="sidebar-backdrop" aria-label="Закрыть оглавление" tabindex="-1" data-astro-cid-ofsbkzh7></button>  <script type="module">const d="vs-sidebar-open",a="(max-width: 900px)";function t(e){const n=document.querySelector(".reader-app");n&&n.classList.toggle("sidebar-open",e)}function r(){return!window.matchMedia(a).matches}function s(){const e=localStorage.getItem(d),i=window.matchMedia(a).matches?!1:e!==null?e==="1":r();t(i),document.getElementById("sidebar-toggle")?.addEventListener("click",()=>{const c=!document.querySelector(".reader-app")?.classList.contains("sidebar-open");window.matchMedia(a).matches||localStorage.setItem(d,c?"1":"0"),t(c)}),document.getElementById("sidebar-backdrop")?.addEventListener("click",()=>t(!1)),document.querySelectorAll(".reader-sidebar a").forEach(o=>{o.addEventListener("click",()=>{window.matchMedia(a).matches&&t(!1)})})}document.readyState==="loading"?document.addEventListener("DOMContentLoaded",s):s();</script> <aside class="reader-sidebar" data-astro-cid-khgtvzrl> <div class="breadcrumb" data-astro-cid-khgtvzrl>Vibesamurai · Middle Path · M8</div> <h4 data-astro-cid-khgtvzrl>In this course</h4> <ul data-astro-cid-khgtvzrl> <li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m1/en" class data-astro-cid-khgtvzrl> M1 · What is agentic AI in the SDLC  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m2/en" class data-astro-cid-khgtvzrl> M2 · Architecting agent boundaries  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m3/en" class data-astro-cid-khgtvzrl> M3 · Observability and human-in-the-loop  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m4/en" class data-astro-cid-khgtvzrl> M4 · Tool inventory and permissions  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m5/en" class data-astro-cid-khgtvzrl> M5 · MCP deep dive  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m6/en" class data-astro-cid-khgtvzrl> M6 · Claude Code CLI mastery  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m7/en" class data-astro-cid-khgtvzrl> M7 · GPT-5.3 Codex CLI and OpenAI agents  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m8/en" class="current" data-astro-cid-khgtvzrl> M8 · Cursor Composer + IDE agents  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m9/en" class data-astro-cid-khgtvzrl> M9 · Memory strategies  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m10/en" class data-astro-cid-khgtvzrl> M10 · State, drift, continuity  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m11/en" class data-astro-cid-khgtvzrl> M11 · Evaluating agents: metrics over vibes  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m12/en" class data-astro-cid-khgtvzrl> M12 · Regression tests for agents  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m13/en" class data-astro-cid-khgtvzrl> M13 · Tuning: what to change when metrics don&#39;t move  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m14/en" class data-astro-cid-khgtvzrl> M14 · One agent, many steps: pipelines and orchestration  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m15/en" class data-astro-cid-khgtvzrl> M15 · Multi-agent: roles, communication, supervisor  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m16/en" class data-astro-cid-khgtvzrl> M16 · When multi-agent is overkill. Anti-patterns  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m17/en" class data-astro-cid-khgtvzrl> M17 · Production: deploying agents to live environments  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m18/en" class data-astro-cid-khgtvzrl> M18 · Security in prod: secrets, sandbox, audit  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m19/en" class data-astro-cid-khgtvzrl> M19 · Incidents &amp; post-mortems  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m20/en" class data-astro-cid-khgtvzrl> M20 · Finale: where to go after Middle  </a> </li> </ul>  </aside> <main class="reader-main" data-astro-cid-a7sruqtr> <div class="chapter-eyebrow" data-astro-cid-a7sruqtr> <span data-astro-cid-a7sruqtr>Middle Path · m8</span> <a class="lang-toggle" href="/vibesamurai-site/courses/middle/m8" aria-label="Switch to RU" data-astro-cid-a7sruqtr>RU</a> </div> <h1 class="chapter-title" data-astro-cid-a7sruqtr>M8 · Cursor Composer + IDE agents</h1> <p class="chapter-subtitle" data-astro-cid-a7sruqtr>Composer-1 patterns, .cursorrules, when IDE agent vs CLI agent, a comparison table of four IDE agents.</p> <h2 id="what-this-chapter-is-about">What this chapter is about</h2>
+<p>Hey folks, welcome 👋</p>
+<p>We close Part II with the fourth camp of agent tools — <strong>IDE agents</strong>. Up to now we’ve covered CLI agents (Claude Code, Codex CLI) that live in the terminal and operate on the project “from the outside.” IDE agents live <strong>inside</strong> the editor, and that’s a completely different philosophy.</p>
+<p>In this chapter:</p>
+<ol>
+<li>How an IDE agent fundamentally differs from a CLI agent</li>
+<li><strong>Cursor Composer</strong> — the IDE-agent flagship, in detail</li>
+<li><strong>Cline / Aider / Windsurf</strong> — the main alternatives, briefly</li>
+<li>When an IDE agent is preferable, when a CLI one</li>
+<li>A comparison table of four IDE agents</li>
+</ol>
+<h2 id="ide-agent-vs-cli-agent-the-difference-isnt-only-the-interface">IDE agent vs CLI agent: the difference isn’t only the interface</h2>
+<p>The obvious split: one in the editor, one in the terminal. But behind it there are <strong>three non-obvious</strong> architectural differences.</p>
+<h3 id="1-context">1. Context</h3>
+<p><strong>CLI agent</strong> sees the project through <strong>tools</strong> — read_file, glob, grep. It “discovers” the project each time.</p>
+<p><strong>IDE agent</strong> sees the project <strong>through the editor API</strong> — open tabs, current cursor position, selected text, symbol under the cursor, recent edits. That gives it the <strong>context of your attention</strong> which a CLI can’t get.</p>
+<p>So when you click a function <code>parseDate</code> and say “optimise this” — the IDE agent immediately knows what you mean. A CLI agent will require “optimise the parseDate function in src/utils/date.ts.”</p>
+<h3 id="2-apply-flow">2. Apply flow</h3>
+<p><strong>CLI agent</strong> edits files directly via the <code>Edit</code> / <code>Write</code> tool. After the edit — it’s an already-changed file, visible in <code>git diff</code>.</p>
+<p><strong>IDE agent</strong> usually first <strong>shows a preview</strong> of edits right in the editor (inline diff), and you accept or reject each change. This gives finer-grained control.</p>
+<h3 id="3-embedding-in-the-dev-flow">3. Embedding in the dev flow</h3>
+<p><strong>CLI agent</strong> is a separate process. You switch between terminal and editor.</p>
+<p><strong>IDE agent</strong> is part of the editor. No switching, no copying file paths, no “setting context by hand.”</p>
+<p>Big deal for UX, not so much architecturally — under the hood the IDE agent runs the same loop, the same tools, the same model.</p>
+<h2 id="cursor-composer--what-it-is">Cursor Composer — what it is</h2>
+<p>Cursor is a <strong>VS Code fork</strong> with a built-in AI agent. Been around several years, actively developed. In 2026 the key feature is <strong>Composer</strong>, the agent mode (used to be separate from the regular chat, now integrated).</p>
+<p>What Composer does:</p>
+<ul>
+<li>Read and edit <strong>multiple files</strong> in one task (not one file at a time)</li>
+<li>Run <strong>bash commands</strong> (tests, linters, build) — with approval</li>
+<li>Use <strong>MCP servers</strong> (like Claude Code and Codex)</li>
+<li>Apply <strong>inline diff</strong> previews with per-change acceptance</li>
+<li>Run in <strong>plan-first</strong> or <strong>agent-mode</strong> (autonomous)</li>
+</ul>
+<p>Under the hood — model of choice: Claude Sonnet 4.6 / Opus 4.7, GPT-5.3, Gemini 3.1 Pro, or “cursor-small” (Cursor’s own fast model for light tasks).</p>
+<h3 id="cursorrules-and-cursorrules"><code>.cursorrules</code> and <code>.cursor/rules/</code></h3>
+<p>The analog of CLAUDE.md / AGENTS.md. Lives in the project root:</p>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>project/</span></span>
+<span class="line"><span>├── .cursorrules                  # legacy format, single file</span></span>
+<span class="line"><span>└── .cursor/</span></span>
+<span class="line"><span>    └── rules/                     # new format, directory of rule files</span></span>
+<span class="line"><span>        ├── conventions.md</span></span>
+<span class="line"><span>        ├── do-not-touch.md</span></span>
+<span class="line"><span>        └── commit-style.md</span></span></code></pre>
+<p>Content is identical in meaning to CLAUDE.md. Cursor reads these on session start.</p>
+<blockquote>
+<p><em>Pro tip:</em> <code>.cursor/rules/</code> can be structured so files auto-apply only in the relevant context. E.g. <code>auth-conventions.md</code> with meta <code>apply_when: "path matches src/auth/**"</code>. Saves a lot of context.</p>
+</blockquote>
+<h3 id="composer-as-a-multi-file-editor">Composer as a multi-file editor</h3>
+<p>The main strength of Composer — <strong>many files in one task</strong>. Typical request:</p>
+<blockquote>
+<p>“Add rate limiting to the /api/login endpoint. We already have Redis in <code>src/lib/redis.ts</code>. Add middleware, config in <code>.env.example</code>, and a unit test.”</p>
+</blockquote>
+<p>Composer assembles a plan, shows which files will be changed, gives an inline diff for each, and you can <strong>accept specific diffs</strong> while rejecting others. Micro-granularity.</p>
+<p>That’s more convenient than Claude Code, where you see changes after they’re applied. But less automatable: for long-running autonomous tasks Composer isn’t as strong.</p>
+<h2 id="cline-formerly-claude-dev--vs-code-extension">Cline (formerly Claude Dev) — VS Code extension</h2>
+<p><strong>Cline</strong> is an extension for original VS Code (not a fork). Open-source, active development. Works with Anthropic, OpenAI, Gemini, Ollama (local models).</p>
+<p>Strengths:</p>
+<ul>
+<li><strong>Open-source</strong> — read the code, contribute, fork</li>
+<li><strong>Connecting local models via Ollama</strong> — for those who need on-prem</li>
+<li><strong>Multi-file edits with per-change approval</strong> — Composer-like</li>
+<li><strong>MCP support</strong></li>
+</ul>
+<p>Weaknesses:</p>
+<ul>
+<li>Less “product-grade” UX vs Cursor</li>
+<li>Fewer ready integrations</li>
+<li>Docs sometimes catch up to development</li>
+</ul>
+<p>I use it occasionally when open-source and/or local models matter. For daily work — Cursor is more convenient.</p>
+<h2 id="aider--terminal-pair-programmer">Aider — terminal pair-programmer</h2>
+<p><strong>Aider</strong> is formally a CLI, but philosophically closer to IDE agents because it <strong>keeps editing the file you’re focused on</strong>. Works via git: every change is a separate commit.</p>
+<p>Strengths:</p>
+<ul>
+<li><strong>Small, simple, clear.</strong> Open-source, active development.</li>
+<li><strong>Git-first.</strong> Every agent change is a commit, easy to roll back.</li>
+<li><strong>Works with any model.</strong> Anthropic, OpenAI, Gemini, local.</li>
+<li><strong>Good for focused pair-programming</strong> of one file / a small feature.</li>
+</ul>
+<p>Weaknesses:</p>
+<ul>
+<li>Worse for long autonomous tasks (no full agent loop)</li>
+<li>No sandbox for execution</li>
+<li>Not suited for aggressive refactoring across many files</li>
+</ul>
+<p>I use it when I want “pair programming” — sits beside me and helps on a specific file.</p>
+<h2 id="windsurf--codeiums-ide-agent">Windsurf — Codeium’s IDE agent</h2>
+<p><strong>Windsurf</strong> is the IDE from Codeium (same shop as the Codeium VSCode plugin). Also a VS Code fork, like Cursor.</p>
+<p>Strengths:</p>
+<ul>
+<li><strong>“Cascade”</strong> — a powerful multi-step mode, sometimes better than Composer on long tasks</li>
+<li><strong>Strong free tier</strong> for solo developers</li>
+<li><strong>Good “feedback loop”</strong> — shows exactly what the agent is doing at each step</li>
+</ul>
+<p>Weaknesses:</p>
+<ul>
+<li>Smaller community than Cursor</li>
+<li>Fewer ready rules / best-practices</li>
+<li>UI a bit heavy in places</li>
+</ul>
+<p>I tried it — fine, but it didn’t make it into my daily workflow. To each their own.</p>
+<h2 id="comparison-table">Comparison table</h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Parameter</th><th>Cursor</th><th>Cline</th><th>Aider</th><th>Windsurf</th></tr></thead><tbody><tr><td><strong>Type</strong></td><td>IDE (VSCode fork)</td><td>VSCode extension</td><td>CLI with git-flow</td><td>IDE (VSCode fork)</td></tr><tr><td><strong>Open-source</strong></td><td>No</td><td>Yes</td><td>Yes</td><td>No</td></tr><tr><td><strong>Auto-completion</strong></td><td>Tab + custom model</td><td>Via extension</td><td>No</td><td>Tab + Codeium</td></tr><tr><td><strong>Composer-style multi-file</strong></td><td>✅</td><td>✅</td><td>Limited</td><td>✅ (Cascade)</td></tr><tr><td><strong>MCP support</strong></td><td>✅</td><td>✅</td><td>No</td><td>✅</td></tr><tr><td><strong>Plan-first mode</strong></td><td>✅</td><td>✅</td><td>Via flag</td><td>✅</td></tr><tr><td><strong>Local models (Ollama)</strong></td><td>Via API</td><td>✅</td><td>✅</td><td>Via API</td></tr><tr><td><strong>Sandbox for bash</strong></td><td>Via approval</td><td>Via approval</td><td>Minimal</td><td>Via approval</td></tr><tr><td><strong>Free tier</strong></td><td>Limited</td><td>Depends on model</td><td>Depends on model</td><td>Good</td></tr><tr><td><strong>Best for</strong></td><td>Daily product work</td><td>OSS / local models</td><td>Pair-programming</td><td>Cascade-style tasks</td></tr></tbody></table>
+<blockquote>
+<p>This table is <strong>May 2026</strong>. In this niche things shift every month, verify before a serious choice.</p>
+</blockquote>
+<h2 id="when-an-ide-agent-beats-a-cli-agent">When an IDE agent beats a CLI agent</h2>
+<h3 id="ide-agent-wins-on">IDE agent wins on:</h3>
+<ol>
+<li><strong>Active work in one project</strong> — you sit in the IDE all day, the agent is right there, no switching.</li>
+<li><strong>Point edits to a specific file</strong> — selected a fragment, asked, looked at the inline diff, accepted or rejected.</li>
+<li><strong>Onboarding a new codebase</strong> — the IDE shows context more naturally.</li>
+<li><strong>UI / markup / small fixes</strong> — high frequency of small tasks.</li>
+</ol>
+<h3 id="cli-agent-wins-on">CLI agent wins on:</h3>
+<ol>
+<li><strong>Long autonomous cycles</strong> — full-auto with sandbox, without your attention.</li>
+<li><strong>Cross-repo tasks</strong> — when working across several repositories at once.</li>
+<li><strong>CI / automation</strong> — agent in a pipeline, no interactive.</li>
+<li><strong>Hooks-driven workflows</strong> — deterministic rules (M6).</li>
+<li><strong>Subagents and parallel decomposition</strong> — separate isolated processes (M6).</li>
+</ol>
+<h3 id="when-to-use-them-together">When to use them together</h3>
+<p>Personally my typical setup on an average working day:</p>
+<ul>
+<li><strong>Cursor open</strong> — main environment, daily product work, small fixes.</li>
+<li><strong>Claude Code in the terminal</strong> — for long tasks, research, subagent decomposition.</li>
+<li><strong>Codex CLI nearby</strong> — for one or two specific tasks (mass migrations, autonomous test-fixing).</li>
+</ul>
+<p>They <strong>don’t compete</strong>, they <strong>complement</strong>. One project, one CLAUDE.md (via symlink to AGENTS.md and <code>.cursor/rules/</code>), three tools — that’s a normal working setup.</p>
+<h2 id="practice">Practice</h2>
+<p>15–20 minutes:</p>
+<ol>
+<li><strong>Install an IDE agent you haven’t tried.</strong> If you’re already on Cursor — try Windsurf, or vice versa.</li>
+<li><strong>Do a small task in the new tool</strong> — something you usually do in your main one. Compare the UX.</li>
+<li><strong>Write down three points</strong> where the new tool won or lost vs your usual. That’s “developing your eye” in action.</li>
+<li><strong>If you already have <code>CLAUDE.md</code> / <code>AGENTS.md</code> / <code>.cursor/rules/</code></strong> — try collapsing them to one source of truth via symlink.</li>
+</ol>
+<h2 id="closing-part-ii">Closing Part II</h2>
+<p>Friends. We close Part II — Tools &#x26; Environment.</p>
+<p>If you sum up M4–M8 in one formula:</p>
+<blockquote>
+<p>Tools are a set of interchangeable working instruments with different strengths. A sharp middle developer in 2026 <strong>knows several</strong>, picks by task, isn’t emotionally attached to any.</p>
+</blockquote>
+<p>The model and tool zoo will keep growing. There will be a “new king” every quarter. Don’t anchor on brands — <strong>anchor on patterns</strong> (plan→act→evaluate, structured plan, sandbox, hooks, MCP). Those outlive specific products.</p>
+<p>Train your eye, not your fingers. Your head matters more than the AI — especially at the moment of picking the tool for the task.</p>
+<h2 id="recap">Recap</h2>
+<ul>
+<li><strong>IDE agent vs CLI agent — three differences:</strong> attention context, apply flow with inline diff, embedding in the editor.</li>
+<li><strong>Cursor Composer</strong> — IDE-agent flagship. <code>.cursor/rules/</code> as the CLAUDE.md analog.</li>
+<li><strong>Cline, Aider, Windsurf</strong> — three alternatives with their own strengths.</li>
+<li><strong>IDE for daily product work, CLI for autonomous cycles</strong> and cross-repo tasks.</li>
+<li><strong>Best setup is a combination</strong>, not a single pick. Symlink CLAUDE.md/AGENTS.md/cursorrules — one source of truth.</li>
+</ul>
+<h2 id="whats-next">What’s next</h2>
+<p>Part III — <strong>Memory &#x26; State</strong>. In <strong>M9 — Memory strategies</strong> we cover short-term, long-term, and external memory: how the agent remembers across sessions, what to clean, what to keep, what not to keep. Closes a whole family of errors “the agent forgot what we decided yesterday / the agent mixes up contexts.”</p>
+<p>If this clicked — share Part II with anyone just picking tools or about to work with an agent seriously. If you have observations about IDE agents I didn’t cover — write in the comments, your feedback really helps polish the material.</p>
+<h2 id="-further-reading">📚 Further reading</h2>
+<p>Four tools in one chapter — that’s a lot. If you want depth on any of them, here are the primary sources I come back to.</p>
+<p><strong>Cursor</strong></p>
+<ul>
+<li><strong>Composer / Overview</strong> — Cursor’s official documentation on Composer and Agent Mode: <a href="https://docs.cursor.com/composer/overview">docs.cursor.com/composer/overview</a>.</li>
+<li><strong>Introducing Cursor 2.0 and Composer</strong> — Cursor’s post about 2.0, parallel agents and Composer-1: <a href="https://cursor.com/blog/2-0">cursor.com/blog/2-0</a>.</li>
+</ul>
+<p><strong>Cline</strong></p>
+<ul>
+<li><strong>cline/cline (GitHub)</strong> — open-source autonomous coding agent for VS Code (and beyond): <a href="https://github.com/cline/cline">github.com/cline/cline</a>.</li>
+<li><strong>Cline Wiki</strong> — practical config, providers, safety settings guide: <a href="https://github.com/cline/cline/wiki">github.com/cline/cline/wiki</a>.</li>
+</ul>
+<p><strong>Aider and Windsurf</strong></p>
+<ul>
+<li><strong>Aider docs</strong> — chat modes (code/architect/ask), in-chat commands, model connection: <a href="https://aider.chat/docs/">aider.chat/docs</a>.</li>
+<li><strong>Windsurf — Cascade docs</strong> — how Cascade works: planning, checkpoints, real-time awareness: <a href="https://docs.windsurf.com/windsurf/cascade/cascade">docs.windsurf.com/windsurf/cascade/cascade</a>.</li>
+</ul>
+<blockquote>
+<p><strong>Tip:</strong> don’t read all four docs back-to-back — pick one IDE agent, work on it for 1–2 weeks, then compare. From opening pages everything “looks the same,” the difference shows up over the distance.</p>
+</blockquote>
+<hr>
+<p><strong>Maps to:</strong> Author’s block — IDE agents survey outside GH-600
+<strong>Closes:</strong> Part II — Tools &#x26; Environment (M4 + M5 + M6 + M7 + M8)</p> <nav class="chapter-nav" data-astro-cid-a7sruqtr> <a href="/vibesamurai-site/courses/middle/m7/en" data-astro-cid-a7sruqtr> <span class="dir" data-astro-cid-a7sruqtr>← Back</span> <span class="title" data-astro-cid-a7sruqtr>M7 · GPT-5.3 Codex CLI and OpenAI agents</span> </a> <a href="/vibesamurai-site/courses/middle/m9/en" data-astro-cid-a7sruqtr> <span class="dir" data-astro-cid-a7sruqtr>Next →</span> <span class="title" data-astro-cid-a7sruqtr>M9 · Memory strategies</span> </a> </nav> </main>  </div> <script type="module">
+    import { gatingEnabled } from '../lib/supabase';
+    import { fetchChapter } from '../lib/auth';
+
+    const base = import.meta.env.BASE_URL;
+    let mermaidLib = null;
+
+    function scopeOf(root) {
+      return root === document ? document.querySelector('.reader-main') : root;
+    }
+
+    function addCopyBtns(root) {
+      const scope = scopeOf(root); if (!scope) return;
+      scope.querySelectorAll('pre').forEach((pre) => {
+        if (pre.closest('.code-tabs')) return;
+        if (pre.querySelector('.copy-btn')) return;
+        const btn = document.createElement('button');
+        btn.className = 'copy-btn';
+        btn.textContent = 'copy';
+        btn.addEventListener('click', async () => {
+          const code = pre.querySelector('code')?.textContent ?? pre.textContent ?? '';
+          await navigator.clipboard.writeText(code.trimEnd());
+          btn.textContent = '✓ copied';
+          setTimeout(() => { btn.textContent = 'copy'; }, 1600);
+        });
+        pre.appendChild(btn);
+      });
+    }
+
+    function tightenMermaidSvgs(retries = 6) {
+      let pending = false;
+      document.querySelectorAll('.mermaid svg').forEach((svg) => {
+        if (svg.dataset.tightened === '1') return;
+        try {
+          const bbox = svg.getBBox();
+          if (!bbox || bbox.width === 0) { pending = true; return; }
+          const pad = 6;
+          svg.setAttribute('viewBox',
+            `${bbox.x - pad} ${bbox.y - pad} ${bbox.width + pad * 2} ${bbox.height + pad * 2}`);
+          svg.removeAttribute('height');
+          svg.style.height = 'auto';
+          svg.style.maxWidth = '100%';
+          svg.style.display = 'block';
+          svg.dataset.tightened = '1';
+        } catch (e) { pending = true; }
+      });
+      if (pending && retries > 0) setTimeout(() => tightenMermaidSvgs(retries - 1), 120);
+    }
+
+    async function ensureMermaid() {
+      if (mermaidLib) return mermaidLib;
+      const mod = await import('https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs');
+      mermaidLib = mod.default;
+      mermaidLib.initialize({
+        startOnLoad: false, theme: 'neutral',
+        themeVariables: {
+          fontFamily: 'JetBrains Mono, ui-monospace, monospace',
+          primaryColor: '#f5f5f5', primaryBorderColor: '#222',
+          primaryTextColor: '#111', lineColor: '#444',
+        },
+        flowchart: { curve: 'basis', padding: 12, useMaxWidth: true },
+      });
+      return mermaidLib;
+    }
+
+    async function renderMermaid(root) {
+      const scope = scopeOf(root); if (!scope) return;
+      const matches = scope.querySelectorAll(
+        'pre[data-language="mermaid"], pre.language-mermaid, code.language-mermaid'
+      );
+      if (!matches.length) return;
+      matches.forEach((el) => {
+        const block = el.tagName === 'CODE' ? el.closest('pre') || el : el;
+        const codeEl = block.querySelector('code') || block;
+        const wrap = document.createElement('div');
+        wrap.className = 'mermaid';
+        wrap.textContent = codeEl.textContent;
+        block.replaceWith(wrap);
+      });
+      try {
+        const m = await ensureMermaid();
+        await m.run();
+        tightenMermaidSvgs();
+      } catch (err) {
+        console.warn('mermaid failed', err);
+        document.querySelectorAll('.mermaid:not(:has(svg))').forEach((el) => { el.style.display = 'none'; });
+      }
+    }
+
+    async function enhance(root = document) {
+      addCopyBtns(root);
+      await renderMermaid(root);
+    }
+
+    function paywallHtml(required, needLogin) {
+      const label = { beginner: 'Beginner (300 ₽)', middle: 'Beginner + Middle (500 ₽)', all: 'Весь пакет (700 ₽)' }[required] || '';
+      return `<div class="paywall">
+        <div class="paywall-ic">🔒</div>
+        <h3>Эта глава — в платном доступе</h3>
+        <p>Нужен тариф: <strong>${label}</strong>. Доступ навсегда, без подписки.</p>
+        ${needLogin ? '<p>Войди через Google и оформи доступ — продолжишь с любого устройства.</p>' : ''}
+        <a class="paywall-btn" href="${base}pricing">Открыть доступ →</a>
+        <a class="paywall-link" href="${base}account">Войти / мой аккаунт</a>
+      </div>`;
+    }
+
+    async function gatedFlow(mount) {
+      const slug = mount.dataset.slug;
+      const required = mount.dataset.required || 'beginner';
+      mount.innerHTML = '<p class="gate-msg">Проверяем доступ…</p>';
+      const res = await fetchChapter(slug);
+      if (res.ok) {
+        mount.innerHTML = res.html;
+        await enhance(mount);
+      } else if (res.status === 401) {
+        mount.innerHTML = paywallHtml(required, true);
+      } else if (res.status === 402) {
+        mount.innerHTML = paywallHtml(res.requiredTier || required, false);
+      } else {
+        mount.innerHTML = '<p class="gate-msg">Не удалось загрузить главу. Обнови страницу.</p>';
+      }
+    }
+
+    const mount = document.getElementById('gated-mount');
+    if (mount && gatingEnabled) gatedFlow(mount);
+    else enhance(document);
+  </script> </body> </html>

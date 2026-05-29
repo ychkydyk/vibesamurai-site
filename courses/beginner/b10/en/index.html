@@ -1,0 +1,310 @@
+<!DOCTYPE html><html lang="en" data-astro-cid-a7sruqtr> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>How to evaluate the agent&#39;s output — Vibesamurai</title><meta name="description" content="Checklist and sceptical checks. Telling 'actually works' from 'looks working'. Half of agent screw-ups live here."><meta property="og:title" content="How to evaluate the agent's output"><meta property="og:type" content="article"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Inter:wght@300..800&family=JetBrains+Mono:wght@400..600&display=swap" rel="stylesheet"><link rel="stylesheet" href="/vibesamurai-site/_astro/_slug_.Cs4TX1wt.css">
+<style>.account-btn{display:inline-flex;align-items:center;gap:var(--space-2);font-family:var(--font-mono);font-size:var(--size-2);text-transform:uppercase;letter-spacing:.06em;padding:5px 10px;border:1px solid var(--rule);border-radius:999px;color:var(--text-soft);background:var(--surface);transition:border-color var(--d-fast),color var(--d-fast)}.account-btn:hover{border-color:var(--accent);color:var(--text)}.account-ic{width:18px;height:18px;display:grid;place-items:center;border-radius:50%;background:var(--accent);color:var(--accent-ink);font-weight:700;font-size:10px;line-height:1}.reader-rail .account-btn{padding:0;border:none;background:transparent}.reader-rail .account-label{display:none}.reader-rail .account-ic{width:32px;height:32px;font-size:13px}.rail-toggle{width:36px;height:36px;display:grid;place-items:center;background:var(--accent);border:1px solid var(--accent);border-radius:4px;cursor:pointer;transition:filter var(--d-fast),transform var(--d-fast);padding:0}.rail-toggle:hover{filter:brightness(1.08);transform:translateY(-1px)}.rail-toggle:active{transform:translateY(0)}.rail-toggle-icon{width:14px;height:12px;border-left:2px solid var(--accent-ink);border-right:2px solid var(--accent-ink);transition:transform var(--d-normal) var(--ease-standard)}.reader-app.sidebar-open .rail-toggle-icon{transform:rotate(0)}.reader-app:not(.sidebar-open) .rail-toggle-icon{transform:scaleX(.5)}.sidebar-backdrop{display:none;position:fixed;inset:0;background:#0000008c;z-index:140;border:0;padding:0;cursor:pointer}@media(max-width:900px){.reader-app.sidebar-open~.sidebar-backdrop{display:block}}.rail-spacer[data-astro-cid-ofsbkzh7]{flex:1}.reader-sidebar[data-astro-cid-khgtvzrl] .ru-tag[data-astro-cid-khgtvzrl]{font-style:normal;font-family:var(--font-mono);font-size:.7em;color:var(--text-mute);margin-left:4px;padding:1px 4px;border:1px solid var(--rule);border-radius:3px;text-transform:uppercase;vertical-align:middle}.chapter-eyebrow[data-astro-cid-a7sruqtr]{display:flex;justify-content:space-between;align-items:center;gap:var(--space-3)}.lang-toggle[data-astro-cid-a7sruqtr]{font-family:var(--font-mono);font-size:var(--size-2);padding:2px 8px;border:1px solid var(--rule);border-radius:4px;color:var(--text-mute);text-decoration:none;text-transform:uppercase;letter-spacing:.08em}.lang-toggle[data-astro-cid-a7sruqtr]:hover{color:var(--accent);border-color:var(--accent)}.code-tabs[data-astro-cid-hg66rjob]{margin:var(--space-5) 0}.code-tabs-nav[data-astro-cid-hg66rjob]{display:flex;gap:2px;margin-bottom:-1px;position:relative;z-index:1}.ctab[data-astro-cid-hg66rjob]{font-family:var(--font-mono);font-size:11px;text-transform:uppercase;letter-spacing:.07em;padding:5px 14px;border:1px solid #21222c;border-bottom:none;background:#1a1b23;color:#6272a4;cursor:pointer;border-radius:4px 4px 0 0;transition:color .12s,background .12s}.ctab[data-astro-cid-hg66rjob].is-active{background:#282a36;color:#f8f8f2;border-color:#21222c}.ctab[data-astro-cid-hg66rjob]:hover:not(.is-active){color:#cdd6f4}.ctab-panel[data-astro-cid-hg66rjob]{display:none}.ctab-panel[data-astro-cid-hg66rjob].is-active{display:block}.ctab-panel[data-astro-cid-hg66rjob] pre{margin-top:0!important;border-radius:0 6px 6px!important}
+</style></head> <body data-astro-cid-a7sruqtr> <div class="reader-app" data-astro-cid-a7sruqtr> <aside class="reader-rail" data-astro-cid-ofsbkzh7> <a href="/vibesamurai-site/" class="logo" aria-label="Vibesamurai home" data-astro-cid-ofsbkzh7>V</a> <button type="button" class="rail-toggle" id="sidebar-toggle" aria-label="Свернуть/развернуть оглавление" title="Свернуть/развернуть оглавление" data-astro-cid-ofsbkzh7> <span class="rail-toggle-icon" aria-hidden="true" data-astro-cid-ofsbkzh7></span> </button> <div class="rail-spacer" data-astro-cid-ofsbkzh7></div> <a href="/vibesamurai-site/account" class="account-btn" id="account-btn" aria-label="Аккаунт"> <span class="account-ic" id="account-ic">⌂</span> <span class="account-label" id="account-label">Войти</span> </a>  <script type="module" src="/vibesamurai-site/_astro/AccountButton.astro_astro_type_script_index_0_lang.CmD2sdn9.js"></script> </aside>  <button type="button" class="sidebar-backdrop" id="sidebar-backdrop" aria-label="Закрыть оглавление" tabindex="-1" data-astro-cid-ofsbkzh7></button>  <script type="module">const d="vs-sidebar-open",a="(max-width: 900px)";function t(e){const n=document.querySelector(".reader-app");n&&n.classList.toggle("sidebar-open",e)}function r(){return!window.matchMedia(a).matches}function s(){const e=localStorage.getItem(d),i=window.matchMedia(a).matches?!1:e!==null?e==="1":r();t(i),document.getElementById("sidebar-toggle")?.addEventListener("click",()=>{const c=!document.querySelector(".reader-app")?.classList.contains("sidebar-open");window.matchMedia(a).matches||localStorage.setItem(d,c?"1":"0"),t(c)}),document.getElementById("sidebar-backdrop")?.addEventListener("click",()=>t(!1)),document.querySelectorAll(".reader-sidebar a").forEach(o=>{o.addEventListener("click",()=>{window.matchMedia(a).matches&&t(!1)})})}document.readyState==="loading"?document.addEventListener("DOMContentLoaded",s):s();</script> <aside class="reader-sidebar" data-astro-cid-khgtvzrl> <div class="breadcrumb" data-astro-cid-khgtvzrl>Vibesamurai · Beginner Path · B10</div> <h4 data-astro-cid-khgtvzrl>In this course</h4> <ul data-astro-cid-khgtvzrl> <li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b1/en" class data-astro-cid-khgtvzrl> B1 · What is an AI agent  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b2/en" class data-astro-cid-khgtvzrl> B2 · Installing your first AI agent  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b3/en" class data-astro-cid-khgtvzrl> B3 · First conversation  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b4/en" class data-astro-cid-khgtvzrl> B4 · What&#39;s a repo and why commit  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b5/en" class data-astro-cid-khgtvzrl> B5 · Building the first project (todo app)  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b6/en" class data-astro-cid-khgtvzrl> B6 · Reading the code the agent wrote  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b7/en" class data-astro-cid-khgtvzrl> B7 · Security for beginners  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b8/en" class data-astro-cid-khgtvzrl> B8 · Cursor vs Claude Code vs Codex CLI  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b9/en" class data-astro-cid-khgtvzrl> B9 · Deploying the first project  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b10/en" class="current" data-astro-cid-khgtvzrl> B10 · How to evaluate the agent&#39;s output  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b11/en" class data-astro-cid-khgtvzrl> B11 · Capstone: build your own tool  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b12/en" class data-astro-cid-khgtvzrl> B12 · Where to go next  </a> </li> </ul>  </aside> <main class="reader-main" data-astro-cid-a7sruqtr> <div class="chapter-eyebrow" data-astro-cid-a7sruqtr> <span data-astro-cid-a7sruqtr>Beginner Path · b10</span> <a class="lang-toggle" href="/vibesamurai-site/courses/beginner/b10" aria-label="Switch to RU" data-astro-cid-a7sruqtr>RU</a> </div> <h1 class="chapter-title" data-astro-cid-a7sruqtr>B10 · How to evaluate the agent&#39;s output</h1> <p class="chapter-subtitle" data-astro-cid-a7sruqtr>Checklist and sceptical checks. Telling &#39;actually works&#39; from &#39;looks working&#39;. Half of agent screw-ups live here.</p> <h2 id="hook">Hook</h2>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>"LOOKS GOOD"                  "ACTUALLY WORKS"</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>Opened — pretty   →           Opened — pretty</span></span>
+<span class="line"><span>Accepted                       Checked every feature</span></span>
+<span class="line"><span>                               Checked edge cases</span></span>
+<span class="line"><span>                               Checked console</span></span>
+<span class="line"><span>                               Read the diff</span></span>
+<span class="line"><span>                               → accepted</span></span></code></pre>
+<p>Hey folks, welcome 👋</p>
+<p>This chapter is about <strong>that moment</strong> when the agent finished, everything “<strong>looks</strong>” fine, and you want to hit accept and move on. That’s the <strong>main trap</strong> for a newcomer. Half of agent screw-ups don’t show up at once — they show up two days later when “looked working” code <strong>actually</strong> breaks on the second click.</p>
+<p>Twenty to thirty minutes. After the chapter you’ll have a <strong>verification checklist</strong> that takes 3–5 minutes but <strong>saves hours</strong> later.</p>
+<h2 id="concept-works-and-looks-working-are-different-things">Concept: “works” and “looks working” are different things</h2>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>LOOKS POTENTIALLY              WORKS</span></span>
+<span class="line"><span>✓ Opened without error         ✓ Opened without error</span></span>
+<span class="line"><span>✓ Picture in place             ✓ All 5 "how we know it's done" items</span></span>
+<span class="line"><span>                               ✓ Edge cases checked</span></span>
+<span class="line"><span>                               ✓ Console clean</span></span>
+<span class="line"><span>                               ✓ Only the right files changed</span></span>
+<span class="line"><span>                               ✓ Reload doesn't break</span></span></code></pre>
+<p><strong>Looks good</strong> is a <strong>surface</strong> test. The eye saw the familiar, the brain ticked “ok.”</p>
+<p><strong>Works</strong> is a <strong>functional</strong> test. Every promised feature checked by hand.</p>
+<p>The difference is <strong>5–7 minutes</strong> of checks. And how many of your nerves survive next week.</p>
+<h2 id="acceptance-checklist-5-minutes">Acceptance checklist (5 minutes)</h2>
+<p>Memorise and walk it <strong>after every</strong> edit by the agent. Base hygiene, like <code>git status</code> after changes.</p>
+<p>The “accept or not” decision drawn as a flowchart:</p>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="mermaid"><code><span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">flowchart TB</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    A([Agent says&#x3C;br/>"done"]) --> B{"How we know it's done"&#x3C;br/>criteria verified&#x3C;br/>by hand?}</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    B -->|no| F([Roll back&#x3C;br/>git restore .])</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    B -->|yes| C{Edge cases&#x3C;br/>passed?}</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    C -->|no| U([Clarify&#x3C;br/>and redo])</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    C -->|yes| D{Console and&#x3C;br/>git diff clean?}</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    D -->|no| U</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    D -->|yes| E{Reload&#x3C;br/>didn't break it?}</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    E -->|no| U</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    E -->|yes| OK([Accept&#x3C;br/>+ commit])</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    U -.-> A</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    F -.-> A</span></span></code></pre>
+<p>Bottom-up: while any check isn’t green — clarify or roll back. <strong>No “I’ll figure it out later.”</strong></p>
+<h3 id="1-match-the-requests-criteria">1. Match the request’s criteria</h3>
+<p>Recall the B3 formula: <strong>WHAT + WHERE + HOW WE KNOW IT’S DONE</strong>. Take your “how we know” and <strong>verify each item</strong> by hand.</p>
+<p>If the request said “<strong>added a task → it appeared in the list</strong>” — add a task and <strong>look</strong>. Not “should appear” — <strong>did it appear</strong>.</p>
+<h3 id="2-edge-cases">2. Edge cases</h3>
+<p>“Edge case” = boundary scenarios: empty input, very long text, special characters, rapid clicks.</p>
+<p>Minimum list:</p>
+<ul>
+<li>Empty input (click “add” without typing)</li>
+<li>Very long input (300 chars)</li>
+<li>Special chars in text (<code>&#x3C;script></code>, quotes, emoji)</li>
+<li>Rapid repeated clicks</li>
+<li>Deleting the last item</li>
+</ul>
+<p>90 % of bugs hide in edge cases.</p>
+<h3 id="3-browser-console">3. Browser console</h3>
+<p>F12 → Console. <strong>What’s there?</strong></p>
+<ul>
+<li><strong>Empty</strong> — great</li>
+<li><strong>Yellow warnings</strong> — usually ok, but read what they mean</li>
+<li><strong>Red errors</strong> — stop. Show the agent: “Console error <code>&#x3C;…></code>. What’s that?“</li>
+</ul>
+<h3 id="4-git-diff">4. Git diff</h3>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#50FA7B;--shiki-dark:#50FA7B">git</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C"> diff</span></span></code></pre>
+<p>Shows <strong>exactly which lines</strong> changed. Eyeball-scroll:</p>
+<ul>
+<li>Did <strong>only</strong> the expected files change?</li>
+<li>No <strong>extra</strong> changes (e.g. you had one todo and the agent rewrote three files)?</li>
+<li>No <strong>suspicious</strong> lines — <code>eval()</code>, <code>localStorage.setItem("token", ...)</code>, new <code>&#x3C;script src="http://..."></code>?</li>
+</ul>
+<p>If something’s off — <code>git restore .</code> (rollback) and reformulate.</p>
+<h3 id="5-page-reload-where-applicable">5. Page reload (where applicable)</h3>
+<p>For web projects: after changes hit F5 in the browser. Still works? State persisted if it should have?</p>
+<h2 id="extended-checklist-510-minutes-before-deployshare">Extended checklist (5–10 minutes, before deploy/share)</h2>
+<p>When you want to <strong>share</strong> the result — extras:</p>
+<h3 id="6-mobile-device">6. Mobile device</h3>
+<p>Open the URL (if you deployed in B9) <strong>on a phone</strong>. Often desktop is fine and mobile:</p>
+<ul>
+<li>Buttons too small</li>
+<li>Text runs off-screen</li>
+<li>Swipe/tap doesn’t work</li>
+</ul>
+<h3 id="7-another-browser">7. Another browser</h3>
+<p>Tested in Chrome? Open in Firefox/Safari. Sometimes things work only in Chrome and quietly break elsewhere.</p>
+<h3 id="8-clean-session">8. Clean session</h3>
+<p>Open in “incognito” / “private window.” That clears localStorage and cookies. If your todo doesn’t start “from scratch” there — you have a first-run bug <strong>on your machine</strong> masked by old data.</p>
+<h3 id="9-what-should-not-work--really-doesnt">9. What should NOT work — really doesn’t?</h3>
+<p>Suppose your todo doesn’t sync to the cloud (it’s local). Verify — does anything go to the cloud? Open DevTools → Network and see <strong>where your site reaches</strong> in the background. There shouldn’t be requests to unknown domains.</p>
+<blockquote>
+<p><em>Principle:</em> if network requests appear you <strong>didn’t ask for</strong> — that’s a serious signal. Ask the agent: “where did the request to <code>&#x3C;domain></code> come from, I didn’t ask for it.”</p>
+</blockquote>
+<h2 id="anti-patterns-newcomers-fall-into">Anti-patterns newcomers fall into</h2>
+<h3 id="anti-pattern-1-looks--works">Anti-pattern 1. “Looks = works”</h3>
+<p>Opened, saw — “oh, button, form, all there” → accepted. <strong>No feature checks.</strong> Two days later half doesn’t work.</p>
+<p><strong>Cure:</strong> the checklist above. <strong>Always.</strong></p>
+<h3 id="anti-pattern-2-agent-wrote-it--its-right">Anti-pattern 2. “Agent wrote it = it’s right”</h3>
+<p>The agent confidently reports “done, added function X.” Actually it added a <strong>similar</strong> function that’s 70 % right and 30 % off.</p>
+<p><strong>Cure:</strong> <strong>check by hand</strong> the key scenarios. Trust the agent — yes, but <strong>with verification</strong>.</p>
+<h3 id="anti-pattern-3-accept-now-figure-out-later">Anti-pattern 3. “Accept now, figure out later”</h3>
+<p>“I’ll just accept, check later.” <strong>Never checks.</strong> A <strong>full menu</strong> of hidden bugs piles up, in a week the project won’t start, and <strong>nobody remembers</strong> what’s what.</p>
+<p><strong>Cure:</strong> <strong>commit after every accepted edit</strong> (B4). If a bug surfaces — <code>git log</code> shows <strong>where</strong> it appeared, and <code>git restore</code> rolls back painlessly.</p>
+<h3 id="anti-pattern-4-green--good">Anti-pattern 4. “Green = good”</h3>
+<p>Tests passed → it works. A common mistake of <strong>experienced</strong> programmers too. Tests check only what’s <strong>written</strong> in them. Did you write <strong>the right</strong> test?</p>
+<p><strong>Cure:</strong> by hand, <strong>with your eyes</strong>. Tests are a <strong>supplement</strong>, not a replacement.</p>
+<h3 id="anti-pattern-5-works-for-me--works-for-everyone">Anti-pattern 5. “Works for me = works for everyone”</h3>
+<p>“Opens on my machine — ok.” For the user:</p>
+<ul>
+<li>Different browser</li>
+<li>Different OS</li>
+<li>Different screen size</li>
+<li>Older version</li>
+</ul>
+<p><strong>Cure:</strong> mobile, clean session, another browser — points 6–8 of the extended checklist.</p>
+<h2 id="a-short-aside">A short aside ⚡</h2>
+<p>The most common comment from folks: “yesterday everything worked, today it’s broken — the agent <strong>broke something</strong>.”</p>
+<p>In 9 out of 10 cases — <strong>nobody</strong> broke anything. Yesterday you didn’t check properly, today you spotted a bug that was there then too. Basic cognitive bias: “works for me” = “works in principle.” It doesn’t.</p>
+<p><strong>The checklist is insurance against yourself.</strong></p>
+<h2 id="example-applying-the-checklist-to-todo">Example: applying the checklist to todo</h2>
+<p>Say you asked the agent: “Add the ability to delete a task with a ❌ button.”</p>
+<p>Agent said “done.”</p>
+<p><strong>Checklist (3 minutes):</strong></p>
+<ol>
+<li><strong>Match:</strong> opened — is there a ❌ next to each task? <strong>Yes.</strong> Click deletes? <strong>Yes.</strong></li>
+<li><strong>Edge:</strong>
+<ul>
+<li>Delete the <strong>last</strong> task — list empty? Not broken?</li>
+<li>Delete rapidly <strong>in a row</strong> — all deleted?</li>
+<li>And if I <strong>completed</strong> a task and then delete — works?</li>
+</ul>
+</li>
+<li><strong>Console:</strong> F12 → Console. <strong>Empty.</strong></li>
+<li><strong>Diff:</strong> <code>git diff</code> → only <code>app.js</code> and <code>style.css</code> changed (for the button) — <strong>expected</strong>.</li>
+<li><strong>Reload:</strong> F5 after delete — tasks really gone, not “restored from localStorage.”</li>
+</ol>
+<p>All good? <strong>Commit.</strong> Not all? <strong>Clarify with the agent or roll back.</strong></p>
+<h2 id="practice-30-minutes">Practice (30 minutes)</h2>
+<h3 id="task-1-15-minutes--checklist-your-todo">Task 1 (15 minutes) — checklist your todo</h3>
+<p>Open your todo from B5 (or any current project). Walk the <strong>basic</strong> checklist (items 1–5). Find at least <strong>one</strong> bug you didn’t notice before.</p>
+<p>If you found zero — great, tidy project. Or you <strong>didn’t check well</strong>.</p>
+<p>If you found something — ask the agent to fix and <strong>walk the checklist again</strong>. Habit reinforced.</p>
+<h3 id="task-2-15-minutes--checklist--text-file">Task 2 (15 minutes) — checklist → text file</h3>
+<p>In the project root create <code>CHECKLIST.md</code>:</p>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="markdown"><code><span class="line"><span style="color:#BD93F9;--shiki-light-font-weight:bold;--shiki-dark:#BD93F9;--shiki-dark-font-weight:bold"># Before commit</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">- [ ] All "how we know it's done" criteria verified by hand</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">- [ ] Edge: empty input, long text, special chars</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">- [ ] Console F12 — no red</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">- [ ] git diff — only the expected changed</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">- [ ] F5 — state persists as it should</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#BD93F9;--shiki-light-font-weight:bold;--shiki-dark:#BD93F9;--shiki-dark-font-weight:bold"># Before sharing</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">- [ ] Mobile</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">- [ ] Another browser</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">- [ ] Incognito (clean session)</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">- [ ] Network: no extra requests</span></span></code></pre>
+<p>Make a habit of <strong>opening</strong> this file before every accepted edit. In 2 weeks it’s in your head; delete the file.</p>
+<h2 id="recap">Recap</h2>
+<ul>
+<li><strong>“Looks good” ≠ “works.”</strong> 5 minutes of checklist saves hours later.</li>
+<li><strong>Base checklist:</strong> criteria → edge → console → diff → reload. <strong>After every edit.</strong></li>
+<li><strong>Anti-patterns:</strong> “accept now, check later,” “green = good,” “works for me.” All three are known traps.</li>
+</ul>
+<h2 id="vibe-samurai">Vibe Samurai</h2>
+<aside class="skeptic">
+<p><strong>🥷 Vibe Samurai asks:</strong>
+“Spending half an hour on checks! I want fast. And the agent wrote it — didn’t it check itself?”</p>
+<p><strong>Answer:</strong> The agent checked <strong>against what you asked</strong>. If you didn’t ask — it did the <strong>minimum sufficient</strong> to look working. Verification is <strong>your</strong> responsibility, not the agent’s. Sounds unfair, but it’s like with a contractor: you can hand over a job, but <strong>accepting the work</strong> is on you. Otherwise every “unchecked” bug stays yours — and the agent moved on. Five minutes of checks vs hours of redo — the math is simple. <strong>Not perfect, but actually works.</strong></p>
+</aside>
+<h2 id="whats-next">What’s next</h2>
+<p>In <strong>B11 — Capstone: build your own tool</strong> we gather <strong>everything covered</strong> in the track — request formula, git, code reading, security, deploy, checklist — into <strong>one real project</strong> that <strong>you personally</strong> need. Not a learning todo, but a thing you’ll <strong>actually use yourself</strong>. The Beginner track’s final work.</p>
+<p>If this clicked — share with anyone who “accepts agent work without looking.” If you had an “accepted — broke two days later” episode — share in the comments, we’ll unpack how to avoid. <strong>A like and a comment is extra appreciated</strong>, your feedback really helps polish the material.</p>
+<h2 id="-further-reading">📚 Further reading</h2>
+<p>Evaluating the result is half of all the work with an agent. Resources I find useful at this stage — “already accepted or not yet.”</p>
+<p><strong>How to review agent code</strong></p>
+<ul>
+<li><strong>GitHub Docs — Review AI-generated code</strong> — <a href="https://docs.github.com/en/copilot/tutorials/review-ai-generated-code">docs.github.com/en/copilot/tutorials/review-ai-generated-code</a>. Official GitHub guide: what to check first, where “looks good but garbage inside” usually surfaces.</li>
+<li><strong>Bright Security — 5 Best Practices for Reviewing AI-Generated Code</strong> — <a href="https://brightsec.com/blog/5-best-practices-for-reviewing-and-approving-ai-generated-code/">brightsec.com/blog/5-best-practices-for-reviewing-and-approving-ai-generated-code</a>. Short checklist focused on security and edge cases — next to ours, in different words.</li>
+</ul>
+<p><strong>Verification tooling</strong></p>
+<ul>
+<li><strong>Anthropic Console — Evaluation tool</strong> — <a href="https://docs.anthropic.com/en/docs/test-and-evaluate/eval-tool">docs.anthropic.com/en/docs/test-and-evaluate/eval-tool</a>. When you grow into running not one edit but whole test sets — Claude’s native way to do it cleanly.</li>
+</ul>
+<blockquote>
+<p><strong>Tip:</strong> if you take one habit from this chapter — <code>git diff</code> and a look-by-eye after every edit. Everything else is derivative. Not perfect, but actually works.</p>
+</blockquote> <nav class="chapter-nav" data-astro-cid-a7sruqtr> <a href="/vibesamurai-site/courses/beginner/b9/en" data-astro-cid-a7sruqtr> <span class="dir" data-astro-cid-a7sruqtr>← Back</span> <span class="title" data-astro-cid-a7sruqtr>B9 · Deploying the first project</span> </a> <a href="/vibesamurai-site/courses/beginner/b11/en" data-astro-cid-a7sruqtr> <span class="dir" data-astro-cid-a7sruqtr>Next →</span> <span class="title" data-astro-cid-a7sruqtr>B11 · Capstone: build your own tool</span> </a> </nav> </main>  </div> <script type="module">
+    import { gatingEnabled } from '../lib/supabase';
+    import { fetchChapter } from '../lib/auth';
+
+    const base = import.meta.env.BASE_URL;
+    let mermaidLib = null;
+
+    function scopeOf(root) {
+      return root === document ? document.querySelector('.reader-main') : root;
+    }
+
+    function addCopyBtns(root) {
+      const scope = scopeOf(root); if (!scope) return;
+      scope.querySelectorAll('pre').forEach((pre) => {
+        if (pre.closest('.code-tabs')) return;
+        if (pre.querySelector('.copy-btn')) return;
+        const btn = document.createElement('button');
+        btn.className = 'copy-btn';
+        btn.textContent = 'copy';
+        btn.addEventListener('click', async () => {
+          const code = pre.querySelector('code')?.textContent ?? pre.textContent ?? '';
+          await navigator.clipboard.writeText(code.trimEnd());
+          btn.textContent = '✓ copied';
+          setTimeout(() => { btn.textContent = 'copy'; }, 1600);
+        });
+        pre.appendChild(btn);
+      });
+    }
+
+    function tightenMermaidSvgs(retries = 6) {
+      let pending = false;
+      document.querySelectorAll('.mermaid svg').forEach((svg) => {
+        if (svg.dataset.tightened === '1') return;
+        try {
+          const bbox = svg.getBBox();
+          if (!bbox || bbox.width === 0) { pending = true; return; }
+          const pad = 6;
+          svg.setAttribute('viewBox',
+            `${bbox.x - pad} ${bbox.y - pad} ${bbox.width + pad * 2} ${bbox.height + pad * 2}`);
+          svg.removeAttribute('height');
+          svg.style.height = 'auto';
+          svg.style.maxWidth = '100%';
+          svg.style.display = 'block';
+          svg.dataset.tightened = '1';
+        } catch (e) { pending = true; }
+      });
+      if (pending && retries > 0) setTimeout(() => tightenMermaidSvgs(retries - 1), 120);
+    }
+
+    async function ensureMermaid() {
+      if (mermaidLib) return mermaidLib;
+      const mod = await import('https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs');
+      mermaidLib = mod.default;
+      mermaidLib.initialize({
+        startOnLoad: false, theme: 'neutral',
+        themeVariables: {
+          fontFamily: 'JetBrains Mono, ui-monospace, monospace',
+          primaryColor: '#f5f5f5', primaryBorderColor: '#222',
+          primaryTextColor: '#111', lineColor: '#444',
+        },
+        flowchart: { curve: 'basis', padding: 12, useMaxWidth: true },
+      });
+      return mermaidLib;
+    }
+
+    async function renderMermaid(root) {
+      const scope = scopeOf(root); if (!scope) return;
+      const matches = scope.querySelectorAll(
+        'pre[data-language="mermaid"], pre.language-mermaid, code.language-mermaid'
+      );
+      if (!matches.length) return;
+      matches.forEach((el) => {
+        const block = el.tagName === 'CODE' ? el.closest('pre') || el : el;
+        const codeEl = block.querySelector('code') || block;
+        const wrap = document.createElement('div');
+        wrap.className = 'mermaid';
+        wrap.textContent = codeEl.textContent;
+        block.replaceWith(wrap);
+      });
+      try {
+        const m = await ensureMermaid();
+        await m.run();
+        tightenMermaidSvgs();
+      } catch (err) {
+        console.warn('mermaid failed', err);
+        document.querySelectorAll('.mermaid:not(:has(svg))').forEach((el) => { el.style.display = 'none'; });
+      }
+    }
+
+    async function enhance(root = document) {
+      addCopyBtns(root);
+      await renderMermaid(root);
+    }
+
+    function paywallHtml(required, needLogin) {
+      const label = { beginner: 'Beginner (300 ₽)', middle: 'Beginner + Middle (500 ₽)', all: 'Весь пакет (700 ₽)' }[required] || '';
+      return `<div class="paywall">
+        <div class="paywall-ic">🔒</div>
+        <h3>Эта глава — в платном доступе</h3>
+        <p>Нужен тариф: <strong>${label}</strong>. Доступ навсегда, без подписки.</p>
+        ${needLogin ? '<p>Войди через Google и оформи доступ — продолжишь с любого устройства.</p>' : ''}
+        <a class="paywall-btn" href="${base}pricing">Открыть доступ →</a>
+        <a class="paywall-link" href="${base}account">Войти / мой аккаунт</a>
+      </div>`;
+    }
+
+    async function gatedFlow(mount) {
+      const slug = mount.dataset.slug;
+      const required = mount.dataset.required || 'beginner';
+      mount.innerHTML = '<p class="gate-msg">Проверяем доступ…</p>';
+      const res = await fetchChapter(slug);
+      if (res.ok) {
+        mount.innerHTML = res.html;
+        await enhance(mount);
+      } else if (res.status === 401) {
+        mount.innerHTML = paywallHtml(required, true);
+      } else if (res.status === 402) {
+        mount.innerHTML = paywallHtml(res.requiredTier || required, false);
+      } else {
+        mount.innerHTML = '<p class="gate-msg">Не удалось загрузить главу. Обнови страницу.</p>';
+      }
+    }
+
+    const mount = document.getElementById('gated-mount');
+    if (mount && gatingEnabled) gatedFlow(mount);
+    else enhance(document);
+  </script> </body> </html>

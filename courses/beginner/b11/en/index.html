@@ -1,0 +1,292 @@
+<!DOCTYPE html><html lang="en" data-astro-cid-a7sruqtr> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Capstone: build your own tool — Vibesamurai</title><meta name="description" content="The Beginner track's final project. From 'learning task' to a personal tool you'll use yourself."><meta property="og:title" content="Capstone: build your own tool"><meta property="og:type" content="article"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Inter:wght@300..800&family=JetBrains+Mono:wght@400..600&display=swap" rel="stylesheet"><link rel="stylesheet" href="/vibesamurai-site/_astro/_slug_.Cs4TX1wt.css">
+<style>.account-btn{display:inline-flex;align-items:center;gap:var(--space-2);font-family:var(--font-mono);font-size:var(--size-2);text-transform:uppercase;letter-spacing:.06em;padding:5px 10px;border:1px solid var(--rule);border-radius:999px;color:var(--text-soft);background:var(--surface);transition:border-color var(--d-fast),color var(--d-fast)}.account-btn:hover{border-color:var(--accent);color:var(--text)}.account-ic{width:18px;height:18px;display:grid;place-items:center;border-radius:50%;background:var(--accent);color:var(--accent-ink);font-weight:700;font-size:10px;line-height:1}.reader-rail .account-btn{padding:0;border:none;background:transparent}.reader-rail .account-label{display:none}.reader-rail .account-ic{width:32px;height:32px;font-size:13px}.rail-toggle{width:36px;height:36px;display:grid;place-items:center;background:var(--accent);border:1px solid var(--accent);border-radius:4px;cursor:pointer;transition:filter var(--d-fast),transform var(--d-fast);padding:0}.rail-toggle:hover{filter:brightness(1.08);transform:translateY(-1px)}.rail-toggle:active{transform:translateY(0)}.rail-toggle-icon{width:14px;height:12px;border-left:2px solid var(--accent-ink);border-right:2px solid var(--accent-ink);transition:transform var(--d-normal) var(--ease-standard)}.reader-app.sidebar-open .rail-toggle-icon{transform:rotate(0)}.reader-app:not(.sidebar-open) .rail-toggle-icon{transform:scaleX(.5)}.sidebar-backdrop{display:none;position:fixed;inset:0;background:#0000008c;z-index:140;border:0;padding:0;cursor:pointer}@media(max-width:900px){.reader-app.sidebar-open~.sidebar-backdrop{display:block}}.rail-spacer[data-astro-cid-ofsbkzh7]{flex:1}.reader-sidebar[data-astro-cid-khgtvzrl] .ru-tag[data-astro-cid-khgtvzrl]{font-style:normal;font-family:var(--font-mono);font-size:.7em;color:var(--text-mute);margin-left:4px;padding:1px 4px;border:1px solid var(--rule);border-radius:3px;text-transform:uppercase;vertical-align:middle}.chapter-eyebrow[data-astro-cid-a7sruqtr]{display:flex;justify-content:space-between;align-items:center;gap:var(--space-3)}.lang-toggle[data-astro-cid-a7sruqtr]{font-family:var(--font-mono);font-size:var(--size-2);padding:2px 8px;border:1px solid var(--rule);border-radius:4px;color:var(--text-mute);text-decoration:none;text-transform:uppercase;letter-spacing:.08em}.lang-toggle[data-astro-cid-a7sruqtr]:hover{color:var(--accent);border-color:var(--accent)}.code-tabs[data-astro-cid-hg66rjob]{margin:var(--space-5) 0}.code-tabs-nav[data-astro-cid-hg66rjob]{display:flex;gap:2px;margin-bottom:-1px;position:relative;z-index:1}.ctab[data-astro-cid-hg66rjob]{font-family:var(--font-mono);font-size:11px;text-transform:uppercase;letter-spacing:.07em;padding:5px 14px;border:1px solid #21222c;border-bottom:none;background:#1a1b23;color:#6272a4;cursor:pointer;border-radius:4px 4px 0 0;transition:color .12s,background .12s}.ctab[data-astro-cid-hg66rjob].is-active{background:#282a36;color:#f8f8f2;border-color:#21222c}.ctab[data-astro-cid-hg66rjob]:hover:not(.is-active){color:#cdd6f4}.ctab-panel[data-astro-cid-hg66rjob]{display:none}.ctab-panel[data-astro-cid-hg66rjob].is-active{display:block}.ctab-panel[data-astro-cid-hg66rjob] pre{margin-top:0!important;border-radius:0 6px 6px!important}
+</style></head> <body data-astro-cid-a7sruqtr> <div class="reader-app" data-astro-cid-a7sruqtr> <aside class="reader-rail" data-astro-cid-ofsbkzh7> <a href="/vibesamurai-site/" class="logo" aria-label="Vibesamurai home" data-astro-cid-ofsbkzh7>V</a> <button type="button" class="rail-toggle" id="sidebar-toggle" aria-label="Свернуть/развернуть оглавление" title="Свернуть/развернуть оглавление" data-astro-cid-ofsbkzh7> <span class="rail-toggle-icon" aria-hidden="true" data-astro-cid-ofsbkzh7></span> </button> <div class="rail-spacer" data-astro-cid-ofsbkzh7></div> <a href="/vibesamurai-site/account" class="account-btn" id="account-btn" aria-label="Аккаунт"> <span class="account-ic" id="account-ic">⌂</span> <span class="account-label" id="account-label">Войти</span> </a>  <script type="module" src="/vibesamurai-site/_astro/AccountButton.astro_astro_type_script_index_0_lang.CmD2sdn9.js"></script> </aside>  <button type="button" class="sidebar-backdrop" id="sidebar-backdrop" aria-label="Закрыть оглавление" tabindex="-1" data-astro-cid-ofsbkzh7></button>  <script type="module">const d="vs-sidebar-open",a="(max-width: 900px)";function t(e){const n=document.querySelector(".reader-app");n&&n.classList.toggle("sidebar-open",e)}function r(){return!window.matchMedia(a).matches}function s(){const e=localStorage.getItem(d),i=window.matchMedia(a).matches?!1:e!==null?e==="1":r();t(i),document.getElementById("sidebar-toggle")?.addEventListener("click",()=>{const c=!document.querySelector(".reader-app")?.classList.contains("sidebar-open");window.matchMedia(a).matches||localStorage.setItem(d,c?"1":"0"),t(c)}),document.getElementById("sidebar-backdrop")?.addEventListener("click",()=>t(!1)),document.querySelectorAll(".reader-sidebar a").forEach(o=>{o.addEventListener("click",()=>{window.matchMedia(a).matches&&t(!1)})})}document.readyState==="loading"?document.addEventListener("DOMContentLoaded",s):s();</script> <aside class="reader-sidebar" data-astro-cid-khgtvzrl> <div class="breadcrumb" data-astro-cid-khgtvzrl>Vibesamurai · Beginner Path · B11</div> <h4 data-astro-cid-khgtvzrl>In this course</h4> <ul data-astro-cid-khgtvzrl> <li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b1/en" class data-astro-cid-khgtvzrl> B1 · What is an AI agent  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b2/en" class data-astro-cid-khgtvzrl> B2 · Installing your first AI agent  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b3/en" class data-astro-cid-khgtvzrl> B3 · First conversation  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b4/en" class data-astro-cid-khgtvzrl> B4 · What&#39;s a repo and why commit  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b5/en" class data-astro-cid-khgtvzrl> B5 · Building the first project (todo app)  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b6/en" class data-astro-cid-khgtvzrl> B6 · Reading the code the agent wrote  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b7/en" class data-astro-cid-khgtvzrl> B7 · Security for beginners  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b8/en" class data-astro-cid-khgtvzrl> B8 · Cursor vs Claude Code vs Codex CLI  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b9/en" class data-astro-cid-khgtvzrl> B9 · Deploying the first project  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b10/en" class data-astro-cid-khgtvzrl> B10 · How to evaluate the agent&#39;s output  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b11/en" class="current" data-astro-cid-khgtvzrl> B11 · Capstone: build your own tool  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b12/en" class data-astro-cid-khgtvzrl> B12 · Where to go next  </a> </li> </ul>  </aside> <main class="reader-main" data-astro-cid-a7sruqtr> <div class="chapter-eyebrow" data-astro-cid-a7sruqtr> <span data-astro-cid-a7sruqtr>Beginner Path · b11</span> <a class="lang-toggle" href="/vibesamurai-site/courses/beginner/b11" aria-label="Switch to RU" data-astro-cid-a7sruqtr>RU</a> </div> <h1 class="chapter-title" data-astro-cid-a7sruqtr>B11 · Capstone: build your own tool</h1> <p class="chapter-subtitle" data-astro-cid-a7sruqtr>The Beginner track&#39;s final project. From &#39;learning task&#39; to a personal tool you&#39;ll use yourself.</p> <h2 id="hook">Hook</h2>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>B5: todo for everyone      B11: something</span></span>
+<span class="line"><span>                           you personally need</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>"learning project"   →     "I use it</span></span>
+<span class="line"><span>                            every day"</span></span></code></pre>
+<p>Hey folks, welcome 👋</p>
+<p>This is the <strong>final chapter</strong> of the Beginner track. No new concepts — we <strong>gather everything</strong> from B1–B10 into <strong>one real project</strong>. The key difference from the B5 todo: this is <strong>not a learning task</strong>. It’s a <strong>thing you personally need</strong>, and you’ll <strong>actually use it yourself</strong>.</p>
+<p>This is the most important thing I can hand you in this track. Because <strong>another todo</strong> is an exercise. Building <strong>your own tool</strong> is the <strong>point of no return</strong>: you realised you <strong>can</strong> build the programs you need.</p>
+<p>An hour and a half to two hours. Make a nice cup of tea.</p>
+<h2 id="concept-everyday-programs-as-a-build-target">Concept: “everyday programs” as a build target</h2>
+<p>It used to be that “program” = “product for millions of users.” Now in the agent era everyone has a <strong>personal right</strong> to a program:</p>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>┌─────────────────────────────────────────────────────┐</span></span>
+<span class="line"><span>│  Before:                                            │</span></span>
+<span class="line"><span>│  "I want X" → buy off-the-shelf or live without     │</span></span>
+<span class="line"><span>│                                                     │</span></span>
+<span class="line"><span>│  Now:                                               │</span></span>
+<span class="line"><span>│  "I want X" → describe to the agent → get it        │</span></span>
+<span class="line"><span>└─────────────────────────────────────────────────────┘</span></span></code></pre>
+<p><strong>Not theory.</strong> Already reality for anyone who finished a track like this one.</p>
+<h2 id="how-to-pick-a-capstone-idea">How to pick a capstone idea</h2>
+<p><strong>Rule 1.</strong> It must solve <strong>your own</strong> pain. Not “I thought people might want this.” But “<strong>I</strong> will <strong>personally</strong> use it.” The more often — the better.</p>
+<p><strong>Rule 2.</strong> Realistic scope — <strong>15–30 minutes</strong> of agent work, not “a month-long project.”</p>
+<p><strong>Rule 3.</strong> <strong>Local</strong> or <strong>static</strong>. No complex servers at the start.</p>
+<h3 id="examples-for-inspiration">Examples (for inspiration)</h3>
+<ul>
+<li><strong>Personal habit tracker</strong> — table “days / habits,” click = ✓, persists in the browser</li>
+<li><strong>Unit converter for your hobby</strong> (photographer — aperture/shutter/ISO; barista — recipes)</li>
+<li><strong>Random picker</strong> — “where to eat today” from your list</li>
+<li><strong>Calorie calculator over your standard meals</strong> (not for everyone, <strong>your</strong> menu)</li>
+<li><strong>“Before flying” checklist</strong> — recurring, ticked, resets after a trip</li>
+<li><strong>Pomodoro timer with <strong>your</strong> intervals</strong> (the standard 25/5 isn’t for everyone)</li>
+<li><strong>Note generator</strong> — you type 5 buzzwords, a structured mini-note comes out</li>
+<li><strong>Spend tracker</strong> — three buttons “coffee / food / transport,” persists, end of month shows the total</li>
+<li><strong>“What I know about X”</strong> — a personal mini-wiki for a topic you keep returning to</li>
+<li><strong>Meds / supplements schedule</strong> — reminder at your times</li>
+</ul>
+<p>These aren’t <strong>“genius”</strong> ideas. They’re <strong>useful to you specifically</strong>. That’s the point.</p>
+<h2 id="capstone-steps">Capstone steps</h2>
+<p>In order, no fluff. Each step references the chapter where we covered the detail.</p>
+<h3 id="step-1-idea--formula-10-minutes">Step 1. Idea → formula (10 minutes)</h3>
+<p>Take the idea and <strong>write it</strong> by the <strong>B3</strong> formula:</p>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>WHAT:</span></span>
+<span class="line"><span>WHERE:</span></span>
+<span class="line"><span>HOW WE KNOW IT'S DONE:</span></span></code></pre>
+<p>Example (habit tracker):</p>
+<ul>
+<li><strong>WHAT:</strong> build a web-page habit tracker</li>
+<li><strong>WHERE:</strong> new folder <code>~/projects/habits</code>, no build step, plain HTML/CSS/JS</li>
+<li><strong>HOW WE KNOW IT’S DONE:</strong>
+<ul>
+<li>Current date in the header</li>
+<li>List of 5 habits (Water, Workout, Reading, Meditation, No sugar)</li>
+<li>Under each weekday — checkboxes for the 5 habits</li>
+<li>Clicking a checkbox persists</li>
+<li>Reload doesn’t lose state</li>
+<li>“New week” button — resets checkboxes, shifts the date</li>
+</ul>
+</li>
+</ul>
+<p>That’s your <strong>brief</strong>.</p>
+<h3 id="step-2-setup-5-minutes">Step 2. Setup (5 minutes)</h3>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#50FA7B;--shiki-dark:#50FA7B">mkdir</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C"> habits</span></span>
+<span class="line"><span style="color:#8BE9FD;--shiki-dark:#8BE9FD">cd</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C"> habits</span></span>
+<span class="line"><span style="color:#50FA7B;--shiki-dark:#50FA7B">git</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C"> init</span></span>
+<span class="line"><span style="color:#8BE9FD;--shiki-dark:#8BE9FD">echo</span><span style="color:#E9F284;--shiki-dark:#E9F284"> "</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">.env</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#FF79C6;--shiki-dark:#FF79C6"> ></span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C"> .gitignore</span></span>
+<span class="line"><span style="color:#50FA7B;--shiki-dark:#50FA7B">git</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C"> add</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C"> .gitignore</span></span>
+<span class="line"><span style="color:#50FA7B;--shiki-dark:#50FA7B">git</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C"> commit</span><span style="color:#BD93F9;--shiki-dark:#BD93F9"> -m</span><span style="color:#E9F284;--shiki-dark:#E9F284"> "</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">init</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span></span>
+<span class="line"><span style="color:#50FA7B;--shiki-dark:#50FA7B">claude</span></span></code></pre>
+<p>See <strong>B4</strong> (git) and <strong>B7</strong> (<code>.gitignore</code> immediately).</p>
+<h3 id="step-3-plan-10-minutes">Step 3. Plan (10 minutes)</h3>
+<p>Send the agent your brief from Step 1. <strong>Say:</strong></p>
+<blockquote>
+<p>“Show the plan first — which files, what structure, no code.”</p>
+</blockquote>
+<p>Read the plan. If you agree — “go.” If something’s off — fix now.</p>
+<p>See <strong>B5</strong>.</p>
+<h3 id="step-4-first-iteration-1525-minutes">Step 4. First iteration (15–25 minutes)</h3>
+<p>The agent writes the files. Run → check. Use the checklist from <strong>B10</strong>:</p>
+<ul>
+<li>Match the criteria</li>
+<li>Edge cases</li>
+<li>Console</li>
+<li><code>git diff</code></li>
+<li>Reload</li>
+</ul>
+<p>After acceptance — <strong>commit</strong> (see <strong>B4</strong>).</p>
+<h3 id="step-5-23-edits-2030-minutes">Step 5. 2–3 edits (20–30 minutes)</h3>
+<p>Something will need fixing. <strong>Phrase by the formula, give to the agent.</strong> After every accepted edit:</p>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#50FA7B;--shiki-dark:#50FA7B">git</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C"> add</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C"> .</span></span>
+<span class="line"><span style="color:#50FA7B;--shiki-dark:#50FA7B">git</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C"> commit</span><span style="color:#BD93F9;--shiki-dark:#BD93F9"> -m</span><span style="color:#E9F284;--shiki-dark:#E9F284"> "</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">&#x3C;short what></span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span></span></code></pre>
+<p>See <strong>B3</strong> (how to phrase), <strong>B10</strong> (checklist), <strong>B4</strong> (commit).</p>
+<h3 id="step-6-deploy-15-minutes">Step 6. Deploy (15 minutes)</h3>
+<p>If your project is <strong>static</strong> (HTML/CSS/JS, no backend):</p>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#6272A4;--shiki-dark:#6272A4"># Create the GitHub repo (see B9)</span></span>
+<span class="line"><span style="color:#50FA7B;--shiki-dark:#50FA7B">git</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C"> remote</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C"> add</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C"> origin</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C"> https://github.com/YOUR-NAME/habits.git</span></span>
+<span class="line"><span style="color:#50FA7B;--shiki-dark:#50FA7B">git</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C"> branch</span><span style="color:#BD93F9;--shiki-dark:#BD93F9"> -M</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C"> main</span></span>
+<span class="line"><span style="color:#50FA7B;--shiki-dark:#50FA7B">git</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C"> push</span><span style="color:#BD93F9;--shiki-dark:#BD93F9"> -u</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C"> origin</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C"> main</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6272A4;--shiki-dark:#6272A4"># Enable GitHub Pages in Settings → Pages</span></span></code></pre>
+<p>Get a URL. Open on a phone.</p>
+<p>See <strong>B9</strong>.</p>
+<h3 id="step-7-use-it-open-ended-time">Step 7. Use it (open-ended time)</h3>
+<p><strong>The main point.</strong> Today, tomorrow, the day after — <strong>try using</strong> your own program. Bookmark it on your phone, tick checkboxes, try “new week.”</p>
+<p>After a week of use you’ll have <strong>2–3 edits</strong> that are <strong>obvious</strong> from the inside:</p>
+<ul>
+<li>“Font too small, can’t see on the go”</li>
+<li>“Want a sixth habit”</li>
+<li>“Want to see last week”</li>
+</ul>
+<p><strong>Each edit</strong> is a new iteration: formula → agent → checklist → commit → deploy. <strong>The full menu</strong> of your own product lifecycle.</p>
+<h2 id="what-not-to-do-for-the-capstone">What NOT to do for the capstone</h2>
+<ul>
+<li><strong>Don’t pick a “mega-idea.”</strong> “Social network for dog owners” — not today. Today — <strong>one</strong> small useful thing.</li>
+<li><strong>Don’t try</strong> to add login, a database, a complex backend. Local/static, all in the browser.</li>
+<li><strong>Don’t get stuck on design.</strong> Design is <strong>easiest</strong> to improve <strong>later</strong>. Function first.</li>
+<li><strong>Don’t sit</strong> silently for 4 hours without <code>git status</code>. After every edit — commit. Per B4.</li>
+</ul>
+<h2 id="example-habit-tracker-real-story">Example: habit tracker, real story</h2>
+<blockquote>
+<p><em>One of the folks in an early course cohort built this tracker for themselves. Two weeks later — sent a screenshot: 14 days straight, all 5 boxes ticked. Said the <strong>free apps</strong> in the store kept “pushing ads” and they dropped them. <strong>Their own</strong> — no ads, <strong>for them</strong>, simple — they didn’t drop it.</em></p>
+<p>That’s the point of the capstone. Not “make another thing,” but <strong>get a tool</strong> you <strong>chose yourself</strong>, <strong>built yourself</strong>, and <strong>use yourself</strong>.</p>
+</blockquote>
+<h2 id="practice--thats-the-capstone">Practice — that’s the capstone</h2>
+<h3 id="main-task-152-hours--build-and-deploy">Main task (1.5–2 hours) — build and deploy</h3>
+<p>One project. From formula to URL on GitHub Pages. All 7 steps above.</p>
+<h3 id="extra-task-a-day-or-a-week--use-it">Extra task (a day or a week) — use it</h3>
+<p>Drop the link in your bookmarks. Use it. Make 2–3 edits based on <strong>actual</strong> use. Commit, redeploy.</p>
+<p>After a week of use you have:</p>
+<ul>
+<li>Your tool in prod</li>
+<li>5–10 commits in history</li>
+<li>A working <strong>loop</strong> “idea → edit → deploy”</li>
+<li><strong>Real</strong> understanding that <strong>you can build</strong> your own tools</li>
+</ul>
+<h2 id="recap">Recap</h2>
+<ul>
+<li><strong>Capstone = your own tool.</strong> Not learning, not “for the portfolio,” but <strong>what you use yourself</strong>.</li>
+<li><strong>Every step is from earlier chapters.</strong> Formula (B3), git (B4), end-to-end flow (B5), security (B7), deploy (B9), evaluation (B10).</li>
+<li><strong>The main thing — use it.</strong> Building is half. <strong>Using for a week and improving</strong> is the other half and the <strong>big shift</strong>.</li>
+</ul>
+<h2 id="vibe-samurai">Vibe Samurai</h2>
+<aside class="skeptic">
+<p><strong>🥷 Vibe Samurai asks:</strong>
+“What if my idea isn’t original — it already exists in the store? Why build my own?”</p>
+<p><strong>Answer:</strong> Because <strong>the store version isn’t yours</strong>. Store apps are universal, with ads, with every conceivable feature you don’t need. <strong>Yours</strong> is tuned to <strong>your</strong> specific habit, no extras, in <strong>your</strong> language, on <strong>your</strong> domain. Analogy: every morning you could buy coffee at a café, but <strong>at home</strong> — faster, cheaper, your way. Same with tools. And — even if the store “has it,” building your own <strong>trains</strong> the build muscle. In a month or two that becomes a <strong>superpower</strong> — not depending on the store at all. <strong>Not perfect, but actually works.</strong></p>
+</aside>
+<h2 id="whats-next">What’s next</h2>
+<p>In <strong>B12 — Where to go next</strong> — the Beginner track’s finale. We collect what you can do at this point and I’ll tell you <strong>where to move</strong> — what tracks exist, what skills come next, what communities. The <strong>graduation</strong> from beginner to <strong>confident user</strong>.</p>
+<p>If this clicked — share with anyone who <strong>knows the theory</strong> but <strong>hasn’t built anything</strong>. The capstone is <strong>the initiation point</strong>. If you <strong>deployed</strong> — <strong>drop the link in the comments</strong>, I’d love to see what you made. <strong>A like and a comment is extra appreciated</strong>, your feedback really helps polish the material.</p>
+<h2 id="-further-reading">📚 Further reading</h2>
+<p>The capstone is your first <strong>personal</strong> program. Two source types come in handy next: where to draw ideas for the following ones and where to see what others build on the same topic.</p>
+<p><strong>Ideas and galleries</strong></p>
+<ul>
+<li><strong>Indie Hackers — Ideas Database</strong> (live base of personal ideas from people who <strong>build</strong> rather than “genius-plan”): <a href="https://www.indiehackers.com/ideas">indiehackers.com/ideas</a>. Filter for “not SaaS,” look at simple ones.</li>
+<li><strong>awesome-claude-code</strong> (hesreallyhim) — curated repo with real CLAUDE.md files, slash-commands, small tools for Claude Code: <a href="https://github.com/hesreallyhim/awesome-claude-code">github.com/hesreallyhim/awesome-claude-code</a>. Good source to see <strong>how others</strong> shape their project for the agent.</li>
+</ul>
+<p><strong>Workflows and patterns</strong></p>
+<ul>
+<li><strong>Simon Willison — Agentic Engineering Patterns</strong> (live blog of one of the best writers on agent practice): <a href="https://simonwillison.net/tags/agentic-engineering/">simonwillison.net/tags/agentic-engineering</a>. Not a textbook — practitioner notes, useful to see how <strong>grown-ups</strong> work with the same tools.</li>
+</ul>
+<blockquote>
+<p><strong>Tip:</strong> don’t copy ideas wholesale. Take the <strong>skeleton</strong> (e.g. “local browser tracker”) and <strong>rewrite to your pain</strong>. Your capstone = you use it yourself, not “looks like the other guy’s.”</p>
+</blockquote> <nav class="chapter-nav" data-astro-cid-a7sruqtr> <a href="/vibesamurai-site/courses/beginner/b10/en" data-astro-cid-a7sruqtr> <span class="dir" data-astro-cid-a7sruqtr>← Back</span> <span class="title" data-astro-cid-a7sruqtr>B10 · How to evaluate the agent&#39;s output</span> </a> <a href="/vibesamurai-site/courses/beginner/b12/en" data-astro-cid-a7sruqtr> <span class="dir" data-astro-cid-a7sruqtr>Next →</span> <span class="title" data-astro-cid-a7sruqtr>B12 · Where to go next</span> </a> </nav> </main>  </div> <script type="module">
+    import { gatingEnabled } from '../lib/supabase';
+    import { fetchChapter } from '../lib/auth';
+
+    const base = import.meta.env.BASE_URL;
+    let mermaidLib = null;
+
+    function scopeOf(root) {
+      return root === document ? document.querySelector('.reader-main') : root;
+    }
+
+    function addCopyBtns(root) {
+      const scope = scopeOf(root); if (!scope) return;
+      scope.querySelectorAll('pre').forEach((pre) => {
+        if (pre.closest('.code-tabs')) return;
+        if (pre.querySelector('.copy-btn')) return;
+        const btn = document.createElement('button');
+        btn.className = 'copy-btn';
+        btn.textContent = 'copy';
+        btn.addEventListener('click', async () => {
+          const code = pre.querySelector('code')?.textContent ?? pre.textContent ?? '';
+          await navigator.clipboard.writeText(code.trimEnd());
+          btn.textContent = '✓ copied';
+          setTimeout(() => { btn.textContent = 'copy'; }, 1600);
+        });
+        pre.appendChild(btn);
+      });
+    }
+
+    function tightenMermaidSvgs(retries = 6) {
+      let pending = false;
+      document.querySelectorAll('.mermaid svg').forEach((svg) => {
+        if (svg.dataset.tightened === '1') return;
+        try {
+          const bbox = svg.getBBox();
+          if (!bbox || bbox.width === 0) { pending = true; return; }
+          const pad = 6;
+          svg.setAttribute('viewBox',
+            `${bbox.x - pad} ${bbox.y - pad} ${bbox.width + pad * 2} ${bbox.height + pad * 2}`);
+          svg.removeAttribute('height');
+          svg.style.height = 'auto';
+          svg.style.maxWidth = '100%';
+          svg.style.display = 'block';
+          svg.dataset.tightened = '1';
+        } catch (e) { pending = true; }
+      });
+      if (pending && retries > 0) setTimeout(() => tightenMermaidSvgs(retries - 1), 120);
+    }
+
+    async function ensureMermaid() {
+      if (mermaidLib) return mermaidLib;
+      const mod = await import('https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs');
+      mermaidLib = mod.default;
+      mermaidLib.initialize({
+        startOnLoad: false, theme: 'neutral',
+        themeVariables: {
+          fontFamily: 'JetBrains Mono, ui-monospace, monospace',
+          primaryColor: '#f5f5f5', primaryBorderColor: '#222',
+          primaryTextColor: '#111', lineColor: '#444',
+        },
+        flowchart: { curve: 'basis', padding: 12, useMaxWidth: true },
+      });
+      return mermaidLib;
+    }
+
+    async function renderMermaid(root) {
+      const scope = scopeOf(root); if (!scope) return;
+      const matches = scope.querySelectorAll(
+        'pre[data-language="mermaid"], pre.language-mermaid, code.language-mermaid'
+      );
+      if (!matches.length) return;
+      matches.forEach((el) => {
+        const block = el.tagName === 'CODE' ? el.closest('pre') || el : el;
+        const codeEl = block.querySelector('code') || block;
+        const wrap = document.createElement('div');
+        wrap.className = 'mermaid';
+        wrap.textContent = codeEl.textContent;
+        block.replaceWith(wrap);
+      });
+      try {
+        const m = await ensureMermaid();
+        await m.run();
+        tightenMermaidSvgs();
+      } catch (err) {
+        console.warn('mermaid failed', err);
+        document.querySelectorAll('.mermaid:not(:has(svg))').forEach((el) => { el.style.display = 'none'; });
+      }
+    }
+
+    async function enhance(root = document) {
+      addCopyBtns(root);
+      await renderMermaid(root);
+    }
+
+    function paywallHtml(required, needLogin) {
+      const label = { beginner: 'Beginner (300 ₽)', middle: 'Beginner + Middle (500 ₽)', all: 'Весь пакет (700 ₽)' }[required] || '';
+      return `<div class="paywall">
+        <div class="paywall-ic">🔒</div>
+        <h3>Эта глава — в платном доступе</h3>
+        <p>Нужен тариф: <strong>${label}</strong>. Доступ навсегда, без подписки.</p>
+        ${needLogin ? '<p>Войди через Google и оформи доступ — продолжишь с любого устройства.</p>' : ''}
+        <a class="paywall-btn" href="${base}pricing">Открыть доступ →</a>
+        <a class="paywall-link" href="${base}account">Войти / мой аккаунт</a>
+      </div>`;
+    }
+
+    async function gatedFlow(mount) {
+      const slug = mount.dataset.slug;
+      const required = mount.dataset.required || 'beginner';
+      mount.innerHTML = '<p class="gate-msg">Проверяем доступ…</p>';
+      const res = await fetchChapter(slug);
+      if (res.ok) {
+        mount.innerHTML = res.html;
+        await enhance(mount);
+      } else if (res.status === 401) {
+        mount.innerHTML = paywallHtml(required, true);
+      } else if (res.status === 402) {
+        mount.innerHTML = paywallHtml(res.requiredTier || required, false);
+      } else {
+        mount.innerHTML = '<p class="gate-msg">Не удалось загрузить главу. Обнови страницу.</p>';
+      }
+    }
+
+    const mount = document.getElementById('gated-mount');
+    if (mount && gatingEnabled) gatedFlow(mount);
+    else enhance(document);
+  </script> </body> </html>

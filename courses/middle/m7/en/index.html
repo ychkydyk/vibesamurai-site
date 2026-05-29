@@ -1,0 +1,344 @@
+<!DOCTYPE html><html lang="en" data-astro-cid-a7sruqtr> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>GPT-5.3 Codex CLI and OpenAI agents — Vibesamurai</title><meta name="description" content="Codex CLI, approval modes, sandbox. When Codex beats Claude — on benchmarks and personal practice."><meta property="og:title" content="GPT-5.3 Codex CLI and OpenAI agents"><meta property="og:type" content="article"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Inter:wght@300..800&family=JetBrains+Mono:wght@400..600&display=swap" rel="stylesheet"><link rel="stylesheet" href="/vibesamurai-site/_astro/_slug_.Cs4TX1wt.css">
+<style>.account-btn{display:inline-flex;align-items:center;gap:var(--space-2);font-family:var(--font-mono);font-size:var(--size-2);text-transform:uppercase;letter-spacing:.06em;padding:5px 10px;border:1px solid var(--rule);border-radius:999px;color:var(--text-soft);background:var(--surface);transition:border-color var(--d-fast),color var(--d-fast)}.account-btn:hover{border-color:var(--accent);color:var(--text)}.account-ic{width:18px;height:18px;display:grid;place-items:center;border-radius:50%;background:var(--accent);color:var(--accent-ink);font-weight:700;font-size:10px;line-height:1}.reader-rail .account-btn{padding:0;border:none;background:transparent}.reader-rail .account-label{display:none}.reader-rail .account-ic{width:32px;height:32px;font-size:13px}.rail-toggle{width:36px;height:36px;display:grid;place-items:center;background:var(--accent);border:1px solid var(--accent);border-radius:4px;cursor:pointer;transition:filter var(--d-fast),transform var(--d-fast);padding:0}.rail-toggle:hover{filter:brightness(1.08);transform:translateY(-1px)}.rail-toggle:active{transform:translateY(0)}.rail-toggle-icon{width:14px;height:12px;border-left:2px solid var(--accent-ink);border-right:2px solid var(--accent-ink);transition:transform var(--d-normal) var(--ease-standard)}.reader-app.sidebar-open .rail-toggle-icon{transform:rotate(0)}.reader-app:not(.sidebar-open) .rail-toggle-icon{transform:scaleX(.5)}.sidebar-backdrop{display:none;position:fixed;inset:0;background:#0000008c;z-index:140;border:0;padding:0;cursor:pointer}@media(max-width:900px){.reader-app.sidebar-open~.sidebar-backdrop{display:block}}.rail-spacer[data-astro-cid-ofsbkzh7]{flex:1}.reader-sidebar[data-astro-cid-khgtvzrl] .ru-tag[data-astro-cid-khgtvzrl]{font-style:normal;font-family:var(--font-mono);font-size:.7em;color:var(--text-mute);margin-left:4px;padding:1px 4px;border:1px solid var(--rule);border-radius:3px;text-transform:uppercase;vertical-align:middle}.chapter-eyebrow[data-astro-cid-a7sruqtr]{display:flex;justify-content:space-between;align-items:center;gap:var(--space-3)}.lang-toggle[data-astro-cid-a7sruqtr]{font-family:var(--font-mono);font-size:var(--size-2);padding:2px 8px;border:1px solid var(--rule);border-radius:4px;color:var(--text-mute);text-decoration:none;text-transform:uppercase;letter-spacing:.08em}.lang-toggle[data-astro-cid-a7sruqtr]:hover{color:var(--accent);border-color:var(--accent)}.code-tabs[data-astro-cid-hg66rjob]{margin:var(--space-5) 0}.code-tabs-nav[data-astro-cid-hg66rjob]{display:flex;gap:2px;margin-bottom:-1px;position:relative;z-index:1}.ctab[data-astro-cid-hg66rjob]{font-family:var(--font-mono);font-size:11px;text-transform:uppercase;letter-spacing:.07em;padding:5px 14px;border:1px solid #21222c;border-bottom:none;background:#1a1b23;color:#6272a4;cursor:pointer;border-radius:4px 4px 0 0;transition:color .12s,background .12s}.ctab[data-astro-cid-hg66rjob].is-active{background:#282a36;color:#f8f8f2;border-color:#21222c}.ctab[data-astro-cid-hg66rjob]:hover:not(.is-active){color:#cdd6f4}.ctab-panel[data-astro-cid-hg66rjob]{display:none}.ctab-panel[data-astro-cid-hg66rjob].is-active{display:block}.ctab-panel[data-astro-cid-hg66rjob] pre{margin-top:0!important;border-radius:0 6px 6px!important}
+</style></head> <body data-astro-cid-a7sruqtr> <div class="reader-app" data-astro-cid-a7sruqtr> <aside class="reader-rail" data-astro-cid-ofsbkzh7> <a href="/vibesamurai-site/" class="logo" aria-label="Vibesamurai home" data-astro-cid-ofsbkzh7>V</a> <button type="button" class="rail-toggle" id="sidebar-toggle" aria-label="Свернуть/развернуть оглавление" title="Свернуть/развернуть оглавление" data-astro-cid-ofsbkzh7> <span class="rail-toggle-icon" aria-hidden="true" data-astro-cid-ofsbkzh7></span> </button> <div class="rail-spacer" data-astro-cid-ofsbkzh7></div> <a href="/vibesamurai-site/account" class="account-btn" id="account-btn" aria-label="Аккаунт"> <span class="account-ic" id="account-ic">⌂</span> <span class="account-label" id="account-label">Войти</span> </a>  <script type="module" src="/vibesamurai-site/_astro/AccountButton.astro_astro_type_script_index_0_lang.CmD2sdn9.js"></script> </aside>  <button type="button" class="sidebar-backdrop" id="sidebar-backdrop" aria-label="Закрыть оглавление" tabindex="-1" data-astro-cid-ofsbkzh7></button>  <script type="module">const d="vs-sidebar-open",a="(max-width: 900px)";function t(e){const n=document.querySelector(".reader-app");n&&n.classList.toggle("sidebar-open",e)}function r(){return!window.matchMedia(a).matches}function s(){const e=localStorage.getItem(d),i=window.matchMedia(a).matches?!1:e!==null?e==="1":r();t(i),document.getElementById("sidebar-toggle")?.addEventListener("click",()=>{const c=!document.querySelector(".reader-app")?.classList.contains("sidebar-open");window.matchMedia(a).matches||localStorage.setItem(d,c?"1":"0"),t(c)}),document.getElementById("sidebar-backdrop")?.addEventListener("click",()=>t(!1)),document.querySelectorAll(".reader-sidebar a").forEach(o=>{o.addEventListener("click",()=>{window.matchMedia(a).matches&&t(!1)})})}document.readyState==="loading"?document.addEventListener("DOMContentLoaded",s):s();</script> <aside class="reader-sidebar" data-astro-cid-khgtvzrl> <div class="breadcrumb" data-astro-cid-khgtvzrl>Vibesamurai · Middle Path · M7</div> <h4 data-astro-cid-khgtvzrl>In this course</h4> <ul data-astro-cid-khgtvzrl> <li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m1/en" class data-astro-cid-khgtvzrl> M1 · What is agentic AI in the SDLC  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m2/en" class data-astro-cid-khgtvzrl> M2 · Architecting agent boundaries  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m3/en" class data-astro-cid-khgtvzrl> M3 · Observability and human-in-the-loop  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m4/en" class data-astro-cid-khgtvzrl> M4 · Tool inventory and permissions  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m5/en" class data-astro-cid-khgtvzrl> M5 · MCP deep dive  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m6/en" class data-astro-cid-khgtvzrl> M6 · Claude Code CLI mastery  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m7/en" class="current" data-astro-cid-khgtvzrl> M7 · GPT-5.3 Codex CLI and OpenAI agents  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m8/en" class data-astro-cid-khgtvzrl> M8 · Cursor Composer + IDE agents  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m9/en" class data-astro-cid-khgtvzrl> M9 · Memory strategies  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m10/en" class data-astro-cid-khgtvzrl> M10 · State, drift, continuity  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m11/en" class data-astro-cid-khgtvzrl> M11 · Evaluating agents: metrics over vibes  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m12/en" class data-astro-cid-khgtvzrl> M12 · Regression tests for agents  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m13/en" class data-astro-cid-khgtvzrl> M13 · Tuning: what to change when metrics don&#39;t move  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m14/en" class data-astro-cid-khgtvzrl> M14 · One agent, many steps: pipelines and orchestration  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m15/en" class data-astro-cid-khgtvzrl> M15 · Multi-agent: roles, communication, supervisor  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m16/en" class data-astro-cid-khgtvzrl> M16 · When multi-agent is overkill. Anti-patterns  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m17/en" class data-astro-cid-khgtvzrl> M17 · Production: deploying agents to live environments  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m18/en" class data-astro-cid-khgtvzrl> M18 · Security in prod: secrets, sandbox, audit  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m19/en" class data-astro-cid-khgtvzrl> M19 · Incidents &amp; post-mortems  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m20/en" class data-astro-cid-khgtvzrl> M20 · Finale: where to go after Middle  </a> </li> </ul>  </aside> <main class="reader-main" data-astro-cid-a7sruqtr> <div class="chapter-eyebrow" data-astro-cid-a7sruqtr> <span data-astro-cid-a7sruqtr>Middle Path · m7</span> <a class="lang-toggle" href="/vibesamurai-site/courses/middle/m7" aria-label="Switch to RU" data-astro-cid-a7sruqtr>RU</a> </div> <h1 class="chapter-title" data-astro-cid-a7sruqtr>M7 · GPT-5.3 Codex CLI and OpenAI agents</h1> <p class="chapter-subtitle" data-astro-cid-a7sruqtr>Codex CLI, approval modes, sandbox. When Codex beats Claude — on benchmarks and personal practice.</p> <h2 id="what-this-chapter-is-about">What this chapter is about</h2>
+<p>Hey folks, welcome 👋</p>
+<p>Last chapter we dug into Claude Code. Now the parallel tool focus — <strong>GPT-5.3 Codex CLI</strong> from OpenAI. And let me say this <strong>up front</strong>: I’m not going to do “X is better than Y” — I sit on both myself, pick by task, and most of my colleagues do the same.</p>
+<p>Personally, content in the “Claude beats everyone / GPT beats everyone” style honestly grates on me — that’s marketing nonsense and a misunderstanding of the actual landscape. The reality: models are different, each has its own strengths profile, and a sharp middle developer in 2026 <strong>knows how to work with both</strong>.</p>
+<p>In this chapter:</p>
+<ol>
+<li>Codex CLI — what it is technically</li>
+<li>Approval modes — the main architectural difference from Claude Code</li>
+<li>Sandbox — how Codex isolates execution</li>
+<li>When Codex beats Claude, and vice versa (benchmark + personal practice)</li>
+<li>A minimal pricing breakdown</li>
+</ol>
+<h2 id="codex-cli-in-5-minutes">Codex CLI in 5 minutes</h2>
+<p><code>codex</code> is OpenAI’s CLI agent that runs the <strong>GPT-5.3</strong> or <strong>GPT-5.3 Codex</strong> model (the specialised coding fork) under the hood. Install:</p>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#6272A4;--shiki-dark:#6272A4"># npm channel</span></span>
+<span class="line"><span style="color:#50FA7B;--shiki-dark:#50FA7B">npm</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C"> install</span><span style="color:#BD93F9;--shiki-dark:#BD93F9"> -g</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C"> @openai/codex</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6272A4;--shiki-dark:#6272A4"># or brew on mac</span></span>
+<span class="line"><span style="color:#50FA7B;--shiki-dark:#50FA7B">brew</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C"> install</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C"> codex</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6272A4;--shiki-dark:#6272A4"># first run</span></span>
+<span class="line"><span style="color:#50FA7B;--shiki-dark:#50FA7B">codex</span></span></code></pre>
+<p>Auth — via a ChatGPT account (Plus/Pro/Enterprise) or via OpenAI API key (pay-per-use).</p>
+<p>After launch you land in the <strong>interactive TUI</strong> — terminal UI where you type a prompt, see the model’s response + suggested actions, approve or reject.</p>
+<p>Architecturally Codex CLI is <strong>very similar</strong> to Claude Code: the same plan→act→evaluate loop, the same tool set (read, edit, bash, search, mcp), the same config + hooks concept. But there are <strong>three principal differences</strong>:</p>
+<ol>
+<li><strong>Approval modes</strong> — a centralised autonomy switch</li>
+<li><strong>Sandbox</strong> — built-in OS-level execution isolation</li>
+<li><strong>AGENTS.md</strong> instead of CLAUDE.md (same concept, different name)</li>
+</ol>
+<p>We’ll cover each.</p>
+<h2 id="approval-modes--the-key-architectural-choice">Approval modes — the key architectural choice</h2>
+<p>In Claude Code autonomy is more distributed: permissions allow/deny, hooks, manual confirmations. In Codex it’s collected into <strong>one parameter</strong> — <code>--approval-mode</code>:</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Mode</th><th>What it means</th><th>Claude Code equivalent</th></tr></thead><tbody><tr><td><code>suggest</code></td><td>Suggests only, does nothing</td><td><code>--permission-mode plan</code></td></tr><tr><td><code>auto-edit</code></td><td>Edits files itself, commands — manual approval</td><td>typical permissions</td></tr><tr><td><code>full-auto</code></td><td>Edits and executes itself, no approval</td><td><code>--dangerously-skip-permissions</code></td></tr></tbody></table>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#50FA7B;--shiki-dark:#50FA7B">codex</span><span style="color:#BD93F9;--shiki-dark:#BD93F9"> --approval-mode</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C"> suggest</span><span style="color:#E9F284;--shiki-dark:#E9F284"> "</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">refactor auth module</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#6272A4;--shiki-dark:#6272A4">     # plan only</span></span>
+<span class="line"><span style="color:#50FA7B;--shiki-dark:#50FA7B">codex</span><span style="color:#BD93F9;--shiki-dark:#BD93F9"> --approval-mode</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C"> auto-edit</span><span style="color:#E9F284;--shiki-dark:#E9F284"> "</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">fix tests in auth/</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#6272A4;--shiki-dark:#6272A4">      # edits itself, commands approve</span></span>
+<span class="line"><span style="color:#50FA7B;--shiki-dark:#50FA7B">codex</span><span style="color:#BD93F9;--shiki-dark:#BD93F9"> --approval-mode</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C"> full-auto</span><span style="color:#E9F284;--shiki-dark:#E9F284"> "</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">run npm test, fix until green</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#6272A4;--shiki-dark:#6272A4">  # autonomous</span></span></code></pre>
+<p>The plus of this architecture — <strong>simplicity</strong>. One value controls it all. The minus — <strong>coarser</strong> than Claude Code: no “allow this bash command, deny that one” granularity. What Claude Code solves with allow/deny patterns, Codex solves by mode + sandbox + custom rules in <code>AGENTS.md</code>.</p>
+<blockquote>
+<p><em>Critical point:</em> <code>full-auto</code> in Codex CLI <strong>defaults to a sandboxed bash</strong>, while <code>--dangerously-skip-permissions</code> in Claude Code is “straight on the host.” Which means full-auto in Codex is <strong>significantly safer</strong> than it sounds. More on this below.</p>
+</blockquote>
+<h2 id="sandbox--built-in-os-level-isolation">Sandbox — built-in OS-level isolation</h2>
+<p>Codex CLI’s strongest architectural choice is the <strong>built-in sandbox</strong>. When you launch a <code>bash</code> command via the agent:</p>
+<ul>
+<li><strong>macOS</strong> — <code>sandbox-exec</code> with a preset profile</li>
+<li><strong>Linux</strong> — <code>seccomp</code> + <code>landlock</code> + namespaces</li>
+<li><strong>Windows</strong> — Job Objects + restricted token</li>
+<li><strong>Containerised</strong> — optional Docker/Podman</li>
+</ul>
+<p>By default the sandbox:</p>
+<ul>
+<li><strong>Blocks internet egress</strong> (optional, behind a flag)</li>
+<li><strong>Limits writes to workdir</strong> (you can’t accidentally change a file outside the project)</li>
+<li><strong>Blocks reads from sensitive paths</strong> (<code>~/.ssh</code>, <code>~/.aws</code>, <code>/etc/shadow</code>)</li>
+<li><strong>Blocks setuid binaries</strong></li>
+</ul>
+<p>That is, <strong>OS-level enforcement</strong> of what Claude Code does through hooks + permissions. There are pluses and minuses:</p>
+<p><strong>Plus:</strong> no manual setup needed. The agent is isolated by default.</p>
+<p><strong>Minus:</strong> less flexible. If your agent legitimately needs to hit the internet (e.g. pull deps), you have to allow it explicitly.</p>
+<p>Minimal override:</p>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#6272A4;--shiki-dark:#6272A4"># Allow egress</span></span>
+<span class="line"><span style="color:#50FA7B;--shiki-dark:#50FA7B">codex</span><span style="color:#BD93F9;--shiki-dark:#BD93F9"> --network-access</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C"> allow</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C"> ...</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6272A4;--shiki-dark:#6272A4"># Extend writable paths</span></span>
+<span class="line"><span style="color:#50FA7B;--shiki-dark:#50FA7B">codex</span><span style="color:#BD93F9;--shiki-dark:#BD93F9"> --writable-paths</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C"> ~/.local/share/app</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C"> ...</span></span></code></pre>
+<p>Config in <code>~/.codex/config.toml</code>:</p>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="toml"><code><span class="line"><span style="color:#FF79C6;--shiki-dark:#FF79C6">[</span><span style="color:#8BE9FD;--shiki-dark:#8BE9FD">sandbox</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">]</span></span>
+<span class="line"><span style="color:#8BE9FD;--shiki-dark:#8BE9FD">network</span><span style="color:#FF79C6;--shiki-dark:#FF79C6"> =</span><span style="color:#E9F284;--shiki-dark:#E9F284"> "</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">deny</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#6272A4;--shiki-dark:#6272A4">            # deny | allow | allowlist</span></span>
+<span class="line"><span style="color:#8BE9FD;--shiki-dark:#8BE9FD">writable_extra</span><span style="color:#FF79C6;--shiki-dark:#FF79C6"> =</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2"> []         </span><span style="color:#6272A4;--shiki-dark:#6272A4"># additional writable paths</span></span>
+<span class="line"><span style="color:#8BE9FD;--shiki-dark:#8BE9FD">readable_extra</span><span style="color:#FF79C6;--shiki-dark:#FF79C6"> =</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2"> []         </span><span style="color:#6272A4;--shiki-dark:#6272A4"># additional readable paths</span></span>
+<span class="line"><span style="color:#8BE9FD;--shiki-dark:#8BE9FD">forbidden_commands</span><span style="color:#FF79C6;--shiki-dark:#FF79C6"> =</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2"> [</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">rm -rf /</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">, </span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">curl ... | sh</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">]</span></span></code></pre>
+<p>This is <strong>architecturally more correct</strong> than “hoping for hooks” in Claude Code. But less tunable for fine scenarios.</p>
+<h2 id="agentsmd--same-as-claudemd">AGENTS.md — same as CLAUDE.md</h2>
+<p><code>AGENTS.md</code> in the project root is the persistent context. Codex CLI reads it on session start. Structure and philosophy — identical to CLAUDE.md (see M6).</p>
+<blockquote>
+<p><em>Tip:</em> in projects where both Claude Code and Codex CLI work — keep <strong>both files</strong> with identical content, via symlink or auto-sync through a hook. Don’t duplicate content by hand — someone on the team will forget to update one.</p>
+</blockquote>
+<p>In my own prod config I keep AGENTS.md as a symbolic link to CLAUDE.md. On Windows — via <code>mklink /H</code> (hardlink, so git is happy).</p>
+<h2 id="when-codex-beats-claude-in-personal-practice">When Codex beats Claude (in personal practice)</h2>
+<p>No bias. I noted every case where, <strong>in real work</strong>, one tool came out better than the other. Six-month assembled picture:</p>
+<h3 id="codex-cli-wins-on">Codex CLI wins on:</h3>
+<ol>
+<li><strong>Long autonomous cycles.</strong> When the task is “run tests, fix, repeat until green,” and you need 5–10 iterations without intervention. Codex with sandbox + full-auto runs more stably and cheaper on tokens.</li>
+<li><strong>Large volume of same-type edits.</strong> E.g. an API migration across 200 files. Codex is faster on mass uniform edits.</li>
+<li><strong>Strict adherence to specifications.</strong> If you have a formal spec and you need it followed strictly — Codex is slightly better at instruction following without “improvements along the way.”</li>
+<li><strong>Complex commercial code with heavy refactoring.</strong> On some typing-heavy TypeScript codebases GPT-5.3 holds steadier.</li>
+</ol>
+<h3 id="claude-code-wins-on">Claude Code wins on:</h3>
+<ol>
+<li><strong>Multi-step research with a big context.</strong> When the task is “understand someone else’s 50k-line repo and propose a solution,” Claude Opus 4.7 sees the relationships better.</li>
+<li><strong>Creative tasks</strong> (layout, UI, copy in code). Claude has slightly better taste.</li>
+<li><strong>Strict adherence to hooks and permissions.</strong> The allow/deny + hooks architecture gives more behavioural control.</li>
+<li><strong>Subagents for parallel decomposition.</strong> The subagent pattern in Claude Code is more cohesive than in Codex.</li>
+<li><strong>Long read-heavy sessions</strong> (M6 — Skills, prompt caching). Anthropic-side prompt caching + long context is noticeably cheaper.</li>
+</ol>
+<h3 id="on-price-may-2026">On price (May 2026)</h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Surface</th><th>Pricing</th><th>When worthwhile</th></tr></thead><tbody><tr><td><strong>Claude Max subscription</strong></td><td>$100/mo flat</td><td>If you write daily and don’t bump the daily limit</td></tr><tr><td><strong>Claude API pay-per-use</strong></td><td>$5/$25 per 1M Opus 4.7</td><td>Irregular use / production pipelines</td></tr><tr><td><strong>ChatGPT Pro</strong></td><td>$200/mo</td><td>If you also use GPT-5.3 for non-coding work</td></tr><tr><td><strong>OpenAI API pay-per-use</strong></td><td>$X (model-dependent)</td><td>Production / occasional sessions</td></tr></tbody></table>
+<p>I personally run Claude Max + OpenAI API pay-per-use for Codex. Cheaper than holding both subscriptions.</p>
+<blockquote>
+<p><em>Principal:</em> “X cheaper than Y” shifts every 2–3 months. Don’t anchor on specific numbers — verify at read time.</p>
+</blockquote>
+<h2 id="using-codex-in-a-hands-on-flow">Using Codex in a hands-on flow</h2>
+<p>Minimal example — “fix the tests”:</p>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#6272A4;--shiki-dark:#6272A4"># Sandbox + auto-edit (edits files, bash — approval)</span></span>
+<span class="line"><span style="color:#50FA7B;--shiki-dark:#50FA7B">codex</span><span style="color:#BD93F9;--shiki-dark:#BD93F9"> --approval-mode</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C"> auto-edit</span><span style="color:#BD93F9;--shiki-dark:#BD93F9"> --network-access</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C"> deny</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#FF79C6;--shiki-dark:#FF79C6">></span><span style="color:#E9F284;--shiki-dark:#E9F284"> "</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">tests/auth.test.ts has 3 failing tests. Run tests in repo:</span></span>
+<span class="line"><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">   npm test -- tests/auth.test.ts</span></span>
+<span class="line"><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">   Fix all 3 tests without changing source logic.</span></span>
+<span class="line"><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">   Success criterion: npm test -- tests/auth.test.ts exit 0.</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span></span></code></pre>
+<p>Codex will propose a plan, ask to approve the <code>npm test</code> run, then look at results, edit tests, ask to approve a re-run, and so on until green. This cycle in Codex usually takes 3–8 iterations.</p>
+<p>In <code>full-auto</code> with sandbox the same goes through without your intervention:</p>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#50FA7B;--shiki-dark:#50FA7B">codex</span><span style="color:#BD93F9;--shiki-dark:#BD93F9"> --approval-mode</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C"> full-auto</span><span style="color:#BD93F9;--shiki-dark:#BD93F9"> --network-access</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C"> deny</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#FF79C6;--shiki-dark:#FF79C6">></span><span style="color:#E9F284;--shiki-dark:#E9F284"> "</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">tests/auth.test.ts has 3 failing tests...</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span></span></code></pre>
+<p>But personally I always first try a small task in auto-edit, confirm Codex actually understood, and <strong>only then</strong> flip to full-auto.</p>
+<h2 id="anti-patterns-codex-specific">Anti-patterns (Codex-specific)</h2>
+<ol>
+<li><strong><code>--approval-mode full-auto --network-access allow</code></strong> without sandbox. That’s the same as <code>--dangerously-skip-permissions</code> in Claude Code. Don’t do it on a dev machine.</li>
+<li><strong><code>--writable-paths /</code></strong> “to avoid restrictions.” This kills the whole sandbox idea. If you need more rights — extend specific paths surgically.</li>
+<li><strong>The same AGENTS.md across projects.</strong> Context must be project-specific. Common rules go into <code>~/.codex/AGENTS.md</code> (user-level).</li>
+<li><strong>Ignoring <code>~/.codex/config.toml</code>.</strong> At minimum put <code>forbidden_commands</code> there. If you haven’t configured it — do.</li>
+</ol>
+<h2 id="practice">Practice</h2>
+<p>20–30 minutes:</p>
+<ol>
+<li><strong>Install Codex CLI</strong> (if you haven’t).</li>
+<li><strong>Create <code>AGENTS.md</code></strong> in one of your projects (symlink to CLAUDE.md if you have one).</li>
+<li><strong>Run <code>codex --approval-mode suggest</code></strong> on a simple task — see what the plan looks like. Compare with what Claude Code produces on the same task.</li>
+<li><strong>Try <code>--approval-mode auto-edit</code></strong> with sandbox on fixing a failing test (break one on purpose). Watch the behaviour.</li>
+<li><strong>Read <code>~/.codex/config.toml</code></strong>. Add at least one <code>forbidden_command</code>.</li>
+</ol>
+<h2 id="recap">Recap</h2>
+<ul>
+<li><strong>Codex CLI is an architectural close relative of Claude Code.</strong> Same tools, same loop. Three differences: approval modes, OS-level sandbox, AGENTS.md.</li>
+<li><strong>Codex sandbox is built-in.</strong> It makes <code>full-auto</code> much safer than <code>--dangerously-skip-permissions</code> in Claude.</li>
+<li><strong>Approval modes are simpler but coarser.</strong> One parameter vs granular permissions.</li>
+<li><strong>Different tasks — different tools.</strong> Codex for long autonomous cycles and mass uniform edits. Claude for research, creative, subagents, hook control.</li>
+<li><strong>AGENTS.md = CLAUDE.md.</strong> Don’t duplicate — symlink or sync.</li>
+</ul>
+<h2 id="whats-next">What’s next</h2>
+<p>In <strong>M8 — Cursor Composer + IDE agents</strong> we cover the third camp: IDE agents. Cursor Composer, Cline, Aider, Windsurf. Where an IDE agent beats a CLI agent, how they integrate into a normal dev flow, and why I personally pick different IDEs for different tasks.</p>
+<p>If this clicked — share with anyone just starting on Codex or comparing tools. If you have your own observations “X better than Y on this kind of task” — definitely write in the comments, your feedback really helps polish the comparisons.</p>
+<h2 id="-further-reading">📚 Further reading</h2>
+<p>So you don’t depend on my read of the comparison — a list of primary sources I leaned on. Open them alongside the chapter.</p>
+<p><strong>Codex CLI — official resources</strong></p>
+<ul>
+<li><strong>openai/codex (GitHub)</strong> — main CLI repo, install/changelog/issues: <a href="https://github.com/openai/codex">github.com/openai/codex</a>.</li>
+<li><strong>Codex CLI overview</strong> on developers.openai.com — install, approval modes, sandbox, AGENTS.md: <a href="https://developers.openai.com/codex/cli">developers.openai.com/codex/cli</a>.</li>
+<li><strong>Codex CLI command reference</strong> — every flag, including <code>--approval-mode</code> and <code>exec</code>: <a href="https://developers.openai.com/codex/cli/reference">developers.openai.com/codex/cli/reference</a>.</li>
+</ul>
+<p><strong>OpenAI Agents SDK</strong></p>
+<ul>
+<li><strong>openai-agents-python</strong> — official framework for multi-agent workflows, the basis for much of the OpenAI agent tutorial line: <a href="https://github.com/openai/openai-agents-python">github.com/openai/openai-agents-python</a>.</li>
+<li><strong>OpenAI Agents SDK docs</strong> — Agent/Tools/Handoffs/Guardrails concepts, best entry point after the CLI: <a href="https://openai.github.io/openai-agents-python/">openai.github.io/openai-agents-python</a>.</li>
+</ul>
+<blockquote>
+<p><strong>Tip:</strong> don’t try comparing Codex and Claude Code “in your head” — open two terminals side by side on the same task and run the same prompt. Takes 20 minutes and gives an honest picture no benchmark review will give you.</p>
+</blockquote>
+<hr>
+<p><strong>Maps to:</strong> Author’s block — tool comparison outside GH-600</p> <nav class="chapter-nav" data-astro-cid-a7sruqtr> <a href="/vibesamurai-site/courses/middle/m6/en" data-astro-cid-a7sruqtr> <span class="dir" data-astro-cid-a7sruqtr>← Back</span> <span class="title" data-astro-cid-a7sruqtr>M6 · Claude Code CLI mastery</span> </a> <a href="/vibesamurai-site/courses/middle/m8/en" data-astro-cid-a7sruqtr> <span class="dir" data-astro-cid-a7sruqtr>Next →</span> <span class="title" data-astro-cid-a7sruqtr>M8 · Cursor Composer + IDE agents</span> </a> </nav> </main>  </div> <script type="module">
+    import { gatingEnabled } from '../lib/supabase';
+    import { fetchChapter } from '../lib/auth';
+
+    const base = import.meta.env.BASE_URL;
+    let mermaidLib = null;
+
+    function scopeOf(root) {
+      return root === document ? document.querySelector('.reader-main') : root;
+    }
+
+    function addCopyBtns(root) {
+      const scope = scopeOf(root); if (!scope) return;
+      scope.querySelectorAll('pre').forEach((pre) => {
+        if (pre.closest('.code-tabs')) return;
+        if (pre.querySelector('.copy-btn')) return;
+        const btn = document.createElement('button');
+        btn.className = 'copy-btn';
+        btn.textContent = 'copy';
+        btn.addEventListener('click', async () => {
+          const code = pre.querySelector('code')?.textContent ?? pre.textContent ?? '';
+          await navigator.clipboard.writeText(code.trimEnd());
+          btn.textContent = '✓ copied';
+          setTimeout(() => { btn.textContent = 'copy'; }, 1600);
+        });
+        pre.appendChild(btn);
+      });
+    }
+
+    function tightenMermaidSvgs(retries = 6) {
+      let pending = false;
+      document.querySelectorAll('.mermaid svg').forEach((svg) => {
+        if (svg.dataset.tightened === '1') return;
+        try {
+          const bbox = svg.getBBox();
+          if (!bbox || bbox.width === 0) { pending = true; return; }
+          const pad = 6;
+          svg.setAttribute('viewBox',
+            `${bbox.x - pad} ${bbox.y - pad} ${bbox.width + pad * 2} ${bbox.height + pad * 2}`);
+          svg.removeAttribute('height');
+          svg.style.height = 'auto';
+          svg.style.maxWidth = '100%';
+          svg.style.display = 'block';
+          svg.dataset.tightened = '1';
+        } catch (e) { pending = true; }
+      });
+      if (pending && retries > 0) setTimeout(() => tightenMermaidSvgs(retries - 1), 120);
+    }
+
+    async function ensureMermaid() {
+      if (mermaidLib) return mermaidLib;
+      const mod = await import('https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs');
+      mermaidLib = mod.default;
+      mermaidLib.initialize({
+        startOnLoad: false, theme: 'neutral',
+        themeVariables: {
+          fontFamily: 'JetBrains Mono, ui-monospace, monospace',
+          primaryColor: '#f5f5f5', primaryBorderColor: '#222',
+          primaryTextColor: '#111', lineColor: '#444',
+        },
+        flowchart: { curve: 'basis', padding: 12, useMaxWidth: true },
+      });
+      return mermaidLib;
+    }
+
+    async function renderMermaid(root) {
+      const scope = scopeOf(root); if (!scope) return;
+      const matches = scope.querySelectorAll(
+        'pre[data-language="mermaid"], pre.language-mermaid, code.language-mermaid'
+      );
+      if (!matches.length) return;
+      matches.forEach((el) => {
+        const block = el.tagName === 'CODE' ? el.closest('pre') || el : el;
+        const codeEl = block.querySelector('code') || block;
+        const wrap = document.createElement('div');
+        wrap.className = 'mermaid';
+        wrap.textContent = codeEl.textContent;
+        block.replaceWith(wrap);
+      });
+      try {
+        const m = await ensureMermaid();
+        await m.run();
+        tightenMermaidSvgs();
+      } catch (err) {
+        console.warn('mermaid failed', err);
+        document.querySelectorAll('.mermaid:not(:has(svg))').forEach((el) => { el.style.display = 'none'; });
+      }
+    }
+
+    async function enhance(root = document) {
+      addCopyBtns(root);
+      await renderMermaid(root);
+    }
+
+    function paywallHtml(required, needLogin) {
+      const label = { beginner: 'Beginner (300 ₽)', middle: 'Beginner + Middle (500 ₽)', all: 'Весь пакет (700 ₽)' }[required] || '';
+      return `<div class="paywall">
+        <div class="paywall-ic">🔒</div>
+        <h3>Эта глава — в платном доступе</h3>
+        <p>Нужен тариф: <strong>${label}</strong>. Доступ навсегда, без подписки.</p>
+        ${needLogin ? '<p>Войди через Google и оформи доступ — продолжишь с любого устройства.</p>' : ''}
+        <a class="paywall-btn" href="${base}pricing">Открыть доступ →</a>
+        <a class="paywall-link" href="${base}account">Войти / мой аккаунт</a>
+      </div>`;
+    }
+
+    async function gatedFlow(mount) {
+      const slug = mount.dataset.slug;
+      const required = mount.dataset.required || 'beginner';
+      mount.innerHTML = '<p class="gate-msg">Проверяем доступ…</p>';
+      const res = await fetchChapter(slug);
+      if (res.ok) {
+        mount.innerHTML = res.html;
+        await enhance(mount);
+      } else if (res.status === 401) {
+        mount.innerHTML = paywallHtml(required, true);
+      } else if (res.status === 402) {
+        mount.innerHTML = paywallHtml(res.requiredTier || required, false);
+      } else {
+        mount.innerHTML = '<p class="gate-msg">Не удалось загрузить главу. Обнови страницу.</p>';
+      }
+    }
+
+    const mount = document.getElementById('gated-mount');
+    if (mount && gatingEnabled) gatedFlow(mount);
+    else enhance(document);
+  </script> </body> </html>

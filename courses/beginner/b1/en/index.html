@@ -1,0 +1,224 @@
+<!DOCTYPE html><html lang="en" data-astro-cid-a7sruqtr> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>What is an AI agent — Vibesamurai</title><meta name="description" content="Not autocomplete and not a chatbot — a worker that does things itself and shows you what it did."><meta property="og:title" content="What is an AI agent"><meta property="og:type" content="article"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Inter:wght@300..800&family=JetBrains+Mono:wght@400..600&display=swap" rel="stylesheet"><link rel="stylesheet" href="/vibesamurai-site/_astro/_slug_.Cs4TX1wt.css">
+<style>.account-btn{display:inline-flex;align-items:center;gap:var(--space-2);font-family:var(--font-mono);font-size:var(--size-2);text-transform:uppercase;letter-spacing:.06em;padding:5px 10px;border:1px solid var(--rule);border-radius:999px;color:var(--text-soft);background:var(--surface);transition:border-color var(--d-fast),color var(--d-fast)}.account-btn:hover{border-color:var(--accent);color:var(--text)}.account-ic{width:18px;height:18px;display:grid;place-items:center;border-radius:50%;background:var(--accent);color:var(--accent-ink);font-weight:700;font-size:10px;line-height:1}.reader-rail .account-btn{padding:0;border:none;background:transparent}.reader-rail .account-label{display:none}.reader-rail .account-ic{width:32px;height:32px;font-size:13px}.rail-toggle{width:36px;height:36px;display:grid;place-items:center;background:var(--accent);border:1px solid var(--accent);border-radius:4px;cursor:pointer;transition:filter var(--d-fast),transform var(--d-fast);padding:0}.rail-toggle:hover{filter:brightness(1.08);transform:translateY(-1px)}.rail-toggle:active{transform:translateY(0)}.rail-toggle-icon{width:14px;height:12px;border-left:2px solid var(--accent-ink);border-right:2px solid var(--accent-ink);transition:transform var(--d-normal) var(--ease-standard)}.reader-app.sidebar-open .rail-toggle-icon{transform:rotate(0)}.reader-app:not(.sidebar-open) .rail-toggle-icon{transform:scaleX(.5)}.sidebar-backdrop{display:none;position:fixed;inset:0;background:#0000008c;z-index:140;border:0;padding:0;cursor:pointer}@media(max-width:900px){.reader-app.sidebar-open~.sidebar-backdrop{display:block}}.rail-spacer[data-astro-cid-ofsbkzh7]{flex:1}.reader-sidebar[data-astro-cid-khgtvzrl] .ru-tag[data-astro-cid-khgtvzrl]{font-style:normal;font-family:var(--font-mono);font-size:.7em;color:var(--text-mute);margin-left:4px;padding:1px 4px;border:1px solid var(--rule);border-radius:3px;text-transform:uppercase;vertical-align:middle}.chapter-eyebrow[data-astro-cid-a7sruqtr]{display:flex;justify-content:space-between;align-items:center;gap:var(--space-3)}.lang-toggle[data-astro-cid-a7sruqtr]{font-family:var(--font-mono);font-size:var(--size-2);padding:2px 8px;border:1px solid var(--rule);border-radius:4px;color:var(--text-mute);text-decoration:none;text-transform:uppercase;letter-spacing:.08em}.lang-toggle[data-astro-cid-a7sruqtr]:hover{color:var(--accent);border-color:var(--accent)}.code-tabs[data-astro-cid-hg66rjob]{margin:var(--space-5) 0}.code-tabs-nav[data-astro-cid-hg66rjob]{display:flex;gap:2px;margin-bottom:-1px;position:relative;z-index:1}.ctab[data-astro-cid-hg66rjob]{font-family:var(--font-mono);font-size:11px;text-transform:uppercase;letter-spacing:.07em;padding:5px 14px;border:1px solid #21222c;border-bottom:none;background:#1a1b23;color:#6272a4;cursor:pointer;border-radius:4px 4px 0 0;transition:color .12s,background .12s}.ctab[data-astro-cid-hg66rjob].is-active{background:#282a36;color:#f8f8f2;border-color:#21222c}.ctab[data-astro-cid-hg66rjob]:hover:not(.is-active){color:#cdd6f4}.ctab-panel[data-astro-cid-hg66rjob]{display:none}.ctab-panel[data-astro-cid-hg66rjob].is-active{display:block}.ctab-panel[data-astro-cid-hg66rjob] pre{margin-top:0!important;border-radius:0 6px 6px!important}
+</style></head> <body data-astro-cid-a7sruqtr> <div class="reader-app" data-astro-cid-a7sruqtr> <aside class="reader-rail" data-astro-cid-ofsbkzh7> <a href="/vibesamurai-site/" class="logo" aria-label="Vibesamurai home" data-astro-cid-ofsbkzh7>V</a> <button type="button" class="rail-toggle" id="sidebar-toggle" aria-label="Свернуть/развернуть оглавление" title="Свернуть/развернуть оглавление" data-astro-cid-ofsbkzh7> <span class="rail-toggle-icon" aria-hidden="true" data-astro-cid-ofsbkzh7></span> </button> <div class="rail-spacer" data-astro-cid-ofsbkzh7></div> <a href="/vibesamurai-site/account" class="account-btn" id="account-btn" aria-label="Аккаунт"> <span class="account-ic" id="account-ic">⌂</span> <span class="account-label" id="account-label">Войти</span> </a>  <script type="module" src="/vibesamurai-site/_astro/AccountButton.astro_astro_type_script_index_0_lang.CmD2sdn9.js"></script> </aside>  <button type="button" class="sidebar-backdrop" id="sidebar-backdrop" aria-label="Закрыть оглавление" tabindex="-1" data-astro-cid-ofsbkzh7></button>  <script type="module">const d="vs-sidebar-open",a="(max-width: 900px)";function t(e){const n=document.querySelector(".reader-app");n&&n.classList.toggle("sidebar-open",e)}function r(){return!window.matchMedia(a).matches}function s(){const e=localStorage.getItem(d),i=window.matchMedia(a).matches?!1:e!==null?e==="1":r();t(i),document.getElementById("sidebar-toggle")?.addEventListener("click",()=>{const c=!document.querySelector(".reader-app")?.classList.contains("sidebar-open");window.matchMedia(a).matches||localStorage.setItem(d,c?"1":"0"),t(c)}),document.getElementById("sidebar-backdrop")?.addEventListener("click",()=>t(!1)),document.querySelectorAll(".reader-sidebar a").forEach(o=>{o.addEventListener("click",()=>{window.matchMedia(a).matches&&t(!1)})})}document.readyState==="loading"?document.addEventListener("DOMContentLoaded",s):s();</script> <aside class="reader-sidebar" data-astro-cid-khgtvzrl> <div class="breadcrumb" data-astro-cid-khgtvzrl>Vibesamurai · Beginner Path · B1</div> <h4 data-astro-cid-khgtvzrl>In this course</h4> <ul data-astro-cid-khgtvzrl> <li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b1/en" class="current" data-astro-cid-khgtvzrl> B1 · What is an AI agent  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b2/en" class data-astro-cid-khgtvzrl> B2 · Installing your first AI agent  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b3/en" class data-astro-cid-khgtvzrl> B3 · First conversation  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b4/en" class data-astro-cid-khgtvzrl> B4 · What&#39;s a repo and why commit  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b5/en" class data-astro-cid-khgtvzrl> B5 · Building the first project (todo app)  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b6/en" class data-astro-cid-khgtvzrl> B6 · Reading the code the agent wrote  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b7/en" class data-astro-cid-khgtvzrl> B7 · Security for beginners  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b8/en" class data-astro-cid-khgtvzrl> B8 · Cursor vs Claude Code vs Codex CLI  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b9/en" class data-astro-cid-khgtvzrl> B9 · Deploying the first project  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b10/en" class data-astro-cid-khgtvzrl> B10 · How to evaluate the agent&#39;s output  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b11/en" class data-astro-cid-khgtvzrl> B11 · Capstone: build your own tool  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b12/en" class data-astro-cid-khgtvzrl> B12 · Where to go next  </a> </li> </ul>  </aside> <main class="reader-main" data-astro-cid-a7sruqtr> <div class="chapter-eyebrow" data-astro-cid-a7sruqtr> <span data-astro-cid-a7sruqtr>Beginner Path · b1</span> <a class="lang-toggle" href="/vibesamurai-site/courses/beginner/b1" aria-label="Switch to RU" data-astro-cid-a7sruqtr>RU</a> </div> <h1 class="chapter-title" data-astro-cid-a7sruqtr>B1 · What is an AI agent</h1> <p class="chapter-subtitle" data-astro-cid-a7sruqtr>Not autocomplete and not a chatbot — a worker that does things itself and shows you what it did.</p> <h2 id="why-this-is-the-first-chapter">Why this is the first chapter</h2>
+<p>Hey folks, welcome 👋</p>
+<p>If you stepped into AI in 2026 and keep hearing the word <strong>“agent”</strong> — it’s normal that your head is a mush. Chatbot, assistant, agent, copilot, autocomplete — they all do something to code, and from the outside it looks like there’s no difference.</p>
+<p>There is a difference, and it’s huge. If you don’t catch it, your first month with these tools will go in “it did something, and I have no idea what” mode. Personally that drove me up the wall in my own start, so let’s begin with the basics.</p>
+<p>By the end of this chapter you can tell three things apart that beginners constantly mix up:</p>
+<ol>
+<li><strong>A search engine</strong> — finds. You read.</li>
+<li><strong>A chatbot</strong> — answers. You read and decide.</li>
+<li><strong>An agent</strong> — <em>does</em>. You look at what it did and accept or roll back.</li>
+</ol>
+<p>That third thing is the topic of the entire course.</p>
+<h2 id="thirty-seconds-on-the-difference">Thirty seconds on the difference</h2>
+<p>Imagine your sink is broken.</p>
+<ul>
+<li><strong>Search engine</strong> — that’s a YouTube query “how to fix a sink.” You get links, the rest is on you.</li>
+<li><strong>Chatbot</strong> — that’s a neighbour plumber explaining over the phone what to unscrew, in what order. You hold the wrench, he talks.</li>
+<li><strong>Agent</strong> — that’s the neighbour plumber who showed up with the wrench, unscrewed everything, swapped the gasket, screwed it back, and says “done, check it doesn’t leak.”</li>
+</ul>
+<p>Feel the difference? In the first two cases you do the work. In the third — he does. Your job in the third case is <strong>to check that he actually fixed it, didn’t make it worse</strong>.</p>
+<p>With an AI agent it’s exactly the same. It opens files itself, writes code itself, runs commands itself, commits itself. Your job is to set a task, draw the boundaries, and then verify the result.</p>
+<h2 id="minimum-diagram-plan--act--evaluate">Minimum diagram: plan → act → evaluate</h2>
+<p>Any decent agent always has three phases:</p>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="mermaid"><code><span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">flowchart LR</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    A([Task from you]) --> P[PLAN&#x3C;br/>agent describes&#x3C;br/>what it will do]</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    P -->|you approve| D[ACT&#x3C;br/>agent changes files,&#x3C;br/>runs commands]</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    D --> C[EVALUATE&#x3C;br/>match result&#x3C;br/>against the plan]</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    C -->|ok| OK([Accept])</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    C -->|nope| R([Roll back and clarify])</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    R -.-> P</span></span></code></pre>
+<p>In one line: <code>plan → act → evaluate</code>.</p>
+<ol>
+<li><strong>Plan.</strong> The agent states what it’s about to do, <strong>before</strong> it changes anything.</li>
+<li><strong>Act.</strong> The agent executes the plan — in a clearly bounded zone (folder, branch, sandbox).</li>
+<li><strong>Evaluate.</strong> The agent (or you) compares the result with what was planned.</li>
+</ol>
+<p>Sounds simple. In practice, most beginner mistakes are skipping phase 1 or phase 3:</p>
+<ul>
+<li><strong>Skipped the plan</strong> — the agent ran off to do things, five minutes later you have 40 changed files and no idea what happened.</li>
+<li><strong>Skipped the evaluation</strong> — the agent said “done,” you pushed to the repo, an hour later you discover it deleted half the tests.</li>
+</ul>
+<p>In this course we learn from day one to <strong>never skip any of the three phases</strong>. It’s not paranoia — it’s taste and discipline, and as we’ll say many times, those matter more than any tool.</p>
+<aside class="skeptic">
+<p><strong>🥷 Vibe Samurai asks:</strong> “If the agent is so smart, why babysit it?”</p>
+<p><strong>Answer:</strong> Smart ≠ context-aware. The agent will cheerfully refactor a file that was holding all the logic. It’s not malicious — it just doesn’t know that file is special. Evaluating is how you stay the senior engineer of your own project, even if you don’t yet call yourself an engineer.</p>
+</aside>
+<h2 id="why-the-agent-is-a-worker-not-a-manual">Why the agent is a “worker,” not a “manual”</h2>
+<p>If you’re used to Stack Overflow or to ChatGPT in a browser — there’s a familiar pattern: you asked, it answered, you copy-pasted.</p>
+<p>With an agent it’s different. <strong>The agent doesn’t hand back text — it hands back changes.</strong> In files. In your folder. Right now.</p>
+<p>Which means:</p>
+<ul>
+<li>If you give it access to everything — it will work on everything.</li>
+<li>If you give it prod credentials — it can take down prod.</li>
+<li>If you ask it to “delete the extra stuff” — it will delete <strong>what it considers</strong> extra.</li>
+</ul>
+<p>That’s not a scare story, that’s working reality. Think of the agent as a new employee on probation. You wouldn’t give that person prod creds on day one, right? Don’t give them to the agent either. First — sandbox, small task, verification, trust.</p>
+<h2 id="the-full-kit-of-a-modern-agent">The full kit of a modern agent</h2>
+<p>When I say “modern agent” — I mean tools like <strong>Claude Code</strong>, <strong>Cursor</strong>, <strong>Codex CLI</strong>, <strong>Devin</strong>. They all have roughly the same kit:</p>
+<ul>
+<li>Read files in your folder</li>
+<li>Write and edit files</li>
+<li>Run commands (tests, build, git)</li>
+<li>Google things and read the web</li>
+<li>Remember what happened in this session (and sometimes across sessions)</li>
+</ul>
+<p>So it’s <strong>not a text chatter</strong>. It’s a full worker with hands (files, commands), eyes (your code, your logs), a voice (replies in the terminal), and memory (session context).</p>
+<p>From which the main thing follows: <strong>the safety boundary is not the agent — it’s you</strong>. You decide which folder it works in, which commands it can run, which files it sees, what it absolutely doesn’t touch.</p>
+<h2 id="your-first-agentic-cycle">Your first agentic cycle</h2>
+<p>No theorising. Open a terminal and ask Claude Code (or Cursor, or Codex CLI) to do <strong>the safest possible thing</strong> — read your folder and tell you what it sees:</p>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#50FA7B;--shiki-dark:#50FA7B">claude</span><span style="color:#E9F284;--shiki-dark:#E9F284"> "</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">Read every file in this folder and write a one-paragraph summary. Do not change anything.</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span></span></code></pre>
+<p>That command is your <strong>“look, don’t touch”</strong> mode. No changes, no commands, just reading.</p>
+<p>Read what the agent wrote. If it understood your project — great, you can move on. If it understood wrong — also great, now you see <strong>where its blind spots are</strong>, and you can give it context next time.</p>
+<p>This habit — opening a session with “look, don’t touch” — will stay with you the whole course. Not perfect, but actually works.</p>
+<h2 id="recap-what-to-take-away">Recap (what to take away)</h2>
+<ul>
+<li><strong>Agent ≠ chatbot.</strong> It doesn’t hand back text, it makes changes in your files.</li>
+<li><strong>Plan → Act → Evaluate</strong> — three phases you can’t skip.</li>
+<li><strong>The safety boundary is you</strong>, not the tool itself. Sandbox, small task, verification.</li>
+<li>Start every session with <strong>“look, don’t touch”</strong> — that’s your training wheels.</li>
+</ul>
+<h2 id="whats-next">What’s next</h2>
+<p>In the next chapter <strong>B2</strong> we install the first working tool — <strong>Claude Code</strong>. Set up, register, get a key, send the first request — and along the way I’ll mention how it differs from Cursor and Codex CLI and when each is more convenient.</p>
+<p>If this clicked — share with anyone just thinking about getting into the topic. If you have questions about what to look out for in the next chapter — write in the course comments, your feedback really helps polish the material.</p>
+<h2 id="-further-reading">📚 Further reading</h2>
+<p>If you want to go deeper on the idea of an AI agent — a short must-read list. Nothing extra, all verified.</p>
+<p><strong>Video</strong></p>
+<ul>
+<li><strong>Andrej Karpathy — “Software is Changing (Again)”</strong> — <a href="https://www.youtube.com/watch?v=LCEmiRjPEtQ">youtube.com/watch?v=LCEmiRjPEtQ</a>. Karpathy explains how the boundary between code and model is shifting. If you watch one video on this topic this year — make it this one.</li>
+</ul>
+<p><strong>Articles and docs</strong></p>
+<ul>
+<li><strong>Anthropic — Claude Code</strong> (product page): <a href="https://www.anthropic.com/product/claude-code">anthropic.com/product/claude-code</a>. A short honest overview of what the tool does and where its boundaries are.</li>
+<li><strong>Claude Code Docs — Overview</strong>: <a href="https://code.claude.com/docs/en/overview">code.claude.com/docs/en/overview</a>. The official docs; we start from here in B2.</li>
+</ul>
+<blockquote>
+<p><strong>Tip:</strong> before B2 at least skim Overview — you’ll feel a bit “in the loop” by the time we start installing the tool by hand.</p>
+</blockquote> <nav class="chapter-nav" data-astro-cid-a7sruqtr> <span data-astro-cid-a7sruqtr></span> <span data-astro-cid-a7sruqtr></span> </nav> </main>  </div> <script type="module">
+    import { gatingEnabled } from '../lib/supabase';
+    import { fetchChapter } from '../lib/auth';
+
+    const base = import.meta.env.BASE_URL;
+    let mermaidLib = null;
+
+    function scopeOf(root) {
+      return root === document ? document.querySelector('.reader-main') : root;
+    }
+
+    function addCopyBtns(root) {
+      const scope = scopeOf(root); if (!scope) return;
+      scope.querySelectorAll('pre').forEach((pre) => {
+        if (pre.closest('.code-tabs')) return;
+        if (pre.querySelector('.copy-btn')) return;
+        const btn = document.createElement('button');
+        btn.className = 'copy-btn';
+        btn.textContent = 'copy';
+        btn.addEventListener('click', async () => {
+          const code = pre.querySelector('code')?.textContent ?? pre.textContent ?? '';
+          await navigator.clipboard.writeText(code.trimEnd());
+          btn.textContent = '✓ copied';
+          setTimeout(() => { btn.textContent = 'copy'; }, 1600);
+        });
+        pre.appendChild(btn);
+      });
+    }
+
+    function tightenMermaidSvgs(retries = 6) {
+      let pending = false;
+      document.querySelectorAll('.mermaid svg').forEach((svg) => {
+        if (svg.dataset.tightened === '1') return;
+        try {
+          const bbox = svg.getBBox();
+          if (!bbox || bbox.width === 0) { pending = true; return; }
+          const pad = 6;
+          svg.setAttribute('viewBox',
+            `${bbox.x - pad} ${bbox.y - pad} ${bbox.width + pad * 2} ${bbox.height + pad * 2}`);
+          svg.removeAttribute('height');
+          svg.style.height = 'auto';
+          svg.style.maxWidth = '100%';
+          svg.style.display = 'block';
+          svg.dataset.tightened = '1';
+        } catch (e) { pending = true; }
+      });
+      if (pending && retries > 0) setTimeout(() => tightenMermaidSvgs(retries - 1), 120);
+    }
+
+    async function ensureMermaid() {
+      if (mermaidLib) return mermaidLib;
+      const mod = await import('https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs');
+      mermaidLib = mod.default;
+      mermaidLib.initialize({
+        startOnLoad: false, theme: 'neutral',
+        themeVariables: {
+          fontFamily: 'JetBrains Mono, ui-monospace, monospace',
+          primaryColor: '#f5f5f5', primaryBorderColor: '#222',
+          primaryTextColor: '#111', lineColor: '#444',
+        },
+        flowchart: { curve: 'basis', padding: 12, useMaxWidth: true },
+      });
+      return mermaidLib;
+    }
+
+    async function renderMermaid(root) {
+      const scope = scopeOf(root); if (!scope) return;
+      const matches = scope.querySelectorAll(
+        'pre[data-language="mermaid"], pre.language-mermaid, code.language-mermaid'
+      );
+      if (!matches.length) return;
+      matches.forEach((el) => {
+        const block = el.tagName === 'CODE' ? el.closest('pre') || el : el;
+        const codeEl = block.querySelector('code') || block;
+        const wrap = document.createElement('div');
+        wrap.className = 'mermaid';
+        wrap.textContent = codeEl.textContent;
+        block.replaceWith(wrap);
+      });
+      try {
+        const m = await ensureMermaid();
+        await m.run();
+        tightenMermaidSvgs();
+      } catch (err) {
+        console.warn('mermaid failed', err);
+        document.querySelectorAll('.mermaid:not(:has(svg))').forEach((el) => { el.style.display = 'none'; });
+      }
+    }
+
+    async function enhance(root = document) {
+      addCopyBtns(root);
+      await renderMermaid(root);
+    }
+
+    function paywallHtml(required, needLogin) {
+      const label = { beginner: 'Beginner (300 ₽)', middle: 'Beginner + Middle (500 ₽)', all: 'Весь пакет (700 ₽)' }[required] || '';
+      return `<div class="paywall">
+        <div class="paywall-ic">🔒</div>
+        <h3>Эта глава — в платном доступе</h3>
+        <p>Нужен тариф: <strong>${label}</strong>. Доступ навсегда, без подписки.</p>
+        ${needLogin ? '<p>Войди через Google и оформи доступ — продолжишь с любого устройства.</p>' : ''}
+        <a class="paywall-btn" href="${base}pricing">Открыть доступ →</a>
+        <a class="paywall-link" href="${base}account">Войти / мой аккаунт</a>
+      </div>`;
+    }
+
+    async function gatedFlow(mount) {
+      const slug = mount.dataset.slug;
+      const required = mount.dataset.required || 'beginner';
+      mount.innerHTML = '<p class="gate-msg">Проверяем доступ…</p>';
+      const res = await fetchChapter(slug);
+      if (res.ok) {
+        mount.innerHTML = res.html;
+        await enhance(mount);
+      } else if (res.status === 401) {
+        mount.innerHTML = paywallHtml(required, true);
+      } else if (res.status === 402) {
+        mount.innerHTML = paywallHtml(res.requiredTier || required, false);
+      } else {
+        mount.innerHTML = '<p class="gate-msg">Не удалось загрузить главу. Обнови страницу.</p>';
+      }
+    }
+
+    const mount = document.getElementById('gated-mount');
+    if (mount && gatingEnabled) gatedFlow(mount);
+    else enhance(document);
+  </script> </body> </html>

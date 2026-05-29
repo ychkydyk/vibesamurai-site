@@ -1,0 +1,395 @@
+<!DOCTYPE html><html lang="en" data-astro-cid-a7sruqtr> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Tool inventory and permissions — Vibesamurai</title><meta name="description" content="Which tools you actually need for a task. Least-privilege scoping and regular permission audits."><meta property="og:title" content="Tool inventory and permissions"><meta property="og:type" content="article"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Inter:wght@300..800&family=JetBrains+Mono:wght@400..600&display=swap" rel="stylesheet"><link rel="stylesheet" href="/vibesamurai-site/_astro/_slug_.Cs4TX1wt.css">
+<style>.account-btn{display:inline-flex;align-items:center;gap:var(--space-2);font-family:var(--font-mono);font-size:var(--size-2);text-transform:uppercase;letter-spacing:.06em;padding:5px 10px;border:1px solid var(--rule);border-radius:999px;color:var(--text-soft);background:var(--surface);transition:border-color var(--d-fast),color var(--d-fast)}.account-btn:hover{border-color:var(--accent);color:var(--text)}.account-ic{width:18px;height:18px;display:grid;place-items:center;border-radius:50%;background:var(--accent);color:var(--accent-ink);font-weight:700;font-size:10px;line-height:1}.reader-rail .account-btn{padding:0;border:none;background:transparent}.reader-rail .account-label{display:none}.reader-rail .account-ic{width:32px;height:32px;font-size:13px}.rail-toggle{width:36px;height:36px;display:grid;place-items:center;background:var(--accent);border:1px solid var(--accent);border-radius:4px;cursor:pointer;transition:filter var(--d-fast),transform var(--d-fast);padding:0}.rail-toggle:hover{filter:brightness(1.08);transform:translateY(-1px)}.rail-toggle:active{transform:translateY(0)}.rail-toggle-icon{width:14px;height:12px;border-left:2px solid var(--accent-ink);border-right:2px solid var(--accent-ink);transition:transform var(--d-normal) var(--ease-standard)}.reader-app.sidebar-open .rail-toggle-icon{transform:rotate(0)}.reader-app:not(.sidebar-open) .rail-toggle-icon{transform:scaleX(.5)}.sidebar-backdrop{display:none;position:fixed;inset:0;background:#0000008c;z-index:140;border:0;padding:0;cursor:pointer}@media(max-width:900px){.reader-app.sidebar-open~.sidebar-backdrop{display:block}}.rail-spacer[data-astro-cid-ofsbkzh7]{flex:1}.reader-sidebar[data-astro-cid-khgtvzrl] .ru-tag[data-astro-cid-khgtvzrl]{font-style:normal;font-family:var(--font-mono);font-size:.7em;color:var(--text-mute);margin-left:4px;padding:1px 4px;border:1px solid var(--rule);border-radius:3px;text-transform:uppercase;vertical-align:middle}.chapter-eyebrow[data-astro-cid-a7sruqtr]{display:flex;justify-content:space-between;align-items:center;gap:var(--space-3)}.lang-toggle[data-astro-cid-a7sruqtr]{font-family:var(--font-mono);font-size:var(--size-2);padding:2px 8px;border:1px solid var(--rule);border-radius:4px;color:var(--text-mute);text-decoration:none;text-transform:uppercase;letter-spacing:.08em}.lang-toggle[data-astro-cid-a7sruqtr]:hover{color:var(--accent);border-color:var(--accent)}.code-tabs[data-astro-cid-hg66rjob]{margin:var(--space-5) 0}.code-tabs-nav[data-astro-cid-hg66rjob]{display:flex;gap:2px;margin-bottom:-1px;position:relative;z-index:1}.ctab[data-astro-cid-hg66rjob]{font-family:var(--font-mono);font-size:11px;text-transform:uppercase;letter-spacing:.07em;padding:5px 14px;border:1px solid #21222c;border-bottom:none;background:#1a1b23;color:#6272a4;cursor:pointer;border-radius:4px 4px 0 0;transition:color .12s,background .12s}.ctab[data-astro-cid-hg66rjob].is-active{background:#282a36;color:#f8f8f2;border-color:#21222c}.ctab[data-astro-cid-hg66rjob]:hover:not(.is-active){color:#cdd6f4}.ctab-panel[data-astro-cid-hg66rjob]{display:none}.ctab-panel[data-astro-cid-hg66rjob].is-active{display:block}.ctab-panel[data-astro-cid-hg66rjob] pre{margin-top:0!important;border-radius:0 6px 6px!important}
+</style></head> <body data-astro-cid-a7sruqtr> <div class="reader-app" data-astro-cid-a7sruqtr> <aside class="reader-rail" data-astro-cid-ofsbkzh7> <a href="/vibesamurai-site/" class="logo" aria-label="Vibesamurai home" data-astro-cid-ofsbkzh7>V</a> <button type="button" class="rail-toggle" id="sidebar-toggle" aria-label="Свернуть/развернуть оглавление" title="Свернуть/развернуть оглавление" data-astro-cid-ofsbkzh7> <span class="rail-toggle-icon" aria-hidden="true" data-astro-cid-ofsbkzh7></span> </button> <div class="rail-spacer" data-astro-cid-ofsbkzh7></div> <a href="/vibesamurai-site/account" class="account-btn" id="account-btn" aria-label="Аккаунт"> <span class="account-ic" id="account-ic">⌂</span> <span class="account-label" id="account-label">Войти</span> </a>  <script type="module" src="/vibesamurai-site/_astro/AccountButton.astro_astro_type_script_index_0_lang.CmD2sdn9.js"></script> </aside>  <button type="button" class="sidebar-backdrop" id="sidebar-backdrop" aria-label="Закрыть оглавление" tabindex="-1" data-astro-cid-ofsbkzh7></button>  <script type="module">const d="vs-sidebar-open",a="(max-width: 900px)";function t(e){const n=document.querySelector(".reader-app");n&&n.classList.toggle("sidebar-open",e)}function r(){return!window.matchMedia(a).matches}function s(){const e=localStorage.getItem(d),i=window.matchMedia(a).matches?!1:e!==null?e==="1":r();t(i),document.getElementById("sidebar-toggle")?.addEventListener("click",()=>{const c=!document.querySelector(".reader-app")?.classList.contains("sidebar-open");window.matchMedia(a).matches||localStorage.setItem(d,c?"1":"0"),t(c)}),document.getElementById("sidebar-backdrop")?.addEventListener("click",()=>t(!1)),document.querySelectorAll(".reader-sidebar a").forEach(o=>{o.addEventListener("click",()=>{window.matchMedia(a).matches&&t(!1)})})}document.readyState==="loading"?document.addEventListener("DOMContentLoaded",s):s();</script> <aside class="reader-sidebar" data-astro-cid-khgtvzrl> <div class="breadcrumb" data-astro-cid-khgtvzrl>Vibesamurai · Middle Path · M4</div> <h4 data-astro-cid-khgtvzrl>In this course</h4> <ul data-astro-cid-khgtvzrl> <li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m1/en" class data-astro-cid-khgtvzrl> M1 · What is agentic AI in the SDLC  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m2/en" class data-astro-cid-khgtvzrl> M2 · Architecting agent boundaries  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m3/en" class data-astro-cid-khgtvzrl> M3 · Observability and human-in-the-loop  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m4/en" class="current" data-astro-cid-khgtvzrl> M4 · Tool inventory and permissions  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m5/en" class data-astro-cid-khgtvzrl> M5 · MCP deep dive  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m6/en" class data-astro-cid-khgtvzrl> M6 · Claude Code CLI mastery  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m7/en" class data-astro-cid-khgtvzrl> M7 · GPT-5.3 Codex CLI and OpenAI agents  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m8/en" class data-astro-cid-khgtvzrl> M8 · Cursor Composer + IDE agents  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m9/en" class data-astro-cid-khgtvzrl> M9 · Memory strategies  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m10/en" class data-astro-cid-khgtvzrl> M10 · State, drift, continuity  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m11/en" class data-astro-cid-khgtvzrl> M11 · Evaluating agents: metrics over vibes  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m12/en" class data-astro-cid-khgtvzrl> M12 · Regression tests for agents  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m13/en" class data-astro-cid-khgtvzrl> M13 · Tuning: what to change when metrics don&#39;t move  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m14/en" class data-astro-cid-khgtvzrl> M14 · One agent, many steps: pipelines and orchestration  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m15/en" class data-astro-cid-khgtvzrl> M15 · Multi-agent: roles, communication, supervisor  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m16/en" class data-astro-cid-khgtvzrl> M16 · When multi-agent is overkill. Anti-patterns  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m17/en" class data-astro-cid-khgtvzrl> M17 · Production: deploying agents to live environments  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m18/en" class data-astro-cid-khgtvzrl> M18 · Security in prod: secrets, sandbox, audit  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m19/en" class data-astro-cid-khgtvzrl> M19 · Incidents &amp; post-mortems  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m20/en" class data-astro-cid-khgtvzrl> M20 · Finale: where to go after Middle  </a> </li> </ul>  </aside> <main class="reader-main" data-astro-cid-a7sruqtr> <div class="chapter-eyebrow" data-astro-cid-a7sruqtr> <span data-astro-cid-a7sruqtr>Middle Path · m4</span> <a class="lang-toggle" href="/vibesamurai-site/courses/middle/m4" aria-label="Switch to RU" data-astro-cid-a7sruqtr>RU</a> </div> <h1 class="chapter-title" data-astro-cid-a7sruqtr>M4 · Tool inventory and permissions</h1> <p class="chapter-subtitle" data-astro-cid-a7sruqtr>Which tools you actually need for a task. Least-privilege scoping and regular permission audits.</p> <h2 id="what-this-chapter-is-about">What this chapter is about</h2>
+<p>Hey folks, welcome 👋</p>
+<p>Part I is closed — that was frames, contracts, observability. Now Part II — <strong>tools and environment</strong>. And the first chapter here is about <strong>tools</strong>.</p>
+<p>You’re probably thinking “well, tools — that’s where <code>--allow-bash</code> is and where <code>--allow-edit</code> is, I know this.” Spoiler: no. In current agentic environments there are <strong>at least 15–20 tools</strong>, and each is a separate risk vector, a separate responsibility zone, and a separate slice of API surface. Default agent CLI settings almost always come with <strong>a surplus</strong> — that is, with a larger tool set than you actually need.</p>
+<p>In this chapter we’ll cover:</p>
+<ol>
+<li>How to assemble a <strong>tool inventory</strong> for a specific class of tasks</li>
+<li>What <strong>least-privilege scoping</strong> is and how to apply it in practice</li>
+<li>The concrete tools available in Claude Code, Cursor, Codex CLI</li>
+<li><strong>Permission audit</strong> — the pattern of regular permission review</li>
+</ol>
+<h2 id="the-full-zoo-of-agent-tools">The full zoo of agent tools</h2>
+<p>Base taxonomy — five categories, each gated by its own allow/deny. On a napkin:</p>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="mermaid"><code><span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">flowchart LR</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    Agent[Agent] --> G{Permission&#x3C;br/>gates}</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    G --> R[Read&#x3C;br/>files / search]</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    G --> W[Write&#x3C;br/>edit / create]</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    G --> X[Execute&#x3C;br/>bash / shell]</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    G --> N[Network&#x3C;br/>web / API]</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    G --> B[Billing&#x3C;br/>paid APIs]</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    R -.allow.-> OK([proceed])</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    W -.ask.-> OK</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    X -.deny by default.-> Block([blocked])</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    N -.allow-list.-> OK</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    B -.budget gate.-> OK</span></span></code></pre>
+<p>Default config: read — usually allow, write — ask, execute/billing — deny or a strict allow-list. Network tools — separate egress whitelist (as in prod, see M18).</p>
+<p>In the current agentic world (May 2026) the typical tool set looks roughly like this:</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Category</th><th>Tools</th><th>Risk</th></tr></thead><tbody><tr><td><strong>Reading the project</strong></td><td><code>read_file</code>, <code>glob</code>, <code>grep</code>, <code>list_dir</code></td><td>low</td></tr><tr><td><strong>Editing</strong></td><td><code>write_file</code>, <code>edit_file</code>, <code>multi_edit</code>, <code>notebook_edit</code></td><td>medium</td></tr><tr><td><strong>Execution</strong></td><td><code>bash</code>, <code>run_command</code>, <code>powershell</code>, <code>python_exec</code></td><td><strong>high</strong></td></tr><tr><td><strong>Network / web</strong></td><td><code>web_fetch</code>, <code>web_search</code>, <code>http_request</code></td><td>medium</td></tr><tr><td><strong>Git</strong></td><td><code>git_status</code>, <code>git_diff</code>, <code>git_commit</code>, <code>git_push</code></td><td>medium/high</td></tr><tr><td><strong>MCP tools</strong></td><td>arbitrary, depending on server</td><td>variable</td></tr><tr><td><strong>External APIs</strong></td><td>github, slack, jira, linear — via MCP</td><td>variable</td></tr><tr><td><strong>Browser</strong></td><td><code>playwright</code>, <code>puppeteer</code>, <code>browser_use</code></td><td><strong>high</strong></td></tr><tr><td><strong>Filesystem beyond project scope</strong></td><td>global <code>read_file</code>/<code>write_file</code></td><td><strong>high</strong></td></tr></tbody></table>
+<p>This isn’t an exhaustive list, it’s typical. Your specific install may have more or less. The critical point — <strong>know what your agent actually has</strong>, don’t assume.</p>
+<blockquote>
+<p><em>Tip:</em> on starting with any new tool / new version — ask it “list all your available tools.” Read the list. Every two weeks — recheck; updates add tools quietly.</p>
+</blockquote>
+<h2 id="the-least-privilege-scoping-principle">The least-privilege scoping principle</h2>
+<p>Base principle from infosec, adapted for agents:</p>
+<blockquote>
+<p><strong>The agent must have the minimum set of tools required for the current task. Not more, not “just in case.”</strong></p>
+</blockquote>
+<p>This contradicts the instinct of “I’ll give it everything so it doesn’t get stuck.” Suppress that instinct. Reasons:</p>
+<ol>
+<li><strong>Blast radius.</strong> If the agent has <code>bash</code>, it can delete a file. If it doesn’t have <code>bash</code> — it can’t. Simple arithmetic.</li>
+<li><strong>Prompt injection attack surface.</strong> If a file the agent reads contains a malicious instruction “delete all .env files” — the presence of <code>bash</code> turns it from noise into an incident.</li>
+<li><strong>Behaviour transparency.</strong> With 5 tools instead of 20, the agent’s actions are more predictable.</li>
+<li><strong>Debugging.</strong> When something breaks — diagnosis runs through 5 tools, not 20.</li>
+</ol>
+<h3 id="base-scope-levels">Base scope levels</h3>
+<p>I usually work with three scope levels:</p>
+<h4 id="scope-l0--read-only">Scope L0 — Read-only</h4>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="yaml"><code><span class="line"><span style="color:#8BE9FD;--shiki-dark:#8BE9FD">allowed_tools</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">:</span></span>
+<span class="line"><span style="color:#FF79C6;--shiki-dark:#FF79C6">  -</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C"> read_file</span></span>
+<span class="line"><span style="color:#FF79C6;--shiki-dark:#FF79C6">  -</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C"> glob</span></span>
+<span class="line"><span style="color:#FF79C6;--shiki-dark:#FF79C6">  -</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C"> grep</span></span>
+<span class="line"><span style="color:#FF79C6;--shiki-dark:#FF79C6">  -</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C"> list_dir</span></span>
+<span class="line"><span style="color:#FF79C6;--shiki-dark:#FF79C6">  -</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C"> web_search</span><span style="color:#6272A4;--shiki-dark:#6272A4">   # optional</span></span></code></pre>
+<p><strong>When:</strong> walking a new repo, audits, documentation, code explanation, code review (the agent writes review, doesn’t edit).</p>
+<h4 id="scope-l1--write-allowed-scope-bounded">Scope L1 — Write-allowed, scope-bounded</h4>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="yaml"><code><span class="line"><span style="color:#8BE9FD;--shiki-dark:#8BE9FD">allowed_tools</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">:</span></span>
+<span class="line"><span style="color:#FF79C6;--shiki-dark:#FF79C6">  -</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C"> read_file</span></span>
+<span class="line"><span style="color:#FF79C6;--shiki-dark:#FF79C6">  -</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C"> glob</span></span>
+<span class="line"><span style="color:#FF79C6;--shiki-dark:#FF79C6">  -</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C"> grep</span></span>
+<span class="line"><span style="color:#FF79C6;--shiki-dark:#FF79C6">  -</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C"> write_file</span><span style="color:#6272A4;--shiki-dark:#6272A4">       # limited by paths</span></span>
+<span class="line"><span style="color:#FF79C6;--shiki-dark:#FF79C6">  -</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C"> edit_file</span></span>
+<span class="line"><span style="color:#8BE9FD;--shiki-dark:#8BE9FD">working_directory</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">:</span><span style="color:#E9F284;--shiki-dark:#E9F284"> "</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">./src/feature-x/</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#6272A4;--shiki-dark:#6272A4">   # explicit limit</span></span>
+<span class="line"><span style="color:#8BE9FD;--shiki-dark:#8BE9FD">forbidden_paths</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">:</span></span>
+<span class="line"><span style="color:#FF79C6;--shiki-dark:#FF79C6">  -</span><span style="color:#E9F284;--shiki-dark:#E9F284"> "</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">**/.env*</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span></span>
+<span class="line"><span style="color:#FF79C6;--shiki-dark:#FF79C6">  -</span><span style="color:#E9F284;--shiki-dark:#E9F284"> "</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">**/secrets/**</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span></span>
+<span class="line"><span style="color:#FF79C6;--shiki-dark:#FF79C6">  -</span><span style="color:#E9F284;--shiki-dark:#E9F284"> "</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">/etc/**</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span></span>
+<span class="line"><span style="color:#FF79C6;--shiki-dark:#FF79C6">  -</span><span style="color:#E9F284;--shiki-dark:#E9F284"> "</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">~/.ssh/**</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span></span></code></pre>
+<p><strong>When:</strong> actual feature development inside a bounded zone. Doesn’t touch the rest of the repo, doesn’t run commands.</p>
+<h4 id="scope-l2--execute-sandboxed">Scope L2 — Execute, sandboxed</h4>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="yaml"><code><span class="line"><span style="color:#8BE9FD;--shiki-dark:#8BE9FD">allowed_tools</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">:</span></span>
+<span class="line"><span style="color:#FF79C6;--shiki-dark:#FF79C6">  -</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C"> L1 +</span></span>
+<span class="line"><span style="color:#FF79C6;--shiki-dark:#FF79C6">  -</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C"> bash</span><span style="color:#6272A4;--shiki-dark:#6272A4">             # sandboxed, via container or firejail</span></span>
+<span class="line"><span style="color:#FF79C6;--shiki-dark:#FF79C6">  -</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C"> git_status</span></span>
+<span class="line"><span style="color:#FF79C6;--shiki-dark:#FF79C6">  -</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C"> git_diff</span></span>
+<span class="line"><span style="color:#8BE9FD;--shiki-dark:#8BE9FD">sandbox</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">:</span><span style="color:#E9F284;--shiki-dark:#E9F284"> "</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">container</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span></span>
+<span class="line"><span style="color:#8BE9FD;--shiki-dark:#8BE9FD">network</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">:</span><span style="color:#E9F284;--shiki-dark:#E9F284"> "</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">none</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#6272A4;--shiki-dark:#6272A4">      # or "egress-only"</span></span>
+<span class="line"><span style="color:#8BE9FD;--shiki-dark:#8BE9FD">forbidden_commands</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">:</span></span>
+<span class="line"><span style="color:#FF79C6;--shiki-dark:#FF79C6">  -</span><span style="color:#E9F284;--shiki-dark:#E9F284"> "</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">rm -rf</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span></span>
+<span class="line"><span style="color:#FF79C6;--shiki-dark:#FF79C6">  -</span><span style="color:#E9F284;--shiki-dark:#E9F284"> "</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">curl ... | sh</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span></span>
+<span class="line"><span style="color:#FF79C6;--shiki-dark:#FF79C6">  -</span><span style="color:#E9F284;--shiki-dark:#E9F284"> "</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">git push --force</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span></span></code></pre>
+<p><strong>When:</strong> tasks that require running tests, linters, local builds. <strong>Never</strong> on a bare machine — always through a sandbox.</p>
+<h4 id="scope-l3--full-access-rare">Scope L3 — Full access (rare)</h4>
+<p>Full bash access on the host machine, git push, external APIs. <strong>Only in a specifically prepared environment</strong>: dedicated CI runner, isolated VM, dedicated GitHub bot account with limited rights.</p>
+<p>Never on a dev machine. Never without supervisor logging.</p>
+<h2 id="how-to-do-scope-in-practice">How to do scope in practice</h2>
+<h3 id="in-claude-code">In Claude Code</h3>
+<p><code>.claude/settings.json</code> in the project root:</p>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="json"><code><span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">{</span></span>
+<span class="line"><span style="color:#8BE9FE;--shiki-dark:#8BE9FE">  "</span><span style="color:#8BE9FD;--shiki-dark:#8BE9FD">permissions</span><span style="color:#8BE9FE;--shiki-dark:#8BE9FE">"</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">:</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2"> {</span></span>
+<span class="line"><span style="color:#8BE9FE;--shiki-dark:#8BE9FE">    "</span><span style="color:#8BE9FD;--shiki-dark:#8BE9FD">allow</span><span style="color:#8BE9FE;--shiki-dark:#8BE9FE">"</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">:</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2"> [</span></span>
+<span class="line"><span style="color:#E9F284;--shiki-dark:#E9F284">      "</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">Bash(npm run test:*)</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">,</span></span>
+<span class="line"><span style="color:#E9F284;--shiki-dark:#E9F284">      "</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">Bash(npm run lint)</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">,</span></span>
+<span class="line"><span style="color:#E9F284;--shiki-dark:#E9F284">      "</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">Bash(git status)</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">,</span></span>
+<span class="line"><span style="color:#E9F284;--shiki-dark:#E9F284">      "</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">Bash(git diff:*)</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">,</span></span>
+<span class="line"><span style="color:#E9F284;--shiki-dark:#E9F284">      "</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">Read</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">,</span></span>
+<span class="line"><span style="color:#E9F284;--shiki-dark:#E9F284">      "</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">Edit</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">,</span></span>
+<span class="line"><span style="color:#E9F284;--shiki-dark:#E9F284">      "</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">Glob</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">,</span></span>
+<span class="line"><span style="color:#E9F284;--shiki-dark:#E9F284">      "</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">Grep</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    ],</span></span>
+<span class="line"><span style="color:#8BE9FE;--shiki-dark:#8BE9FE">    "</span><span style="color:#8BE9FD;--shiki-dark:#8BE9FD">deny</span><span style="color:#8BE9FE;--shiki-dark:#8BE9FE">"</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">:</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2"> [</span></span>
+<span class="line"><span style="color:#E9F284;--shiki-dark:#E9F284">      "</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">Bash(rm:*)</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">,</span></span>
+<span class="line"><span style="color:#E9F284;--shiki-dark:#E9F284">      "</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">Bash(git push:*)</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">,</span></span>
+<span class="line"><span style="color:#E9F284;--shiki-dark:#E9F284">      "</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">Bash(curl:*)</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">,</span></span>
+<span class="line"><span style="color:#E9F284;--shiki-dark:#E9F284">      "</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">Read(./.env)</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">,</span></span>
+<span class="line"><span style="color:#E9F284;--shiki-dark:#E9F284">      "</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">Read(./.env.*)</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">,</span></span>
+<span class="line"><span style="color:#E9F284;--shiki-dark:#E9F284">      "</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">Read(~/.ssh/**)</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">,</span></span>
+<span class="line"><span style="color:#E9F284;--shiki-dark:#E9F284">      "</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">Read(~/.aws/**)</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    ]</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">  }</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">}</span></span></code></pre>
+<ul>
+<li><code>allow</code> — what’s explicitly allowed (whitelist)</li>
+<li><code>deny</code> — what’s always forbidden, even if inside <code>allow</code> (blacklist wins)</li>
+<li>Patterns like <code>Bash(npm run test:*)</code> — specific commands, not “all of bash”</li>
+</ul>
+<h3 id="in-cursor">In Cursor</h3>
+<p><code>.cursorrules</code> or Settings → Composer → Permissions. You can limit access to bash commands, paths, files. Less granular than Claude Code, but the base scope is covered.</p>
+<h3 id="in-codex-cli">In Codex CLI</h3>
+<p>Via <code>--approval-mode</code>:</p>
+<ul>
+<li><code>suggest</code> — agent only suggests changes, doesn’t apply (~L0–L1)</li>
+<li><code>auto-edit</code> — applies edits itself, doesn’t run commands (~L1)</li>
+<li><code>full-auto</code> — runs commands without approval (~L2+, only in a sandbox)</li>
+</ul>
+<p>And via <code>--allowed-commands</code> / <code>--forbidden-commands</code> bash filtering.</p>
+<h3 id="universal-pattern-any-agent">Universal pattern (any agent)</h3>
+<p>If a specific tool doesn’t have a built-in scope mechanism — wrap it <strong>at the OS level</strong>:</p>
+<ul>
+<li>Run the agent under a separate user account with limited rights</li>
+<li>Containerization (Docker, Podman) with read-only mounts on sensitive paths</li>
+<li>Firejail / bubblewrap for a light sandbox without a full container</li>
+<li>VM for the riskiest scenarios</li>
+</ul>
+<blockquote>
+<p><em>Principle:</em> agent-level permissions are the first line. OS-level isolation is the second. Don’t rely on the first alone — it can be bypassed via prompt injection.</p>
+</blockquote>
+<h2 id="permission-audit-pattern">Permission audit pattern</h2>
+<p>Once a sprint (or at the start of the month — pick your rhythm) — run a <strong>permission audit</strong>. Not a “formal check” — a real review.</p>
+<h3 id="audit-checklist">Audit checklist</h3>
+<ol>
+<li><strong>Review of effective allow-lists</strong> across every agent environment in the team.</li>
+<li><strong>Compare with actual usage over the period.</strong> Which tools were actually called, and which are in <code>allow</code> but unused for months? Drop the unused ones.</li>
+<li><strong>Review bypass events.</strong> Who, when, and why turned permissions off? Discuss every such case in the team. A bypass in the last month is a signal “something in the process isn’t working.”</li>
+<li><strong>Review reverts.</strong> Which agent PRs got rolled back. Which tools were involved. Is there a “always when this tool is used” pattern?</li>
+<li><strong>Review the MCP allow-list separately.</strong> MCP is the fastest-changing layer; new MCP servers get added regularly, the list must match policy.</li>
+<li><strong>Review global settings.</strong> <code>~/.claude/settings.json</code> (user-level) and project <code>.claude/settings.json</code>. Remember: user-level applies to every project — keep it <strong>minimal</strong>, extend at the project level.</li>
+</ol>
+<h3 id="report-template">Report template</h3>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="markdown"><code><span class="line"><span style="color:#BD93F9;--shiki-light-font-weight:bold;--shiki-dark:#BD93F9;--shiki-dark-font-weight:bold"># Permission audit — 2026-05-16</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#BD93F9;--shiki-light-font-weight:bold;--shiki-dark:#BD93F9;--shiki-dark-font-weight:bold">## Inventory snapshot</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">- Tools allowed (global, user-level): N</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">- Tools allowed (project-level, in-use): N</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">- MCP servers connected: N</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#BD93F9;--shiki-light-font-weight:bold;--shiki-dark:#BD93F9;--shiki-dark-font-weight:bold">## Changes since last audit</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">- Added: ...</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">- Removed: ...</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#BD93F9;--shiki-light-font-weight:bold;--shiki-dark:#BD93F9;--shiki-dark-font-weight:bold">## Bypass events: N</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">- 2026-05-03 by @alice — reason: hotfix on prod, scope: ...</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">- 2026-05-11 by @bob — reason: ..., scope: ...</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#BD93F9;--shiki-light-font-weight:bold;--shiki-dark:#BD93F9;--shiki-dark-font-weight:bold">## Reverts on agent-authored PRs: N</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">- PR#347 — root cause: agent used </span><span style="color:#50FA7B;--shiki-dark:#50FA7B">`bash(rm)`</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2"> on cache, deleted wrong directory</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">  - Action: deny </span><span style="color:#50FA7B;--shiki-dark:#50FA7B">`Bash(rm:*)`</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2"> more strictly; add path guard</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#BD93F9;--shiki-light-font-weight:bold;--shiki-dark:#BD93F9;--shiki-dark-font-weight:bold">## Recommendations</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">1. Remove </span><span style="color:#50FA7B;--shiki-dark:#50FA7B">`Bash(curl:*)`</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2"> from allow-list — unused for 6 weeks, risk > benefit</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">2. Tighten MCP github-server scope: drop </span><span style="color:#50FA7B;--shiki-dark:#50FA7B">`repo:write`</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2"> where </span><span style="color:#50FA7B;--shiki-dark:#50FA7B">`repo:read`</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2"> works</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">3. ...</span></span></code></pre>
+<p>The audit takes 30–60 minutes once a month for a team of 5. <strong>These are the highest-return 60 minutes of your month</strong> — one prevented agent-<code>rm</code> incident pays back several quarters of audits.</p>
+<h2 id="a-short-aside-on-bypass-culture-register-b">A short aside on bypass culture (register B)</h2>
+<p>Folks, look — I covered this briefly in M3, but I’ll repeat it separately because I see it too often.</p>
+<p><strong>If anyone on your team regularly works with <code>--dangerously-skip-permissions</code> or <code>--full-auto</code> — you have an incident.</strong> Not “an incident now,” but “an incident in the next 90 days.” That’s statistics, not a threat.</p>
+<p>Bypass flags don’t exist for everyday work. They exist for <strong>rare tasks in a prepared environment</strong>: dedicated CI runner, isolated sandbox, specially configured bot account. Not on a dev machine, not on someone else’s repo, not “because I’m in a hurry.”</p>
+<p>When a team normalises “I’ll just skip permissions” — that’s the moment the pretty excuse “but I have deadlines” turns into actual loss of code / prod / reputation. How long are we going to keep doing this?</p>
+<p>Make bypass visible: in team channels, in logs, in audit reports. Bypass isn’t the norm — it’s an exception that requires justification.</p>
+<h2 id="practice-audit-your-current-setup">Practice: audit your current setup</h2>
+<p>20 minutes. Concrete steps:</p>
+<ol>
+<li>Open <code>~/.claude/settings.json</code> (or the equivalent in Cursor/Codex). Read it through.</li>
+<li>Open project <code>.claude/settings.json</code> in every project you’re currently working in.</li>
+<li>For each item in <code>allow</code> — ask yourself: <strong>“have I used this in the last month?”</strong> If not — drop.</li>
+<li>If <code>deny</code> is empty — add the minimum: <code>Bash(rm:*)</code>, <code>Bash(curl:* | sh)</code>, <code>Read(./.env*)</code>, <code>Read(~/.ssh/**)</code>, <code>Read(~/.aws/**)</code>.</li>
+<li>If MCP servers are connected — revisit their scopes. Where <code>write</code> can be <code>read</code> — replace.</li>
+</ol>
+<p>Note the audit date in the project README or an ADR. Repeat a month later.</p>
+<h2 id="recap">Recap</h2>
+<ul>
+<li><strong>A current agent has 15-20+ tools by category.</strong> Know your inventory.</li>
+<li><strong>Least-privilege scoping</strong> — three-four scope levels (L0 read-only, L1 write-bounded, L2 sandboxed-execute, L3 full).</li>
+<li><strong>Agent permissions are the first line, OS isolation is the second.</strong> Don’t rely on the first alone.</li>
+<li><strong>Permission audit once a month</strong> — the highest-return 60 minutes.</li>
+<li><strong>Bypass culture = future incident.</strong> Make bypass visible and rare.</li>
+</ul>
+<h2 id="whats-next">What’s next</h2>
+<p>In <strong>M5 — MCP deep dive</strong> we’ll cover the MCP protocol separately: what it is, how third-party MCP servers work, how to write your own, and — critically — <strong>how to do a security audit of a third-party MCP</strong> before connecting it. MCP is the fastest-changing layer of the agent stack, and most problems right now come from there.</p>
+<p>If this clicked — share the chapter with the team lead and the security engineer; ideally the audit should happen with their eyes on it. If you have specific permission-incident cases from your practice — write in the comments, your feedback really helps polish the material.</p>
+<h2 id="-further-reading">📚 Further reading</h2>
+<p>I assembled this chapter from official documentation, so no esoterics — only primary sources on the permission models of three tools.</p>
+<p><strong>Permission models of agent CLIs</strong></p>
+<ul>
+<li><strong>Claude Code — Configure permissions</strong> — <a href="https://code.claude.com/docs/en/permissions">code.claude.com/docs/en/permissions</a>. The <code>permissions</code> structure (allow / deny / ask), evaluation order (deny wins), wildcard syntax. The base your whole allow-list policy sits on.</li>
+<li><strong>Anthropic — “Making Claude Code more secure and autonomous”</strong> — <a href="https://www.anthropic.com/engineering/claude-code-sandboxing">anthropic.com/engineering/claude-code-sandboxing</a>. Sandbox level: which tools hit not config but an OS boundary (bubblewrap/seatbelt). That’s the “second line” we talked about.</li>
+<li><strong>Anthropic — Subagents (Claude Code)</strong> — <a href="https://docs.anthropic.com/en/docs/claude-code/sub-agents">docs.anthropic.com/en/docs/claude-code/sub-agents</a>. Useful for scoping: a subagent is a way to give a narrow tool set to a narrow role, not globally. Comes back in M14 and M15.</li>
+</ul>
+<blockquote>
+<p><strong>Tip:</strong> read Configure permissions with <code>~/.claude/settings.json</code> open beside you — most readers find something clearly unnecessary there in the first 5 minutes.</p>
+</blockquote>
+<hr>
+<p><strong>Maps to:</strong> GH-600 §2.1 — <em>Tool inventory, scoping, and permission management</em></p> <nav class="chapter-nav" data-astro-cid-a7sruqtr> <a href="/vibesamurai-site/courses/middle/m3/en" data-astro-cid-a7sruqtr> <span class="dir" data-astro-cid-a7sruqtr>← Back</span> <span class="title" data-astro-cid-a7sruqtr>M3 · Observability and human-in-the-loop</span> </a> <a href="/vibesamurai-site/courses/middle/m5/en" data-astro-cid-a7sruqtr> <span class="dir" data-astro-cid-a7sruqtr>Next →</span> <span class="title" data-astro-cid-a7sruqtr>M5 · MCP deep dive</span> </a> </nav> </main>  </div> <script type="module">
+    import { gatingEnabled } from '../lib/supabase';
+    import { fetchChapter } from '../lib/auth';
+
+    const base = import.meta.env.BASE_URL;
+    let mermaidLib = null;
+
+    function scopeOf(root) {
+      return root === document ? document.querySelector('.reader-main') : root;
+    }
+
+    function addCopyBtns(root) {
+      const scope = scopeOf(root); if (!scope) return;
+      scope.querySelectorAll('pre').forEach((pre) => {
+        if (pre.closest('.code-tabs')) return;
+        if (pre.querySelector('.copy-btn')) return;
+        const btn = document.createElement('button');
+        btn.className = 'copy-btn';
+        btn.textContent = 'copy';
+        btn.addEventListener('click', async () => {
+          const code = pre.querySelector('code')?.textContent ?? pre.textContent ?? '';
+          await navigator.clipboard.writeText(code.trimEnd());
+          btn.textContent = '✓ copied';
+          setTimeout(() => { btn.textContent = 'copy'; }, 1600);
+        });
+        pre.appendChild(btn);
+      });
+    }
+
+    function tightenMermaidSvgs(retries = 6) {
+      let pending = false;
+      document.querySelectorAll('.mermaid svg').forEach((svg) => {
+        if (svg.dataset.tightened === '1') return;
+        try {
+          const bbox = svg.getBBox();
+          if (!bbox || bbox.width === 0) { pending = true; return; }
+          const pad = 6;
+          svg.setAttribute('viewBox',
+            `${bbox.x - pad} ${bbox.y - pad} ${bbox.width + pad * 2} ${bbox.height + pad * 2}`);
+          svg.removeAttribute('height');
+          svg.style.height = 'auto';
+          svg.style.maxWidth = '100%';
+          svg.style.display = 'block';
+          svg.dataset.tightened = '1';
+        } catch (e) { pending = true; }
+      });
+      if (pending && retries > 0) setTimeout(() => tightenMermaidSvgs(retries - 1), 120);
+    }
+
+    async function ensureMermaid() {
+      if (mermaidLib) return mermaidLib;
+      const mod = await import('https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs');
+      mermaidLib = mod.default;
+      mermaidLib.initialize({
+        startOnLoad: false, theme: 'neutral',
+        themeVariables: {
+          fontFamily: 'JetBrains Mono, ui-monospace, monospace',
+          primaryColor: '#f5f5f5', primaryBorderColor: '#222',
+          primaryTextColor: '#111', lineColor: '#444',
+        },
+        flowchart: { curve: 'basis', padding: 12, useMaxWidth: true },
+      });
+      return mermaidLib;
+    }
+
+    async function renderMermaid(root) {
+      const scope = scopeOf(root); if (!scope) return;
+      const matches = scope.querySelectorAll(
+        'pre[data-language="mermaid"], pre.language-mermaid, code.language-mermaid'
+      );
+      if (!matches.length) return;
+      matches.forEach((el) => {
+        const block = el.tagName === 'CODE' ? el.closest('pre') || el : el;
+        const codeEl = block.querySelector('code') || block;
+        const wrap = document.createElement('div');
+        wrap.className = 'mermaid';
+        wrap.textContent = codeEl.textContent;
+        block.replaceWith(wrap);
+      });
+      try {
+        const m = await ensureMermaid();
+        await m.run();
+        tightenMermaidSvgs();
+      } catch (err) {
+        console.warn('mermaid failed', err);
+        document.querySelectorAll('.mermaid:not(:has(svg))').forEach((el) => { el.style.display = 'none'; });
+      }
+    }
+
+    async function enhance(root = document) {
+      addCopyBtns(root);
+      await renderMermaid(root);
+    }
+
+    function paywallHtml(required, needLogin) {
+      const label = { beginner: 'Beginner (300 ₽)', middle: 'Beginner + Middle (500 ₽)', all: 'Весь пакет (700 ₽)' }[required] || '';
+      return `<div class="paywall">
+        <div class="paywall-ic">🔒</div>
+        <h3>Эта глава — в платном доступе</h3>
+        <p>Нужен тариф: <strong>${label}</strong>. Доступ навсегда, без подписки.</p>
+        ${needLogin ? '<p>Войди через Google и оформи доступ — продолжишь с любого устройства.</p>' : ''}
+        <a class="paywall-btn" href="${base}pricing">Открыть доступ →</a>
+        <a class="paywall-link" href="${base}account">Войти / мой аккаунт</a>
+      </div>`;
+    }
+
+    async function gatedFlow(mount) {
+      const slug = mount.dataset.slug;
+      const required = mount.dataset.required || 'beginner';
+      mount.innerHTML = '<p class="gate-msg">Проверяем доступ…</p>';
+      const res = await fetchChapter(slug);
+      if (res.ok) {
+        mount.innerHTML = res.html;
+        await enhance(mount);
+      } else if (res.status === 401) {
+        mount.innerHTML = paywallHtml(required, true);
+      } else if (res.status === 402) {
+        mount.innerHTML = paywallHtml(res.requiredTier || required, false);
+      } else {
+        mount.innerHTML = '<p class="gate-msg">Не удалось загрузить главу. Обнови страницу.</p>';
+      }
+    }
+
+    const mount = document.getElementById('gated-mount');
+    if (mount && gatingEnabled) gatedFlow(mount);
+    else enhance(document);
+  </script> </body> </html>

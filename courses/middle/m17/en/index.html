@@ -1,0 +1,424 @@
+<!DOCTYPE html><html lang="en" data-astro-cid-a7sruqtr> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Production: deploying agents to live environments — Vibesamurai</title><meta name="description" content="From local dev to an agent system in prod. Persistence, observability, secret management — what changes."><meta property="og:title" content="Production: deploying agents to live environments"><meta property="og:type" content="article"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Inter:wght@300..800&family=JetBrains+Mono:wght@400..600&display=swap" rel="stylesheet"><link rel="stylesheet" href="/vibesamurai-site/_astro/_slug_.Cs4TX1wt.css">
+<style>.account-btn{display:inline-flex;align-items:center;gap:var(--space-2);font-family:var(--font-mono);font-size:var(--size-2);text-transform:uppercase;letter-spacing:.06em;padding:5px 10px;border:1px solid var(--rule);border-radius:999px;color:var(--text-soft);background:var(--surface);transition:border-color var(--d-fast),color var(--d-fast)}.account-btn:hover{border-color:var(--accent);color:var(--text)}.account-ic{width:18px;height:18px;display:grid;place-items:center;border-radius:50%;background:var(--accent);color:var(--accent-ink);font-weight:700;font-size:10px;line-height:1}.reader-rail .account-btn{padding:0;border:none;background:transparent}.reader-rail .account-label{display:none}.reader-rail .account-ic{width:32px;height:32px;font-size:13px}.rail-toggle{width:36px;height:36px;display:grid;place-items:center;background:var(--accent);border:1px solid var(--accent);border-radius:4px;cursor:pointer;transition:filter var(--d-fast),transform var(--d-fast);padding:0}.rail-toggle:hover{filter:brightness(1.08);transform:translateY(-1px)}.rail-toggle:active{transform:translateY(0)}.rail-toggle-icon{width:14px;height:12px;border-left:2px solid var(--accent-ink);border-right:2px solid var(--accent-ink);transition:transform var(--d-normal) var(--ease-standard)}.reader-app.sidebar-open .rail-toggle-icon{transform:rotate(0)}.reader-app:not(.sidebar-open) .rail-toggle-icon{transform:scaleX(.5)}.sidebar-backdrop{display:none;position:fixed;inset:0;background:#0000008c;z-index:140;border:0;padding:0;cursor:pointer}@media(max-width:900px){.reader-app.sidebar-open~.sidebar-backdrop{display:block}}.rail-spacer[data-astro-cid-ofsbkzh7]{flex:1}.reader-sidebar[data-astro-cid-khgtvzrl] .ru-tag[data-astro-cid-khgtvzrl]{font-style:normal;font-family:var(--font-mono);font-size:.7em;color:var(--text-mute);margin-left:4px;padding:1px 4px;border:1px solid var(--rule);border-radius:3px;text-transform:uppercase;vertical-align:middle}.chapter-eyebrow[data-astro-cid-a7sruqtr]{display:flex;justify-content:space-between;align-items:center;gap:var(--space-3)}.lang-toggle[data-astro-cid-a7sruqtr]{font-family:var(--font-mono);font-size:var(--size-2);padding:2px 8px;border:1px solid var(--rule);border-radius:4px;color:var(--text-mute);text-decoration:none;text-transform:uppercase;letter-spacing:.08em}.lang-toggle[data-astro-cid-a7sruqtr]:hover{color:var(--accent);border-color:var(--accent)}.code-tabs[data-astro-cid-hg66rjob]{margin:var(--space-5) 0}.code-tabs-nav[data-astro-cid-hg66rjob]{display:flex;gap:2px;margin-bottom:-1px;position:relative;z-index:1}.ctab[data-astro-cid-hg66rjob]{font-family:var(--font-mono);font-size:11px;text-transform:uppercase;letter-spacing:.07em;padding:5px 14px;border:1px solid #21222c;border-bottom:none;background:#1a1b23;color:#6272a4;cursor:pointer;border-radius:4px 4px 0 0;transition:color .12s,background .12s}.ctab[data-astro-cid-hg66rjob].is-active{background:#282a36;color:#f8f8f2;border-color:#21222c}.ctab[data-astro-cid-hg66rjob]:hover:not(.is-active){color:#cdd6f4}.ctab-panel[data-astro-cid-hg66rjob]{display:none}.ctab-panel[data-astro-cid-hg66rjob].is-active{display:block}.ctab-panel[data-astro-cid-hg66rjob] pre{margin-top:0!important;border-radius:0 6px 6px!important}
+</style></head> <body data-astro-cid-a7sruqtr> <div class="reader-app" data-astro-cid-a7sruqtr> <aside class="reader-rail" data-astro-cid-ofsbkzh7> <a href="/vibesamurai-site/" class="logo" aria-label="Vibesamurai home" data-astro-cid-ofsbkzh7>V</a> <button type="button" class="rail-toggle" id="sidebar-toggle" aria-label="Свернуть/развернуть оглавление" title="Свернуть/развернуть оглавление" data-astro-cid-ofsbkzh7> <span class="rail-toggle-icon" aria-hidden="true" data-astro-cid-ofsbkzh7></span> </button> <div class="rail-spacer" data-astro-cid-ofsbkzh7></div> <a href="/vibesamurai-site/account" class="account-btn" id="account-btn" aria-label="Аккаунт"> <span class="account-ic" id="account-ic">⌂</span> <span class="account-label" id="account-label">Войти</span> </a>  <script type="module" src="/vibesamurai-site/_astro/AccountButton.astro_astro_type_script_index_0_lang.CmD2sdn9.js"></script> </aside>  <button type="button" class="sidebar-backdrop" id="sidebar-backdrop" aria-label="Закрыть оглавление" tabindex="-1" data-astro-cid-ofsbkzh7></button>  <script type="module">const d="vs-sidebar-open",a="(max-width: 900px)";function t(e){const n=document.querySelector(".reader-app");n&&n.classList.toggle("sidebar-open",e)}function r(){return!window.matchMedia(a).matches}function s(){const e=localStorage.getItem(d),i=window.matchMedia(a).matches?!1:e!==null?e==="1":r();t(i),document.getElementById("sidebar-toggle")?.addEventListener("click",()=>{const c=!document.querySelector(".reader-app")?.classList.contains("sidebar-open");window.matchMedia(a).matches||localStorage.setItem(d,c?"1":"0"),t(c)}),document.getElementById("sidebar-backdrop")?.addEventListener("click",()=>t(!1)),document.querySelectorAll(".reader-sidebar a").forEach(o=>{o.addEventListener("click",()=>{window.matchMedia(a).matches&&t(!1)})})}document.readyState==="loading"?document.addEventListener("DOMContentLoaded",s):s();</script> <aside class="reader-sidebar" data-astro-cid-khgtvzrl> <div class="breadcrumb" data-astro-cid-khgtvzrl>Vibesamurai · Middle Path · M17</div> <h4 data-astro-cid-khgtvzrl>In this course</h4> <ul data-astro-cid-khgtvzrl> <li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m1/en" class data-astro-cid-khgtvzrl> M1 · What is agentic AI in the SDLC  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m2/en" class data-astro-cid-khgtvzrl> M2 · Architecting agent boundaries  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m3/en" class data-astro-cid-khgtvzrl> M3 · Observability and human-in-the-loop  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m4/en" class data-astro-cid-khgtvzrl> M4 · Tool inventory and permissions  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m5/en" class data-astro-cid-khgtvzrl> M5 · MCP deep dive  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m6/en" class data-astro-cid-khgtvzrl> M6 · Claude Code CLI mastery  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m7/en" class data-astro-cid-khgtvzrl> M7 · GPT-5.3 Codex CLI and OpenAI agents  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m8/en" class data-astro-cid-khgtvzrl> M8 · Cursor Composer + IDE agents  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m9/en" class data-astro-cid-khgtvzrl> M9 · Memory strategies  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m10/en" class data-astro-cid-khgtvzrl> M10 · State, drift, continuity  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m11/en" class data-astro-cid-khgtvzrl> M11 · Evaluating agents: metrics over vibes  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m12/en" class data-astro-cid-khgtvzrl> M12 · Regression tests for agents  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m13/en" class data-astro-cid-khgtvzrl> M13 · Tuning: what to change when metrics don&#39;t move  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m14/en" class data-astro-cid-khgtvzrl> M14 · One agent, many steps: pipelines and orchestration  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m15/en" class data-astro-cid-khgtvzrl> M15 · Multi-agent: roles, communication, supervisor  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m16/en" class data-astro-cid-khgtvzrl> M16 · When multi-agent is overkill. Anti-patterns  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m17/en" class="current" data-astro-cid-khgtvzrl> M17 · Production: deploying agents to live environments  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m18/en" class data-astro-cid-khgtvzrl> M18 · Security in prod: secrets, sandbox, audit  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m19/en" class data-astro-cid-khgtvzrl> M19 · Incidents &amp; post-mortems  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m20/en" class data-astro-cid-khgtvzrl> M20 · Finale: where to go after Middle  </a> </li> </ul>  </aside> <main class="reader-main" data-astro-cid-a7sruqtr> <div class="chapter-eyebrow" data-astro-cid-a7sruqtr> <span data-astro-cid-a7sruqtr>Middle Path · m17</span> <a class="lang-toggle" href="/vibesamurai-site/courses/middle/m17" aria-label="Switch to RU" data-astro-cid-a7sruqtr>RU</a> </div> <h1 class="chapter-title" data-astro-cid-a7sruqtr>M17 · Production: deploying agents to live environments</h1> <p class="chapter-subtitle" data-astro-cid-a7sruqtr>From local dev to an agent system in prod. Persistence, observability, secret management — what changes.</p> <h2 id="hook">Hook</h2>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>LOCAL DEV:                       PRODUCTION:</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>claude in terminal      →        container on a server</span></span>
+<span class="line"><span>↓                                ↓</span></span>
+<span class="line"><span>reads your files                 reads other people's tasks</span></span>
+<span class="line"><span>you see every step               logs to a centralised bus</span></span>
+<span class="line"><span>mistake → roll back              mistake → incident → on-call</span></span>
+<span class="line"><span>$5/day on your key               $1000/day on the company key</span></span></code></pre>
+<p>Hey folks, welcome 👋</p>
+<p>This chapter opens <strong>Part VI — Production</strong>. The final part of the Middle track. We already know <strong>how</strong> to design agents (Part I), what <strong>tools</strong> are available (Part II), how to <strong>manage memory</strong> (Part III), how to <strong>measure</strong> (Part IV), and <strong>when</strong> not to do multi-agent (Part V). Now — the <strong>final</strong> step: <strong>how</strong> all of this ships to production.</p>
+<p>An hour, dense. After the chapter you’ll have an <strong>architectural map</strong> of what’s needed to deploy an agent <strong>into a live regime</strong>.</p>
+<h2 id="concept-production-isnt-the-same-thing-but-on-a-server">Concept: production isn’t “the same thing, but on a server”</h2>
+<p>The most common slip: “it works in my Claude Code — let’s move it to a server.” Not so.</p>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>┌─────────────────────────────────────────────────────┐</span></span>
+<span class="line"><span>│  In local you have:                                 │</span></span>
+<span class="line"><span>│  - You, the human (HITL by default)                 │</span></span>
+<span class="line"><span>│  - A free terminal with confirmations               │</span></span>
+<span class="line"><span>│  - Access to your own files                         │</span></span>
+<span class="line"><span>│  - Low volume (1-10 tasks/day)                      │</span></span>
+<span class="line"><span>│                                                     │</span></span>
+<span class="line"><span>│  In prod you have none of that:                     │</span></span>
+<span class="line"><span>│  - Many user requests                               │</span></span>
+<span class="line"><span>│  - Can't confirm every action                       │</span></span>
+<span class="line"><span>│  - Access to company data, not yours                │</span></span>
+<span class="line"><span>│  - 1000+ tasks/day, possibly in parallel            │</span></span>
+<span class="line"><span>└─────────────────────────────────────────────────────┘</span></span></code></pre>
+<p>So the <strong>architecture</strong> in prod is <strong>different</strong>. Not “same + server” — a <strong>different</strong> architecture with <strong>different</strong> rules. The deploy flow looks roughly like:</p>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="mermaid"><code><span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">flowchart LR</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    Local[Local dev&#x3C;br/>claude in terminal] --> Staging[Staging&#x3C;br/>headless / Docker]</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    Staging --> Eval{Eval harness&#x3C;br/>pass?}</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    Eval -->|fail| Local</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    Eval -->|ok| Canary[Canary&#x3C;br/>1-5% of traffic]</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    Canary --> Health{Metrics ok?}</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    Health -->|fail| Rollback([Rollback&#x3C;br/>kill switch])</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    Health -->|ok| Prod[Prod&#x3C;br/>100% of traffic]</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    Rollback -.-> Staging</span></span></code></pre>
+<p>Each transition is its own gate with its own signals: on staging — the eval harness (M11), on canary — error rate / cost / latency, on prod — alerts and the kill switch.</p>
+<h2 id="layers-of-a-production-agent">Layers of a production agent</h2>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>┌─────────────────────────────────────────────────────┐</span></span>
+<span class="line"><span>│  6. Observability       (logs, metrics, alerts)     │</span></span>
+<span class="line"><span>│  5. Cost &#x26; rate limiting (budgets, throttling)      │</span></span>
+<span class="line"><span>│  4. Persistence         (state, history, audit)     │</span></span>
+<span class="line"><span>│  3. Security            (secrets, sandbox, ACL)     │</span></span>
+<span class="line"><span>│  2. Orchestration       (queue, retry, error)       │</span></span>
+<span class="line"><span>│  1. Agent runtime       (LLM calls, tool calls)     │</span></span>
+<span class="line"><span>└─────────────────────────────────────────────────────┘</span></span></code></pre>
+<p>Locally you usually have <strong>only</strong> layer 1 (and partly 2). In prod <strong>all six</strong> are mandatory.</p>
+<h2 id="layer-1-agent-runtime-in-prod">Layer 1. Agent runtime in prod</h2>
+<p>Locally you run <code>claude</code> interactively. In prod you need:</p>
+<h3 id="headless-mode">Headless mode</h3>
+<p>Claude Code, Codex CLI, and most modern agents support a <strong>non-interactive</strong> mode:</p>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#50FA7B;--shiki-dark:#50FA7B">claude</span><span style="color:#BD93F9;--shiki-dark:#BD93F9"> --print</span><span style="color:#BD93F9;--shiki-dark:#BD93F9"> --json-mode</span><span style="color:#FF79C6;--shiki-dark:#FF79C6"> \</span></span>
+<span class="line"><span style="color:#BD93F9;--shiki-dark:#BD93F9">       --system-prompt-file</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C"> system.md</span><span style="color:#FF79C6;--shiki-dark:#FF79C6"> \</span></span>
+<span class="line"><span style="color:#BD93F9;--shiki-dark:#BD93F9">       --max-iterations</span><span style="color:#BD93F9;--shiki-dark:#BD93F9"> 10</span><span style="color:#FF79C6;--shiki-dark:#FF79C6"> \</span></span>
+<span class="line"><span style="color:#BD93F9;--shiki-dark:#BD93F9">       --timeout</span><span style="color:#BD93F9;--shiki-dark:#BD93F9"> 600</span><span style="color:#FF79C6;--shiki-dark:#FF79C6"> \</span></span>
+<span class="line"><span style="color:#FF79C6;--shiki-dark:#FF79C6">       &#x3C;</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C"> task.json</span><span style="color:#FF79C6;--shiki-dark:#FF79C6"> ></span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C"> result.json</span></span></code></pre>
+<p>No interactivity — task in, result out.</p>
+<h3 id="container-based">Container-based</h3>
+<p>Deploy in Docker / Podman / Kubernetes. Advantages:</p>
+<ul>
+<li><strong>Isolation</strong> — each task in its own container, no cross-talk</li>
+<li><strong>Versioning</strong> — pin agent version together with its context</li>
+<li><strong>Resource limits</strong> — memory, CPU, time</li>
+</ul>
+<p><code>Dockerfile</code>:</p>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="dockerfile"><code><span class="line"><span style="color:#FF79C6;--shiki-dark:#FF79C6">FROM</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2"> node:22-slim</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6272A4;--shiki-dark:#6272A4"># Install Claude Code</span></span>
+<span class="line"><span style="color:#FF79C6;--shiki-dark:#FF79C6">RUN</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2"> npm install -g @anthropic-ai/claude-code</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6272A4;--shiki-dark:#6272A4"># Agent context</span></span>
+<span class="line"><span style="color:#FF79C6;--shiki-dark:#FF79C6">COPY</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2"> CLAUDE.md /workspace/</span></span>
+<span class="line"><span style="color:#FF79C6;--shiki-dark:#FF79C6">COPY</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2"> .claude/ /workspace/.claude/</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6272A4;--shiki-dark:#6272A4"># Entrypoint</span></span>
+<span class="line"><span style="color:#FF79C6;--shiki-dark:#FF79C6">WORKDIR</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2"> /workspace</span></span>
+<span class="line"><span style="color:#FF79C6;--shiki-dark:#FF79C6">ENTRYPOINT</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2"> [</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">"claude"</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">, </span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">"--print"</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">, </span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">"--json-mode"</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">]</span></span></code></pre>
+<p>In reality — <strong>more complex</strong> (dependencies, multi-stage build, security scan), but the <strong>skeleton</strong> is this.</p>
+<h3 id="managed-agents">Managed Agents</h3>
+<p>Alternative to running your own infra — <strong>Managed Agents</strong> from providers (Anthropic, …). Anthropic runs a <strong>per-session</strong> container, the agent works on <strong>mounted</strong> files, an <strong>SSE</strong> event stream returns to the client.</p>
+<p><strong>Plus:</strong> no infra of your own, firewall/sandbox from the provider, ready event stream.
+<strong>Minus:</strong> vendor lock-in, more expensive per unit, compute limits.</p>
+<p>For B, Anthropic Managed Agents is a <strong>working</strong> option for teams that <strong>don’t want</strong> a DevOps team for agent infra.</p>
+<h2 id="layer-2-orchestration">Layer 2. Orchestration</h2>
+<p>In prod tasks come <strong>from a queue</strong>, not from a terminal.</p>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>User request → API gateway → Queue → Agent runner → Result store → Notification</span></span>
+<span class="line"><span>                              ↑              ↓</span></span>
+<span class="line"><span>                              └──── retry ───┘</span></span></code></pre>
+<p>Minimum stack:</p>
+<ul>
+<li><strong>Queue</strong> — Redis, RabbitMQ, AWS SQS, or just Postgres with advisory locks</li>
+<li><strong>Runner</strong> — spawns an agent container per task</li>
+<li><strong>Result store</strong> — where the outcome lands (S3, DB)</li>
+<li><strong>Notification</strong> — webhook / Slack / e-mail to the client</li>
+</ul>
+<p><strong>Orchestration rules:</strong></p>
+<ol>
+<li><strong>Idempotency</strong> — a task can arrive twice (retry); the result must be <strong>the same</strong></li>
+<li><strong>Timeout per task</strong> — hard upper bound (15–30 minutes)</li>
+<li><strong>Retry policy</strong> — exponential backoff, max 3 attempts</li>
+<li><strong>Dead letter queue</strong> — tasks that died after retries, separately for inspection</li>
+</ol>
+<h2 id="layer-3-security">Layer 3. Security</h2>
+<p>A whole chapter (M18); here the <strong>map</strong> at “what exists” level:</p>
+<ul>
+<li><strong>Secrets</strong> — never in code/config, only through a secret manager (AWS Secrets Manager, HashiCorp Vault, K8s Secrets)</li>
+<li><strong>Sandbox</strong> — container with <strong>minimum</strong> rights; <strong>separate</strong> filesystem; <strong>whitelisted</strong> network</li>
+<li><strong>ACL</strong> — which tasks <strong>can be given to which</strong> agent; multi-tenant isolation</li>
+<li><strong>Audit log</strong> — <strong>every</strong> tool call, <strong>every</strong> file change — into a centralised bus</li>
+</ul>
+<h2 id="layer-4-persistence">Layer 4. Persistence</h2>
+<p>Locally state lives in <code>.agent/journals/</code>, files (M10). In prod — a <strong>DB</strong>.</p>
+<h3 id="what-to-store">What to store</h3>
+<ul>
+<li><strong>Sessions</strong> — each agent “session”: id, user, start/end, status</li>
+<li><strong>Messages</strong> — every user/assistant/tool message</li>
+<li><strong>Tool calls</strong> — what was called, with what args, what returned, duration</li>
+<li><strong>Artifacts</strong> — files created/changed by the agent (or S3 links)</li>
+<li><strong>Costs</strong> — tokens, $ per session</li>
+</ul>
+<h3 id="why">Why</h3>
+<ul>
+<li><strong>Audit</strong> — who did what when, for compliance</li>
+<li><strong>Replay</strong> — reproduce an incident step by step</li>
+<li><strong>Analytics</strong> — which tasks are expensive, where the agent misses more often</li>
+<li><strong>HITL handoff</strong> — if the agent is stuck, a human <strong>sees</strong> context and continues</li>
+</ul>
+<p><code>sessions</code> table (simplified):</p>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="sql"><code><span class="line"><span style="color:#FF79C6;--shiki-dark:#FF79C6">CREATE</span><span style="color:#FF79C6;--shiki-dark:#FF79C6"> TABLE</span><span style="color:#50FA7B;--shiki-dark:#50FA7B"> agent_sessions</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2"> (</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">  id            UUID </span><span style="color:#FF79C6;--shiki-dark:#FF79C6">PRIMARY KEY</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">,</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">  user_id       UUID </span><span style="color:#FF79C6;--shiki-dark:#FF79C6">NOT NULL</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">,</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">  agent_version </span><span style="color:#FF79C6;--shiki-dark:#FF79C6">VARCHAR</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">(</span><span style="color:#BD93F9;--shiki-dark:#BD93F9">50</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">) </span><span style="color:#FF79C6;--shiki-dark:#FF79C6">NOT NULL</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">,</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">  model_id      </span><span style="color:#FF79C6;--shiki-dark:#FF79C6">VARCHAR</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">(</span><span style="color:#BD93F9;--shiki-dark:#BD93F9">50</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">) </span><span style="color:#FF79C6;--shiki-dark:#FF79C6">NOT NULL</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">,</span></span>
+<span class="line"><span style="color:#FF79C6;--shiki-dark:#FF79C6">  status</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">        VARCHAR</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">(</span><span style="color:#BD93F9;--shiki-dark:#BD93F9">20</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">) </span><span style="color:#FF79C6;--shiki-dark:#FF79C6">NOT NULL</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">,  </span><span style="color:#6272A4;--shiki-dark:#6272A4">-- pending/running/done/failed</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">  started_at    </span><span style="color:#FF79C6;--shiki-dark:#FF79C6">TIMESTAMP</span><span style="color:#FF79C6;--shiki-dark:#FF79C6"> NOT NULL</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">,</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">  finished_at   </span><span style="color:#FF79C6;--shiki-dark:#FF79C6">TIMESTAMP</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">,</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">  input_tokens  </span><span style="color:#FF79C6;--shiki-dark:#FF79C6">INT</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">,</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">  output_tokens </span><span style="color:#FF79C6;--shiki-dark:#FF79C6">INT</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">,</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">  cost_usd      </span><span style="color:#FF79C6;--shiki-dark:#FF79C6">DECIMAL</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">(</span><span style="color:#BD93F9;--shiki-dark:#BD93F9">10</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">, </span><span style="color:#BD93F9;--shiki-dark:#BD93F9">4</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">),</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">  result_url    </span><span style="color:#FF79C6;--shiki-dark:#FF79C6">TEXT</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">);</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#FF79C6;--shiki-dark:#FF79C6">CREATE</span><span style="color:#FF79C6;--shiki-dark:#FF79C6"> INDEX</span><span style="color:#50FA7B;--shiki-dark:#50FA7B"> idx_sessions_user_started</span></span>
+<span class="line"><span style="color:#FF79C6;--shiki-dark:#FF79C6">  ON</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2"> agent_sessions (user_id, started_at </span><span style="color:#FF79C6;--shiki-dark:#FF79C6">DESC</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">);</span></span></code></pre>
+<h2 id="layer-5-cost--rate-limiting">Layer 5. Cost &#x26; rate limiting</h2>
+<p>The most <strong>underrated</strong> layer. Without it your agent can <strong>quietly</strong> generate $5000/day on the API.</p>
+<h3 id="budgets">Budgets</h3>
+<p>At <strong>three</strong> levels:</p>
+<ol>
+<li><strong>Per-task</strong> — task no more than <strong>N</strong> tokens / <strong>$X</strong></li>
+<li><strong>Per-user/tenant</strong> — user no more than <strong>N</strong> tasks/day / <strong>$X</strong>/month</li>
+<li><strong>Per-system</strong> — global daily / monthly cap</li>
+</ol>
+<p>Breach → <strong>stop</strong>, not “degrade gracefully.” Better <strong>refuse</strong> than <strong>bankrupt</strong>.</p>
+<h3 id="throttling">Throttling</h3>
+<p>LLM-provider requests are rate-limited (per minute / TPM). On excess — <strong>queue</strong>, not <strong>retry forever</strong>.</p>
+<h3 id="cost-guardrails">Cost guardrails</h3>
+<p>Hooks (see M4) that <strong>before</strong> an expensive tool call (large prompt, long run) <strong>show</strong> the estimate and require approval <strong>above</strong> a threshold.</p>
+<p>For example:</p>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="python"><code><span class="line"><span style="color:#6272A4;--shiki-dark:#6272A4"># pre-tool hook</span></span>
+<span class="line"><span style="color:#FF79C6;--shiki-dark:#FF79C6">if</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2"> estimated_cost(tool_call) </span><span style="color:#FF79C6;--shiki-dark:#FF79C6">></span><span style="color:#BD93F9;--shiki-dark:#BD93F9"> 0.50</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">:  </span><span style="color:#6272A4;--shiki-dark:#6272A4"># 50 cents</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    require_approval(</span><span style="color:#BD93F9;--shiki-dark:#BD93F9">...</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">)</span></span></code></pre>
+<p>This <strong>saves</strong> you from runaway loops where the agent <strong>runs itself</strong> 100 times.</p>
+<h2 id="layer-6-observability">Layer 6. Observability</h2>
+<p>“In prod you don’t <strong>see</strong> what the agent does” — the <strong>main</strong> difference from local. So:</p>
+<h3 id="logs">Logs</h3>
+<ul>
+<li><strong>Structured logs</strong> (JSON) per step</li>
+<li><strong>Trace ID</strong> linking all steps of one session</li>
+<li>Centralised aggregation (ELK, Loki, Datadog)</li>
+</ul>
+<h3 id="metrics">Metrics</h3>
+<ul>
+<li>Sessions/min (RPS)</li>
+<li>Pass rate (if you have automated validation)</li>
+<li>p50/p95/p99 latency</li>
+<li>Cost per session</li>
+<li>Error rate</li>
+</ul>
+<h3 id="tracing">Tracing</h3>
+<p>OpenTelemetry-style traces — <strong>every</strong> tool call as a span, the <strong>call hierarchy</strong> visible. Especially valuable for multi-agent (though hopefully you don’t have multi-agent — see M16).</p>
+<h3 id="alerts">Alerts</h3>
+<p>Triggers:</p>
+<ul>
+<li>Error rate > 5 % → page on-call</li>
+<li>Cost rate > 2× baseline → page on-call</li>
+<li>P99 latency > 30 min → warning</li>
+<li>No sessions in last 10 minutes (if flow was expected) → warning</li>
+</ul>
+<h2 id="example-minimum-prod-stack">Example: minimum prod stack</h2>
+<p>For a <strong>small</strong> project (one agent, up to 100 tasks/day):</p>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>1. K8s deployment:</span></span>
+<span class="line"><span>   - Replicas 2 (HA)</span></span>
+<span class="line"><span>   - Resource limits: 1 CPU, 2 GB RAM</span></span>
+<span class="line"><span>   - Init container: pulls latest CLAUDE.md from git</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>2. PostgreSQL:</span></span>
+<span class="line"><span>   - tables: sessions, messages, tool_calls, costs</span></span>
+<span class="line"><span>   - daily backup → S3</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>3. Redis:</span></span>
+<span class="line"><span>   - task queue</span></span>
+<span class="line"><span>   - rate-limiting counters</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>4. Monitoring:</span></span>
+<span class="line"><span>   - Loki for logs</span></span>
+<span class="line"><span>   - Prometheus + Grafana for metrics</span></span>
+<span class="line"><span>   - PagerDuty/OpsGenie for alerts</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>5. Secrets:</span></span>
+<span class="line"><span>   - ANTHROPIC_API_KEY in K8s Secret</span></span>
+<span class="line"><span>   - injected as env var</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>6. Cost guardrails:</span></span>
+<span class="line"><span>   - per-task: 100K tokens / $1</span></span>
+<span class="line"><span>   - per-tenant: 1000 tasks / day</span></span>
+<span class="line"><span>   - global: $100 / day initially</span></span></code></pre>
+<p>That’s <strong>already</strong> complete. Beyond — scaling (multi-region, blue-green deploys, etc.).</p>
+<h2 id="pre-prod-checklist">Pre-prod checklist</h2>
+<p>Before deploying your first agent to <strong>live</strong> traffic:</p>
+<ul class="contains-task-list">
+<li class="task-list-item"><input type="checkbox" disabled> <strong>Headless mode</strong> works on 95 %+ of tasks locally</li>
+<li class="task-list-item"><input type="checkbox" disabled> <strong>All secrets</strong> — in a secret manager, not in the repo</li>
+<li class="task-list-item"><input type="checkbox" disabled> <strong>Sandbox</strong> — container has no access outside the workdir</li>
+<li class="task-list-item"><input type="checkbox" disabled> <strong>Budgets</strong> at three levels (task, user, system)</li>
+<li class="task-list-item"><input type="checkbox" disabled> <strong>Idempotency keys</strong> on every task from the API</li>
+<li class="task-list-item"><input type="checkbox" disabled> <strong>Timeout</strong> per task (max 30 minutes wall-clock)</li>
+<li class="task-list-item"><input type="checkbox" disabled> <strong>Logs structured</strong> + centralised</li>
+<li class="task-list-item"><input type="checkbox" disabled> <strong>Alerts</strong> on error rate, cost, latency</li>
+<li class="task-list-item"><input type="checkbox" disabled> <strong>Runbook</strong> for typical incidents</li>
+<li class="task-list-item"><input type="checkbox" disabled> <strong>Kill switch</strong> — ability to <strong>disable the agent</strong> in seconds (env var / feature flag)</li>
+<li class="task-list-item"><input type="checkbox" disabled> <strong>Harness</strong> has run on the staging environment</li>
+<li class="task-list-item"><input type="checkbox" disabled> <strong>On-call rotation</strong> defined</li>
+</ul>
+<p>Without <strong>every</strong> box — no deploy. That’s the <strong>minimum</strong>.</p>
+<h2 id="production-anti-patterns">Production anti-patterns</h2>
+<h3 id="1-ship-and-watch-later">1. “Ship and watch later”</h3>
+<p>Without observability — <strong>blind</strong>. The first incident will be in <strong>prod</strong>, not staging.</p>
+<p><strong>Cure:</strong> observability <strong>before</strong> launch.</p>
+<h3 id="2-one-container-many-tasks">2. “One container, many tasks”</h3>
+<p>One pod handles 100 tasks in parallel. Context leaks, state crosses.</p>
+<p><strong>Cure:</strong> <strong>one container = one session</strong>. More compute, but <strong>isolated</strong>.</p>
+<h3 id="3-hard-coded-api-key">3. Hard-coded API key</h3>
+<p>The key in an env file in the repo. A week later — on GitHub.</p>
+<p><strong>Cure:</strong> <strong>secret manager</strong>, always, no exceptions (see M18).</p>
+<h3 id="4-retry-until-success">4. “Retry until success”</h3>
+<p>Task failed → retry → failed → retry. Forever.</p>
+<p><strong>Cure:</strong> max 3 retries, exponential backoff, dead letter queue.</p>
+<h3 id="5-no-kill-switch">5. “No kill switch”</h3>
+<p>When something goes wrong — no way to quickly <strong>disable</strong> the agent, short of “delete the deployment.”</p>
+<p><strong>Cure:</strong> feature flag (LaunchDarkly, ConfigCat, or just an env var). Flip to false → the agent stops taking <strong>new</strong> tasks.</p>
+<h2 id="practice-6090-minutes">Practice (60–90 minutes)</h2>
+<h3 id="task-1-30-minutes--headless-mode-locally">Task 1 (30 minutes) — headless mode locally</h3>
+<p>Take one of your agent workflows. Move to <code>claude --print --json-mode</code>. Run 5 tasks. Measure:</p>
+<ul>
+<li>Which tasks <strong>broke</strong> without interactivity?</li>
+<li>What else is needed (input schema, exit codes, output schema)?</li>
+</ul>
+<h3 id="task-2-30-minutes--minimal-dockerfile">Task 2 (30 minutes) — minimal Dockerfile</h3>
+<p>Build a <code>Dockerfile</code> for a headless agent. Run locally in Docker. Verify a task end-to-end <strong>inside the container</strong>.</p>
+<h3 id="task-3-30-minutes--observability-skeleton">Task 3 (30 minutes) — observability skeleton</h3>
+<p>Sketch the minimum set of logs and metrics for <strong>your</strong> future prod agent. What’s <strong>critical</strong> to see in prod? What’s nice-to-have?</p>
+<h2 id="recap">Recap</h2>
+<ul>
+<li><strong>Production = different architecture.</strong> Not “same + server.”</li>
+<li><strong>Six layers:</strong> runtime → orchestration → security → persistence → cost → observability. <strong>All mandatory.</strong></li>
+<li><strong>Pre-prod checklist.</strong> Without every box — no deploy.</li>
+</ul>
+<h2 id="vibe-samurai">Vibe Samurai</h2>
+<aside class="skeptic">
+<p><strong>🥷 Vibe Samurai asks:</strong>
+“I have a pet project with 10 users. Do I <strong>really</strong> need all this?”</p>
+<p><strong>Answer:</strong> For 10 users — <strong>not all of it</strong>. <strong>Minimum:</strong> headless mode + secrets in env-var + an API budget ($5/day) + a basic log. <strong>That’s</strong> enough to <strong>not go broke</strong> and to <strong>see</strong> what’s happening. The <strong>full</strong> prod stack starts paying off when: you charge <strong>money</strong> for the service, or you have <strong>>100 users</strong>, or it’s a <strong>regulated</strong> domain (finance, medicine). Otherwise — minimum viable observability. <strong>Rule:</strong> match infra to what scale <strong>pays for</strong>. <strong>Not perfect, but actually works.</strong></p>
+</aside>
+<h2 id="whats-next">What’s next</h2>
+<p>In <strong>M18 — Security in prod: secrets, sandbox, audit</strong> we dig into the <strong>security</strong> layer. The <strong>most</strong> responsible chapter of the course. Secret managers, container sandbox done right, audit logging, prompt-injection defence, multi-tenant isolation. If M17 was <strong>architecture</strong>, M18 is <strong>the details</strong> that make the architecture safe.</p>
+<p>If this clicked — share with anyone <strong>preparing</strong> their first agent deploy. If you already have a prod agent — tell me in the comments what was the most <strong>unexpected</strong> in the local → prod jump. Your feedback really helps polish the material.</p>
+<h2 id="-further-reading">📚 Further reading</h2>
+<p>Deploying agents is the area where “general principles” go only so far; the fastest way up is to read the docs of the actual platform. Three anchors: managed Bedrock, sandbox infra for code, and observability for a prod agent.</p>
+<p><strong>Managed runtime for agents</strong></p>
+<ul>
+<li><strong>AWS — Amazon Bedrock AgentCore</strong> — <a href="https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/what-is-bedrock-agentcore.html">docs.aws.amazon.com/bedrock-agentcore/latest/devguide/what-is-bedrock-agentcore.html</a>. Serverless host for agents: session isolation, VPC, PrivateLink. A good reference for “what does prod infra for agents from a big vendor look like.”</li>
+<li><strong>AWS — Deploy an Amazon Bedrock agent</strong> — <a href="https://docs.aws.amazon.com/bedrock/latest/userguide/agents-deploy.html">docs.aws.amazon.com/bedrock/latest/userguide/agents-deploy.html</a>. Concretely on alias/version/InvokeAgent flow — the “don’t quietly switch agent version in prod” piece.</li>
+</ul>
+<p><strong>Sandbox infra for agent code</strong></p>
+<ul>
+<li><strong>E2B — Docs</strong> — <a href="https://e2b.dev/docs">e2b.dev/docs</a>. Cloud sandboxes for executing agent-generated code. Start in ~80 ms, cut your infrastructure yak-shaving.</li>
+</ul>
+<p><strong>Observability in prod</strong></p>
+<ul>
+<li><strong>Langfuse — Observability overview</strong> — <a href="https://langfuse.com/docs/observability/overview">langfuse.com/docs/observability/overview</a>. A ready platform for traces / sessions / cost; up in an evening, sees the whole flow at once.</li>
+</ul>
+<blockquote>
+<p><strong>Tip:</strong> before the first prod deploy pick exactly one of these three. “All at once” is a guaranteed way to drown in infra for a month.</p>
+</blockquote> <nav class="chapter-nav" data-astro-cid-a7sruqtr> <a href="/vibesamurai-site/courses/middle/m16/en" data-astro-cid-a7sruqtr> <span class="dir" data-astro-cid-a7sruqtr>← Back</span> <span class="title" data-astro-cid-a7sruqtr>M16 · When multi-agent is overkill. Anti-patterns</span> </a> <a href="/vibesamurai-site/courses/middle/m18/en" data-astro-cid-a7sruqtr> <span class="dir" data-astro-cid-a7sruqtr>Next →</span> <span class="title" data-astro-cid-a7sruqtr>M18 · Security in prod: secrets, sandbox, audit</span> </a> </nav> </main>  </div> <script type="module">
+    import { gatingEnabled } from '../lib/supabase';
+    import { fetchChapter } from '../lib/auth';
+
+    const base = import.meta.env.BASE_URL;
+    let mermaidLib = null;
+
+    function scopeOf(root) {
+      return root === document ? document.querySelector('.reader-main') : root;
+    }
+
+    function addCopyBtns(root) {
+      const scope = scopeOf(root); if (!scope) return;
+      scope.querySelectorAll('pre').forEach((pre) => {
+        if (pre.closest('.code-tabs')) return;
+        if (pre.querySelector('.copy-btn')) return;
+        const btn = document.createElement('button');
+        btn.className = 'copy-btn';
+        btn.textContent = 'copy';
+        btn.addEventListener('click', async () => {
+          const code = pre.querySelector('code')?.textContent ?? pre.textContent ?? '';
+          await navigator.clipboard.writeText(code.trimEnd());
+          btn.textContent = '✓ copied';
+          setTimeout(() => { btn.textContent = 'copy'; }, 1600);
+        });
+        pre.appendChild(btn);
+      });
+    }
+
+    function tightenMermaidSvgs(retries = 6) {
+      let pending = false;
+      document.querySelectorAll('.mermaid svg').forEach((svg) => {
+        if (svg.dataset.tightened === '1') return;
+        try {
+          const bbox = svg.getBBox();
+          if (!bbox || bbox.width === 0) { pending = true; return; }
+          const pad = 6;
+          svg.setAttribute('viewBox',
+            `${bbox.x - pad} ${bbox.y - pad} ${bbox.width + pad * 2} ${bbox.height + pad * 2}`);
+          svg.removeAttribute('height');
+          svg.style.height = 'auto';
+          svg.style.maxWidth = '100%';
+          svg.style.display = 'block';
+          svg.dataset.tightened = '1';
+        } catch (e) { pending = true; }
+      });
+      if (pending && retries > 0) setTimeout(() => tightenMermaidSvgs(retries - 1), 120);
+    }
+
+    async function ensureMermaid() {
+      if (mermaidLib) return mermaidLib;
+      const mod = await import('https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs');
+      mermaidLib = mod.default;
+      mermaidLib.initialize({
+        startOnLoad: false, theme: 'neutral',
+        themeVariables: {
+          fontFamily: 'JetBrains Mono, ui-monospace, monospace',
+          primaryColor: '#f5f5f5', primaryBorderColor: '#222',
+          primaryTextColor: '#111', lineColor: '#444',
+        },
+        flowchart: { curve: 'basis', padding: 12, useMaxWidth: true },
+      });
+      return mermaidLib;
+    }
+
+    async function renderMermaid(root) {
+      const scope = scopeOf(root); if (!scope) return;
+      const matches = scope.querySelectorAll(
+        'pre[data-language="mermaid"], pre.language-mermaid, code.language-mermaid'
+      );
+      if (!matches.length) return;
+      matches.forEach((el) => {
+        const block = el.tagName === 'CODE' ? el.closest('pre') || el : el;
+        const codeEl = block.querySelector('code') || block;
+        const wrap = document.createElement('div');
+        wrap.className = 'mermaid';
+        wrap.textContent = codeEl.textContent;
+        block.replaceWith(wrap);
+      });
+      try {
+        const m = await ensureMermaid();
+        await m.run();
+        tightenMermaidSvgs();
+      } catch (err) {
+        console.warn('mermaid failed', err);
+        document.querySelectorAll('.mermaid:not(:has(svg))').forEach((el) => { el.style.display = 'none'; });
+      }
+    }
+
+    async function enhance(root = document) {
+      addCopyBtns(root);
+      await renderMermaid(root);
+    }
+
+    function paywallHtml(required, needLogin) {
+      const label = { beginner: 'Beginner (300 ₽)', middle: 'Beginner + Middle (500 ₽)', all: 'Весь пакет (700 ₽)' }[required] || '';
+      return `<div class="paywall">
+        <div class="paywall-ic">🔒</div>
+        <h3>Эта глава — в платном доступе</h3>
+        <p>Нужен тариф: <strong>${label}</strong>. Доступ навсегда, без подписки.</p>
+        ${needLogin ? '<p>Войди через Google и оформи доступ — продолжишь с любого устройства.</p>' : ''}
+        <a class="paywall-btn" href="${base}pricing">Открыть доступ →</a>
+        <a class="paywall-link" href="${base}account">Войти / мой аккаунт</a>
+      </div>`;
+    }
+
+    async function gatedFlow(mount) {
+      const slug = mount.dataset.slug;
+      const required = mount.dataset.required || 'beginner';
+      mount.innerHTML = '<p class="gate-msg">Проверяем доступ…</p>';
+      const res = await fetchChapter(slug);
+      if (res.ok) {
+        mount.innerHTML = res.html;
+        await enhance(mount);
+      } else if (res.status === 401) {
+        mount.innerHTML = paywallHtml(required, true);
+      } else if (res.status === 402) {
+        mount.innerHTML = paywallHtml(res.requiredTier || required, false);
+      } else {
+        mount.innerHTML = '<p class="gate-msg">Не удалось загрузить главу. Обнови страницу.</p>';
+      }
+    }
+
+    const mount = document.getElementById('gated-mount');
+    if (mount && gatingEnabled) gatedFlow(mount);
+    else enhance(document);
+  </script> </body> </html>

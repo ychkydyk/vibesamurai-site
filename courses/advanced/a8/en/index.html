@@ -1,0 +1,229 @@
+<!DOCTYPE html><html lang="en" data-astro-cid-a7sruqtr> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Identity-preserving generation — Vibesamurai</title><meta name="description" content="Soul ID training, LoRA, character consistency via image-to-image and references. Which approach when: an artist, a host, a recurring brand character."><meta property="og:title" content="Identity-preserving generation"><meta property="og:type" content="article"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Inter:wght@300..800&family=JetBrains+Mono:wght@400..600&display=swap" rel="stylesheet"><link rel="stylesheet" href="/vibesamurai-site/_astro/_slug_.Cs4TX1wt.css">
+<style>.account-btn{display:inline-flex;align-items:center;gap:var(--space-2);font-family:var(--font-mono);font-size:var(--size-2);text-transform:uppercase;letter-spacing:.06em;padding:5px 10px;border:1px solid var(--rule);border-radius:999px;color:var(--text-soft);background:var(--surface);transition:border-color var(--d-fast),color var(--d-fast)}.account-btn:hover{border-color:var(--accent);color:var(--text)}.account-ic{width:18px;height:18px;display:grid;place-items:center;border-radius:50%;background:var(--accent);color:var(--accent-ink);font-weight:700;font-size:10px;line-height:1}.reader-rail .account-btn{padding:0;border:none;background:transparent}.reader-rail .account-label{display:none}.reader-rail .account-ic{width:32px;height:32px;font-size:13px}.rail-toggle{width:36px;height:36px;display:grid;place-items:center;background:var(--accent);border:1px solid var(--accent);border-radius:4px;cursor:pointer;transition:filter var(--d-fast),transform var(--d-fast);padding:0}.rail-toggle:hover{filter:brightness(1.08);transform:translateY(-1px)}.rail-toggle:active{transform:translateY(0)}.rail-toggle-icon{width:14px;height:12px;border-left:2px solid var(--accent-ink);border-right:2px solid var(--accent-ink);transition:transform var(--d-normal) var(--ease-standard)}.reader-app.sidebar-open .rail-toggle-icon{transform:rotate(0)}.reader-app:not(.sidebar-open) .rail-toggle-icon{transform:scaleX(.5)}.sidebar-backdrop{display:none;position:fixed;inset:0;background:#0000008c;z-index:140;border:0;padding:0;cursor:pointer}@media(max-width:900px){.reader-app.sidebar-open~.sidebar-backdrop{display:block}}.rail-spacer[data-astro-cid-ofsbkzh7]{flex:1}.reader-sidebar[data-astro-cid-khgtvzrl] .ru-tag[data-astro-cid-khgtvzrl]{font-style:normal;font-family:var(--font-mono);font-size:.7em;color:var(--text-mute);margin-left:4px;padding:1px 4px;border:1px solid var(--rule);border-radius:3px;text-transform:uppercase;vertical-align:middle}.chapter-eyebrow[data-astro-cid-a7sruqtr]{display:flex;justify-content:space-between;align-items:center;gap:var(--space-3)}.lang-toggle[data-astro-cid-a7sruqtr]{font-family:var(--font-mono);font-size:var(--size-2);padding:2px 8px;border:1px solid var(--rule);border-radius:4px;color:var(--text-mute);text-decoration:none;text-transform:uppercase;letter-spacing:.08em}.lang-toggle[data-astro-cid-a7sruqtr]:hover{color:var(--accent);border-color:var(--accent)}.code-tabs[data-astro-cid-hg66rjob]{margin:var(--space-5) 0}.code-tabs-nav[data-astro-cid-hg66rjob]{display:flex;gap:2px;margin-bottom:-1px;position:relative;z-index:1}.ctab[data-astro-cid-hg66rjob]{font-family:var(--font-mono);font-size:11px;text-transform:uppercase;letter-spacing:.07em;padding:5px 14px;border:1px solid #21222c;border-bottom:none;background:#1a1b23;color:#6272a4;cursor:pointer;border-radius:4px 4px 0 0;transition:color .12s,background .12s}.ctab[data-astro-cid-hg66rjob].is-active{background:#282a36;color:#f8f8f2;border-color:#21222c}.ctab[data-astro-cid-hg66rjob]:hover:not(.is-active){color:#cdd6f4}.ctab-panel[data-astro-cid-hg66rjob]{display:none}.ctab-panel[data-astro-cid-hg66rjob].is-active{display:block}.ctab-panel[data-astro-cid-hg66rjob] pre{margin-top:0!important;border-radius:0 6px 6px!important}
+</style></head> <body data-astro-cid-a7sruqtr> <div class="reader-app" data-astro-cid-a7sruqtr> <aside class="reader-rail" data-astro-cid-ofsbkzh7> <a href="/vibesamurai-site/" class="logo" aria-label="Vibesamurai home" data-astro-cid-ofsbkzh7>V</a> <button type="button" class="rail-toggle" id="sidebar-toggle" aria-label="Свернуть/развернуть оглавление" title="Свернуть/развернуть оглавление" data-astro-cid-ofsbkzh7> <span class="rail-toggle-icon" aria-hidden="true" data-astro-cid-ofsbkzh7></span> </button> <div class="rail-spacer" data-astro-cid-ofsbkzh7></div> <a href="/vibesamurai-site/account" class="account-btn" id="account-btn" aria-label="Аккаунт"> <span class="account-ic" id="account-ic">⌂</span> <span class="account-label" id="account-label">Войти</span> </a>  <script type="module" src="/vibesamurai-site/_astro/AccountButton.astro_astro_type_script_index_0_lang.CmD2sdn9.js"></script> </aside>  <button type="button" class="sidebar-backdrop" id="sidebar-backdrop" aria-label="Закрыть оглавление" tabindex="-1" data-astro-cid-ofsbkzh7></button>  <script type="module">const d="vs-sidebar-open",a="(max-width: 900px)";function t(e){const n=document.querySelector(".reader-app");n&&n.classList.toggle("sidebar-open",e)}function r(){return!window.matchMedia(a).matches}function s(){const e=localStorage.getItem(d),i=window.matchMedia(a).matches?!1:e!==null?e==="1":r();t(i),document.getElementById("sidebar-toggle")?.addEventListener("click",()=>{const c=!document.querySelector(".reader-app")?.classList.contains("sidebar-open");window.matchMedia(a).matches||localStorage.setItem(d,c?"1":"0"),t(c)}),document.getElementById("sidebar-backdrop")?.addEventListener("click",()=>t(!1)),document.querySelectorAll(".reader-sidebar a").forEach(o=>{o.addEventListener("click",()=>{window.matchMedia(a).matches&&t(!1)})})}document.readyState==="loading"?document.addEventListener("DOMContentLoaded",s):s();</script> <aside class="reader-sidebar" data-astro-cid-khgtvzrl> <div class="breadcrumb" data-astro-cid-khgtvzrl>Vibesamurai · Advanced Path · A8</div> <h4 data-astro-cid-khgtvzrl>In this course</h4> <ul data-astro-cid-khgtvzrl> <li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a1/en" class data-astro-cid-khgtvzrl> A1 · AI studio stack — May 2026  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a2/en" class data-astro-cid-khgtvzrl> A2 · Multi-modal pipeline architecture  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a3/en" class data-astro-cid-khgtvzrl> A3 · Local vs Cloud matrix  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a4/en" class data-astro-cid-khgtvzrl> A4 · Design system as a contract  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a5/en" class data-astro-cid-khgtvzrl> A5 · Image generation for a brand  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a6/en" class data-astro-cid-khgtvzrl> A6 · Marketplace + product photoshoot  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a7/en" class data-astro-cid-khgtvzrl> A7 · Video generation pipelines  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a8/en" class="current" data-astro-cid-khgtvzrl> A8 · Identity-preserving generation  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a9/en" class data-astro-cid-khgtvzrl> A9 · TouchDesigner + StreamDiffusion  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a10/en" class data-astro-cid-khgtvzrl> A10 · Audio-reactive AV installations  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a11/en" class data-astro-cid-khgtvzrl> A11 · Interactive booths: STT+LLM+TTS+CV  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a12/en" class data-astro-cid-khgtvzrl> A12 · Telemetry → control loop  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a13/en" class data-astro-cid-khgtvzrl> A13 · Private RAG for an archive  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a14/en" class data-astro-cid-khgtvzrl> A14 · Local LLMs on 8GB VRAM  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a15/en" class data-astro-cid-khgtvzrl> A15 · RunPod Flash + vLLM  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a16/en" class data-astro-cid-khgtvzrl> A16 · Custom MCP servers  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a17/en" class data-astro-cid-khgtvzrl> A17 · Token economics across modalities  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a18/en" class data-astro-cid-khgtvzrl> A18 · Eval for creative output  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a19/en" class data-astro-cid-khgtvzrl> A19 · Security in a creative studio  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a20/en" class data-astro-cid-khgtvzrl> A20 · Capstone: launching the studio  </a> </li> </ul>  </aside> <main class="reader-main" data-astro-cid-a7sruqtr> <div class="chapter-eyebrow" data-astro-cid-a7sruqtr> <span data-astro-cid-a7sruqtr>Advanced Path · a8</span> <a class="lang-toggle" href="/vibesamurai-site/courses/advanced/a8" aria-label="Switch to RU" data-astro-cid-a7sruqtr>RU</a> </div> <h1 class="chapter-title" data-astro-cid-a7sruqtr>A8 · Identity-preserving generation</h1> <p class="chapter-subtitle" data-astro-cid-a7sruqtr>Soul ID training, LoRA, character consistency via image-to-image and references. Which approach when: an artist, a host, a recurring brand character.</p> <h2 id="what-were-building">What we’re building</h2>
+<p>An identity pipeline — a series of artifacts (image + video) where the same face/character looks recognisable. Without identity preservation, a 12-post series turns into “12 different people.” With it, it’s one recognisable brand character.</p>
+<h2 id="three-approaches">Three approaches</h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Approach</th><th>What it is</th><th>When</th></tr></thead><tbody><tr><td><strong>Soul ID training</strong></td><td>A compact face representation trained on Higgsfield, then used as <code>--soul-id &#x3C;ref></code></td><td>A real person/artist, high facial fidelity needed</td></tr><tr><td><strong>LoRA</strong></td><td>Fine-tune SDXL/FLUX on 15–50 photos; an extra weight of ~50–150 MB</td><td>Style/character, flexibility over time</td></tr><tr><td><strong>Reference image (one-shot)</strong></td><td>Pass a reference in each call (Nano Banana 2, FLUX Kontext)</td><td>One project, few frames, consistency non-critical</td></tr></tbody></table>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>Real face?           ──► Soul ID training (Higgsfield)</span></span>
+<span class="line"><span>   │</span></span>
+<span class="line"><span>Style/character?     ──► LoRA (SDXL/FLUX via FAL/Replicate)</span></span>
+<span class="line"><span>   │</span></span>
+<span class="line"><span>1–5 frames of one    ──► reference image (Nano Banana 2 / FLUX Kontext)</span></span>
+<span class="line"><span>scene, no series?</span></span></code></pre>
+<h2 id="soul-id-training">Soul ID training</h2>
+<p>From the <code>higgsfield-soul-id</code> skill (verified 2026-05-29):</p>
+<ol>
+<li><strong>Data collection</strong> — minimum 15–20 photos of one person: varied angles, lighting, expressions. No glasses, no hats, no strong background. All the same person (not a group).</li>
+<li><strong>Training</strong> — <code>/higgsfield-soul-id</code> with a folder of photos → the API returns a <code>reference_id</code>.</li>
+<li><strong>Cost and time</strong> — <strong>~$3 per session</strong>, training ~3–5 minutes (on 15 photos). This is sharply cheaper than older estimates suggested.</li>
+<li><strong>Usage</strong> — pass <code>--soul-id &#x3C;reference_id></code> to <code>higgsfield-generate</code> for image and video.</li>
+</ol>
+<p>Compatible engines in the Higgsfield stack: <code>text2image_soul_v2</code>, <code>soul_cinema_studio</code>, Soul Cast, Soul Location.</p>
+<h2 id="lora-when-its-justified">LoRA: when it’s justified</h2>
+<p>LoRA fits when you need to pin a <strong>style</strong> (e.g. a signature illustration look) or a <strong>character</strong> (a fictional persona) and work flexibly:</p>
+<ul>
+<li>regularly fine-tune more (new scenes, new angles);</li>
+<li>use it in an open-weight stack with no vendor lock;</li>
+<li>combine with other LoRAs (style + character).</li>
+</ul>
+<p>Cost (verified 2026-05-29 on FAL):</p>
+<ul>
+<li><strong>FLUX LoRA Fast training</strong> — ~$2 per full run (linear in steps).</li>
+<li><strong>FLUX.2 [dev] LoRA training</strong> — $0.008 per training step (9–50 photos, hundreds–thousands of steps).</li>
+<li><strong>SDXL LoRA on Replicate</strong> — $3–10 depending on training length.</li>
+</ul>
+<p>Weight size: 50–150 MB. Compatibility: SDXL, FLUX dev, FLUX.2 [dev].</p>
+<h2 id="reference-image-one-shot">Reference image (one-shot)</h2>
+<p>The cheapest option when identity is needed for 1–5 frames, not “forever”:</p>
+<ul>
+<li>Nano Banana 2 accepts up to 3 references and holds the face better than FLUX;</li>
+<li>FLUX Kontext — edit by reference, targeted edits to one source;</li>
+<li>Higgsfield CLI with a single ref file.</li>
+</ul>
+<p>Downside: drifts on long series. Upside: $0 setup, only the generation cost.</p>
+<h2 id="real-case-artist-lubava">Real case: artist Lubava</h2>
+<p>From <code>project_lubava_platform</code> (Lyubov Sokolova — handpan/vocals/percussion):</p>
+<p>The brief: a publication series for the artist’s React+Vite+TS platform — photos, clip previews, motion-pins for SMM.</p>
+<p>Approach: <strong>Soul ID training</strong> on 22 studio photos of the artist (varied lighting, varied angles, neutral expressions). Cost: ~$3 per session, ~5 minutes training. Result: a <code>reference_id</code> lives in the project and is reused across every generation.</p>
+<p>Stack from there:</p>
+<ul>
+<li><strong>Static</strong>: <code>text2image_soul_v2</code> + the platform’s brand tokens → a series of portraits for track covers.</li>
+<li><strong>Motion</strong>: <code>soul_cinema_studio</code> (<code>--soul-id &#x3C;id></code> + cinematic prompt) → 8-second motion pins for Instagram.</li>
+<li><strong>Live performance render</strong>: image-to-video with a hero frame from a real shoot + Soul ID to guarantee recognisability across stylised transitions.</li>
+</ul>
+<p>Time for an 8-artifact series: 1 working day, ~$20–25 of generative + $3 Soul ID (the fixed-cost dissolves across hundreds of frames).</p>
+<h2 id="pitfalls">Pitfalls</h2>
+<ul>
+<li><strong>Soul ID on bad source material</strong> — if the photos all have the same lighting/angle, training produces “one frame in different poses.” Variety of source is critical.</li>
+<li><strong><code>ip_detected</code></strong> — Higgsfield catches a face in the reference before generation (see <code>reference_higgsfield_cli</code>). Blur helps partially; the safe path is Soul ID on your own face/model, not on photos from the internet.</li>
+<li><strong>LoRA + per-frame cost</strong> — for projects with &#x3C;100 frames a LoRA rarely pays back; reference image is cheaper.</li>
+<li><strong>“Soul ID is forever”</strong> — no. Over 6–12 months the base model updates and Soul ID may need re-training. Budget for it.</li>
+<li><strong>A real person’s face</strong> — consent is required. Legally and ethically. A contract with artist / model / client before the training run.</li>
+</ul>
+<h2 id="recap">Recap</h2>
+<ul>
+<li>Three approaches: Soul ID (real face), LoRA (style/character), reference image (1–5 frames).</li>
+<li>Soul ID — single payment ~$3, then pennies per frame.</li>
+<li>LoRA pays back across hundreds of frames and when flexible re-training is needed.</li>
+<li>Reference image — for one-off tasks; drifts on long series.</li>
+<li>Face consent is mandatory. Contract before training.</li>
+</ul>
+<h2 id="further-reading">Further reading</h2>
+<ul>
+<li><strong>Skill: higgsfield-soul-id</strong> — <code>/higgsfield-soul-id</code> (skill in repo). Full workflow training → reference_id → use.</li>
+<li><strong>FAL — LoRA training (FLUX dev)</strong> — <a href="https://fal.ai/models/fal-ai/flux-lora-fast-training">fal.ai/models/fal-ai/flux-lora-fast-training</a>. Ready-to-use training pipeline ($2/run).</li>
+<li><strong>FAL — FLUX.2 [dev] LoRA Trainer</strong> — <a href="https://fal.ai/models/fal-ai/flux-2-trainer">fal.ai/models/fal-ai/flux-2-trainer</a>. $0.008 per training step.</li>
+<li><strong>Replicate — SDXL LoRA training</strong> — <a href="https://replicate.com/blog/fine-tune-sdxl">replicate.com/blog/fine-tune-sdxl</a>. Fine-tune concepts and parameters.</li>
+<li><strong>Higgsfield Soul docs</strong> — <a href="https://higgsfield.ai/soul">higgsfield.ai/soul</a>. All Soul engines (V2, Cinema, Cast, Location).</li>
+</ul> <nav class="chapter-nav" data-astro-cid-a7sruqtr> <a href="/vibesamurai-site/courses/advanced/a7/en" data-astro-cid-a7sruqtr> <span class="dir" data-astro-cid-a7sruqtr>← Back</span> <span class="title" data-astro-cid-a7sruqtr>A7 · Video generation pipelines</span> </a> <a href="/vibesamurai-site/courses/advanced/a9/en" data-astro-cid-a7sruqtr> <span class="dir" data-astro-cid-a7sruqtr>Next →</span> <span class="title" data-astro-cid-a7sruqtr>A9 · TouchDesigner + StreamDiffusion</span> </a> </nav> </main>  </div> <script type="module">
+    import { gatingEnabled } from '../lib/supabase';
+    import { fetchChapter } from '../lib/auth';
+
+    const base = import.meta.env.BASE_URL;
+    let mermaidLib = null;
+
+    function scopeOf(root) {
+      return root === document ? document.querySelector('.reader-main') : root;
+    }
+
+    function addCopyBtns(root) {
+      const scope = scopeOf(root); if (!scope) return;
+      scope.querySelectorAll('pre').forEach((pre) => {
+        if (pre.closest('.code-tabs')) return;
+        if (pre.querySelector('.copy-btn')) return;
+        const btn = document.createElement('button');
+        btn.className = 'copy-btn';
+        btn.textContent = 'copy';
+        btn.addEventListener('click', async () => {
+          const code = pre.querySelector('code')?.textContent ?? pre.textContent ?? '';
+          await navigator.clipboard.writeText(code.trimEnd());
+          btn.textContent = '✓ copied';
+          setTimeout(() => { btn.textContent = 'copy'; }, 1600);
+        });
+        pre.appendChild(btn);
+      });
+    }
+
+    function tightenMermaidSvgs(retries = 6) {
+      let pending = false;
+      document.querySelectorAll('.mermaid svg').forEach((svg) => {
+        if (svg.dataset.tightened === '1') return;
+        try {
+          const bbox = svg.getBBox();
+          if (!bbox || bbox.width === 0) { pending = true; return; }
+          const pad = 6;
+          svg.setAttribute('viewBox',
+            `${bbox.x - pad} ${bbox.y - pad} ${bbox.width + pad * 2} ${bbox.height + pad * 2}`);
+          svg.removeAttribute('height');
+          svg.style.height = 'auto';
+          svg.style.maxWidth = '100%';
+          svg.style.display = 'block';
+          svg.dataset.tightened = '1';
+        } catch (e) { pending = true; }
+      });
+      if (pending && retries > 0) setTimeout(() => tightenMermaidSvgs(retries - 1), 120);
+    }
+
+    async function ensureMermaid() {
+      if (mermaidLib) return mermaidLib;
+      const mod = await import('https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs');
+      mermaidLib = mod.default;
+      mermaidLib.initialize({
+        startOnLoad: false, theme: 'neutral',
+        themeVariables: {
+          fontFamily: 'JetBrains Mono, ui-monospace, monospace',
+          primaryColor: '#f5f5f5', primaryBorderColor: '#222',
+          primaryTextColor: '#111', lineColor: '#444',
+        },
+        flowchart: { curve: 'basis', padding: 12, useMaxWidth: true },
+      });
+      return mermaidLib;
+    }
+
+    async function renderMermaid(root) {
+      const scope = scopeOf(root); if (!scope) return;
+      const matches = scope.querySelectorAll(
+        'pre[data-language="mermaid"], pre.language-mermaid, code.language-mermaid'
+      );
+      if (!matches.length) return;
+      matches.forEach((el) => {
+        const block = el.tagName === 'CODE' ? el.closest('pre') || el : el;
+        const codeEl = block.querySelector('code') || block;
+        const wrap = document.createElement('div');
+        wrap.className = 'mermaid';
+        wrap.textContent = codeEl.textContent;
+        block.replaceWith(wrap);
+      });
+      try {
+        const m = await ensureMermaid();
+        await m.run();
+        tightenMermaidSvgs();
+      } catch (err) {
+        console.warn('mermaid failed', err);
+        document.querySelectorAll('.mermaid:not(:has(svg))').forEach((el) => { el.style.display = 'none'; });
+      }
+    }
+
+    async function enhance(root = document) {
+      addCopyBtns(root);
+      await renderMermaid(root);
+    }
+
+    function paywallHtml(required, needLogin) {
+      const label = { beginner: 'Beginner (300 ₽)', middle: 'Beginner + Middle (500 ₽)', all: 'Весь пакет (700 ₽)' }[required] || '';
+      return `<div class="paywall">
+        <div class="paywall-ic">🔒</div>
+        <h3>Эта глава — в платном доступе</h3>
+        <p>Нужен тариф: <strong>${label}</strong>. Доступ навсегда, без подписки.</p>
+        ${needLogin ? '<p>Войди через Google и оформи доступ — продолжишь с любого устройства.</p>' : ''}
+        <a class="paywall-btn" href="${base}pricing">Открыть доступ →</a>
+        <a class="paywall-link" href="${base}account">Войти / мой аккаунт</a>
+      </div>`;
+    }
+
+    async function gatedFlow(mount) {
+      const slug = mount.dataset.slug;
+      const required = mount.dataset.required || 'beginner';
+      mount.innerHTML = '<p class="gate-msg">Проверяем доступ…</p>';
+      const res = await fetchChapter(slug);
+      if (res.ok) {
+        mount.innerHTML = res.html;
+        await enhance(mount);
+      } else if (res.status === 401) {
+        mount.innerHTML = paywallHtml(required, true);
+      } else if (res.status === 402) {
+        mount.innerHTML = paywallHtml(res.requiredTier || required, false);
+      } else {
+        mount.innerHTML = '<p class="gate-msg">Не удалось загрузить главу. Обнови страницу.</p>';
+      }
+    }
+
+    const mount = document.getElementById('gated-mount');
+    if (mount && gatingEnabled) gatedFlow(mount);
+    else enhance(document);
+  </script> </body> </html>

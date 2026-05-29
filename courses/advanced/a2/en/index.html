@@ -1,0 +1,241 @@
+<!DOCTYPE html><html lang="en" data-astro-cid-a7sruqtr> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Multi-modal pipeline architecture — Vibesamurai</title><meta name="description" content="Contract between modalities: text → image → video → control. Idempotency, caching, lineage. So the pipeline never regenerates what's already been built."><meta property="og:title" content="Multi-modal pipeline architecture"><meta property="og:type" content="article"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Inter:wght@300..800&family=JetBrains+Mono:wght@400..600&display=swap" rel="stylesheet"><link rel="stylesheet" href="/vibesamurai-site/_astro/_slug_.Cs4TX1wt.css">
+<style>.account-btn{display:inline-flex;align-items:center;gap:var(--space-2);font-family:var(--font-mono);font-size:var(--size-2);text-transform:uppercase;letter-spacing:.06em;padding:5px 10px;border:1px solid var(--rule);border-radius:999px;color:var(--text-soft);background:var(--surface);transition:border-color var(--d-fast),color var(--d-fast)}.account-btn:hover{border-color:var(--accent);color:var(--text)}.account-ic{width:18px;height:18px;display:grid;place-items:center;border-radius:50%;background:var(--accent);color:var(--accent-ink);font-weight:700;font-size:10px;line-height:1}.reader-rail .account-btn{padding:0;border:none;background:transparent}.reader-rail .account-label{display:none}.reader-rail .account-ic{width:32px;height:32px;font-size:13px}.rail-toggle{width:36px;height:36px;display:grid;place-items:center;background:var(--accent);border:1px solid var(--accent);border-radius:4px;cursor:pointer;transition:filter var(--d-fast),transform var(--d-fast);padding:0}.rail-toggle:hover{filter:brightness(1.08);transform:translateY(-1px)}.rail-toggle:active{transform:translateY(0)}.rail-toggle-icon{width:14px;height:12px;border-left:2px solid var(--accent-ink);border-right:2px solid var(--accent-ink);transition:transform var(--d-normal) var(--ease-standard)}.reader-app.sidebar-open .rail-toggle-icon{transform:rotate(0)}.reader-app:not(.sidebar-open) .rail-toggle-icon{transform:scaleX(.5)}.sidebar-backdrop{display:none;position:fixed;inset:0;background:#0000008c;z-index:140;border:0;padding:0;cursor:pointer}@media(max-width:900px){.reader-app.sidebar-open~.sidebar-backdrop{display:block}}.rail-spacer[data-astro-cid-ofsbkzh7]{flex:1}.reader-sidebar[data-astro-cid-khgtvzrl] .ru-tag[data-astro-cid-khgtvzrl]{font-style:normal;font-family:var(--font-mono);font-size:.7em;color:var(--text-mute);margin-left:4px;padding:1px 4px;border:1px solid var(--rule);border-radius:3px;text-transform:uppercase;vertical-align:middle}.chapter-eyebrow[data-astro-cid-a7sruqtr]{display:flex;justify-content:space-between;align-items:center;gap:var(--space-3)}.lang-toggle[data-astro-cid-a7sruqtr]{font-family:var(--font-mono);font-size:var(--size-2);padding:2px 8px;border:1px solid var(--rule);border-radius:4px;color:var(--text-mute);text-decoration:none;text-transform:uppercase;letter-spacing:.08em}.lang-toggle[data-astro-cid-a7sruqtr]:hover{color:var(--accent);border-color:var(--accent)}.code-tabs[data-astro-cid-hg66rjob]{margin:var(--space-5) 0}.code-tabs-nav[data-astro-cid-hg66rjob]{display:flex;gap:2px;margin-bottom:-1px;position:relative;z-index:1}.ctab[data-astro-cid-hg66rjob]{font-family:var(--font-mono);font-size:11px;text-transform:uppercase;letter-spacing:.07em;padding:5px 14px;border:1px solid #21222c;border-bottom:none;background:#1a1b23;color:#6272a4;cursor:pointer;border-radius:4px 4px 0 0;transition:color .12s,background .12s}.ctab[data-astro-cid-hg66rjob].is-active{background:#282a36;color:#f8f8f2;border-color:#21222c}.ctab[data-astro-cid-hg66rjob]:hover:not(.is-active){color:#cdd6f4}.ctab-panel[data-astro-cid-hg66rjob]{display:none}.ctab-panel[data-astro-cid-hg66rjob].is-active{display:block}.ctab-panel[data-astro-cid-hg66rjob] pre{margin-top:0!important;border-radius:0 6px 6px!important}
+</style></head> <body data-astro-cid-a7sruqtr> <div class="reader-app" data-astro-cid-a7sruqtr> <aside class="reader-rail" data-astro-cid-ofsbkzh7> <a href="/vibesamurai-site/" class="logo" aria-label="Vibesamurai home" data-astro-cid-ofsbkzh7>V</a> <button type="button" class="rail-toggle" id="sidebar-toggle" aria-label="Свернуть/развернуть оглавление" title="Свернуть/развернуть оглавление" data-astro-cid-ofsbkzh7> <span class="rail-toggle-icon" aria-hidden="true" data-astro-cid-ofsbkzh7></span> </button> <div class="rail-spacer" data-astro-cid-ofsbkzh7></div> <a href="/vibesamurai-site/account" class="account-btn" id="account-btn" aria-label="Аккаунт"> <span class="account-ic" id="account-ic">⌂</span> <span class="account-label" id="account-label">Войти</span> </a>  <script type="module" src="/vibesamurai-site/_astro/AccountButton.astro_astro_type_script_index_0_lang.CmD2sdn9.js"></script> </aside>  <button type="button" class="sidebar-backdrop" id="sidebar-backdrop" aria-label="Закрыть оглавление" tabindex="-1" data-astro-cid-ofsbkzh7></button>  <script type="module">const d="vs-sidebar-open",a="(max-width: 900px)";function t(e){const n=document.querySelector(".reader-app");n&&n.classList.toggle("sidebar-open",e)}function r(){return!window.matchMedia(a).matches}function s(){const e=localStorage.getItem(d),i=window.matchMedia(a).matches?!1:e!==null?e==="1":r();t(i),document.getElementById("sidebar-toggle")?.addEventListener("click",()=>{const c=!document.querySelector(".reader-app")?.classList.contains("sidebar-open");window.matchMedia(a).matches||localStorage.setItem(d,c?"1":"0"),t(c)}),document.getElementById("sidebar-backdrop")?.addEventListener("click",()=>t(!1)),document.querySelectorAll(".reader-sidebar a").forEach(o=>{o.addEventListener("click",()=>{window.matchMedia(a).matches&&t(!1)})})}document.readyState==="loading"?document.addEventListener("DOMContentLoaded",s):s();</script> <aside class="reader-sidebar" data-astro-cid-khgtvzrl> <div class="breadcrumb" data-astro-cid-khgtvzrl>Vibesamurai · Advanced Path · A2</div> <h4 data-astro-cid-khgtvzrl>In this course</h4> <ul data-astro-cid-khgtvzrl> <li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a1/en" class data-astro-cid-khgtvzrl> A1 · AI studio stack — May 2026  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a2/en" class="current" data-astro-cid-khgtvzrl> A2 · Multi-modal pipeline architecture  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a3/en" class data-astro-cid-khgtvzrl> A3 · Local vs Cloud matrix  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a4/en" class data-astro-cid-khgtvzrl> A4 · Design system as a contract  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a5/en" class data-astro-cid-khgtvzrl> A5 · Image generation for a brand  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a6/en" class data-astro-cid-khgtvzrl> A6 · Marketplace + product photoshoot  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a7/en" class data-astro-cid-khgtvzrl> A7 · Video generation pipelines  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a8/en" class data-astro-cid-khgtvzrl> A8 · Identity-preserving generation  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a9/en" class data-astro-cid-khgtvzrl> A9 · TouchDesigner + StreamDiffusion  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a10/en" class data-astro-cid-khgtvzrl> A10 · Audio-reactive AV installations  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a11/en" class data-astro-cid-khgtvzrl> A11 · Interactive booths: STT+LLM+TTS+CV  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a12/en" class data-astro-cid-khgtvzrl> A12 · Telemetry → control loop  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a13/en" class data-astro-cid-khgtvzrl> A13 · Private RAG for an archive  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a14/en" class data-astro-cid-khgtvzrl> A14 · Local LLMs on 8GB VRAM  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a15/en" class data-astro-cid-khgtvzrl> A15 · RunPod Flash + vLLM  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a16/en" class data-astro-cid-khgtvzrl> A16 · Custom MCP servers  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a17/en" class data-astro-cid-khgtvzrl> A17 · Token economics across modalities  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a18/en" class data-astro-cid-khgtvzrl> A18 · Eval for creative output  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a19/en" class data-astro-cid-khgtvzrl> A19 · Security in a creative studio  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a20/en" class data-astro-cid-khgtvzrl> A20 · Capstone: launching the studio  </a> </li> </ul>  </aside> <main class="reader-main" data-astro-cid-a7sruqtr> <div class="chapter-eyebrow" data-astro-cid-a7sruqtr> <span data-astro-cid-a7sruqtr>Advanced Path · a2</span> <a class="lang-toggle" href="/vibesamurai-site/courses/advanced/a2" aria-label="Switch to RU" data-astro-cid-a7sruqtr>RU</a> </div> <h1 class="chapter-title" data-astro-cid-a7sruqtr>A2 · Multi-modal pipeline architecture</h1> <p class="chapter-subtitle" data-astro-cid-a7sruqtr>Contract between modalities: text → image → video → control. Idempotency, caching, lineage. So the pipeline never regenerates what&#39;s already been built.</p> <h2 id="what-were-building">What we’re building</h2>
+<p>The architecture of a multi-modal pipeline — the program that calls generative services in sequence and assembles a final artifact (SMM post, clip, installation). One non-negotiable: the pipeline must not regenerate what’s already been generated, and it must give you a clear lineage (where every frame/second/sound came from).</p>
+<h2 id="the-contract-between-steps">The contract between steps</h2>
+<p>Every step has three mandatory fields. Same rule as M2 (Architecting agent boundaries), now applied to generative services rather than LLMs.</p>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>PIPELINE STEP</span></span>
+<span class="line"><span>├── INPUT             hash-stable set: prompt text, refs, params</span></span>
+<span class="line"><span>├── OUTPUT            artifact + metadata (model, version, seed, cost)</span></span>
+<span class="line"><span>└── CACHE KEY         hash(INPUT) → if a file with that key exists, return it</span></span></code></pre>
+<p>Without a CACHE KEY every run regenerates the same frames. For a batch of 200 videos that’s 200 × 8 s × $0.27 ≈ $432 in pure regeneration cost.</p>
+<h2 id="lineage-where-did-this-frame-come-from">Lineage: where did this frame come from</h2>
+<p>Every artifact ships with a JSON sidecar (or a metadata table):</p>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="json"><code><span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">{</span></span>
+<span class="line"><span style="color:#8BE9FE;--shiki-dark:#8BE9FE">  "</span><span style="color:#8BE9FD;--shiki-dark:#8BE9FD">id</span><span style="color:#8BE9FE;--shiki-dark:#8BE9FE">"</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">:</span><span style="color:#E9F284;--shiki-dark:#E9F284"> "</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">frame_a83f</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">,</span></span>
+<span class="line"><span style="color:#8BE9FE;--shiki-dark:#8BE9FE">  "</span><span style="color:#8BE9FD;--shiki-dark:#8BE9FD">step</span><span style="color:#8BE9FE;--shiki-dark:#8BE9FE">"</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">:</span><span style="color:#E9F284;--shiki-dark:#E9F284"> "</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">image:hero</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">,</span></span>
+<span class="line"><span style="color:#8BE9FE;--shiki-dark:#8BE9FE">  "</span><span style="color:#8BE9FD;--shiki-dark:#8BE9FD">engine</span><span style="color:#8BE9FE;--shiki-dark:#8BE9FE">"</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">:</span><span style="color:#E9F284;--shiki-dark:#E9F284"> "</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">flux-2</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">,</span></span>
+<span class="line"><span style="color:#8BE9FE;--shiki-dark:#8BE9FE">  "</span><span style="color:#8BE9FD;--shiki-dark:#8BE9FD">engine_version</span><span style="color:#8BE9FE;--shiki-dark:#8BE9FE">"</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">:</span><span style="color:#E9F284;--shiki-dark:#E9F284"> "</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">2.0.3</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">,</span></span>
+<span class="line"><span style="color:#8BE9FE;--shiki-dark:#8BE9FE">  "</span><span style="color:#8BE9FD;--shiki-dark:#8BE9FD">prompt_hash</span><span style="color:#8BE9FE;--shiki-dark:#8BE9FE">"</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">:</span><span style="color:#E9F284;--shiki-dark:#E9F284"> "</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">sha256:7c1e...</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">,</span></span>
+<span class="line"><span style="color:#8BE9FE;--shiki-dark:#8BE9FE">  "</span><span style="color:#8BE9FD;--shiki-dark:#8BE9FD">seed</span><span style="color:#8BE9FE;--shiki-dark:#8BE9FE">"</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">:</span><span style="color:#BD93F9;--shiki-dark:#BD93F9"> 42</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">,</span></span>
+<span class="line"><span style="color:#8BE9FE;--shiki-dark:#8BE9FE">  "</span><span style="color:#8BE9FD;--shiki-dark:#8BE9FD">refs</span><span style="color:#8BE9FE;--shiki-dark:#8BE9FE">"</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">:</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2"> [</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">brand_token://wedoit/main</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">],</span></span>
+<span class="line"><span style="color:#8BE9FE;--shiki-dark:#8BE9FE">  "</span><span style="color:#8BE9FD;--shiki-dark:#8BE9FD">cost_usd</span><span style="color:#8BE9FE;--shiki-dark:#8BE9FE">"</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">:</span><span style="color:#BD93F9;--shiki-dark:#BD93F9"> 0.03</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">,</span></span>
+<span class="line"><span style="color:#8BE9FE;--shiki-dark:#8BE9FE">  "</span><span style="color:#8BE9FD;--shiki-dark:#8BE9FD">created_at</span><span style="color:#8BE9FE;--shiki-dark:#8BE9FE">"</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">:</span><span style="color:#E9F284;--shiki-dark:#E9F284"> "</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">2026-05-29T14:22:11Z</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">,</span></span>
+<span class="line"><span style="color:#8BE9FE;--shiki-dark:#8BE9FE">  "</span><span style="color:#8BE9FD;--shiki-dark:#8BE9FD">input_step_ids</span><span style="color:#8BE9FE;--shiki-dark:#8BE9FE">"</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">:</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2"> []</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">}</span></span></code></pre>
+<p>What you get:</p>
+<ul>
+<li>A month later you can answer <strong>why</strong> the clip looks the way it does.</li>
+<li>The client asks “same one but blue” — you change one ref, and the cache reuses everything that doesn’t depend on colour.</li>
+<li>Accounting sees the exact unit cost of the order.</li>
+</ul>
+<h2 id="flow">Flow</h2>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="mermaid"><code><span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">flowchart LR</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    BR[Brand tokens&#x3C;br/>JSON]</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    PR[Prompt template]</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    BR --> PR</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    PR --> H1{Cache hit?}</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    H1 -->|yes| OUT1[hero image]</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    H1 -->|no| IMG[FLUX 2]</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    IMG --> OUT1</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    OUT1 --> V1{Cache hit?}</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    V1 -->|yes| OUT2[motion clip]</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    V1 -->|no| VID[Seedance 2.0]</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    VID --> OUT2</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    OUT2 --> POST[Post compositor]</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    POST --> FIN[final mp4]</span></span></code></pre>
+<p>Each arrow is a step with its own cache key. Any step can be restarted in isolation; the rest is reused.</p>
+<h2 id="real-case-static-hero--motion-pin-for-smm">Real case: static hero → motion pin for SMM</h2>
+<p>Brief: a series of 12 Instagram posts for a brand. Each post = brand-token hero still + a 6-second motion pin.</p>
+<p>Without a pipeline (naive): run FLUX 12 times by hand, run Seedance 12 times by hand, two days of work, half-baked consistency.</p>
+<p>With a pipeline:</p>
+<ol>
+<li><strong>Briefs</strong> — <code>posts/spring-collection.yaml</code> with 12 entries (theme, hero-prompt, motion-hint).</li>
+<li><strong>Hero step</strong> — FLUX 2 with the brand prompt template, seed pinned per post. CACHE KEY = <code>sha256(prompt + seed + ref_hash)</code>.</li>
+<li><strong>Motion step</strong> — Seedance 2.0 with the hero as <code>start_image</code>. CACHE KEY = <code>sha256(hero_hash + motion_hint + camera_params)</code>.</li>
+<li><strong>Compose step</strong> — ffmpeg assembly with logo and captions. CACHE KEY = <code>sha256(motion_hash + caption + logo_version)</code>.</li>
+</ol>
+<p>Copy changed for one post? Only the compose step reruns; hero and motion come from cache. Re-render cost is rounding error.</p>
+<h2 id="copyable-orchestrator-skeleton">Copyable orchestrator skeleton</h2>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="python"><code><span class="line"><span style="color:#FF79C6;--shiki-dark:#FF79C6">import</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2"> hashlib, json</span></span>
+<span class="line"><span style="color:#FF79C6;--shiki-dark:#FF79C6">from</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2"> pathlib </span><span style="color:#FF79C6;--shiki-dark:#FF79C6">import</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2"> Path</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#BD93F9;--shiki-dark:#BD93F9">CACHE</span><span style="color:#FF79C6;--shiki-dark:#FF79C6"> =</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2"> Path(</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">./cache</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#FF79C6;--shiki-dark:#FF79C6">def</span><span style="color:#50FA7B;--shiki-dark:#50FA7B"> cache_key</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">(</span><span style="color:#FFB86C;--shiki-light-font-style:italic;--shiki-dark:#FFB86C;--shiki-dark-font-style:italic">step</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">:</span><span style="color:#8BE9FD;--shiki-light-font-style:italic;--shiki-dark:#8BE9FD;--shiki-dark-font-style:italic"> str</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">, </span><span style="color:#FFB86C;--shiki-light-font-style:italic;--shiki-dark:#FFB86C;--shiki-dark-font-style:italic">payload</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">:</span><span style="color:#8BE9FD;--shiki-light-font-style:italic;--shiki-dark:#8BE9FD;--shiki-dark-font-style:italic"> dict</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">) </span><span style="color:#FF79C6;--shiki-dark:#FF79C6">-></span><span style="color:#8BE9FD;--shiki-light-font-style:italic;--shiki-dark:#8BE9FD;--shiki-dark-font-style:italic"> str</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">:</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    blob </span><span style="color:#FF79C6;--shiki-dark:#FF79C6">=</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2"> json.dumps(payload, </span><span style="color:#FFB86C;--shiki-light-font-style:italic;--shiki-dark:#FFB86C;--shiki-dark-font-style:italic">sort_keys</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">=</span><span style="color:#BD93F9;--shiki-dark:#BD93F9">True</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">).encode()</span></span>
+<span class="line"><span style="color:#FF79C6;--shiki-dark:#FF79C6">    return</span><span style="color:#FF79C6;--shiki-dark:#FF79C6"> f</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">"</span><span style="color:#BD93F9;--shiki-dark:#BD93F9">{</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">step</span><span style="color:#BD93F9;--shiki-dark:#BD93F9">}</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">_</span><span style="color:#BD93F9;--shiki-dark:#BD93F9">{</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">hashlib.sha256(blob).hexdigest()[:</span><span style="color:#BD93F9;--shiki-dark:#BD93F9">16</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">]</span><span style="color:#BD93F9;--shiki-dark:#BD93F9">}</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">"</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#FF79C6;--shiki-dark:#FF79C6">def</span><span style="color:#50FA7B;--shiki-dark:#50FA7B"> run_step</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">(</span><span style="color:#FFB86C;--shiki-light-font-style:italic;--shiki-dark:#FFB86C;--shiki-dark-font-style:italic">step</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">:</span><span style="color:#8BE9FD;--shiki-light-font-style:italic;--shiki-dark:#8BE9FD;--shiki-dark-font-style:italic"> str</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">, </span><span style="color:#FFB86C;--shiki-light-font-style:italic;--shiki-dark:#FFB86C;--shiki-dark-font-style:italic">payload</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">:</span><span style="color:#8BE9FD;--shiki-light-font-style:italic;--shiki-dark:#8BE9FD;--shiki-dark-font-style:italic"> dict</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">, </span><span style="color:#FFB86C;--shiki-light-font-style:italic;--shiki-dark:#FFB86C;--shiki-dark-font-style:italic">runner</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">):</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    key </span><span style="color:#FF79C6;--shiki-dark:#FF79C6">=</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2"> cache_key(step, payload)</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    out_path </span><span style="color:#FF79C6;--shiki-dark:#FF79C6">=</span><span style="color:#BD93F9;--shiki-dark:#BD93F9"> CACHE</span><span style="color:#FF79C6;--shiki-dark:#FF79C6"> /</span><span style="color:#FF79C6;--shiki-dark:#FF79C6"> f</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">"</span><span style="color:#BD93F9;--shiki-dark:#BD93F9">{</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">key</span><span style="color:#BD93F9;--shiki-dark:#BD93F9">}</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">.bin"</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    meta_path </span><span style="color:#FF79C6;--shiki-dark:#FF79C6">=</span><span style="color:#BD93F9;--shiki-dark:#BD93F9"> CACHE</span><span style="color:#FF79C6;--shiki-dark:#FF79C6"> /</span><span style="color:#FF79C6;--shiki-dark:#FF79C6"> f</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">"</span><span style="color:#BD93F9;--shiki-dark:#BD93F9">{</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">key</span><span style="color:#BD93F9;--shiki-dark:#BD93F9">}</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">.json"</span></span>
+<span class="line"><span style="color:#FF79C6;--shiki-dark:#FF79C6">    if</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2"> out_path.exists():</span></span>
+<span class="line"><span style="color:#FF79C6;--shiki-dark:#FF79C6">        return</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2"> out_path, json.loads(meta_path.read_text())</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    result, meta </span><span style="color:#FF79C6;--shiki-dark:#FF79C6">=</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2"> runner(payload)</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    out_path.write_bytes(result)</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    meta_path.write_text(json.dumps(meta, </span><span style="color:#FFB86C;--shiki-light-font-style:italic;--shiki-dark:#FFB86C;--shiki-dark-font-style:italic">indent</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">=</span><span style="color:#BD93F9;--shiki-dark:#BD93F9">2</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">))</span></span>
+<span class="line"><span style="color:#FF79C6;--shiki-dark:#FF79C6">    return</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2"> out_path, meta</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6272A4;--shiki-dark:#6272A4"># usage:</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">hero_path, hero_meta </span><span style="color:#FF79C6;--shiki-dark:#FF79C6">=</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2"> run_step(</span></span>
+<span class="line"><span style="color:#E9F284;--shiki-dark:#E9F284">    "</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">image:hero</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">,</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    {</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">prompt</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">: prompt, </span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">seed</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">: </span><span style="color:#BD93F9;--shiki-dark:#BD93F9">42</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">, </span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">ref</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">: </span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">brand:wedoit</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">},</span></span>
+<span class="line"><span style="color:#FFB86C;--shiki-light-font-style:italic;--shiki-dark:#FFB86C;--shiki-dark-font-style:italic">    runner</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">=</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">flux_runner,</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">)</span></span></code></pre>
+<p>Minimum viable orchestrator: 20 lines, idempotent, audit-friendly. Every scale-up starts here.</p>
+<h2 id="what-counts-as-an-immutable-input">What counts as an immutable input</h2>
+<p>A cache key has to be stable between runs. That means:</p>
+<ul>
+<li><strong>Prompt template</strong> is versioned (v1.0, v1.1). Editing the template = new version = cache invalidated.</li>
+<li><strong>Brand tokens</strong> are versioned. <code>brand:wedoit@2026-05</code> is an explicit ref.</li>
+<li><strong>Random seed</strong> is pinned (not auto-generated on every run).</li>
+<li><strong>Model parameters</strong> — temperature/cfg/steps/aspect — are part of the payload.</li>
+</ul>
+<p>What must <strong>not</strong> end up in the cache key: timestamps, usernames, the current working directory.</p>
+<h2 id="pitfalls">Pitfalls</h2>
+<ul>
+<li><strong>Hidden randomness</strong> — if the model defaults to a random seed, two runs with the same payload produce different frames. The cache key becomes meaningless. Pin the seed inside the runner.</li>
+<li><strong>Model versions</strong> — the vendor ships an updated engine, your cached frames are stale. Include <code>engine_version</code> in the cache key so an upgrade invalidates the cache honestly.</li>
+<li><strong>Different modalities, different cache footprints</strong> — image 1 MB × 1000 = 1 GB; video 30 MB × 1000 = 30 GB. At scale, the cache moves to S3 / R2 / Yandex Object Storage.</li>
+<li><strong>“Cache nobody cleans”</strong> — set a TTL and a cron job that prunes artifacts older than N days (or older engine versions). Otherwise disk fills up at the worst possible moment.</li>
+</ul>
+<h2 id="recap">Recap</h2>
+<ul>
+<li>Every pipeline step = INPUT + OUTPUT + CACHE KEY. Without the cache key the project gets expensive fast.</li>
+<li>Lineage (JSON sidecar) — for reproducibility, client review, and accounting.</li>
+<li>A stable cache key requires a pinned seed, a versioned template, and a versioned engine.</li>
+<li>A pipeline rerun = only the steps whose inputs changed get recomputed. That’s what “cheap to iterate” actually means.</li>
+</ul>
+<h2 id="further-reading">Further reading</h2>
+<ul>
+<li><strong>DVC — Data Version Control</strong> — <a href="https://dvc.org/">dvc.org</a>. Off-the-shelf caching/lineage for ML pipelines; trivial to port to generative ones.</li>
+<li><strong>MLflow Tracking</strong> — <a href="https://mlflow.org/docs/latest/tracking.html">mlflow.org/docs/latest/tracking</a>. An alternative for metadata and lineage if you’re already on an ML stack.</li>
+<li><strong>Prefect</strong> / <strong>Dagster</strong> — modern orchestration frameworks with caching as a first-class citizen: <a href="https://www.prefect.io/">prefect.io</a>, <a href="https://dagster.io/">dagster.io</a>.</li>
+</ul> <nav class="chapter-nav" data-astro-cid-a7sruqtr> <a href="/vibesamurai-site/courses/advanced/a1/en" data-astro-cid-a7sruqtr> <span class="dir" data-astro-cid-a7sruqtr>← Back</span> <span class="title" data-astro-cid-a7sruqtr>A1 · AI studio stack 2026</span> </a> <a href="/vibesamurai-site/courses/advanced/a3/en" data-astro-cid-a7sruqtr> <span class="dir" data-astro-cid-a7sruqtr>Next →</span> <span class="title" data-astro-cid-a7sruqtr>A3 · Local vs Cloud matrix</span> </a> </nav> </main>  </div> <script type="module">
+    import { gatingEnabled } from '../lib/supabase';
+    import { fetchChapter } from '../lib/auth';
+
+    const base = import.meta.env.BASE_URL;
+    let mermaidLib = null;
+
+    function scopeOf(root) {
+      return root === document ? document.querySelector('.reader-main') : root;
+    }
+
+    function addCopyBtns(root) {
+      const scope = scopeOf(root); if (!scope) return;
+      scope.querySelectorAll('pre').forEach((pre) => {
+        if (pre.closest('.code-tabs')) return;
+        if (pre.querySelector('.copy-btn')) return;
+        const btn = document.createElement('button');
+        btn.className = 'copy-btn';
+        btn.textContent = 'copy';
+        btn.addEventListener('click', async () => {
+          const code = pre.querySelector('code')?.textContent ?? pre.textContent ?? '';
+          await navigator.clipboard.writeText(code.trimEnd());
+          btn.textContent = '✓ copied';
+          setTimeout(() => { btn.textContent = 'copy'; }, 1600);
+        });
+        pre.appendChild(btn);
+      });
+    }
+
+    function tightenMermaidSvgs(retries = 6) {
+      let pending = false;
+      document.querySelectorAll('.mermaid svg').forEach((svg) => {
+        if (svg.dataset.tightened === '1') return;
+        try {
+          const bbox = svg.getBBox();
+          if (!bbox || bbox.width === 0) { pending = true; return; }
+          const pad = 6;
+          svg.setAttribute('viewBox',
+            `${bbox.x - pad} ${bbox.y - pad} ${bbox.width + pad * 2} ${bbox.height + pad * 2}`);
+          svg.removeAttribute('height');
+          svg.style.height = 'auto';
+          svg.style.maxWidth = '100%';
+          svg.style.display = 'block';
+          svg.dataset.tightened = '1';
+        } catch (e) { pending = true; }
+      });
+      if (pending && retries > 0) setTimeout(() => tightenMermaidSvgs(retries - 1), 120);
+    }
+
+    async function ensureMermaid() {
+      if (mermaidLib) return mermaidLib;
+      const mod = await import('https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs');
+      mermaidLib = mod.default;
+      mermaidLib.initialize({
+        startOnLoad: false, theme: 'neutral',
+        themeVariables: {
+          fontFamily: 'JetBrains Mono, ui-monospace, monospace',
+          primaryColor: '#f5f5f5', primaryBorderColor: '#222',
+          primaryTextColor: '#111', lineColor: '#444',
+        },
+        flowchart: { curve: 'basis', padding: 12, useMaxWidth: true },
+      });
+      return mermaidLib;
+    }
+
+    async function renderMermaid(root) {
+      const scope = scopeOf(root); if (!scope) return;
+      const matches = scope.querySelectorAll(
+        'pre[data-language="mermaid"], pre.language-mermaid, code.language-mermaid'
+      );
+      if (!matches.length) return;
+      matches.forEach((el) => {
+        const block = el.tagName === 'CODE' ? el.closest('pre') || el : el;
+        const codeEl = block.querySelector('code') || block;
+        const wrap = document.createElement('div');
+        wrap.className = 'mermaid';
+        wrap.textContent = codeEl.textContent;
+        block.replaceWith(wrap);
+      });
+      try {
+        const m = await ensureMermaid();
+        await m.run();
+        tightenMermaidSvgs();
+      } catch (err) {
+        console.warn('mermaid failed', err);
+        document.querySelectorAll('.mermaid:not(:has(svg))').forEach((el) => { el.style.display = 'none'; });
+      }
+    }
+
+    async function enhance(root = document) {
+      addCopyBtns(root);
+      await renderMermaid(root);
+    }
+
+    function paywallHtml(required, needLogin) {
+      const label = { beginner: 'Beginner (300 ₽)', middle: 'Beginner + Middle (500 ₽)', all: 'Весь пакет (700 ₽)' }[required] || '';
+      return `<div class="paywall">
+        <div class="paywall-ic">🔒</div>
+        <h3>Эта глава — в платном доступе</h3>
+        <p>Нужен тариф: <strong>${label}</strong>. Доступ навсегда, без подписки.</p>
+        ${needLogin ? '<p>Войди через Google и оформи доступ — продолжишь с любого устройства.</p>' : ''}
+        <a class="paywall-btn" href="${base}pricing">Открыть доступ →</a>
+        <a class="paywall-link" href="${base}account">Войти / мой аккаунт</a>
+      </div>`;
+    }
+
+    async function gatedFlow(mount) {
+      const slug = mount.dataset.slug;
+      const required = mount.dataset.required || 'beginner';
+      mount.innerHTML = '<p class="gate-msg">Проверяем доступ…</p>';
+      const res = await fetchChapter(slug);
+      if (res.ok) {
+        mount.innerHTML = res.html;
+        await enhance(mount);
+      } else if (res.status === 401) {
+        mount.innerHTML = paywallHtml(required, true);
+      } else if (res.status === 402) {
+        mount.innerHTML = paywallHtml(res.requiredTier || required, false);
+      } else {
+        mount.innerHTML = '<p class="gate-msg">Не удалось загрузить главу. Обнови страницу.</p>';
+      }
+    }
+
+    const mount = document.getElementById('gated-mount');
+    if (mount && gatingEnabled) gatedFlow(mount);
+    else enhance(document);
+  </script> </body> </html>

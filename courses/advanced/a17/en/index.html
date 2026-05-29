@@ -1,0 +1,344 @@
+<!DOCTYPE html><html lang="en" data-astro-cid-a7sruqtr> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Token economics across modalities — Vibesamurai</title><meta name="description" content="Cost per frame, per video second, per 1k tokens. Haiku → Sonnet → Opus cascade + prompt caching + Batch API. Mandatory gate before paid generation."><meta property="og:title" content="Token economics across modalities"><meta property="og:type" content="article"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Inter:wght@300..800&family=JetBrains+Mono:wght@400..600&display=swap" rel="stylesheet"><link rel="stylesheet" href="/vibesamurai-site/_astro/_slug_.Cs4TX1wt.css">
+<style>.account-btn{display:inline-flex;align-items:center;gap:var(--space-2);font-family:var(--font-mono);font-size:var(--size-2);text-transform:uppercase;letter-spacing:.06em;padding:5px 10px;border:1px solid var(--rule);border-radius:999px;color:var(--text-soft);background:var(--surface);transition:border-color var(--d-fast),color var(--d-fast)}.account-btn:hover{border-color:var(--accent);color:var(--text)}.account-ic{width:18px;height:18px;display:grid;place-items:center;border-radius:50%;background:var(--accent);color:var(--accent-ink);font-weight:700;font-size:10px;line-height:1}.reader-rail .account-btn{padding:0;border:none;background:transparent}.reader-rail .account-label{display:none}.reader-rail .account-ic{width:32px;height:32px;font-size:13px}.rail-toggle{width:36px;height:36px;display:grid;place-items:center;background:var(--accent);border:1px solid var(--accent);border-radius:4px;cursor:pointer;transition:filter var(--d-fast),transform var(--d-fast);padding:0}.rail-toggle:hover{filter:brightness(1.08);transform:translateY(-1px)}.rail-toggle:active{transform:translateY(0)}.rail-toggle-icon{width:14px;height:12px;border-left:2px solid var(--accent-ink);border-right:2px solid var(--accent-ink);transition:transform var(--d-normal) var(--ease-standard)}.reader-app.sidebar-open .rail-toggle-icon{transform:rotate(0)}.reader-app:not(.sidebar-open) .rail-toggle-icon{transform:scaleX(.5)}.sidebar-backdrop{display:none;position:fixed;inset:0;background:#0000008c;z-index:140;border:0;padding:0;cursor:pointer}@media(max-width:900px){.reader-app.sidebar-open~.sidebar-backdrop{display:block}}.rail-spacer[data-astro-cid-ofsbkzh7]{flex:1}.reader-sidebar[data-astro-cid-khgtvzrl] .ru-tag[data-astro-cid-khgtvzrl]{font-style:normal;font-family:var(--font-mono);font-size:.7em;color:var(--text-mute);margin-left:4px;padding:1px 4px;border:1px solid var(--rule);border-radius:3px;text-transform:uppercase;vertical-align:middle}.chapter-eyebrow[data-astro-cid-a7sruqtr]{display:flex;justify-content:space-between;align-items:center;gap:var(--space-3)}.lang-toggle[data-astro-cid-a7sruqtr]{font-family:var(--font-mono);font-size:var(--size-2);padding:2px 8px;border:1px solid var(--rule);border-radius:4px;color:var(--text-mute);text-decoration:none;text-transform:uppercase;letter-spacing:.08em}.lang-toggle[data-astro-cid-a7sruqtr]:hover{color:var(--accent);border-color:var(--accent)}.code-tabs[data-astro-cid-hg66rjob]{margin:var(--space-5) 0}.code-tabs-nav[data-astro-cid-hg66rjob]{display:flex;gap:2px;margin-bottom:-1px;position:relative;z-index:1}.ctab[data-astro-cid-hg66rjob]{font-family:var(--font-mono);font-size:11px;text-transform:uppercase;letter-spacing:.07em;padding:5px 14px;border:1px solid #21222c;border-bottom:none;background:#1a1b23;color:#6272a4;cursor:pointer;border-radius:4px 4px 0 0;transition:color .12s,background .12s}.ctab[data-astro-cid-hg66rjob].is-active{background:#282a36;color:#f8f8f2;border-color:#21222c}.ctab[data-astro-cid-hg66rjob]:hover:not(.is-active){color:#cdd6f4}.ctab-panel[data-astro-cid-hg66rjob]{display:none}.ctab-panel[data-astro-cid-hg66rjob].is-active{display:block}.ctab-panel[data-astro-cid-hg66rjob] pre{margin-top:0!important;border-radius:0 6px 6px!important}
+</style></head> <body data-astro-cid-a7sruqtr> <div class="reader-app" data-astro-cid-a7sruqtr> <aside class="reader-rail" data-astro-cid-ofsbkzh7> <a href="/vibesamurai-site/" class="logo" aria-label="Vibesamurai home" data-astro-cid-ofsbkzh7>V</a> <button type="button" class="rail-toggle" id="sidebar-toggle" aria-label="Свернуть/развернуть оглавление" title="Свернуть/развернуть оглавление" data-astro-cid-ofsbkzh7> <span class="rail-toggle-icon" aria-hidden="true" data-astro-cid-ofsbkzh7></span> </button> <div class="rail-spacer" data-astro-cid-ofsbkzh7></div> <a href="/vibesamurai-site/account" class="account-btn" id="account-btn" aria-label="Аккаунт"> <span class="account-ic" id="account-ic">⌂</span> <span class="account-label" id="account-label">Войти</span> </a>  <script type="module" src="/vibesamurai-site/_astro/AccountButton.astro_astro_type_script_index_0_lang.CmD2sdn9.js"></script> </aside>  <button type="button" class="sidebar-backdrop" id="sidebar-backdrop" aria-label="Закрыть оглавление" tabindex="-1" data-astro-cid-ofsbkzh7></button>  <script type="module">const d="vs-sidebar-open",a="(max-width: 900px)";function t(e){const n=document.querySelector(".reader-app");n&&n.classList.toggle("sidebar-open",e)}function r(){return!window.matchMedia(a).matches}function s(){const e=localStorage.getItem(d),i=window.matchMedia(a).matches?!1:e!==null?e==="1":r();t(i),document.getElementById("sidebar-toggle")?.addEventListener("click",()=>{const c=!document.querySelector(".reader-app")?.classList.contains("sidebar-open");window.matchMedia(a).matches||localStorage.setItem(d,c?"1":"0"),t(c)}),document.getElementById("sidebar-backdrop")?.addEventListener("click",()=>t(!1)),document.querySelectorAll(".reader-sidebar a").forEach(o=>{o.addEventListener("click",()=>{window.matchMedia(a).matches&&t(!1)})})}document.readyState==="loading"?document.addEventListener("DOMContentLoaded",s):s();</script> <aside class="reader-sidebar" data-astro-cid-khgtvzrl> <div class="breadcrumb" data-astro-cid-khgtvzrl>Vibesamurai · Advanced Path · A17</div> <h4 data-astro-cid-khgtvzrl>In this course</h4> <ul data-astro-cid-khgtvzrl> <li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a1/en" class data-astro-cid-khgtvzrl> A1 · AI studio stack — May 2026  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a2/en" class data-astro-cid-khgtvzrl> A2 · Multi-modal pipeline architecture  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a3/en" class data-astro-cid-khgtvzrl> A3 · Local vs Cloud matrix  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a4/en" class data-astro-cid-khgtvzrl> A4 · Design system as a contract  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a5/en" class data-astro-cid-khgtvzrl> A5 · Image generation for a brand  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a6/en" class data-astro-cid-khgtvzrl> A6 · Marketplace + product photoshoot  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a7/en" class data-astro-cid-khgtvzrl> A7 · Video generation pipelines  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a8/en" class data-astro-cid-khgtvzrl> A8 · Identity-preserving generation  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a9/en" class data-astro-cid-khgtvzrl> A9 · TouchDesigner + StreamDiffusion  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a10/en" class data-astro-cid-khgtvzrl> A10 · Audio-reactive AV installations  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a11/en" class data-astro-cid-khgtvzrl> A11 · Interactive booths: STT+LLM+TTS+CV  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a12/en" class data-astro-cid-khgtvzrl> A12 · Telemetry → control loop  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a13/en" class data-astro-cid-khgtvzrl> A13 · Private RAG for an archive  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a14/en" class data-astro-cid-khgtvzrl> A14 · Local LLMs on 8GB VRAM  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a15/en" class data-astro-cid-khgtvzrl> A15 · RunPod Flash + vLLM  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a16/en" class data-astro-cid-khgtvzrl> A16 · Custom MCP servers  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a17/en" class="current" data-astro-cid-khgtvzrl> A17 · Token economics across modalities  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a18/en" class data-astro-cid-khgtvzrl> A18 · Eval for creative output  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a19/en" class data-astro-cid-khgtvzrl> A19 · Security in a creative studio  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a20/en" class data-astro-cid-khgtvzrl> A20 · Capstone: launching the studio  </a> </li> </ul>  </aside> <main class="reader-main" data-astro-cid-a7sruqtr> <div class="chapter-eyebrow" data-astro-cid-a7sruqtr> <span data-astro-cid-a7sruqtr>Advanced Path · a17</span> <a class="lang-toggle" href="/vibesamurai-site/courses/advanced/a17" aria-label="Switch to RU" data-astro-cid-a7sruqtr>RU</a> </div> <h1 class="chapter-title" data-astro-cid-a7sruqtr>A17 · Token economics across modalities</h1> <p class="chapter-subtitle" data-astro-cid-a7sruqtr>Cost per frame, per video second, per 1k tokens. Haiku → Sonnet → Opus cascade + prompt caching + Batch API. Mandatory gate before paid generation.</p> <h2 id="what-were-building">What we’re building</h2>
+<p>A single cost-accounting system across every studio modality: text (LLM), image, video, audio. The goal is to know up-front what a project costs, see the cost drivers, and require an explicit confirmation before any paid generation.</p>
+<h2 id="may-2026-baseline-numbers">May 2026 baseline numbers</h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Modality</th><th>Node</th><th>Unit cost</th></tr></thead><tbody><tr><td>Text</td><td>Claude Haiku 4.5</td><td>$1 in / $5 out per 1M tokens</td></tr><tr><td>Text</td><td>Claude Sonnet 4.6</td><td>$3 in / $15 out per 1M tokens</td></tr><tr><td>Text</td><td>Claude Opus 4.7</td><td>$5 in / $25 out per 1M tokens (released 2026-04-16)</td></tr><tr><td>Text (local)</td><td>Qwen3.5-21B-Deckard</td><td>$0 + ~200W electricity</td></tr><tr><td>Image</td><td>FLUX 2 (text2image)</td><td>$0.03 per 1 MP</td></tr><tr><td>Image</td><td>FLUX 2 (edit)</td><td>$0.045 per 1 MP</td></tr><tr><td>Image</td><td>GPT Image 2</td><td>$0.005 low-q / $0.401 high-q (4K) — by resolution</td></tr><tr><td>Image</td><td>Nano Banana 2</td><td>$0.06 (0.5K) / $0.08 (1K) / $0.12 (2K) / $0.16 (4K)</td></tr><tr><td>Video</td><td>Seedance 2.0 (FAL, 720p)</td><td>$0.24–0.30 per second</td></tr><tr><td>Video</td><td>Kling 3.0</td><td>$0.029 per second</td></tr><tr><td>Video</td><td>Runway Gen-4 Turbo API</td><td>$0.05 per second</td></tr><tr><td>Video</td><td>Runway Gen-4 Unlimited</td><td>fixed/month (UI iterations, no per-clip charge)</td></tr><tr><td>Video</td><td>Higgsfield Soul Cinema</td><td>~$0.50 per second</td></tr><tr><td>Video</td><td>Sora 2 Pro</td><td>$0.30–0.50 per second</td></tr><tr><td>Video</td><td>Veo 3</td><td>~$0.75 per second</td></tr><tr><td>Audio TTS</td><td>ElevenLabs</td><td>$0.18 per 1k chars</td></tr><tr><td>Audio TTS</td><td>Fish Speech local</td><td>$0 + 200W</td></tr><tr><td>Identity</td><td>Soul ID training</td><td>~$3 one-time (15+ photos, ~3–5 min train)</td></tr><tr><td>Identity</td><td>FLUX LoRA Fast training</td><td>~$2 per run</td></tr><tr><td>Identity</td><td>FLUX.2 [dev] LoRA training</td><td>$0.008 per training step</td></tr><tr><td>Embeddings</td><td>OpenAI text-embedding-3</td><td>$0.02 per 1M tokens</td></tr><tr><td>Embeddings</td><td>BGE-M3 local</td><td>$0 + 200W</td></tr></tbody></table>
+<p>Prices shift every 1–3 months. Re-verify before each project (rule <code>feedback_verify_fresh_info</code>). Verification of the table above: 2026-05-29 — Anthropic, FAL, Higgsfield official tariffs + Artificial Analysis independent summaries.</p>
+<p><strong>Important about output:</strong> for Claude models output cost = 5× input (across every current model). It changes the arithmetic of the cascade — output dominates, optimise around it.</p>
+<h2 id="whats-cheap-whats-expensive">What’s cheap, what’s expensive</h2>
+<p>Order of magnitude:</p>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>LLM text             $        ~1k tokens     1</span></span>
+<span class="line"><span>embeddings local     $0       ~1k tokens     0</span></span>
+<span class="line"><span>LLM Opus (out)       $$$$     1k out tokens  $0.025</span></span>
+<span class="line"><span>image FLUX 1MP       $$       1 frame 1024²  ~1300×Opus 1k</span></span>
+<span class="line"><span>video Seedance 6s    $$$$$    1 clip 6s      $1.8 ≈ 70×image</span></span>
+<span class="line"><span>Soul ID one-time     $$$      1 training     ~$3 ≈ 120×image</span></span></code></pre>
+<p>A 1 MP FLUX 2 frame costs roughly 1.3k of Opus output tokens. A 6-second Seedance clip — about 70 FLUX frames. This is why video is the most “accounting-heavy” modality.</p>
+<h2 id="haiku--sonnet--opus-cascade">Haiku → Sonnet → Opus cascade</h2>
+<p>From production (memory <code>feedback_course_translation_pipeline</code>): for batch tasks (like translating a course) use a cascade — Haiku → Sonnet → Opus + prompt caching + Batch API. Chat examples — Sonnet, final — Opus.</p>
+<p>Logic (measured on <strong>output</strong> because Claude output = 5× input):</p>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>ALL REQUESTS ──► Haiku ($5/1M out)        ──► 80 % closed cheaply</span></span>
+<span class="line"><span>                  │</span></span>
+<span class="line"><span>       simple?    │</span></span>
+<span class="line"><span>                  ├── yes ──► OUTPUT</span></span>
+<span class="line"><span>                  │</span></span>
+<span class="line"><span>                  └── no  ──► Sonnet ($15/1M out)  ──► 18 % of tasks</span></span>
+<span class="line"><span>                              │</span></span>
+<span class="line"><span>                              ├── acceptable? ──► OUTPUT</span></span>
+<span class="line"><span>                              │</span></span>
+<span class="line"><span>                              └── no ──► Opus ($25/1M out)  ──► 2 % of tasks</span></span>
+<span class="line"><span>                                            │</span></span>
+<span class="line"><span>                                            └──► OUTPUT</span></span></code></pre>
+<p>Effective output cost: <code>5 × 0.8 + 15 × 0.18 + 25 × 0.02 = 4.0 + 2.7 + 0.5 = $7.2 / 1M output</code>. Routing everything through Opus = $25/1M, so the cascade saves ~3.5×. With Batch API (−50 %) and prompt caching (cached input −90 %) — up to 6–8× cheaper than the direct Opus path.</p>
+<h2 id="prompt-caching">Prompt caching</h2>
+<p>On repeat calls with the same prefix Anthropic caches the prefix for 5 minutes. Cached input cost → 10 % of normal.</p>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="python"><code><span class="line"><span style="color:#6272A4;--shiki-dark:#6272A4"># first call: caches the prefix</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">client.messages.create(</span></span>
+<span class="line"><span style="color:#FFB86C;--shiki-light-font-style:italic;--shiki-dark:#FFB86C;--shiki-dark-font-style:italic">    model</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">=</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">claude-sonnet-4-6</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">,</span></span>
+<span class="line"><span style="color:#FFB86C;--shiki-light-font-style:italic;--shiki-dark:#FFB86C;--shiki-dark-font-style:italic">    messages</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">=</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">[{</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">role</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">: </span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">user</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">, </span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">content</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">: [</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">        {</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">type</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">: </span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">text</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">, </span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">text</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">: </span><span style="color:#BD93F9;--shiki-dark:#BD93F9">LONG_SYSTEM_PROMPT</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">, </span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">cache_control</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">: {</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">type</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">: </span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">ephemeral</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">}},</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">        {</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">type</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">: </span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">text</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">, </span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">text</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">: </span><span style="color:#BD93F9;--shiki-dark:#BD93F9">USER_QUESTION</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">},</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    ]}],</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6272A4;--shiki-dark:#6272A4"># subsequent calls (within 5 min): prefix from cache, −90 % input cost</span></span></code></pre>
+<p>When it’s justified: batched requests with the same system prompt; an interactive agent with a long CLAUDE.md. Direct ROI: on a booth with 1000 questions/hour and an 8k-token system prompt, prompt caching saves tens of dollars per day.</p>
+<h2 id="batch-api">Batch API</h2>
+<p>Anthropic’s Batch API: requests complete within 24 hours (usually much faster), at 50 % of normal price.</p>
+<p>When justified:</p>
+<ul>
+<li>non-interactive tasks (overnight course ingest, translation, archive classification);</li>
+<li>batches of 1000+ requests;</li>
+<li>OK to wait minutes-to-hours.</li>
+</ul>
+<p>Inside the Haiku → Sonnet → Opus cascade, running through Batch API gives another −50 %. Combined with prompt caching — up to −80 % vs the bare interactive path.</p>
+<h2 id="tokenomics-gate-mandatory">Tokenomics gate (mandatory)</h2>
+<p>The main studio rule (memory <code>feedback_tokenomics_confirm</code> + <code>feedback_analysis_tokenomics_gate</code>): <strong>before any paid generation</strong> (LLM analysis, image, video) — compute the cost and wait for an explicit <code>[y/N]</code> confirmation.</p>
+<p>No back doors, no bypass flags. Both in the admin and in the CLI.</p>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="python"><code><span class="line"><span style="color:#FF79C6;--shiki-dark:#FF79C6">def</span><span style="color:#50FA7B;--shiki-dark:#50FA7B"> gate</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">(</span><span style="color:#FFB86C;--shiki-light-font-style:italic;--shiki-dark:#FFB86C;--shiki-dark-font-style:italic">label</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">:</span><span style="color:#8BE9FD;--shiki-light-font-style:italic;--shiki-dark:#8BE9FD;--shiki-dark-font-style:italic"> str</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">, </span><span style="color:#FFB86C;--shiki-light-font-style:italic;--shiki-dark:#FFB86C;--shiki-dark-font-style:italic">cost_usd</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">:</span><span style="color:#8BE9FD;--shiki-light-font-style:italic;--shiki-dark:#8BE9FD;--shiki-dark-font-style:italic"> float</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">):</span></span>
+<span class="line"><span style="color:#8BE9FD;--shiki-dark:#8BE9FD">    print</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">(</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">f</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">"</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">\n</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">=== TOKENOMICS GATE ==="</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">)</span></span>
+<span class="line"><span style="color:#8BE9FD;--shiki-dark:#8BE9FD">    print</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">(</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">f</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">"Task: </span><span style="color:#BD93F9;--shiki-dark:#BD93F9">{</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">label</span><span style="color:#BD93F9;--shiki-dark:#BD93F9">}</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">"</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">)</span></span>
+<span class="line"><span style="color:#8BE9FD;--shiki-dark:#8BE9FD">    print</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">(</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">f</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">"Estimate: $</span><span style="color:#BD93F9;--shiki-dark:#BD93F9">{</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">cost_usd</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">:.2f</span><span style="color:#BD93F9;--shiki-dark:#BD93F9">}</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">"</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">)</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    confirm </span><span style="color:#FF79C6;--shiki-dark:#FF79C6">=</span><span style="color:#8BE9FD;--shiki-dark:#8BE9FD"> input</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">(</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">[y/N] continue? </span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">).strip().lower()</span></span>
+<span class="line"><span style="color:#FF79C6;--shiki-dark:#FF79C6">    if</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2"> confirm </span><span style="color:#FF79C6;--shiki-dark:#FF79C6">!=</span><span style="color:#E9F284;--shiki-dark:#E9F284"> "</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">y</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">:</span></span>
+<span class="line"><span style="color:#FF79C6;--shiki-dark:#FF79C6">        raise</span><span style="color:#8BE9FD;--shiki-light-font-style:italic;--shiki-dark:#8BE9FD;--shiki-dark-font-style:italic"> SystemExit</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">(</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">cancelled by user</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">)</span></span></code></pre>
+<p>This isn’t “caution for the squeamish.” A forgotten loop over 200 videos = $480 in five minutes. The gate catches it before money moves.</p>
+<h2 id="real-case-an-overnight-course-translation">Real case: an overnight course translation</h2>
+<p>Brief: translate Beginner + Middle (32 chapters × ~10k chars = 320k chars of source, ≈ 12k output tokens per chapter). Cascade:</p>
+<ol>
+<li><strong>Haiku</strong> — first-pass translation for all 32 chapters (<code>max_tokens=12000</code>). Cost: 32 × 12000 / 1M × $5 (out) = $1.92.</li>
+<li><strong>Sonnet</strong> — review of the Haiku output, flagging chapters that need polish. Cost: ~$1.8 (smaller output, ~3000 tokens per chapter).</li>
+<li><strong>Opus</strong> — final pass on the flagged chapters (5 of 32). Cost: 5 × 12000 / 1M × $25 = $1.50.</li>
+</ol>
+<p>Total: ~$5.2 without optimisations. Batch API (−50 %) + prompt caching (−90 % on cached input) bring it down to ~$1.5–2.</p>
+<p>Head-on through Opus: 32 × 12k × $25 / 1M = $9.60. Not catastrophic at the scale of one course, but at the scale of 300 materials — tens-to-hundreds of dollars saved.</p>
+<h2 id="pitfalls">Pitfalls</h2>
+<ul>
+<li><strong>Count input tokens too</strong> — output is more expensive, but input piles up on big prompts. Especially with RAG (large context).</li>
+<li><strong>Caching only works on an identical prefix</strong> — change one character in the system prompt and the cache misses.</li>
+<li><strong>Batch API isn’t interactive</strong> — answers arrive as a batch, not in real time.</li>
+<li><strong>“Local is free”</strong> — no. A 4070 doing 24/7 inference = +200–300 W = real money on electricity.</li>
+<li><strong>Hidden costs</strong> — Soul ID training, S3 storage for caches, Cloudflare bandwidth. Count them.</li>
+</ul>
+<h2 id="recap">Recap</h2>
+<ul>
+<li>Prices shift every 1–3 months — re-verify before each project (table verification: 2026-05-29).</li>
+<li>Claude output = 5× input; optimise around output.</li>
+<li>A 1 MP FLUX frame ≈ 1.3k Opus output tokens; a 6-second Seedance ≈ 70 FLUX frames.</li>
+<li>Cascade Haiku → Sonnet → Opus saves ~3.5× vs “everything through Opus”; + Batch API + prompt caching up to 6–8×.</li>
+<li>Tokenomics gate before paid generation — mandatory. No bypass.</li>
+</ul>
+<h2 id="further-reading">Further reading</h2>
+<ul>
+<li><strong>Anthropic — Pricing</strong> — <a href="https://www.anthropic.com/pricing">anthropic.com/pricing</a>. Current prices and Batch API discount.</li>
+<li><strong>Anthropic — Prompt caching</strong> — <a href="https://docs.anthropic.com/en/docs/build-with-claude/prompt-caching">docs.anthropic.com/en/docs/build-with-claude/prompt-caching</a>. How, when, what’s cached.</li>
+<li><strong>Anthropic — Batch API</strong> — <a href="https://docs.anthropic.com/en/docs/build-with-claude/batch-processing">docs.anthropic.com/en/docs/build-with-claude/batch-processing</a>. −50 % on non-interactive tasks.</li>
+<li><strong>Artificial Analysis Pricing</strong> — <a href="https://artificialanalysis.ai/text-to-image">artificialanalysis.ai/text-to-image</a>, <a href="https://artificialanalysis.ai/text-to-video">artificialanalysis.ai/text-to-video</a>. Independent image/video price comparisons.</li>
+</ul> <nav class="chapter-nav" data-astro-cid-a7sruqtr> <a href="/vibesamurai-site/courses/advanced/a16/en" data-astro-cid-a7sruqtr> <span class="dir" data-astro-cid-a7sruqtr>← Back</span> <span class="title" data-astro-cid-a7sruqtr>A16 · Custom MCP servers</span> </a> <a href="/vibesamurai-site/courses/advanced/a18/en" data-astro-cid-a7sruqtr> <span class="dir" data-astro-cid-a7sruqtr>Next →</span> <span class="title" data-astro-cid-a7sruqtr>A18 · Eval for creative output</span> </a> </nav> </main>  </div> <script type="module">
+    import { gatingEnabled } from '../lib/supabase';
+    import { fetchChapter } from '../lib/auth';
+
+    const base = import.meta.env.BASE_URL;
+    let mermaidLib = null;
+
+    function scopeOf(root) {
+      return root === document ? document.querySelector('.reader-main') : root;
+    }
+
+    function addCopyBtns(root) {
+      const scope = scopeOf(root); if (!scope) return;
+      scope.querySelectorAll('pre').forEach((pre) => {
+        if (pre.closest('.code-tabs')) return;
+        if (pre.querySelector('.copy-btn')) return;
+        const btn = document.createElement('button');
+        btn.className = 'copy-btn';
+        btn.textContent = 'copy';
+        btn.addEventListener('click', async () => {
+          const code = pre.querySelector('code')?.textContent ?? pre.textContent ?? '';
+          await navigator.clipboard.writeText(code.trimEnd());
+          btn.textContent = '✓ copied';
+          setTimeout(() => { btn.textContent = 'copy'; }, 1600);
+        });
+        pre.appendChild(btn);
+      });
+    }
+
+    function tightenMermaidSvgs(retries = 6) {
+      let pending = false;
+      document.querySelectorAll('.mermaid svg').forEach((svg) => {
+        if (svg.dataset.tightened === '1') return;
+        try {
+          const bbox = svg.getBBox();
+          if (!bbox || bbox.width === 0) { pending = true; return; }
+          const pad = 6;
+          svg.setAttribute('viewBox',
+            `${bbox.x - pad} ${bbox.y - pad} ${bbox.width + pad * 2} ${bbox.height + pad * 2}`);
+          svg.removeAttribute('height');
+          svg.style.height = 'auto';
+          svg.style.maxWidth = '100%';
+          svg.style.display = 'block';
+          svg.dataset.tightened = '1';
+        } catch (e) { pending = true; }
+      });
+      if (pending && retries > 0) setTimeout(() => tightenMermaidSvgs(retries - 1), 120);
+    }
+
+    async function ensureMermaid() {
+      if (mermaidLib) return mermaidLib;
+      const mod = await import('https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs');
+      mermaidLib = mod.default;
+      mermaidLib.initialize({
+        startOnLoad: false, theme: 'neutral',
+        themeVariables: {
+          fontFamily: 'JetBrains Mono, ui-monospace, monospace',
+          primaryColor: '#f5f5f5', primaryBorderColor: '#222',
+          primaryTextColor: '#111', lineColor: '#444',
+        },
+        flowchart: { curve: 'basis', padding: 12, useMaxWidth: true },
+      });
+      return mermaidLib;
+    }
+
+    async function renderMermaid(root) {
+      const scope = scopeOf(root); if (!scope) return;
+      const matches = scope.querySelectorAll(
+        'pre[data-language="mermaid"], pre.language-mermaid, code.language-mermaid'
+      );
+      if (!matches.length) return;
+      matches.forEach((el) => {
+        const block = el.tagName === 'CODE' ? el.closest('pre') || el : el;
+        const codeEl = block.querySelector('code') || block;
+        const wrap = document.createElement('div');
+        wrap.className = 'mermaid';
+        wrap.textContent = codeEl.textContent;
+        block.replaceWith(wrap);
+      });
+      try {
+        const m = await ensureMermaid();
+        await m.run();
+        tightenMermaidSvgs();
+      } catch (err) {
+        console.warn('mermaid failed', err);
+        document.querySelectorAll('.mermaid:not(:has(svg))').forEach((el) => { el.style.display = 'none'; });
+      }
+    }
+
+    async function enhance(root = document) {
+      addCopyBtns(root);
+      await renderMermaid(root);
+    }
+
+    function paywallHtml(required, needLogin) {
+      const label = { beginner: 'Beginner (300 ₽)', middle: 'Beginner + Middle (500 ₽)', all: 'Весь пакет (700 ₽)' }[required] || '';
+      return `<div class="paywall">
+        <div class="paywall-ic">🔒</div>
+        <h3>Эта глава — в платном доступе</h3>
+        <p>Нужен тариф: <strong>${label}</strong>. Доступ навсегда, без подписки.</p>
+        ${needLogin ? '<p>Войди через Google и оформи доступ — продолжишь с любого устройства.</p>' : ''}
+        <a class="paywall-btn" href="${base}pricing">Открыть доступ →</a>
+        <a class="paywall-link" href="${base}account">Войти / мой аккаунт</a>
+      </div>`;
+    }
+
+    async function gatedFlow(mount) {
+      const slug = mount.dataset.slug;
+      const required = mount.dataset.required || 'beginner';
+      mount.innerHTML = '<p class="gate-msg">Проверяем доступ…</p>';
+      const res = await fetchChapter(slug);
+      if (res.ok) {
+        mount.innerHTML = res.html;
+        await enhance(mount);
+      } else if (res.status === 401) {
+        mount.innerHTML = paywallHtml(required, true);
+      } else if (res.status === 402) {
+        mount.innerHTML = paywallHtml(res.requiredTier || required, false);
+      } else {
+        mount.innerHTML = '<p class="gate-msg">Не удалось загрузить главу. Обнови страницу.</p>';
+      }
+    }
+
+    const mount = document.getElementById('gated-mount');
+    if (mount && gatingEnabled) gatedFlow(mount);
+    else enhance(document);
+  </script> </body> </html>

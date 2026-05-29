@@ -1,0 +1,414 @@
+<!DOCTYPE html><html lang="en" data-astro-cid-a7sruqtr> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Multi-agent: roles, communication, supervisor — Vibesamurai</title><meta name="description" content="Several independent agents talking to each other. When a supervisor, when a flat network, how to avoid chaos."><meta property="og:title" content="Multi-agent: roles, communication, supervisor"><meta property="og:type" content="article"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Inter:wght@300..800&family=JetBrains+Mono:wght@400..600&display=swap" rel="stylesheet"><link rel="stylesheet" href="/vibesamurai-site/_astro/_slug_.Cs4TX1wt.css">
+<style>.account-btn{display:inline-flex;align-items:center;gap:var(--space-2);font-family:var(--font-mono);font-size:var(--size-2);text-transform:uppercase;letter-spacing:.06em;padding:5px 10px;border:1px solid var(--rule);border-radius:999px;color:var(--text-soft);background:var(--surface);transition:border-color var(--d-fast),color var(--d-fast)}.account-btn:hover{border-color:var(--accent);color:var(--text)}.account-ic{width:18px;height:18px;display:grid;place-items:center;border-radius:50%;background:var(--accent);color:var(--accent-ink);font-weight:700;font-size:10px;line-height:1}.reader-rail .account-btn{padding:0;border:none;background:transparent}.reader-rail .account-label{display:none}.reader-rail .account-ic{width:32px;height:32px;font-size:13px}.rail-toggle{width:36px;height:36px;display:grid;place-items:center;background:var(--accent);border:1px solid var(--accent);border-radius:4px;cursor:pointer;transition:filter var(--d-fast),transform var(--d-fast);padding:0}.rail-toggle:hover{filter:brightness(1.08);transform:translateY(-1px)}.rail-toggle:active{transform:translateY(0)}.rail-toggle-icon{width:14px;height:12px;border-left:2px solid var(--accent-ink);border-right:2px solid var(--accent-ink);transition:transform var(--d-normal) var(--ease-standard)}.reader-app.sidebar-open .rail-toggle-icon{transform:rotate(0)}.reader-app:not(.sidebar-open) .rail-toggle-icon{transform:scaleX(.5)}.sidebar-backdrop{display:none;position:fixed;inset:0;background:#0000008c;z-index:140;border:0;padding:0;cursor:pointer}@media(max-width:900px){.reader-app.sidebar-open~.sidebar-backdrop{display:block}}.rail-spacer[data-astro-cid-ofsbkzh7]{flex:1}.reader-sidebar[data-astro-cid-khgtvzrl] .ru-tag[data-astro-cid-khgtvzrl]{font-style:normal;font-family:var(--font-mono);font-size:.7em;color:var(--text-mute);margin-left:4px;padding:1px 4px;border:1px solid var(--rule);border-radius:3px;text-transform:uppercase;vertical-align:middle}.chapter-eyebrow[data-astro-cid-a7sruqtr]{display:flex;justify-content:space-between;align-items:center;gap:var(--space-3)}.lang-toggle[data-astro-cid-a7sruqtr]{font-family:var(--font-mono);font-size:var(--size-2);padding:2px 8px;border:1px solid var(--rule);border-radius:4px;color:var(--text-mute);text-decoration:none;text-transform:uppercase;letter-spacing:.08em}.lang-toggle[data-astro-cid-a7sruqtr]:hover{color:var(--accent);border-color:var(--accent)}.code-tabs[data-astro-cid-hg66rjob]{margin:var(--space-5) 0}.code-tabs-nav[data-astro-cid-hg66rjob]{display:flex;gap:2px;margin-bottom:-1px;position:relative;z-index:1}.ctab[data-astro-cid-hg66rjob]{font-family:var(--font-mono);font-size:11px;text-transform:uppercase;letter-spacing:.07em;padding:5px 14px;border:1px solid #21222c;border-bottom:none;background:#1a1b23;color:#6272a4;cursor:pointer;border-radius:4px 4px 0 0;transition:color .12s,background .12s}.ctab[data-astro-cid-hg66rjob].is-active{background:#282a36;color:#f8f8f2;border-color:#21222c}.ctab[data-astro-cid-hg66rjob]:hover:not(.is-active){color:#cdd6f4}.ctab-panel[data-astro-cid-hg66rjob]{display:none}.ctab-panel[data-astro-cid-hg66rjob].is-active{display:block}.ctab-panel[data-astro-cid-hg66rjob] pre{margin-top:0!important;border-radius:0 6px 6px!important}
+</style></head> <body data-astro-cid-a7sruqtr> <div class="reader-app" data-astro-cid-a7sruqtr> <aside class="reader-rail" data-astro-cid-ofsbkzh7> <a href="/vibesamurai-site/" class="logo" aria-label="Vibesamurai home" data-astro-cid-ofsbkzh7>V</a> <button type="button" class="rail-toggle" id="sidebar-toggle" aria-label="Свернуть/развернуть оглавление" title="Свернуть/развернуть оглавление" data-astro-cid-ofsbkzh7> <span class="rail-toggle-icon" aria-hidden="true" data-astro-cid-ofsbkzh7></span> </button> <div class="rail-spacer" data-astro-cid-ofsbkzh7></div> <a href="/vibesamurai-site/account" class="account-btn" id="account-btn" aria-label="Аккаунт"> <span class="account-ic" id="account-ic">⌂</span> <span class="account-label" id="account-label">Войти</span> </a>  <script type="module" src="/vibesamurai-site/_astro/AccountButton.astro_astro_type_script_index_0_lang.CmD2sdn9.js"></script> </aside>  <button type="button" class="sidebar-backdrop" id="sidebar-backdrop" aria-label="Закрыть оглавление" tabindex="-1" data-astro-cid-ofsbkzh7></button>  <script type="module">const d="vs-sidebar-open",a="(max-width: 900px)";function t(e){const n=document.querySelector(".reader-app");n&&n.classList.toggle("sidebar-open",e)}function r(){return!window.matchMedia(a).matches}function s(){const e=localStorage.getItem(d),i=window.matchMedia(a).matches?!1:e!==null?e==="1":r();t(i),document.getElementById("sidebar-toggle")?.addEventListener("click",()=>{const c=!document.querySelector(".reader-app")?.classList.contains("sidebar-open");window.matchMedia(a).matches||localStorage.setItem(d,c?"1":"0"),t(c)}),document.getElementById("sidebar-backdrop")?.addEventListener("click",()=>t(!1)),document.querySelectorAll(".reader-sidebar a").forEach(o=>{o.addEventListener("click",()=>{window.matchMedia(a).matches&&t(!1)})})}document.readyState==="loading"?document.addEventListener("DOMContentLoaded",s):s();</script> <aside class="reader-sidebar" data-astro-cid-khgtvzrl> <div class="breadcrumb" data-astro-cid-khgtvzrl>Vibesamurai · Middle Path · M15</div> <h4 data-astro-cid-khgtvzrl>In this course</h4> <ul data-astro-cid-khgtvzrl> <li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m1/en" class data-astro-cid-khgtvzrl> M1 · What is agentic AI in the SDLC  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m2/en" class data-astro-cid-khgtvzrl> M2 · Architecting agent boundaries  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m3/en" class data-astro-cid-khgtvzrl> M3 · Observability and human-in-the-loop  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m4/en" class data-astro-cid-khgtvzrl> M4 · Tool inventory and permissions  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m5/en" class data-astro-cid-khgtvzrl> M5 · MCP deep dive  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m6/en" class data-astro-cid-khgtvzrl> M6 · Claude Code CLI mastery  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m7/en" class data-astro-cid-khgtvzrl> M7 · GPT-5.3 Codex CLI and OpenAI agents  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m8/en" class data-astro-cid-khgtvzrl> M8 · Cursor Composer + IDE agents  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m9/en" class data-astro-cid-khgtvzrl> M9 · Memory strategies  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m10/en" class data-astro-cid-khgtvzrl> M10 · State, drift, continuity  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m11/en" class data-astro-cid-khgtvzrl> M11 · Evaluating agents: metrics over vibes  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m12/en" class data-astro-cid-khgtvzrl> M12 · Regression tests for agents  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m13/en" class data-astro-cid-khgtvzrl> M13 · Tuning: what to change when metrics don&#39;t move  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m14/en" class data-astro-cid-khgtvzrl> M14 · One agent, many steps: pipelines and orchestration  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m15/en" class="current" data-astro-cid-khgtvzrl> M15 · Multi-agent: roles, communication, supervisor  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m16/en" class data-astro-cid-khgtvzrl> M16 · When multi-agent is overkill. Anti-patterns  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m17/en" class data-astro-cid-khgtvzrl> M17 · Production: deploying agents to live environments  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m18/en" class data-astro-cid-khgtvzrl> M18 · Security in prod: secrets, sandbox, audit  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m19/en" class data-astro-cid-khgtvzrl> M19 · Incidents &amp; post-mortems  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m20/en" class data-astro-cid-khgtvzrl> M20 · Finale: where to go after Middle  </a> </li> </ul>  </aside> <main class="reader-main" data-astro-cid-a7sruqtr> <div class="chapter-eyebrow" data-astro-cid-a7sruqtr> <span data-astro-cid-a7sruqtr>Middle Path · m15</span> <a class="lang-toggle" href="/vibesamurai-site/courses/middle/m15" aria-label="Switch to RU" data-astro-cid-a7sruqtr>RU</a> </div> <h1 class="chapter-title" data-astro-cid-a7sruqtr>M15 · Multi-agent: roles, communication, supervisor</h1> <p class="chapter-subtitle" data-astro-cid-a7sruqtr>Several independent agents talking to each other. When a supervisor, when a flat network, how to avoid chaos.</p> <h2 id="hook">Hook</h2>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>PIPELINE (M14):              MULTI-AGENT (M15):</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>planner → impl → tests       supervisor</span></span>
+<span class="line"><span>                                 ↓</span></span>
+<span class="line"><span>one agent                   ┌────┴────┬─────────┐</span></span>
+<span class="line"><span>several roles             coder    reviewer   ops</span></span>
+<span class="line"><span>                          ↑↓        ↑↓        ↑↓</span></span>
+<span class="line"><span>                          ════════ event bus ════════</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>                          different processes, shared bus</span></span></code></pre>
+<p>Hey folks, welcome 👋</p>
+<p>This chapter is about <strong>real</strong> multi-agent. Not “one agent in several hats” (that was M14), but <strong>several independent</strong> processes <strong>talking to each other</strong>.</p>
+<p><strong>Honestly:</strong> in reality you <strong>rarely</strong> need this. Most tasks close with one agent or a pipeline. Multi-agent pays off in <strong>specific</strong> scenarios — long autonomous cycles, parallel work, specialisation with a <strong>strong</strong> conflict of interests between roles. If <strong>you’re not sure you need it</strong> — <strong>you probably don’t</strong>. M16 will be entirely about anti-patterns; but we cover this chapter so you understand <strong>what’s</strong> available.</p>
+<p>An hour and a half.</p>
+<h2 id="concept-when-several-roles-becomes-several-agents">Concept: when “several roles” becomes “several agents”</h2>
+<p>In M14 we had <strong>one</strong> Claude playing <strong>different roles</strong> through subagents. That works while:</p>
+<ul>
+<li>Roles <strong>rotate</strong> (not parallel)</li>
+<li>Context between roles <strong>transfers</strong> through files</li>
+<li>One source of truth (one CLAUDE.md)</li>
+</ul>
+<p><strong>Signals</strong> that a pipeline is <strong>already too small</strong>:</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Sign</th><th>Signal</th></tr></thead><tbody><tr><td>Roles must work <strong>in parallel</strong></td><td>yes</td></tr><tr><td>Roles use <strong>different</strong> base models (Opus for architect, Haiku for tests)</td><td>yes</td></tr><tr><td>Roles have <strong>different</strong> contexts (different repos, different docs)</td><td>yes</td></tr><tr><td>Roles must <strong>disagree</strong> with each other (review, adversarial)</td><td>yes</td></tr><tr><td>The cycle is <strong>long</strong> (hours-days) with autonomous decisions</td><td>yes</td></tr><tr><td>One agent’s context <strong>can’t hold</strong> all roles</td><td>yes</td></tr></tbody></table>
+<p>If 2–3 of those are “yes” — time for multi-agent.</p>
+<h2 id="multi-agent-architectures">Multi-agent architectures</h2>
+<p>Most common in practice — supervisor + workers. Picture:</p>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="mermaid"><code><span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">flowchart TB</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    User([User task]) --> Sup[Supervisor&#x3C;br/>planning / dispatch]</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    Sup --> Coder[Coder&#x3C;br/>src/*]</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    Sup --> Tester[Tester&#x3C;br/>tests/*]</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    Sup --> Reviewer[Reviewer&#x3C;br/>read-only + review.md]</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    Coder --> Sup</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    Tester --> Sup</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    Reviewer --> Sup</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    Sup --> Result([Synthesized result])</span></span></code></pre>
+<p>The supervisor is the only role that decides “done / redo.” Workers return results to it, not to each other. That alone removes half the “infinite debate” risks discussed below.</p>
+<h3 id="a-supervisor--workers-hierarchy">A. Supervisor + workers (hierarchy)</h3>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>        ┌────────────────┐</span></span>
+<span class="line"><span>        │   Supervisor    │</span></span>
+<span class="line"><span>        │  (orchestrator) │</span></span>
+<span class="line"><span>        └────────┬────────┘</span></span>
+<span class="line"><span>                 │ task dispatch</span></span>
+<span class="line"><span>       ┌─────────┼─────────┐</span></span>
+<span class="line"><span>       ↓         ↓         ↓</span></span>
+<span class="line"><span>   ┌────────┐ ┌────────┐ ┌────────┐</span></span>
+<span class="line"><span>   │ Coder  │ │ Tester │ │Reviewer│</span></span>
+<span class="line"><span>   └────────┘ └────────┘ └────────┘</span></span></code></pre>
+<p>Supervisor:</p>
+<ul>
+<li>Breaks a big task into subtasks</li>
+<li>Dispatches to workers</li>
+<li>Gathers results</li>
+<li>Makes the final “done/redo” call</li>
+</ul>
+<p>Workers — narrowly specialised, minimum rights.</p>
+<p><strong>Fits:</strong> structured tasks with <strong>obvious</strong> decomposition (feature = code + tests + review).</p>
+<h3 id="b-peer-to-peer-flat-network">B. Peer-to-peer (flat network)</h3>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>   ┌────────┐ ←─────→ ┌────────┐</span></span>
+<span class="line"><span>   │Agent A │         │Agent B │</span></span>
+<span class="line"><span>   └────────┘ ←─────→ └────────┘</span></span>
+<span class="line"><span>       ↕                 ↕</span></span>
+<span class="line"><span>   ┌────────┐ ←─────→ ┌────────┐</span></span>
+<span class="line"><span>   │Agent C │         │Agent D │</span></span>
+<span class="line"><span>   └────────┘         └────────┘</span></span></code></pre>
+<p>All agents are <strong>equal</strong>, talk directly. Decisions are made <strong>locally</strong> or by <strong>voting</strong>.</p>
+<p><strong>Fits:</strong> creative / research tasks (brainstorm, debate). <strong>Rarely</strong> needed in development.</p>
+<p><strong>Danger:</strong> <strong>easy</strong> to descend into infinite dialogue with no result. You need <strong>hard termination rules</strong> (“after 5 rounds — supervisor decides”).</p>
+<h3 id="c-event-driven-through-a-bus">C. Event-driven (through a bus)</h3>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>   Agent A ──→ ┌─────────────────┐ ──→ Agent C</span></span>
+<span class="line"><span>              │   Event Bus     │</span></span>
+<span class="line"><span>   Agent B ──→ │  (queue/pub-sub) │ ──→ Agent D</span></span>
+<span class="line"><span>              └─────────────────┘</span></span></code></pre>
+<p>Agents <strong>don’t know</strong> about each other. Each listens to <strong>event types</strong>, reacts, publishes its own.</p>
+<p><strong>Fits:</strong> long processes, partly human workflows (CI/CD-like).</p>
+<p><strong>Tech:</strong> Redis pub/sub, RabbitMQ, GitHub webhooks, <strong>or</strong> just a filesystem queue (<code>tasks/inbox/</code> → <code>tasks/done/</code>).</p>
+<h2 id="communication-message-format">Communication: message format</h2>
+<p>The main rule — a <strong>shared format</strong>, without which Agent B <strong>won’t understand</strong> Agent A.</p>
+<h3 id="minimum-packet">Minimum packet</h3>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="json"><code><span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">{</span></span>
+<span class="line"><span style="color:#8BE9FE;--shiki-dark:#8BE9FE">  "</span><span style="color:#8BE9FD;--shiki-dark:#8BE9FD">from</span><span style="color:#8BE9FE;--shiki-dark:#8BE9FE">"</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">:</span><span style="color:#E9F284;--shiki-dark:#E9F284"> "</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">coder-agent-01</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">,</span></span>
+<span class="line"><span style="color:#8BE9FE;--shiki-dark:#8BE9FE">  "</span><span style="color:#8BE9FD;--shiki-dark:#8BE9FD">to</span><span style="color:#8BE9FE;--shiki-dark:#8BE9FE">"</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">:</span><span style="color:#E9F284;--shiki-dark:#E9F284"> "</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">tester-agent-01</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">,</span></span>
+<span class="line"><span style="color:#8BE9FE;--shiki-dark:#8BE9FE">  "</span><span style="color:#8BE9FD;--shiki-dark:#8BE9FD">task_id</span><span style="color:#8BE9FE;--shiki-dark:#8BE9FE">"</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">:</span><span style="color:#E9F284;--shiki-dark:#E9F284"> "</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">feature-y-2026-05-15</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">,</span></span>
+<span class="line"><span style="color:#8BE9FE;--shiki-dark:#8BE9FE">  "</span><span style="color:#8BE9FD;--shiki-dark:#8BE9FD">type</span><span style="color:#8BE9FE;--shiki-dark:#8BE9FE">"</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">:</span><span style="color:#E9F284;--shiki-dark:#E9F284"> "</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">request_test</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">,</span></span>
+<span class="line"><span style="color:#8BE9FE;--shiki-dark:#8BE9FE">  "</span><span style="color:#8BE9FD;--shiki-dark:#8BE9FD">payload</span><span style="color:#8BE9FE;--shiki-dark:#8BE9FE">"</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">:</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2"> {</span></span>
+<span class="line"><span style="color:#8BE9FE;--shiki-dark:#8BE9FE">    "</span><span style="color:#8BE9FD;--shiki-dark:#8BE9FD">files</span><span style="color:#8BE9FE;--shiki-dark:#8BE9FE">"</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">:</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2"> [</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">src/api/users.ts</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">],</span></span>
+<span class="line"><span style="color:#8BE9FE;--shiki-dark:#8BE9FE">    "</span><span style="color:#8BE9FD;--shiki-dark:#8BE9FD">context</span><span style="color:#8BE9FE;--shiki-dark:#8BE9FE">"</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">:</span><span style="color:#E9F284;--shiki-dark:#E9F284"> "</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">Implemented GET /api/users/me. See PR #142 for diff.</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">  },</span></span>
+<span class="line"><span style="color:#8BE9FE;--shiki-dark:#8BE9FE">  "</span><span style="color:#8BE9FD;--shiki-dark:#8BE9FD">timestamp</span><span style="color:#8BE9FE;--shiki-dark:#8BE9FE">"</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">:</span><span style="color:#E9F284;--shiki-dark:#E9F284"> "</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">2026-05-15T14:32:00Z</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">}</span></span></code></pre>
+<p>That format is the <strong>protocol</strong>. Every agent knows it (via CLAUDE.md or system prompt). Without a format — you don’t have <strong>multi-agent</strong>, you have <strong>chaos</strong>.</p>
+<h3 id="typing-levels">Typing levels</h3>
+<p><strong>Weak</strong> (free-form inside a JSON block): “do it how you feel, just JSON.”
+<strong>Medium</strong> (schema + examples): “here’s a JSON Schema, validate.”
+<strong>Strong</strong> (typed bus): protocol buffers, FlatBuffers, etc.</p>
+<p>For <strong>most</strong> cases — medium. JSON Schema + parser at every agent’s input.</p>
+<h2 id="supervisor-how-it-works">Supervisor: how it works</h2>
+<p>The supervisor is a <strong>separate</strong> prompt (or agent) with a <strong>different</strong> role from the workers. Its jobs:</p>
+<ol>
+<li><strong>Decomposition:</strong> split the task into sub-tasks</li>
+<li><strong>Dispatch:</strong> which worker takes which sub-task</li>
+<li><strong>Synthesis:</strong> gather results, check consistency</li>
+<li><strong>Decision:</strong> finish, iterate, escalate to a human</li>
+</ol>
+<p><code>supervisor.md</code>:</p>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="markdown"><code><span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">You are a supervisor agent. You do NOT write code.</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">You orchestrate workers (coder, tester, reviewer).</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">For each incoming task:</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">1. Decompose into 1-5 worker tasks.</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">2. Dispatch via .agent/queue/&#x3C;worker>/&#x3C;task-id>.json</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">3. Poll .agent/queue/&#x3C;worker>/done/ for results.</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">4. On all-done: synthesize result, return.</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">5. On worker error: retry once, then escalate.</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">Hard rules:</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">- Max 5 iterations per task.</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">- Total budget: 30 minutes wall-clock.</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">- On budget exhaustion: stop, return what we have, flag for human.</span></span></code></pre>
+<p>It’s a <strong>fine</strong> setup. The supervisor is the <strong>hardest</strong> role in multi-agent because <strong>it</strong> has to decide about other agents. Often the first place where <strong>something goes wrong</strong>.</p>
+<h2 id="a-short-aside">A short aside ⚡</h2>
+<p>A chat story — folks assembled a supervisor + 4 workers for an auto-PR factory. Launched on one task. Six hours later:</p>
+<ul>
+<li>47 commits in the feature branch</li>
+<li>supervisor “cancelled” its own decisions three times</li>
+<li>coder and reviewer fell into an <strong>infinite</strong> argument about one variable’s naming</li>
+<li>$80 on the API overnight</li>
+</ul>
+<p>What was done <strong>wrong</strong>: no <strong>hard limits</strong> (iteration count, $ budget, time). The supervisor ran on “the agent knows best.” It doesn’t.</p>
+<p><strong>Multi-agent without budgets is a deadlock machine.</strong> Always set an upper bound: iterations, time, tokens. Exceeded — <strong>stop</strong>, <strong>escalate</strong> to a human.</p>
+<h2 id="which-architecture-to-pick-when">Which architecture to pick when</h2>
+<h3 id="supervisor--workers--the-most-common">Supervisor + workers — the most common</h3>
+<p>Fits almost everywhere the task <strong>decomposes obviously</strong>:</p>
+<ul>
+<li>Feature development: planner + coder + tester + doc-writer</li>
+<li>Codebase analysis: split by subsystems, sub-agents on each</li>
+<li>PR prep: code-review-tests-description-merge</li>
+</ul>
+<p><strong>Limits:</strong> max 5 workers (more — hard to debug), max 3 levels of depth.</p>
+<h3 id="peer-to-peer--rare">Peer-to-peer — rare</h3>
+<p>Only when you <strong>specifically</strong> need <strong>dialogue</strong> dynamics (brainstorm, debate, generation+critique loops).</p>
+<p><strong>Mandatory:</strong> a hard termination rule (N rounds, or a supervisor-judge on top).</p>
+<h3 id="event-driven--for-long-processes">Event-driven — for long processes</h3>
+<p>When steps can be <strong>hours-days</strong> apart. CI/CD, customer tickets, on-call rotation with a first-line agent.</p>
+<p><strong>Don’t use</strong> when the task fits one hour of wall-clock — overhead won’t pay back.</p>
+<h2 id="example-supervisor--3-workers-minimal-implementation">Example: supervisor + 3 workers (minimal implementation)</h2>
+<p><code>.agent/queue/</code> layout:</p>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>.agent/queue/</span></span>
+<span class="line"><span>├── inbox/                    # supervisor reads from here</span></span>
+<span class="line"><span>│   └── task-001.json</span></span>
+<span class="line"><span>├── coder/</span></span>
+<span class="line"><span>│   ├── todo/</span></span>
+<span class="line"><span>│   ├── doing/</span></span>
+<span class="line"><span>│   └── done/</span></span>
+<span class="line"><span>├── tester/</span></span>
+<span class="line"><span>│   ├── todo/</span></span>
+<span class="line"><span>│   ├── doing/</span></span>
+<span class="line"><span>│   └── done/</span></span>
+<span class="line"><span>└── reviewer/</span></span>
+<span class="line"><span>    ├── todo/</span></span>
+<span class="line"><span>    ├── doing/</span></span>
+<span class="line"><span>    └── done/</span></span></code></pre>
+<p><code>runner.sh</code>:</p>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#6272A4;--shiki-dark:#6272A4">#!/usr/bin/env bash</span></span>
+<span class="line"><span style="color:#8BE9FD;--shiki-dark:#8BE9FD">set</span><span style="color:#BD93F9;--shiki-dark:#BD93F9"> -e</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6272A4;--shiki-dark:#6272A4"># One supervisor cycle</span></span>
+<span class="line"><span style="color:#FF79C6;--shiki-dark:#FF79C6">while</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2"> [ </span><span style="color:#FF79C6;--shiki-dark:#FF79C6">-f</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2"> .agent/queue/inbox/</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">*</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">.json ]; </span><span style="color:#FF79C6;--shiki-dark:#FF79C6">do</span></span>
+<span class="line"><span style="color:#BD93F9;--shiki-dark:#BD93F9">    TASK</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">=</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">$(</span><span style="color:#50FA7B;--shiki-dark:#50FA7B">ls</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C"> .agent/queue/inbox/</span><span style="color:#BD93F9;--shiki-light-font-style:italic;--shiki-dark:#BD93F9;--shiki-dark-font-style:italic">*</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">.json</span><span style="color:#FF79C6;--shiki-dark:#FF79C6"> |</span><span style="color:#50FA7B;--shiki-dark:#50FA7B"> head</span><span style="color:#BD93F9;--shiki-dark:#BD93F9"> -1</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">)</span></span>
+<span class="line"><span style="color:#BD93F9;--shiki-dark:#BD93F9">    TASK_ID</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">=</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">$(</span><span style="color:#50FA7B;--shiki-dark:#50FA7B">basename</span><span style="color:#E9F284;--shiki-dark:#E9F284"> "</span><span style="color:#BD93F9;--shiki-dark:#BD93F9">$TASK</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C"> .json</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6272A4;--shiki-dark:#6272A4">    # 1. Supervisor decomposes</span></span>
+<span class="line"><span style="color:#50FA7B;--shiki-dark:#50FA7B">    claude</span><span style="color:#BD93F9;--shiki-dark:#BD93F9"> --print</span><span style="color:#BD93F9;--shiki-dark:#BD93F9"> --system-prompt-file</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C"> supervisor.md</span><span style="color:#FF79C6;--shiki-dark:#FF79C6"> \</span></span>
+<span class="line"><span style="color:#E9F284;--shiki-dark:#E9F284">        "</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">Decompose task in </span><span style="color:#BD93F9;--shiki-dark:#BD93F9">$TASK</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">. Output subtasks to .agent/queue/{worker}/todo/</span><span style="color:#BD93F9;--shiki-dark:#BD93F9">$TASK_ID</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">-{n}.json</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#50FA7B;--shiki-dark:#50FA7B">    mv</span><span style="color:#E9F284;--shiki-dark:#E9F284"> "</span><span style="color:#BD93F9;--shiki-dark:#BD93F9">$TASK</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C"> .agent/queue/processing/</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6272A4;--shiki-dark:#6272A4">    # 2. Workers process in parallel</span></span>
+<span class="line"><span style="color:#50FA7B;--shiki-dark:#50FA7B">    parallel</span><span style="color:#BD93F9;--shiki-dark:#BD93F9"> -j</span><span style="color:#BD93F9;--shiki-dark:#BD93F9"> 3</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C"> :::</span><span style="color:#FF79C6;--shiki-dark:#FF79C6"> \</span></span>
+<span class="line"><span style="color:#E9F284;--shiki-dark:#E9F284">        "</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">claude --print --system-prompt-file coder.md --json-mode</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#FF79C6;--shiki-dark:#FF79C6"> \</span></span>
+<span class="line"><span style="color:#E9F284;--shiki-dark:#E9F284">        "</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">claude --print --system-prompt-file tester.md --json-mode</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#FF79C6;--shiki-dark:#FF79C6"> \</span></span>
+<span class="line"><span style="color:#E9F284;--shiki-dark:#E9F284">        "</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">claude --print --system-prompt-file reviewer.md --json-mode</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6272A4;--shiki-dark:#6272A4">    # 3. Supervisor synthesizes</span></span>
+<span class="line"><span style="color:#50FA7B;--shiki-dark:#50FA7B">    claude</span><span style="color:#BD93F9;--shiki-dark:#BD93F9"> --print</span><span style="color:#BD93F9;--shiki-dark:#BD93F9"> --system-prompt-file</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C"> supervisor.md</span><span style="color:#FF79C6;--shiki-dark:#FF79C6"> \</span></span>
+<span class="line"><span style="color:#E9F284;--shiki-dark:#E9F284">        "</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">Tasks done. Synthesize result for </span><span style="color:#BD93F9;--shiki-dark:#BD93F9">$TASK_ID</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">.</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span></span>
+<span class="line"><span style="color:#FF79C6;--shiki-dark:#FF79C6">done</span></span></code></pre>
+<p><strong>This is a simplification.</strong> In reality you also need timeouts per worker, retry policy, error handling, deduplication, persistent state. But the <strong>skeleton</strong> is this.</p>
+<h2 id="multi-agent-anti-patterns">Multi-agent anti-patterns</h2>
+<h3 id="1-too-fine-grained-split">1. “Too fine-grained split”</h3>
+<p>Supervisor + 8 narrow workers. Each does <strong>one function</strong>. Coordination overhead <strong>exceeds</strong> the gain from specialisation.</p>
+<p><strong>Cure:</strong> <strong>2–4</strong> workers. More — only if you <strong>actually</strong> need different models or rights.</p>
+<h3 id="2-workers-without-hard-rights">2. Workers without hard rights</h3>
+<p>The “reviewer” has full write to the repo. Why? It <strong>only</strong> reads and writes a comment.</p>
+<p><strong>Cure:</strong> minimum rights per role. Reviewer — read-only + write only in <code>.agent/reviews/</code>.</p>
+<h3 id="3-free-form-communication">3. Free-form communication</h3>
+<p>Workers write “how they feel.” The supervisor parses <strong>guessing</strong>. <strong>Chaos.</strong></p>
+<p><strong>Cure:</strong> <strong>JSON Schema</strong> per message type. Parser at input. Invalid — <strong>drop</strong> and <strong>re-ask</strong>.</p>
+<h3 id="4-no-limits">4. No limits</h3>
+<p>“Let the supervisor decide when to stop.” <strong>It won’t.</strong> Run to a <strong>budget</strong>, then <strong>stop</strong>.</p>
+<p><strong>Cure:</strong> hard upper bounds on iterations, time, tokens. Any breach — <strong>escalate to a human</strong>, not an autonomous decision.</p>
+<h3 id="5-every-agent-on-one-model">5. Every agent on one model</h3>
+<p>You can. But <strong>expensive</strong> and <strong>overkill</strong> for simple roles.</p>
+<p><strong>Cure:</strong> Supervisor / planner — Opus. Coder — Sonnet or Opus. Tester / formatter — Haiku or Sonnet (faster, cheaper). Reviewer — Opus (for quality).</p>
+<h3 id="6-multi-agent-for-a-task-that-doesnt-need-multi-agent">6. Multi-agent for a task that doesn’t need multi-agent</h3>
+<p>The most common. “Sounds cool, let’s build it.” Hype-driven design.</p>
+<p><strong>Cure:</strong> see M16, the whole chapter is about this.</p>
+<h2 id="practice-90120-minutes">Practice (90–120 minutes)</h2>
+<h3 id="task-1-60-minutes--assemble-a-minimal-supervisor--2-workers">Task 1 (60 minutes) — assemble a minimal supervisor + 2 workers</h3>
+<p>Not on a live project — on a <strong>sandbox</strong>. Script + JSON queue + two subagents. Run on a simple task (e.g. “refactor function X, add a test”).</p>
+<p>Record:</p>
+<ul>
+<li>How long to <strong>verify</strong> the result?</li>
+<li>What broke first (if anything)?</li>
+<li>Was it worth it <strong>vs</strong> just a pipeline?</li>
+</ul>
+<h3 id="task-2-30-minutes--message-format">Task 2 (30 minutes) — message format</h3>
+<p>Describe a <strong>JSON Schema</strong> for one message type in your pipeline. Decide which fields are <strong>mandatory</strong>, which optional. This exercise is <strong>critical</strong> before attempting real multi-agent.</p>
+<h3 id="optional-60-minutes--parallel-pipeline">Optional (60+ minutes) — parallel pipeline</h3>
+<p>If you have a real task with <strong>parallel</strong> branches (e.g. migrating two independent modules), run 2 workers concurrently via <code>parallel</code>. Compare wall-clock vs sequential.</p>
+<h2 id="recap">Recap</h2>
+<ul>
+<li><strong>Multi-agent pays off</strong> on parallelism, different models/contexts, adversarial setups. In <strong>most</strong> cases — a pipeline is enough.</li>
+<li><strong>Architectures:</strong> supervisor+workers (most common), peer-to-peer (rare), event-driven (long processes).</li>
+<li><strong>Hard communication format + hard limits</strong> — without them multi-agent turns into a deadlock machine.</li>
+</ul>
+<h2 id="vibe-samurai">Vibe Samurai</h2>
+<aside class="skeptic">
+<p><strong>🥷 Vibe Samurai asks:</strong>
+“All cool, but <strong>why me</strong>? I have a pet project, I work alone. I’ll <strong>never</strong> touch multi-agent in my life.”</p>
+<p><strong>Answer:</strong> And you’ll <strong>be right</strong>. Multi-agent is <strong>architectural</strong> territory, paying off on <strong>large</strong> projects with teams and production. I put this chapter in <strong>precisely</strong> so you <strong>understand</strong> that multi-agent <strong>exists</strong> and <strong>how it works</strong> — in case you land on a project where it’s <strong>actually</strong> needed (or <strong>seems</strong> needed — half the cases). But <strong>building</strong> multi-agent for yourself — overhead. A pipeline (M14) — yes, I recommend to everyone. Multi-agent — only when <strong>the pain</strong> from its absence costs <strong>more</strong> than the pain of its presence. <strong>Not perfect, but actually works.</strong></p>
+</aside>
+<h2 id="whats-next">What’s next</h2>
+<p>In <strong>M16 — When multi-agent is overkill. Anti-patterns</strong> we close Part V. The complete other side of this chapter — <strong>where</strong> and <strong>why</strong> multi-agent <strong>isn’t needed</strong>, what typical design mistakes are, and <strong>how</strong> to convince yourself or the team to “not build.” The most useful chapter of the track for <strong>avoiding</strong> expensive mistakes.</p>
+<p>If this clicked — share with anyone who <strong>immediately wants</strong> to build multi-agent without mastering pipelines. If you have a <strong>working</strong> multi-agent system — tell me in the comments, we’ll unpack the architecture. Your feedback really helps polish the material.</p>
+<h2 id="-further-reading">📚 Further reading</h2>
+<p>Multi-agent is a topic with much hype and little good writing. The minimum worth aligning on:</p>
+<p><strong>Academic reference</strong></p>
+<ul>
+<li><strong>AutoGen — paper (Microsoft, arXiv:2308.08155)</strong> — <a href="https://arxiv.org/abs/2308.08155">arxiv.org/abs/2308.08155</a>. Original paper on conversable agents and multi-agent conversation programming. Still the best mental model: “dialogue between roles” as a first-class concept.</li>
+</ul>
+<p><strong>Multi-agent frameworks</strong></p>
+<ul>
+<li><strong>CrewAI — docs</strong> — <a href="https://docs.crewai.com/">docs.crewai.com</a>. Role-based crews + flows. A good way to feel what supervisor+workers looks like without your own skeleton.</li>
+<li><strong>LangGraph — Overview</strong> — <a href="https://docs.langchain.com/oss/python/langgraph/overview">docs.langchain.com/oss/python/langgraph/overview</a>. The same DAG as in M14, but conveniently shows how state is split across several agent nodes.</li>
+</ul>
+<p><strong>Anthropic-native</strong></p>
+<ul>
+<li><strong>Anthropic — Subagents</strong> — <a href="https://docs.anthropic.com/en/docs/claude-code/sub-agents">docs.anthropic.com/en/docs/claude-code/sub-agents</a>. Limited multi-agent inside one session. Useful if you want roles <strong>without</strong> an inter-session bus.</li>
+</ul>
+<blockquote>
+<p><strong>Tip:</strong> read the AutoGen paper before installing any framework. Half the design questions are solved there, and without it you’ll be surprised by CrewAI/LangGraph’s “weird” behaviour.</p>
+</blockquote> <nav class="chapter-nav" data-astro-cid-a7sruqtr> <a href="/vibesamurai-site/courses/middle/m14/en" data-astro-cid-a7sruqtr> <span class="dir" data-astro-cid-a7sruqtr>← Back</span> <span class="title" data-astro-cid-a7sruqtr>M14 · One agent, many steps: pipelines and orchestration</span> </a> <a href="/vibesamurai-site/courses/middle/m16/en" data-astro-cid-a7sruqtr> <span class="dir" data-astro-cid-a7sruqtr>Next →</span> <span class="title" data-astro-cid-a7sruqtr>M16 · When multi-agent is overkill. Anti-patterns</span> </a> </nav> </main>  </div> <script type="module">
+    import { gatingEnabled } from '../lib/supabase';
+    import { fetchChapter } from '../lib/auth';
+
+    const base = import.meta.env.BASE_URL;
+    let mermaidLib = null;
+
+    function scopeOf(root) {
+      return root === document ? document.querySelector('.reader-main') : root;
+    }
+
+    function addCopyBtns(root) {
+      const scope = scopeOf(root); if (!scope) return;
+      scope.querySelectorAll('pre').forEach((pre) => {
+        if (pre.closest('.code-tabs')) return;
+        if (pre.querySelector('.copy-btn')) return;
+        const btn = document.createElement('button');
+        btn.className = 'copy-btn';
+        btn.textContent = 'copy';
+        btn.addEventListener('click', async () => {
+          const code = pre.querySelector('code')?.textContent ?? pre.textContent ?? '';
+          await navigator.clipboard.writeText(code.trimEnd());
+          btn.textContent = '✓ copied';
+          setTimeout(() => { btn.textContent = 'copy'; }, 1600);
+        });
+        pre.appendChild(btn);
+      });
+    }
+
+    function tightenMermaidSvgs(retries = 6) {
+      let pending = false;
+      document.querySelectorAll('.mermaid svg').forEach((svg) => {
+        if (svg.dataset.tightened === '1') return;
+        try {
+          const bbox = svg.getBBox();
+          if (!bbox || bbox.width === 0) { pending = true; return; }
+          const pad = 6;
+          svg.setAttribute('viewBox',
+            `${bbox.x - pad} ${bbox.y - pad} ${bbox.width + pad * 2} ${bbox.height + pad * 2}`);
+          svg.removeAttribute('height');
+          svg.style.height = 'auto';
+          svg.style.maxWidth = '100%';
+          svg.style.display = 'block';
+          svg.dataset.tightened = '1';
+        } catch (e) { pending = true; }
+      });
+      if (pending && retries > 0) setTimeout(() => tightenMermaidSvgs(retries - 1), 120);
+    }
+
+    async function ensureMermaid() {
+      if (mermaidLib) return mermaidLib;
+      const mod = await import('https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs');
+      mermaidLib = mod.default;
+      mermaidLib.initialize({
+        startOnLoad: false, theme: 'neutral',
+        themeVariables: {
+          fontFamily: 'JetBrains Mono, ui-monospace, monospace',
+          primaryColor: '#f5f5f5', primaryBorderColor: '#222',
+          primaryTextColor: '#111', lineColor: '#444',
+        },
+        flowchart: { curve: 'basis', padding: 12, useMaxWidth: true },
+      });
+      return mermaidLib;
+    }
+
+    async function renderMermaid(root) {
+      const scope = scopeOf(root); if (!scope) return;
+      const matches = scope.querySelectorAll(
+        'pre[data-language="mermaid"], pre.language-mermaid, code.language-mermaid'
+      );
+      if (!matches.length) return;
+      matches.forEach((el) => {
+        const block = el.tagName === 'CODE' ? el.closest('pre') || el : el;
+        const codeEl = block.querySelector('code') || block;
+        const wrap = document.createElement('div');
+        wrap.className = 'mermaid';
+        wrap.textContent = codeEl.textContent;
+        block.replaceWith(wrap);
+      });
+      try {
+        const m = await ensureMermaid();
+        await m.run();
+        tightenMermaidSvgs();
+      } catch (err) {
+        console.warn('mermaid failed', err);
+        document.querySelectorAll('.mermaid:not(:has(svg))').forEach((el) => { el.style.display = 'none'; });
+      }
+    }
+
+    async function enhance(root = document) {
+      addCopyBtns(root);
+      await renderMermaid(root);
+    }
+
+    function paywallHtml(required, needLogin) {
+      const label = { beginner: 'Beginner (300 ₽)', middle: 'Beginner + Middle (500 ₽)', all: 'Весь пакет (700 ₽)' }[required] || '';
+      return `<div class="paywall">
+        <div class="paywall-ic">🔒</div>
+        <h3>Эта глава — в платном доступе</h3>
+        <p>Нужен тариф: <strong>${label}</strong>. Доступ навсегда, без подписки.</p>
+        ${needLogin ? '<p>Войди через Google и оформи доступ — продолжишь с любого устройства.</p>' : ''}
+        <a class="paywall-btn" href="${base}pricing">Открыть доступ →</a>
+        <a class="paywall-link" href="${base}account">Войти / мой аккаунт</a>
+      </div>`;
+    }
+
+    async function gatedFlow(mount) {
+      const slug = mount.dataset.slug;
+      const required = mount.dataset.required || 'beginner';
+      mount.innerHTML = '<p class="gate-msg">Проверяем доступ…</p>';
+      const res = await fetchChapter(slug);
+      if (res.ok) {
+        mount.innerHTML = res.html;
+        await enhance(mount);
+      } else if (res.status === 401) {
+        mount.innerHTML = paywallHtml(required, true);
+      } else if (res.status === 402) {
+        mount.innerHTML = paywallHtml(res.requiredTier || required, false);
+      } else {
+        mount.innerHTML = '<p class="gate-msg">Не удалось загрузить главу. Обнови страницу.</p>';
+      }
+    }
+
+    const mount = document.getElementById('gated-mount');
+    if (mount && gatingEnabled) gatedFlow(mount);
+    else enhance(document);
+  </script> </body> </html>

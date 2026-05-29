@@ -1,0 +1,341 @@
+<!DOCTYPE html><html lang="en" data-astro-cid-a7sruqtr> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Evaluating agents: metrics over vibes — Vibesamurai</title><meta name="description" content="What 'the agent works well' actually means. Metrics, dashboards, evals. How to move past 'feels like it got worse'."><meta property="og:title" content="Evaluating agents: metrics over vibes"><meta property="og:type" content="article"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Inter:wght@300..800&family=JetBrains+Mono:wght@400..600&display=swap" rel="stylesheet"><link rel="stylesheet" href="/vibesamurai-site/_astro/_slug_.Cs4TX1wt.css">
+<style>.account-btn{display:inline-flex;align-items:center;gap:var(--space-2);font-family:var(--font-mono);font-size:var(--size-2);text-transform:uppercase;letter-spacing:.06em;padding:5px 10px;border:1px solid var(--rule);border-radius:999px;color:var(--text-soft);background:var(--surface);transition:border-color var(--d-fast),color var(--d-fast)}.account-btn:hover{border-color:var(--accent);color:var(--text)}.account-ic{width:18px;height:18px;display:grid;place-items:center;border-radius:50%;background:var(--accent);color:var(--accent-ink);font-weight:700;font-size:10px;line-height:1}.reader-rail .account-btn{padding:0;border:none;background:transparent}.reader-rail .account-label{display:none}.reader-rail .account-ic{width:32px;height:32px;font-size:13px}.rail-toggle{width:36px;height:36px;display:grid;place-items:center;background:var(--accent);border:1px solid var(--accent);border-radius:4px;cursor:pointer;transition:filter var(--d-fast),transform var(--d-fast);padding:0}.rail-toggle:hover{filter:brightness(1.08);transform:translateY(-1px)}.rail-toggle:active{transform:translateY(0)}.rail-toggle-icon{width:14px;height:12px;border-left:2px solid var(--accent-ink);border-right:2px solid var(--accent-ink);transition:transform var(--d-normal) var(--ease-standard)}.reader-app.sidebar-open .rail-toggle-icon{transform:rotate(0)}.reader-app:not(.sidebar-open) .rail-toggle-icon{transform:scaleX(.5)}.sidebar-backdrop{display:none;position:fixed;inset:0;background:#0000008c;z-index:140;border:0;padding:0;cursor:pointer}@media(max-width:900px){.reader-app.sidebar-open~.sidebar-backdrop{display:block}}.rail-spacer[data-astro-cid-ofsbkzh7]{flex:1}.reader-sidebar[data-astro-cid-khgtvzrl] .ru-tag[data-astro-cid-khgtvzrl]{font-style:normal;font-family:var(--font-mono);font-size:.7em;color:var(--text-mute);margin-left:4px;padding:1px 4px;border:1px solid var(--rule);border-radius:3px;text-transform:uppercase;vertical-align:middle}.chapter-eyebrow[data-astro-cid-a7sruqtr]{display:flex;justify-content:space-between;align-items:center;gap:var(--space-3)}.lang-toggle[data-astro-cid-a7sruqtr]{font-family:var(--font-mono);font-size:var(--size-2);padding:2px 8px;border:1px solid var(--rule);border-radius:4px;color:var(--text-mute);text-decoration:none;text-transform:uppercase;letter-spacing:.08em}.lang-toggle[data-astro-cid-a7sruqtr]:hover{color:var(--accent);border-color:var(--accent)}.code-tabs[data-astro-cid-hg66rjob]{margin:var(--space-5) 0}.code-tabs-nav[data-astro-cid-hg66rjob]{display:flex;gap:2px;margin-bottom:-1px;position:relative;z-index:1}.ctab[data-astro-cid-hg66rjob]{font-family:var(--font-mono);font-size:11px;text-transform:uppercase;letter-spacing:.07em;padding:5px 14px;border:1px solid #21222c;border-bottom:none;background:#1a1b23;color:#6272a4;cursor:pointer;border-radius:4px 4px 0 0;transition:color .12s,background .12s}.ctab[data-astro-cid-hg66rjob].is-active{background:#282a36;color:#f8f8f2;border-color:#21222c}.ctab[data-astro-cid-hg66rjob]:hover:not(.is-active){color:#cdd6f4}.ctab-panel[data-astro-cid-hg66rjob]{display:none}.ctab-panel[data-astro-cid-hg66rjob].is-active{display:block}.ctab-panel[data-astro-cid-hg66rjob] pre{margin-top:0!important;border-radius:0 6px 6px!important}
+</style></head> <body data-astro-cid-a7sruqtr> <div class="reader-app" data-astro-cid-a7sruqtr> <aside class="reader-rail" data-astro-cid-ofsbkzh7> <a href="/vibesamurai-site/" class="logo" aria-label="Vibesamurai home" data-astro-cid-ofsbkzh7>V</a> <button type="button" class="rail-toggle" id="sidebar-toggle" aria-label="Свернуть/развернуть оглавление" title="Свернуть/развернуть оглавление" data-astro-cid-ofsbkzh7> <span class="rail-toggle-icon" aria-hidden="true" data-astro-cid-ofsbkzh7></span> </button> <div class="rail-spacer" data-astro-cid-ofsbkzh7></div> <a href="/vibesamurai-site/account" class="account-btn" id="account-btn" aria-label="Аккаунт"> <span class="account-ic" id="account-ic">⌂</span> <span class="account-label" id="account-label">Войти</span> </a>  <script type="module" src="/vibesamurai-site/_astro/AccountButton.astro_astro_type_script_index_0_lang.CmD2sdn9.js"></script> </aside>  <button type="button" class="sidebar-backdrop" id="sidebar-backdrop" aria-label="Закрыть оглавление" tabindex="-1" data-astro-cid-ofsbkzh7></button>  <script type="module">const d="vs-sidebar-open",a="(max-width: 900px)";function t(e){const n=document.querySelector(".reader-app");n&&n.classList.toggle("sidebar-open",e)}function r(){return!window.matchMedia(a).matches}function s(){const e=localStorage.getItem(d),i=window.matchMedia(a).matches?!1:e!==null?e==="1":r();t(i),document.getElementById("sidebar-toggle")?.addEventListener("click",()=>{const c=!document.querySelector(".reader-app")?.classList.contains("sidebar-open");window.matchMedia(a).matches||localStorage.setItem(d,c?"1":"0"),t(c)}),document.getElementById("sidebar-backdrop")?.addEventListener("click",()=>t(!1)),document.querySelectorAll(".reader-sidebar a").forEach(o=>{o.addEventListener("click",()=>{window.matchMedia(a).matches&&t(!1)})})}document.readyState==="loading"?document.addEventListener("DOMContentLoaded",s):s();</script> <aside class="reader-sidebar" data-astro-cid-khgtvzrl> <div class="breadcrumb" data-astro-cid-khgtvzrl>Vibesamurai · Middle Path · M11</div> <h4 data-astro-cid-khgtvzrl>In this course</h4> <ul data-astro-cid-khgtvzrl> <li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m1/en" class data-astro-cid-khgtvzrl> M1 · What is agentic AI in the SDLC  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m2/en" class data-astro-cid-khgtvzrl> M2 · Architecting agent boundaries  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m3/en" class data-astro-cid-khgtvzrl> M3 · Observability and human-in-the-loop  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m4/en" class data-astro-cid-khgtvzrl> M4 · Tool inventory and permissions  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m5/en" class data-astro-cid-khgtvzrl> M5 · MCP deep dive  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m6/en" class data-astro-cid-khgtvzrl> M6 · Claude Code CLI mastery  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m7/en" class data-astro-cid-khgtvzrl> M7 · GPT-5.3 Codex CLI and OpenAI agents  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m8/en" class data-astro-cid-khgtvzrl> M8 · Cursor Composer + IDE agents  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m9/en" class data-astro-cid-khgtvzrl> M9 · Memory strategies  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m10/en" class data-astro-cid-khgtvzrl> M10 · State, drift, continuity  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m11/en" class="current" data-astro-cid-khgtvzrl> M11 · Evaluating agents: metrics over vibes  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m12/en" class data-astro-cid-khgtvzrl> M12 · Regression tests for agents  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m13/en" class data-astro-cid-khgtvzrl> M13 · Tuning: what to change when metrics don&#39;t move  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m14/en" class data-astro-cid-khgtvzrl> M14 · One agent, many steps: pipelines and orchestration  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m15/en" class data-astro-cid-khgtvzrl> M15 · Multi-agent: roles, communication, supervisor  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m16/en" class data-astro-cid-khgtvzrl> M16 · When multi-agent is overkill. Anti-patterns  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m17/en" class data-astro-cid-khgtvzrl> M17 · Production: deploying agents to live environments  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m18/en" class data-astro-cid-khgtvzrl> M18 · Security in prod: secrets, sandbox, audit  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m19/en" class data-astro-cid-khgtvzrl> M19 · Incidents &amp; post-mortems  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m20/en" class data-astro-cid-khgtvzrl> M20 · Finale: where to go after Middle  </a> </li> </ul>  </aside> <main class="reader-main" data-astro-cid-a7sruqtr> <div class="chapter-eyebrow" data-astro-cid-a7sruqtr> <span data-astro-cid-a7sruqtr>Middle Path · m11</span> <a class="lang-toggle" href="/vibesamurai-site/courses/middle/m11" aria-label="Switch to RU" data-astro-cid-a7sruqtr>RU</a> </div> <h1 class="chapter-title" data-astro-cid-a7sruqtr>M11 · Evaluating agents: metrics over vibes</h1> <p class="chapter-subtitle" data-astro-cid-a7sruqtr>What &#39;the agent works well&#39; actually means. Metrics, dashboards, evals. How to move past &#39;feels like it got worse&#39;.</p> <h2 id="hook">Hook</h2>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>WITHOUT metrics:                    WITH metrics:</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>"Feels like the agent     →         Run on 50 reference cases:</span></span>
+<span class="line"><span> has been duller this                42/50 → 38/50</span></span>
+<span class="line"><span> week"                               breaks more often at step 4</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>zero data, all feelings              concrete signal, something to fix</span></span></code></pre>
+<p>Hey folks, welcome 👋</p>
+<p>This chapter opens <strong>Part IV — Evaluation &#x26; Tuning</strong>. The most delicate part of the course. In the first three parts we built the <strong>architecture</strong> of agents: frames, tools, memory. Now — how to <strong>measure</strong> their work so we <strong>know</strong> they work well, instead of “seem to.”</p>
+<p>This topic is <strong>dry</strong> to most. I sat on it for too long myself — “I can feel when it’s bad.” Then two strikes in a row happened: the model <strong>silently</strong> regressed, I <strong>silently</strong> lost time, and <strong>loudly</strong> cursed myself for the lack of metrics.</p>
+<p>An hour, maybe an hour and a half. This is <strong>hygiene</strong>, without which Middle isn’t really Middle.</p>
+<h2 id="concept-works-is-subjective-until-you-quantified-it">Concept: “works” is subjective until you quantified it</h2>
+<p>When we say <strong>“the agent works well”</strong> we usually mean something like:</p>
+<ul>
+<li>“Understands my requests”</li>
+<li>“Doesn’t lie”</li>
+<li>“Does it fast”</li>
+<li>“Doesn’t do extra”</li>
+</ul>
+<p>These are all <strong>vibes</strong>. In a team they <strong>don’t work</strong> — everyone has their own. <strong>Over time</strong> they don’t work either — last week “felt fine,” today “feels worse,” and there’s no data.</p>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>┌─────────────────────────────────────────────────────┐</span></span>
+<span class="line"><span>│  Without metric: "kind of works"                    │</span></span>
+<span class="line"><span>│  With metric:    "pass rate 87% (±3%)               │</span></span>
+<span class="line"><span>│                   on 50 reference cases"            │</span></span>
+<span class="line"><span>└─────────────────────────────────────────────────────┘</span></span></code></pre>
+<p>Big difference. You can <strong>compare</strong> weeks, model builds, configurations.</p>
+<h2 id="three-measurement-tiers">Three measurement tiers</h2>
+<p>You don’t need to start with a “production eval pipeline.” Begin with what’s <strong>accessible</strong>.</p>
+<h3 id="tier-1-qualitative-log-zero-setup">Tier 1. Qualitative log (zero setup)</h3>
+<p>In CLAUDE.md / in a personal note, keep <code>evals/log.md</code>. After each significant session write:</p>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="markdown"><code><span class="line"><span style="color:#BD93F9;--shiki-light-font-weight:bold;--shiki-dark:#BD93F9;--shiki-dark-font-weight:bold">## 2026-05-15</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">- Task: DB migration Postgres 15 → 17, 4 microservices</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">- Model: Opus 4.6</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">- Did well: correct migrations, understood dependencies</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">- Did poorly: spent 30 minutes on table formatting instead of logic</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">- Reverts?: 1 — auth-service wrong JOIN side</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">- Time: 2.5h (planned 2.0)</span></span></code></pre>
+<p><strong>Cost</strong> — 2 minutes after a session. <strong>Payoff</strong> — in a month patterns appear: “consistently struggles on JOINs,” “after that model update got better on migrations.”</p>
+<h3 id="tier-2-passfail-on-reference-cases-half-an-hour-setup">Tier 2. Pass/fail on reference cases (half an hour setup)</h3>
+<p>Collect <strong>5–20 typical tasks</strong> you regularly verify on. For example:</p>
+<ul>
+<li>“Refactor auth.py — extract session handling into a separate module”</li>
+<li>“Add pagination to /api/posts endpoint”</li>
+<li>“Find why test_user_login is flaky”</li>
+</ul>
+<p>Each task has an <strong>acceptance criterion</strong> (like in B3, but stricter — programmatically checkable or by checklist).</p>
+<p>Once every <strong>2–4 weeks</strong> run <strong>all</strong> of them on the current configuration. Record the <strong>pass rate</strong>. That’s <strong>your benchmark</strong>.</p>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="markdown"><code><span class="line"><span style="color:#BD93F9;--shiki-light-font-weight:bold;--shiki-dark:#BD93F9;--shiki-dark-font-weight:bold">## Reference Suite 2026-05-01</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">| # | Task | Pass? | Notes |</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">|---|---|---|---|</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">| 1 | auth.py refactor | ✓ | OK |</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">| 2 | pagination | ✓ | + edge: didn't handle page=0 |</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">| 3 | flaky test fix | ✗ | proposed retry instead of root-cause |</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">...</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">Pass rate: 14/20 = 70%</span></span></code></pre>
+<p>A month later → <strong>76%</strong>. Progress is <strong>visible</strong>.</p>
+<h3 id="tier-3-automated-eval-hours-of-setup-pays-off-at-scale">Tier 3. Automated eval (hours of setup, pays off at scale)</h3>
+<p>Full pipeline:</p>
+<ul>
+<li>Reference tasks in YAML/JSON</li>
+<li>A script runs the agent on each</li>
+<li>Output is verified programmatically (regex, AST diff, unit tests)</li>
+<li>Results go to CSV/dashboard</li>
+</ul>
+<p>You need this when:</p>
+<ul>
+<li>You have <strong>many</strong> developers on agents and need a <strong>common metric</strong></li>
+<li>You run a <strong>SaaS</strong> on agents and need a <strong>production metric</strong></li>
+<li>You <strong>tune</strong> agents for clients and need to <strong>prove</strong> progress</li>
+</ul>
+<p>For <strong>one person</strong> — tier 1–2 is usually enough.</p>
+<h2 id="which-metrics-to-measure">Which metrics to measure</h2>
+<h3 id="qualitative-binary--scalar">Qualitative (binary / scalar)</h3>
+<ul>
+<li><strong>Pass rate</strong> on reference suite — % of tasks the agent did correctly</li>
+<li><strong>Revert rate</strong> — % of accepted edits later rolled back</li>
+<li><strong>Bypass rate</strong> — how many times permissions had to be bypassed (see M3 — this is an <strong>anti-metric</strong>, must stay <strong>low</strong>)</li>
+<li><strong>Approval friction</strong> — number of approval prompts per task (see M3)</li>
+</ul>
+<h3 id="efficiency-numeric">Efficiency (numeric)</h3>
+<ul>
+<li><strong>Time-to-PR</strong> — from prompt to ready result</li>
+<li><strong>Iteration count</strong> — how many reformulations</li>
+<li><strong>Token usage per task</strong> — economics, especially on paid APIs</li>
+<li><strong>Tool call distribution</strong> — which tools the agent calls most</li>
+</ul>
+<h3 id="trust-meta">Trust (meta)</h3>
+<ul>
+<li><strong>Inspectability score</strong> — % of agent steps <strong>you</strong> saw and understood (see M3 — 5 artifacts)</li>
+<li><strong>Post-mortem count</strong> — how often you had to dig into “why did the agent do this”</li>
+</ul>
+<h2 id="measurement-anti-patterns">Measurement anti-patterns</h2>
+<h3 id="1-good-number-instead-of-right-number">1. “Good number” instead of “right number”</h3>
+<p>Most common miss. You picked the metric “lines of code per day” — the agent started writing <strong>more</strong>, but <strong>worse</strong>. Metric grew, reality got worse.</p>
+<p><strong>Cure:</strong> the metric must reflect <strong>what you actually want</strong>, not a surrogate. Pass rate on a reference suite is <strong>outcome</strong>. Lines of code is <strong>activity</strong>, not outcome.</p>
+<h3 id="2-one-run--a-metric">2. One run ≠ a metric</h3>
+<p>Ran the suite, got <strong>78 %</strong>. Cheers. Ran again — <strong>65 %</strong>. What happened?</p>
+<p><strong>Nothing.</strong> The <strong>model has high variance</strong>. One run is a <strong>point</strong>, not a <strong>signal</strong>.</p>
+<p><strong>Cure:</strong> for serious decisions — <strong>3+ runs</strong>, means ± standard deviation. For tracking — pin <strong>seeds</strong> for random components.</p>
+<h3 id="3-metric-passed-therefore-works">3. “Metric passed, therefore works”</h3>
+<p>The trickiest anti-pattern (see B10). You hit <strong>94 %</strong> on the suite. You think — “great, the agent <strong>works</strong>.”</p>
+<p>The suite is <strong>30 cases</strong>. In reality you have <strong>300 types</strong> of task. The suite <strong>doesn’t cover</strong> 90 % of reality.</p>
+<p><strong>Cure:</strong> periodically <strong>update</strong> the suite — add cases from <strong>actual screw-ups</strong>. Every time the agent seriously dropped the ball — that case goes <strong>into the suite</strong>. In a year the suite becomes <strong>representative</strong>.</p>
+<h3 id="4-metric--pressure--manipulation">4. Metric → pressure → manipulation</h3>
+<p>In the team you announce “pass rate must be >85 %.” The team starts <strong>tuning the suite</strong> to hit 85 %. Cases the agent reliably fails on — <strong>deleted</strong>.</p>
+<p><strong>Cure:</strong> <strong>separate</strong> tracking from pressure. Metric — for <strong>information</strong>, not for “KPI.” Same conversation as developer productivity metrics (commits/day, etc.) — they <strong>rot</strong> the moment they become the goal.</p>
+<h2 id="a-short-aside">A short aside ⚡</h2>
+<p>A real story. One of the folks running an agentic pipeline initially measured <strong>“token cost per task.”</strong> Convenient metric: cheap = good.</p>
+<p>Two months in the agent <strong>forgot how</strong> to do hard tasks — because we <strong>trained</strong> it to minimise tokens, not deliver <strong>outcomes</strong>. Did it <strong>cheap</strong> and <strong>badly</strong>.</p>
+<p>Changed the metric to <strong>“pass rate × (1 − cost-relative-to-baseline)”</strong> — a “result and cost” compromise. Got better.</p>
+<p>I think about this every time someone proposes “let’s just measure X.” <strong>X doesn’t exist</strong> in a vacuum. Every metric is <strong>pressure</strong>, and <strong>pressure warps</strong> the system.</p>
+<h2 id="example-stand-up-a-reference-suite-in-an-hour">Example: stand up a reference suite in an hour</h2>
+<p>Take a typical dev project (CRUD web app).</p>
+<h3 id="step-1-pick-10-typical-tasks-15-minutes">Step 1. Pick 10 typical tasks (15 minutes)</h3>
+<p>In <code>evals/cases.md</code>:</p>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="markdown"><code><span class="line"><span style="color:#BD93F9;--shiki-light-font-weight:bold;--shiki-dark:#BD93F9;--shiki-dark-font-weight:bold"># Reference Suite v1</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#BD93F9;--shiki-light-font-weight:bold;--shiki-dark:#BD93F9;--shiki-dark-font-weight:bold">## Case 01 — refactor controller</span></span>
+<span class="line"><span style="color:#FFB86C;--shiki-light-font-weight:bold;--shiki-dark:#FFB86C;--shiki-dark-font-weight:bold">**Input:**</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2"> In </span><span style="color:#50FA7B;--shiki-dark:#50FA7B">`src/api/users.ts`</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2"> the </span><span style="color:#50FA7B;--shiki-dark:#50FA7B">`createUser`</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2"> method mixes validation, business logic, and DB access. Extract validation into a separate module </span><span style="color:#50FA7B;--shiki-dark:#50FA7B">`validators/userValidator.ts`</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">.</span></span>
+<span class="line"><span style="color:#FFB86C;--shiki-light-font-weight:bold;--shiki-dark:#FFB86C;--shiki-dark-font-weight:bold">**Expected:**</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">- File </span><span style="color:#50FA7B;--shiki-dark:#50FA7B">`src/validators/userValidator.ts`</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2"> exists</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">- </span><span style="color:#50FA7B;--shiki-dark:#50FA7B">`createUser`</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2"> imports from the new module</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">- Existing tests </span><span style="color:#50FA7B;--shiki-dark:#50FA7B">`users.test.ts`</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2"> pass</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#BD93F9;--shiki-light-font-weight:bold;--shiki-dark:#BD93F9;--shiki-dark-font-weight:bold">## Case 02 — bug fix</span></span>
+<span class="line"><span style="color:#FFB86C;--shiki-light-font-weight:bold;--shiki-dark:#FFB86C;--shiki-dark-font-weight:bold">**Input:**</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2"> Test </span><span style="color:#50FA7B;--shiki-dark:#50FA7B">`cart.test.ts → calculates discount`</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2"> fails. Symptom: when coupon='WELCOME10' returns 0 instead of 10 %. Find the cause and fix.</span></span>
+<span class="line"><span style="color:#FFB86C;--shiki-light-font-weight:bold;--shiki-dark:#FFB86C;--shiki-dark-font-weight:bold">**Expected:**</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">- Test green</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">- Changes only in </span><span style="color:#50FA7B;--shiki-dark:#50FA7B">`cart.ts`</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2"> or </span><span style="color:#50FA7B;--shiki-dark:#50FA7B">`discount.ts`</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">- No hardcoded branches for a specific coupon</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#BD93F9;--shiki-light-font-weight:bold;--shiki-dark:#BD93F9;--shiki-dark-font-weight:bold">## Case 03 — feature add</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">...</span></span></code></pre>
+<p>10 cases cover: refactors, bug fixes, new features, docs, tests, security.</p>
+<h3 id="step-2-manual-run-30-minutes">Step 2. Manual run (30 minutes)</h3>
+<p>For each case:</p>
+<ol>
+<li>Clean branch</li>
+<li>Feed input to the agent</li>
+<li>Time it, observe-mode</li>
+<li>On completion — verify expected by hand</li>
+<li>Record pass/fail + a note</li>
+</ol>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="markdown"><code><span class="line"><span style="color:#BD93F9;--shiki-light-font-weight:bold;--shiki-dark:#BD93F9;--shiki-dark-font-weight:bold">## Run 2026-05-15</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">| # | Pass | Time | Notes |</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">|---|---|---|---|</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">| 01 | ✓ | 8m | OK |</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">| 02 | ✗ | 12m | proposed a workaround, not root-cause |</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">| 03 | ✓ | 6m | OK, stray change in comments |</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">...</span></span></code></pre>
+<h3 id="step-3-analysis-15-minutes">Step 3. Analysis (15 minutes)</h3>
+<ul>
+<li><strong>Pass rate:</strong> 7/10 = 70 %</li>
+<li><strong>Where does it fail?</strong> Hard debug tasks (02), security (08)</li>
+<li><strong>Trend?</strong> Last month was 6/10 — there’s progress</li>
+</ul>
+<p>A month later — <strong>repeat</strong>. That’s <strong>measurement</strong>.</p>
+<h2 id="eval-as-a-team-practice">Eval as a team practice</h2>
+<p>If the team has >1 developer on agents — a shared suite is <strong>mandatory</strong>. Otherwise:</p>
+<ul>
+<li>Each tunes the agent “for themselves”</li>
+<li>Configs drift apart</li>
+<li>Nobody knows if the <strong>collective</strong> got better or worse</li>
+</ul>
+<p>Rules for a team suite:</p>
+<ol>
+<li><strong>Common suite in the repo</strong> — <code>evals/cases.yaml</code> in the same branch as code</li>
+<li><strong>Owned by a maintainer</strong> — the suite <strong>has an owner</strong>, otherwise it rots</li>
+<li><strong>Update on incident</strong> — every prod incident → new case</li>
+<li><strong>Quarterly review</strong> — quarterly, drop what’s stale</li>
+<li><strong>No blame on numbers</strong> — numbers = information, not KPI</li>
+</ol>
+<h2 id="practice-6090-minutes">Practice (60–90 minutes)</h2>
+<h3 id="task-1-30-minutes--build-your-reference-suite">Task 1 (30 minutes) — build your reference suite</h3>
+<p>Find 5 <strong>real</strong> tasks you gave the agent in the last month — successes and failures. Write them into <code>evals/cases.md</code> by the template: input + expected.</p>
+<p>That’s your <strong>first baseline</strong>. In 2 weeks — run. In a month — run again.</p>
+<h3 id="task-2-1530-minutes--formal-log">Task 2 (15–30 minutes) — formal log</h3>
+<p>Start <code>evals/log.md</code>. Record the <strong>last 5</strong> significant sessions <strong>after the fact</strong>: task, what was good, what bad, time, reverts.</p>
+<p>This is the <strong>minimum</strong> measurement level, and it <strong>pays back</strong> in 2–3 weeks — patterns become visible.</p>
+<h3 id="task-3-15-minutes--pick-a-not-your-metric">Task 3 (15 minutes) — pick a “not-your” metric</h3>
+<p>Think about which metric you <strong>could</strong> introduce in the team and <strong>why it would warp</strong> the system. A useful exercise <strong>before</strong> you introduce a metric — spot the <strong>anti-pattern</strong> in advance.</p>
+<h2 id="recap">Recap</h2>
+<ul>
+<li><strong>No measurement of quality — no Middle level.</strong> “Feels worse” is <strong>not a signal</strong>, it’s <strong>noise</strong>.</li>
+<li><strong>Three measurement tiers:</strong> session log (5 min/week) → reference suite (one hour setup) → automated pipeline.</li>
+<li><strong>Anti-patterns:</strong> “good number instead of right number,” “one run = metric,” “passed the suite = ok,” “metric as KPI.”</li>
+</ul>
+<h2 id="vibe-samurai">Vibe Samurai</h2>
+<aside class="skeptic">
+<p><strong>🥷 Vibe Samurai asks:</strong>
+“This is bureaucracy! I work alone, why would I need a reference suite?”</p>
+<p><strong>Answer:</strong> The suite isn’t “bureaucracy,” it’s <strong>your external memory of quality</strong>. In 3 months you <strong>won’t remember</strong> which tasks the agent was good at in March. Without a suite you’ll <strong>guess</strong>. With it — you check the numbers and <strong>know</strong>. Same story as git: “why commit, I work alone” → <strong>because</strong> without commits you lose control fast. The suite is <strong>commits for quality</strong>. Minimum level — <strong>5 minutes/week</strong>, and it pays off the <strong>first</strong> “feels like the agent got duller, but actually I just framed the task wrong.” <strong>Not perfect, but actually works.</strong></p>
+</aside>
+<h2 id="whats-next">What’s next</h2>
+<p>In <strong>M12 — Regression tests for agents</strong> we turn the reference suite into an <strong>automated</strong> regression harness. Golden examples, snapshot testing, CI hooks. After M12 you’ll catch <strong>regressions</strong> instantly — no more two weeks of “hmm, something feels worse.”</p>
+<p>If this clicked — share with anyone working with agents who says “kind of OK, but sometimes nonsense.” If you have <strong>your own</strong> metric that works well — tell me in the comments, we’ll unpack it. Your feedback really helps polish the material.</p>
+<h2 id="-further-reading">📚 Further reading</h2>
+<p>The chapter is deliberately “without heavy maths” — but every claim sits on concrete sources. Take one at a time, don’t try to swallow everything at once.</p>
+<p><strong>Anthropic — eval methodology</strong></p>
+<ul>
+<li><strong>Create strong empirical evaluations</strong> — Anthropic’s official guide on building evals: rubrics, grading types, common mistakes: <a href="https://docs.claude.com/en/docs/test-and-evaluate/develop-tests">docs.claude.com/en/docs/test-and-evaluate/develop-tests</a>.</li>
+<li><strong>A statistical approach to model evaluations</strong> — Anthropic Research post on paired-difference tests and why one run ≠ a metric: <a href="https://www.anthropic.com/research/statistical-approach-to-model-evals">anthropic.com/research/statistical-approach-to-model-evals</a>.</li>
+<li><strong>anthropic-cookbook · building_evals.ipynb</strong> — a working notebook showing what evals look like “by hand”: <a href="https://github.com/anthropics/anthropic-cookbook/blob/main/misc/building_evals.ipynb">github.com/anthropics/anthropic-cookbook/blob/main/misc/building_evals.ipynb</a>.</li>
+</ul>
+<p><strong>OpenAI and community benchmarks</strong></p>
+<ul>
+<li><strong>openai/evals</strong> — OpenAI’s framework + open registry of benchmarks, a handy reference for eval classes and the YAML structure: <a href="https://github.com/openai/evals">github.com/openai/evals</a>.</li>
+<li><strong>SWE-bench leaderboards</strong> — where to look for real agent-benchmarks on code (Verified / Pro / Lite): <a href="https://www.swebench.com/">swebench.com</a>.</li>
+</ul>
+<blockquote>
+<p><strong>Tip:</strong> don’t copy other people’s evals wholesale — take the idea (the rubric, the grading format) and rebuild for your domain. Universal evals = uniformly mediocre.</p>
+</blockquote> <nav class="chapter-nav" data-astro-cid-a7sruqtr> <a href="/vibesamurai-site/courses/middle/m10/en" data-astro-cid-a7sruqtr> <span class="dir" data-astro-cid-a7sruqtr>← Back</span> <span class="title" data-astro-cid-a7sruqtr>M10 · State, drift, continuity</span> </a> <a href="/vibesamurai-site/courses/middle/m12/en" data-astro-cid-a7sruqtr> <span class="dir" data-astro-cid-a7sruqtr>Next →</span> <span class="title" data-astro-cid-a7sruqtr>M12 · Regression tests for agents</span> </a> </nav> </main>  </div> <script type="module">
+    import { gatingEnabled } from '../lib/supabase';
+    import { fetchChapter } from '../lib/auth';
+
+    const base = import.meta.env.BASE_URL;
+    let mermaidLib = null;
+
+    function scopeOf(root) {
+      return root === document ? document.querySelector('.reader-main') : root;
+    }
+
+    function addCopyBtns(root) {
+      const scope = scopeOf(root); if (!scope) return;
+      scope.querySelectorAll('pre').forEach((pre) => {
+        if (pre.closest('.code-tabs')) return;
+        if (pre.querySelector('.copy-btn')) return;
+        const btn = document.createElement('button');
+        btn.className = 'copy-btn';
+        btn.textContent = 'copy';
+        btn.addEventListener('click', async () => {
+          const code = pre.querySelector('code')?.textContent ?? pre.textContent ?? '';
+          await navigator.clipboard.writeText(code.trimEnd());
+          btn.textContent = '✓ copied';
+          setTimeout(() => { btn.textContent = 'copy'; }, 1600);
+        });
+        pre.appendChild(btn);
+      });
+    }
+
+    function tightenMermaidSvgs(retries = 6) {
+      let pending = false;
+      document.querySelectorAll('.mermaid svg').forEach((svg) => {
+        if (svg.dataset.tightened === '1') return;
+        try {
+          const bbox = svg.getBBox();
+          if (!bbox || bbox.width === 0) { pending = true; return; }
+          const pad = 6;
+          svg.setAttribute('viewBox',
+            `${bbox.x - pad} ${bbox.y - pad} ${bbox.width + pad * 2} ${bbox.height + pad * 2}`);
+          svg.removeAttribute('height');
+          svg.style.height = 'auto';
+          svg.style.maxWidth = '100%';
+          svg.style.display = 'block';
+          svg.dataset.tightened = '1';
+        } catch (e) { pending = true; }
+      });
+      if (pending && retries > 0) setTimeout(() => tightenMermaidSvgs(retries - 1), 120);
+    }
+
+    async function ensureMermaid() {
+      if (mermaidLib) return mermaidLib;
+      const mod = await import('https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs');
+      mermaidLib = mod.default;
+      mermaidLib.initialize({
+        startOnLoad: false, theme: 'neutral',
+        themeVariables: {
+          fontFamily: 'JetBrains Mono, ui-monospace, monospace',
+          primaryColor: '#f5f5f5', primaryBorderColor: '#222',
+          primaryTextColor: '#111', lineColor: '#444',
+        },
+        flowchart: { curve: 'basis', padding: 12, useMaxWidth: true },
+      });
+      return mermaidLib;
+    }
+
+    async function renderMermaid(root) {
+      const scope = scopeOf(root); if (!scope) return;
+      const matches = scope.querySelectorAll(
+        'pre[data-language="mermaid"], pre.language-mermaid, code.language-mermaid'
+      );
+      if (!matches.length) return;
+      matches.forEach((el) => {
+        const block = el.tagName === 'CODE' ? el.closest('pre') || el : el;
+        const codeEl = block.querySelector('code') || block;
+        const wrap = document.createElement('div');
+        wrap.className = 'mermaid';
+        wrap.textContent = codeEl.textContent;
+        block.replaceWith(wrap);
+      });
+      try {
+        const m = await ensureMermaid();
+        await m.run();
+        tightenMermaidSvgs();
+      } catch (err) {
+        console.warn('mermaid failed', err);
+        document.querySelectorAll('.mermaid:not(:has(svg))').forEach((el) => { el.style.display = 'none'; });
+      }
+    }
+
+    async function enhance(root = document) {
+      addCopyBtns(root);
+      await renderMermaid(root);
+    }
+
+    function paywallHtml(required, needLogin) {
+      const label = { beginner: 'Beginner (300 ₽)', middle: 'Beginner + Middle (500 ₽)', all: 'Весь пакет (700 ₽)' }[required] || '';
+      return `<div class="paywall">
+        <div class="paywall-ic">🔒</div>
+        <h3>Эта глава — в платном доступе</h3>
+        <p>Нужен тариф: <strong>${label}</strong>. Доступ навсегда, без подписки.</p>
+        ${needLogin ? '<p>Войди через Google и оформи доступ — продолжишь с любого устройства.</p>' : ''}
+        <a class="paywall-btn" href="${base}pricing">Открыть доступ →</a>
+        <a class="paywall-link" href="${base}account">Войти / мой аккаунт</a>
+      </div>`;
+    }
+
+    async function gatedFlow(mount) {
+      const slug = mount.dataset.slug;
+      const required = mount.dataset.required || 'beginner';
+      mount.innerHTML = '<p class="gate-msg">Проверяем доступ…</p>';
+      const res = await fetchChapter(slug);
+      if (res.ok) {
+        mount.innerHTML = res.html;
+        await enhance(mount);
+      } else if (res.status === 401) {
+        mount.innerHTML = paywallHtml(required, true);
+      } else if (res.status === 402) {
+        mount.innerHTML = paywallHtml(res.requiredTier || required, false);
+      } else {
+        mount.innerHTML = '<p class="gate-msg">Не удалось загрузить главу. Обнови страницу.</p>';
+      }
+    }
+
+    const mount = document.getElementById('gated-mount');
+    if (mount && gatingEnabled) gatedFlow(mount);
+    else enhance(document);
+  </script> </body> </html>

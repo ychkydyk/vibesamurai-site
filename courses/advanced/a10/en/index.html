@@ -1,0 +1,251 @@
+<!DOCTYPE html><html lang="en" data-astro-cid-a7sruqtr> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Audio-reactive AV installations — Vibesamurai</title><meta name="description" content="TD audio (VB-Cable loopback), spectral / onset / envelope, mapping into visuals. 27 flows, Tier 1 (in-house AudioReact) vs Tier 2 (audiobridge.js)."><meta property="og:title" content="Audio-reactive AV installations"><meta property="og:type" content="article"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Inter:wght@300..800&family=JetBrains+Mono:wght@400..600&display=swap" rel="stylesheet"><link rel="stylesheet" href="/vibesamurai-site/_astro/_slug_.Cs4TX1wt.css">
+<style>.account-btn{display:inline-flex;align-items:center;gap:var(--space-2);font-family:var(--font-mono);font-size:var(--size-2);text-transform:uppercase;letter-spacing:.06em;padding:5px 10px;border:1px solid var(--rule);border-radius:999px;color:var(--text-soft);background:var(--surface);transition:border-color var(--d-fast),color var(--d-fast)}.account-btn:hover{border-color:var(--accent);color:var(--text)}.account-ic{width:18px;height:18px;display:grid;place-items:center;border-radius:50%;background:var(--accent);color:var(--accent-ink);font-weight:700;font-size:10px;line-height:1}.reader-rail .account-btn{padding:0;border:none;background:transparent}.reader-rail .account-label{display:none}.reader-rail .account-ic{width:32px;height:32px;font-size:13px}.rail-toggle{width:36px;height:36px;display:grid;place-items:center;background:var(--accent);border:1px solid var(--accent);border-radius:4px;cursor:pointer;transition:filter var(--d-fast),transform var(--d-fast);padding:0}.rail-toggle:hover{filter:brightness(1.08);transform:translateY(-1px)}.rail-toggle:active{transform:translateY(0)}.rail-toggle-icon{width:14px;height:12px;border-left:2px solid var(--accent-ink);border-right:2px solid var(--accent-ink);transition:transform var(--d-normal) var(--ease-standard)}.reader-app.sidebar-open .rail-toggle-icon{transform:rotate(0)}.reader-app:not(.sidebar-open) .rail-toggle-icon{transform:scaleX(.5)}.sidebar-backdrop{display:none;position:fixed;inset:0;background:#0000008c;z-index:140;border:0;padding:0;cursor:pointer}@media(max-width:900px){.reader-app.sidebar-open~.sidebar-backdrop{display:block}}.rail-spacer[data-astro-cid-ofsbkzh7]{flex:1}.reader-sidebar[data-astro-cid-khgtvzrl] .ru-tag[data-astro-cid-khgtvzrl]{font-style:normal;font-family:var(--font-mono);font-size:.7em;color:var(--text-mute);margin-left:4px;padding:1px 4px;border:1px solid var(--rule);border-radius:3px;text-transform:uppercase;vertical-align:middle}.chapter-eyebrow[data-astro-cid-a7sruqtr]{display:flex;justify-content:space-between;align-items:center;gap:var(--space-3)}.lang-toggle[data-astro-cid-a7sruqtr]{font-family:var(--font-mono);font-size:var(--size-2);padding:2px 8px;border:1px solid var(--rule);border-radius:4px;color:var(--text-mute);text-decoration:none;text-transform:uppercase;letter-spacing:.08em}.lang-toggle[data-astro-cid-a7sruqtr]:hover{color:var(--accent);border-color:var(--accent)}.code-tabs[data-astro-cid-hg66rjob]{margin:var(--space-5) 0}.code-tabs-nav[data-astro-cid-hg66rjob]{display:flex;gap:2px;margin-bottom:-1px;position:relative;z-index:1}.ctab[data-astro-cid-hg66rjob]{font-family:var(--font-mono);font-size:11px;text-transform:uppercase;letter-spacing:.07em;padding:5px 14px;border:1px solid #21222c;border-bottom:none;background:#1a1b23;color:#6272a4;cursor:pointer;border-radius:4px 4px 0 0;transition:color .12s,background .12s}.ctab[data-astro-cid-hg66rjob].is-active{background:#282a36;color:#f8f8f2;border-color:#21222c}.ctab[data-astro-cid-hg66rjob]:hover:not(.is-active){color:#cdd6f4}.ctab-panel[data-astro-cid-hg66rjob]{display:none}.ctab-panel[data-astro-cid-hg66rjob].is-active{display:block}.ctab-panel[data-astro-cid-hg66rjob] pre{margin-top:0!important;border-radius:0 6px 6px!important}
+</style></head> <body data-astro-cid-a7sruqtr> <div class="reader-app" data-astro-cid-a7sruqtr> <aside class="reader-rail" data-astro-cid-ofsbkzh7> <a href="/vibesamurai-site/" class="logo" aria-label="Vibesamurai home" data-astro-cid-ofsbkzh7>V</a> <button type="button" class="rail-toggle" id="sidebar-toggle" aria-label="Свернуть/развернуть оглавление" title="Свернуть/развернуть оглавление" data-astro-cid-ofsbkzh7> <span class="rail-toggle-icon" aria-hidden="true" data-astro-cid-ofsbkzh7></span> </button> <div class="rail-spacer" data-astro-cid-ofsbkzh7></div> <a href="/vibesamurai-site/account" class="account-btn" id="account-btn" aria-label="Аккаунт"> <span class="account-ic" id="account-ic">⌂</span> <span class="account-label" id="account-label">Войти</span> </a>  <script type="module" src="/vibesamurai-site/_astro/AccountButton.astro_astro_type_script_index_0_lang.CmD2sdn9.js"></script> </aside>  <button type="button" class="sidebar-backdrop" id="sidebar-backdrop" aria-label="Закрыть оглавление" tabindex="-1" data-astro-cid-ofsbkzh7></button>  <script type="module">const d="vs-sidebar-open",a="(max-width: 900px)";function t(e){const n=document.querySelector(".reader-app");n&&n.classList.toggle("sidebar-open",e)}function r(){return!window.matchMedia(a).matches}function s(){const e=localStorage.getItem(d),i=window.matchMedia(a).matches?!1:e!==null?e==="1":r();t(i),document.getElementById("sidebar-toggle")?.addEventListener("click",()=>{const c=!document.querySelector(".reader-app")?.classList.contains("sidebar-open");window.matchMedia(a).matches||localStorage.setItem(d,c?"1":"0"),t(c)}),document.getElementById("sidebar-backdrop")?.addEventListener("click",()=>t(!1)),document.querySelectorAll(".reader-sidebar a").forEach(o=>{o.addEventListener("click",()=>{window.matchMedia(a).matches&&t(!1)})})}document.readyState==="loading"?document.addEventListener("DOMContentLoaded",s):s();</script> <aside class="reader-sidebar" data-astro-cid-khgtvzrl> <div class="breadcrumb" data-astro-cid-khgtvzrl>Vibesamurai · Advanced Path · A10</div> <h4 data-astro-cid-khgtvzrl>In this course</h4> <ul data-astro-cid-khgtvzrl> <li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a1/en" class data-astro-cid-khgtvzrl> A1 · AI studio stack — May 2026  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a2/en" class data-astro-cid-khgtvzrl> A2 · Multi-modal pipeline architecture  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a3/en" class data-astro-cid-khgtvzrl> A3 · Local vs Cloud matrix  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a4/en" class data-astro-cid-khgtvzrl> A4 · Design system as a contract  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a5/en" class data-astro-cid-khgtvzrl> A5 · Image generation for a brand  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a6/en" class data-astro-cid-khgtvzrl> A6 · Marketplace + product photoshoot  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a7/en" class data-astro-cid-khgtvzrl> A7 · Video generation pipelines  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a8/en" class data-astro-cid-khgtvzrl> A8 · Identity-preserving generation  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a9/en" class data-astro-cid-khgtvzrl> A9 · TouchDesigner + StreamDiffusion  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a10/en" class="current" data-astro-cid-khgtvzrl> A10 · Audio-reactive AV installations  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a11/en" class data-astro-cid-khgtvzrl> A11 · Interactive booths: STT+LLM+TTS+CV  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a12/en" class data-astro-cid-khgtvzrl> A12 · Telemetry → control loop  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a13/en" class data-astro-cid-khgtvzrl> A13 · Private RAG for an archive  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a14/en" class data-astro-cid-khgtvzrl> A14 · Local LLMs on 8GB VRAM  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a15/en" class data-astro-cid-khgtvzrl> A15 · RunPod Flash + vLLM  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a16/en" class data-astro-cid-khgtvzrl> A16 · Custom MCP servers  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a17/en" class data-astro-cid-khgtvzrl> A17 · Token economics across modalities  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a18/en" class data-astro-cid-khgtvzrl> A18 · Eval for creative output  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a19/en" class data-astro-cid-khgtvzrl> A19 · Security in a creative studio  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a20/en" class data-astro-cid-khgtvzrl> A20 · Capstone: launching the studio  </a> </li> </ul>  </aside> <main class="reader-main" data-astro-cid-a7sruqtr> <div class="chapter-eyebrow" data-astro-cid-a7sruqtr> <span data-astro-cid-a7sruqtr>Advanced Path · a10</span> <a class="lang-toggle" href="/vibesamurai-site/courses/advanced/a10" aria-label="Switch to RU" data-astro-cid-a7sruqtr>RU</a> </div> <h1 class="chapter-title" data-astro-cid-a7sruqtr>A10 · Audio-reactive AV installations</h1> <p class="chapter-subtitle" data-astro-cid-a7sruqtr>TD audio (VB-Cable loopback), spectral / onset / envelope, mapping into visuals. 27 flows, Tier 1 (in-house AudioReact) vs Tier 2 (audiobridge.js).</p> <h2 id="what-were-building">What we’re building</h2>
+<p>An audio-reactive AV installation: audio input (system sound or microphone) → feature extraction (spectral / onset / envelope) → mapping into visual parameters → render in TD or in the browser. Latency &#x3C;50 ms (above that the audience hears motion “lag” behind the music).</p>
+<h2 id="getting-audio-into-td">Getting audio into TD</h2>
+<p>WASAPI loopback isn’t available in the current TD build (memory <code>project_td_audioreact_audio</code>). The fix is VB-Cable:</p>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>SYSTEM AUDIO ──► VB-Cable (virtual sink) ──► TD Audio Device In (loopback)</span></span>
+<span class="line"><span>                            │</span></span>
+<span class="line"><span>                            └─► Windows Listen-Through ──► real speakers</span></span></code></pre>
+<p>VB-Cable captures system audio, TD reads it as a regular mic input, Listen-Through forwards it to the physical speakers/headphones. Without Listen-Through the audience hears nothing while the visuals react — a classic first-run mistake.</p>
+<p>Container layout in the <code>.toe</code>:</p>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>INPUT  (subcontainer)   audio in CHOP + analyzer CHOPs</span></span>
+<span class="line"><span>OUTPUT (subcontainer)   visual rendering, projector mapping</span></span></code></pre>
+<p>Reference project file — <code>Clode_React.toe</code> on the desktop.</p>
+<h2 id="audio-features">Audio features</h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Feature</th><th>What it shows</th><th>Where to use</th></tr></thead><tbody><tr><td><strong>Volume RMS</strong></td><td>Loudness</td><td>Base “amplitude” of motion</td></tr><tr><td><strong>Spectrum (FFT)</strong></td><td>Frequency distribution</td><td>Colour, shape, texture</td></tr><tr><td><strong>Onset</strong></td><td>Sharp changes (drum, hit)</td><td>Triggers, flash</td></tr><tr><td><strong>Beat</strong></td><td>Tempo</td><td>Pulse, rhythmic motif</td></tr><tr><td><strong>Envelope (ADSR)</strong></td><td>Attack/sustain/release</td><td>Smooth fading</td></tr><tr><td><strong>Centroid</strong></td><td>Spectral brightness</td><td>”Brightness” of the scene</td></tr></tbody></table>
+<p>Simple rule: for impact/trigger → onset; for smooth motion → envelope; for colour/palette → spectrum.</p>
+<h2 id="audio-analyzer">Audio analyzer</h2>
+<p>From production (memory <code>project_td_audioreact_flows</code>): a separate Python module <code>audio_analyzer.py</code> is Phase B. Pre-processes the signal before it reaches the TD flow.</p>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="python"><code><span class="line"><span style="color:#FF79C6;--shiki-dark:#FF79C6">import</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2"> numpy </span><span style="color:#FF79C6;--shiki-dark:#FF79C6">as</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2"> np</span></span>
+<span class="line"><span style="color:#FF79C6;--shiki-dark:#FF79C6">import</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2"> librosa</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#FF79C6;--shiki-dark:#FF79C6">def</span><span style="color:#50FA7B;--shiki-dark:#50FA7B"> analyze</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">(</span><span style="color:#FFB86C;--shiki-light-font-style:italic;--shiki-dark:#FFB86C;--shiki-dark-font-style:italic">samples</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">:</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2"> np.ndarray, </span><span style="color:#FFB86C;--shiki-light-font-style:italic;--shiki-dark:#FFB86C;--shiki-dark-font-style:italic">sr</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">:</span><span style="color:#8BE9FD;--shiki-light-font-style:italic;--shiki-dark:#8BE9FD;--shiki-dark-font-style:italic"> int</span><span style="color:#FF79C6;--shiki-dark:#FF79C6"> =</span><span style="color:#BD93F9;--shiki-dark:#BD93F9"> 48000</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">):</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    rms </span><span style="color:#FF79C6;--shiki-dark:#FF79C6">=</span><span style="color:#8BE9FD;--shiki-light-font-style:italic;--shiki-dark:#8BE9FD;--shiki-dark-font-style:italic"> float</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">(np.sqrt(np.mean(samples </span><span style="color:#FF79C6;--shiki-dark:#FF79C6">**</span><span style="color:#BD93F9;--shiki-dark:#BD93F9"> 2</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">)))</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    spec </span><span style="color:#FF79C6;--shiki-dark:#FF79C6">=</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2"> np.abs(np.fft.rfft(samples)[:</span><span style="color:#BD93F9;--shiki-dark:#BD93F9">1024</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">])</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    onset </span><span style="color:#FF79C6;--shiki-dark:#FF79C6">=</span><span style="color:#8BE9FD;--shiki-light-font-style:italic;--shiki-dark:#8BE9FD;--shiki-dark-font-style:italic"> float</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">(librosa.onset.onset_strength(</span><span style="color:#FFB86C;--shiki-light-font-style:italic;--shiki-dark:#FFB86C;--shiki-dark-font-style:italic">y</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">=</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">samples, </span><span style="color:#FFB86C;--shiki-light-font-style:italic;--shiki-dark:#FFB86C;--shiki-dark-font-style:italic">sr</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">=</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">sr).mean())</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    centroid </span><span style="color:#FF79C6;--shiki-dark:#FF79C6">=</span><span style="color:#8BE9FD;--shiki-light-font-style:italic;--shiki-dark:#8BE9FD;--shiki-dark-font-style:italic"> float</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">(librosa.feature.spectral_centroid(</span><span style="color:#FFB86C;--shiki-light-font-style:italic;--shiki-dark:#FFB86C;--shiki-dark-font-style:italic">y</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">=</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">samples, </span><span style="color:#FFB86C;--shiki-light-font-style:italic;--shiki-dark:#FFB86C;--shiki-dark-font-style:italic">sr</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">=</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">sr).mean())</span></span>
+<span class="line"><span style="color:#FF79C6;--shiki-dark:#FF79C6">    return</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2"> {</span></span>
+<span class="line"><span style="color:#E9F284;--shiki-dark:#E9F284">        "</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">rms</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">: rms,</span></span>
+<span class="line"><span style="color:#E9F284;--shiki-dark:#E9F284">        "</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">spectrum_bands</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">: spec.tolist(),</span></span>
+<span class="line"><span style="color:#E9F284;--shiki-dark:#E9F284">        "</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">onset</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">: onset,</span></span>
+<span class="line"><span style="color:#E9F284;--shiki-dark:#E9F284">        "</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">centroid</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">: centroid,</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    }</span></span></code></pre>
+<p>Into TD via a DAT (for metadata) or CHOP (for continuous values). Again — not HTTP; latency is critical.</p>
+<h2 id="tier-1-vs-tier-2">Tier 1 vs Tier 2</h2>
+<p>The collection of 27 flows (memory <code>project_td_audioreact_flows</code>) has two tiers:</p>
+<ul>
+<li><strong>Tier 1</strong> — an in-house AudioReact stack running entirely in TD. Minimum dependencies, low latency, but written from scratch.</li>
+<li><strong>Tier 2</strong> — via <code>audiobridge.js</code>, ready-made bridges from web/Wekinator. Faster start, but adds ~30 ms over the bridge.</li>
+</ul>
+<p>Tier 1 — for production (a festival, a client install). Tier 2 — for a prototype or an AV evening where a small delay is acceptable.</p>
+<p>There are also <strong>55 factory presets</strong> — a starting sketch, not the finished product.</p>
+<h2 id="real-case-av_jam_lab_demo-av-evening">Real case: av_jam_lab_demo AV evening</h2>
+<p>From memory <code>project_av_jam_lab_demo</code>: a series of AV evenings, the first demo on 2026-05-08 in the office lab (24-hour event), tdmkii + TD on a 4070, installations A/B/C/F.</p>
+<p>Stack:</p>
+<ul>
+<li><strong>A</strong> — sound → spectrum → 3D particles;</li>
+<li><strong>B</strong> — onset → trigger generative video (StreamDiffusion from A9);</li>
+<li><strong>C</strong> — envelope + centroid → projection colour;</li>
+<li><strong>F</strong> — voice input → text → visual typography (via STT — see A11).</li>
+</ul>
+<p>Day-of prep: load 55 factory presets, pick the closest matches to the concept, set up VB-Cable, test for 30 minutes on a live signal, freeze the setup. Without the factory presets you spend the whole day on basic CHOP plumbing.</p>
+<h2 id="scene-player">Scene Player</h2>
+<p>From memory <code>project_td_audioreact_flows</code>: Scene Player is Phase C. It’s a control layer on top of the flows — switching scenes via timeline, MIDI, OSC, or hotkeys.</p>
+<p>The architecture is simple: one parameter container holds the active scene; switching changes the routes to the output TOPs.</p>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>TIMELINE / MIDI / OSC ──► Scene Player ──► scene_id (int)</span></span>
+<span class="line"><span>                                              │</span></span>
+<span class="line"><span>                                              ├──► [0] flow_a active</span></span>
+<span class="line"><span>                                              ├──► [1] flow_b active</span></span>
+<span class="line"><span>                                              ├──► [2] flow_c active</span></span>
+<span class="line"><span>                                              └──► [3] flow_f active</span></span></code></pre>
+<p>Without Scene Player the performer jumps between <code>.toe</code> files by hand — and the audience sees it in the projection.</p>
+<h2 id="pitfalls">Pitfalls</h2>
+<ul>
+<li><strong>WASAPI loopback isn’t in your TD build</strong> — don’t spend hours hunting “how to enable it”; install VB-Cable.</li>
+<li><strong>Forgot Listen-Through</strong> — the audience hears nothing but sees the reaction. Catch this in a 30-second test before the public.</li>
+<li><strong>Smoothing kills onset</strong> — if you smooth the onset CHOP, the hits disappear. Smooth the envelope, not the onset.</li>
+<li><strong>Big FFT buffer</strong> — the spectrum “lags.” Keep 512–1024 samples per FFT block at 48 kHz.</li>
+<li><strong>TD main-thread hang</strong> — a known issue (memory <code>project_td_audioreact_hang</code>). Don’t run WS servers on the same thread as <code>frame_exec</code>.</li>
+</ul>
+<h2 id="recap">Recap</h2>
+<ul>
+<li>VB-Cable for system audio in TD; Listen-Through is mandatory.</li>
+<li>6 base audio features; for triggers use onset, for motion use envelope, for palette use spectrum.</li>
+<li>Tier 1 (in-house AudioReact) — production; Tier 2 (audiobridge.js) — prototype/AV evening.</li>
+<li>Scene Player + Tier 1 flows — working configuration for an hour-long installation.</li>
+<li>Latency budget &#x3C;50 ms; FFT 512–1024 per block at 48 kHz.</li>
+</ul>
+<h2 id="further-reading">Further reading</h2>
+<ul>
+<li><strong>TouchDesigner — Audio Spectrum CHOP</strong> — <a href="https://docs.derivative.ca/Audio_Spectrum_CHOP">docs.derivative.ca/Audio_Spectrum_CHOP</a>. Baseline spectral analysis in TD.</li>
+<li><strong>VB-Audio Virtual Cable</strong> — <a href="https://vb-audio.com/Cable/">vb-audio.com/Cable</a>. Reference virtual sink for loopback on Windows.</li>
+<li><strong>librosa</strong> — <a href="https://librosa.org/">librosa.org</a>. Every audio feature with a clean API for the analyzer module.</li>
+<li><strong>The Interactive &#x26; Immersive HQ — TD basics for audio reactivity</strong> — <a href="https://interactiveimmersive.io/">interactiveimmersive.io</a>. Learning resources past the factory presets.</li>
+</ul> <nav class="chapter-nav" data-astro-cid-a7sruqtr> <a href="/vibesamurai-site/courses/advanced/a9/en" data-astro-cid-a7sruqtr> <span class="dir" data-astro-cid-a7sruqtr>← Back</span> <span class="title" data-astro-cid-a7sruqtr>A9 · TouchDesigner + StreamDiffusion</span> </a> <a href="/vibesamurai-site/courses/advanced/a11/en" data-astro-cid-a7sruqtr> <span class="dir" data-astro-cid-a7sruqtr>Next →</span> <span class="title" data-astro-cid-a7sruqtr>A11 · Interactive booths</span> </a> </nav> </main>  </div> <script type="module">
+    import { gatingEnabled } from '../lib/supabase';
+    import { fetchChapter } from '../lib/auth';
+
+    const base = import.meta.env.BASE_URL;
+    let mermaidLib = null;
+
+    function scopeOf(root) {
+      return root === document ? document.querySelector('.reader-main') : root;
+    }
+
+    function addCopyBtns(root) {
+      const scope = scopeOf(root); if (!scope) return;
+      scope.querySelectorAll('pre').forEach((pre) => {
+        if (pre.closest('.code-tabs')) return;
+        if (pre.querySelector('.copy-btn')) return;
+        const btn = document.createElement('button');
+        btn.className = 'copy-btn';
+        btn.textContent = 'copy';
+        btn.addEventListener('click', async () => {
+          const code = pre.querySelector('code')?.textContent ?? pre.textContent ?? '';
+          await navigator.clipboard.writeText(code.trimEnd());
+          btn.textContent = '✓ copied';
+          setTimeout(() => { btn.textContent = 'copy'; }, 1600);
+        });
+        pre.appendChild(btn);
+      });
+    }
+
+    function tightenMermaidSvgs(retries = 6) {
+      let pending = false;
+      document.querySelectorAll('.mermaid svg').forEach((svg) => {
+        if (svg.dataset.tightened === '1') return;
+        try {
+          const bbox = svg.getBBox();
+          if (!bbox || bbox.width === 0) { pending = true; return; }
+          const pad = 6;
+          svg.setAttribute('viewBox',
+            `${bbox.x - pad} ${bbox.y - pad} ${bbox.width + pad * 2} ${bbox.height + pad * 2}`);
+          svg.removeAttribute('height');
+          svg.style.height = 'auto';
+          svg.style.maxWidth = '100%';
+          svg.style.display = 'block';
+          svg.dataset.tightened = '1';
+        } catch (e) { pending = true; }
+      });
+      if (pending && retries > 0) setTimeout(() => tightenMermaidSvgs(retries - 1), 120);
+    }
+
+    async function ensureMermaid() {
+      if (mermaidLib) return mermaidLib;
+      const mod = await import('https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs');
+      mermaidLib = mod.default;
+      mermaidLib.initialize({
+        startOnLoad: false, theme: 'neutral',
+        themeVariables: {
+          fontFamily: 'JetBrains Mono, ui-monospace, monospace',
+          primaryColor: '#f5f5f5', primaryBorderColor: '#222',
+          primaryTextColor: '#111', lineColor: '#444',
+        },
+        flowchart: { curve: 'basis', padding: 12, useMaxWidth: true },
+      });
+      return mermaidLib;
+    }
+
+    async function renderMermaid(root) {
+      const scope = scopeOf(root); if (!scope) return;
+      const matches = scope.querySelectorAll(
+        'pre[data-language="mermaid"], pre.language-mermaid, code.language-mermaid'
+      );
+      if (!matches.length) return;
+      matches.forEach((el) => {
+        const block = el.tagName === 'CODE' ? el.closest('pre') || el : el;
+        const codeEl = block.querySelector('code') || block;
+        const wrap = document.createElement('div');
+        wrap.className = 'mermaid';
+        wrap.textContent = codeEl.textContent;
+        block.replaceWith(wrap);
+      });
+      try {
+        const m = await ensureMermaid();
+        await m.run();
+        tightenMermaidSvgs();
+      } catch (err) {
+        console.warn('mermaid failed', err);
+        document.querySelectorAll('.mermaid:not(:has(svg))').forEach((el) => { el.style.display = 'none'; });
+      }
+    }
+
+    async function enhance(root = document) {
+      addCopyBtns(root);
+      await renderMermaid(root);
+    }
+
+    function paywallHtml(required, needLogin) {
+      const label = { beginner: 'Beginner (300 ₽)', middle: 'Beginner + Middle (500 ₽)', all: 'Весь пакет (700 ₽)' }[required] || '';
+      return `<div class="paywall">
+        <div class="paywall-ic">🔒</div>
+        <h3>Эта глава — в платном доступе</h3>
+        <p>Нужен тариф: <strong>${label}</strong>. Доступ навсегда, без подписки.</p>
+        ${needLogin ? '<p>Войди через Google и оформи доступ — продолжишь с любого устройства.</p>' : ''}
+        <a class="paywall-btn" href="${base}pricing">Открыть доступ →</a>
+        <a class="paywall-link" href="${base}account">Войти / мой аккаунт</a>
+      </div>`;
+    }
+
+    async function gatedFlow(mount) {
+      const slug = mount.dataset.slug;
+      const required = mount.dataset.required || 'beginner';
+      mount.innerHTML = '<p class="gate-msg">Проверяем доступ…</p>';
+      const res = await fetchChapter(slug);
+      if (res.ok) {
+        mount.innerHTML = res.html;
+        await enhance(mount);
+      } else if (res.status === 401) {
+        mount.innerHTML = paywallHtml(required, true);
+      } else if (res.status === 402) {
+        mount.innerHTML = paywallHtml(res.requiredTier || required, false);
+      } else {
+        mount.innerHTML = '<p class="gate-msg">Не удалось загрузить главу. Обнови страницу.</p>';
+      }
+    }
+
+    const mount = document.getElementById('gated-mount');
+    if (mount && gatingEnabled) gatedFlow(mount);
+    else enhance(document);
+  </script> </body> </html>

@@ -1,0 +1,443 @@
+<!DOCTYPE html><html lang="en" data-astro-cid-a7sruqtr> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Incidents &amp; post-mortems — Vibesamurai</title><meta name="description" content="When the agent broke in prod. Incident response, blameless post-mortems, systemic lessons from incidents."><meta property="og:title" content="Incidents &#38; post-mortems"><meta property="og:type" content="article"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Inter:wght@300..800&family=JetBrains+Mono:wght@400..600&display=swap" rel="stylesheet"><link rel="stylesheet" href="/vibesamurai-site/_astro/_slug_.Cs4TX1wt.css">
+<style>.account-btn{display:inline-flex;align-items:center;gap:var(--space-2);font-family:var(--font-mono);font-size:var(--size-2);text-transform:uppercase;letter-spacing:.06em;padding:5px 10px;border:1px solid var(--rule);border-radius:999px;color:var(--text-soft);background:var(--surface);transition:border-color var(--d-fast),color var(--d-fast)}.account-btn:hover{border-color:var(--accent);color:var(--text)}.account-ic{width:18px;height:18px;display:grid;place-items:center;border-radius:50%;background:var(--accent);color:var(--accent-ink);font-weight:700;font-size:10px;line-height:1}.reader-rail .account-btn{padding:0;border:none;background:transparent}.reader-rail .account-label{display:none}.reader-rail .account-ic{width:32px;height:32px;font-size:13px}.rail-toggle{width:36px;height:36px;display:grid;place-items:center;background:var(--accent);border:1px solid var(--accent);border-radius:4px;cursor:pointer;transition:filter var(--d-fast),transform var(--d-fast);padding:0}.rail-toggle:hover{filter:brightness(1.08);transform:translateY(-1px)}.rail-toggle:active{transform:translateY(0)}.rail-toggle-icon{width:14px;height:12px;border-left:2px solid var(--accent-ink);border-right:2px solid var(--accent-ink);transition:transform var(--d-normal) var(--ease-standard)}.reader-app.sidebar-open .rail-toggle-icon{transform:rotate(0)}.reader-app:not(.sidebar-open) .rail-toggle-icon{transform:scaleX(.5)}.sidebar-backdrop{display:none;position:fixed;inset:0;background:#0000008c;z-index:140;border:0;padding:0;cursor:pointer}@media(max-width:900px){.reader-app.sidebar-open~.sidebar-backdrop{display:block}}.rail-spacer[data-astro-cid-ofsbkzh7]{flex:1}.reader-sidebar[data-astro-cid-khgtvzrl] .ru-tag[data-astro-cid-khgtvzrl]{font-style:normal;font-family:var(--font-mono);font-size:.7em;color:var(--text-mute);margin-left:4px;padding:1px 4px;border:1px solid var(--rule);border-radius:3px;text-transform:uppercase;vertical-align:middle}.chapter-eyebrow[data-astro-cid-a7sruqtr]{display:flex;justify-content:space-between;align-items:center;gap:var(--space-3)}.lang-toggle[data-astro-cid-a7sruqtr]{font-family:var(--font-mono);font-size:var(--size-2);padding:2px 8px;border:1px solid var(--rule);border-radius:4px;color:var(--text-mute);text-decoration:none;text-transform:uppercase;letter-spacing:.08em}.lang-toggle[data-astro-cid-a7sruqtr]:hover{color:var(--accent);border-color:var(--accent)}.code-tabs[data-astro-cid-hg66rjob]{margin:var(--space-5) 0}.code-tabs-nav[data-astro-cid-hg66rjob]{display:flex;gap:2px;margin-bottom:-1px;position:relative;z-index:1}.ctab[data-astro-cid-hg66rjob]{font-family:var(--font-mono);font-size:11px;text-transform:uppercase;letter-spacing:.07em;padding:5px 14px;border:1px solid #21222c;border-bottom:none;background:#1a1b23;color:#6272a4;cursor:pointer;border-radius:4px 4px 0 0;transition:color .12s,background .12s}.ctab[data-astro-cid-hg66rjob].is-active{background:#282a36;color:#f8f8f2;border-color:#21222c}.ctab[data-astro-cid-hg66rjob]:hover:not(.is-active){color:#cdd6f4}.ctab-panel[data-astro-cid-hg66rjob]{display:none}.ctab-panel[data-astro-cid-hg66rjob].is-active{display:block}.ctab-panel[data-astro-cid-hg66rjob] pre{margin-top:0!important;border-radius:0 6px 6px!important}
+</style></head> <body data-astro-cid-a7sruqtr> <div class="reader-app" data-astro-cid-a7sruqtr> <aside class="reader-rail" data-astro-cid-ofsbkzh7> <a href="/vibesamurai-site/" class="logo" aria-label="Vibesamurai home" data-astro-cid-ofsbkzh7>V</a> <button type="button" class="rail-toggle" id="sidebar-toggle" aria-label="Свернуть/развернуть оглавление" title="Свернуть/развернуть оглавление" data-astro-cid-ofsbkzh7> <span class="rail-toggle-icon" aria-hidden="true" data-astro-cid-ofsbkzh7></span> </button> <div class="rail-spacer" data-astro-cid-ofsbkzh7></div> <a href="/vibesamurai-site/account" class="account-btn" id="account-btn" aria-label="Аккаунт"> <span class="account-ic" id="account-ic">⌂</span> <span class="account-label" id="account-label">Войти</span> </a>  <script type="module" src="/vibesamurai-site/_astro/AccountButton.astro_astro_type_script_index_0_lang.CmD2sdn9.js"></script> </aside>  <button type="button" class="sidebar-backdrop" id="sidebar-backdrop" aria-label="Закрыть оглавление" tabindex="-1" data-astro-cid-ofsbkzh7></button>  <script type="module">const d="vs-sidebar-open",a="(max-width: 900px)";function t(e){const n=document.querySelector(".reader-app");n&&n.classList.toggle("sidebar-open",e)}function r(){return!window.matchMedia(a).matches}function s(){const e=localStorage.getItem(d),i=window.matchMedia(a).matches?!1:e!==null?e==="1":r();t(i),document.getElementById("sidebar-toggle")?.addEventListener("click",()=>{const c=!document.querySelector(".reader-app")?.classList.contains("sidebar-open");window.matchMedia(a).matches||localStorage.setItem(d,c?"1":"0"),t(c)}),document.getElementById("sidebar-backdrop")?.addEventListener("click",()=>t(!1)),document.querySelectorAll(".reader-sidebar a").forEach(o=>{o.addEventListener("click",()=>{window.matchMedia(a).matches&&t(!1)})})}document.readyState==="loading"?document.addEventListener("DOMContentLoaded",s):s();</script> <aside class="reader-sidebar" data-astro-cid-khgtvzrl> <div class="breadcrumb" data-astro-cid-khgtvzrl>Vibesamurai · Middle Path · M19</div> <h4 data-astro-cid-khgtvzrl>In this course</h4> <ul data-astro-cid-khgtvzrl> <li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m1/en" class data-astro-cid-khgtvzrl> M1 · What is agentic AI in the SDLC  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m2/en" class data-astro-cid-khgtvzrl> M2 · Architecting agent boundaries  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m3/en" class data-astro-cid-khgtvzrl> M3 · Observability and human-in-the-loop  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m4/en" class data-astro-cid-khgtvzrl> M4 · Tool inventory and permissions  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m5/en" class data-astro-cid-khgtvzrl> M5 · MCP deep dive  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m6/en" class data-astro-cid-khgtvzrl> M6 · Claude Code CLI mastery  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m7/en" class data-astro-cid-khgtvzrl> M7 · GPT-5.3 Codex CLI and OpenAI agents  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m8/en" class data-astro-cid-khgtvzrl> M8 · Cursor Composer + IDE agents  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m9/en" class data-astro-cid-khgtvzrl> M9 · Memory strategies  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m10/en" class data-astro-cid-khgtvzrl> M10 · State, drift, continuity  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m11/en" class data-astro-cid-khgtvzrl> M11 · Evaluating agents: metrics over vibes  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m12/en" class data-astro-cid-khgtvzrl> M12 · Regression tests for agents  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m13/en" class data-astro-cid-khgtvzrl> M13 · Tuning: what to change when metrics don&#39;t move  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m14/en" class data-astro-cid-khgtvzrl> M14 · One agent, many steps: pipelines and orchestration  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m15/en" class data-astro-cid-khgtvzrl> M15 · Multi-agent: roles, communication, supervisor  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m16/en" class data-astro-cid-khgtvzrl> M16 · When multi-agent is overkill. Anti-patterns  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m17/en" class data-astro-cid-khgtvzrl> M17 · Production: deploying agents to live environments  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m18/en" class data-astro-cid-khgtvzrl> M18 · Security in prod: secrets, sandbox, audit  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m19/en" class="current" data-astro-cid-khgtvzrl> M19 · Incidents &amp; post-mortems  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m20/en" class data-astro-cid-khgtvzrl> M20 · Finale: where to go after Middle  </a> </li> </ul>  </aside> <main class="reader-main" data-astro-cid-a7sruqtr> <div class="chapter-eyebrow" data-astro-cid-a7sruqtr> <span data-astro-cid-a7sruqtr>Middle Path · m19</span> <a class="lang-toggle" href="/vibesamurai-site/courses/middle/m19" aria-label="Switch to RU" data-astro-cid-a7sruqtr>RU</a> </div> <h1 class="chapter-title" data-astro-cid-a7sruqtr>M19 · Incidents &amp; post-mortems</h1> <p class="chapter-subtitle" data-astro-cid-a7sruqtr>When the agent broke in prod. Incident response, blameless post-mortems, systemic lessons from incidents.</p> <h2 id="hook">Hook</h2>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>DURING THE INCIDENT:              AFTER:</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>03:42 PagerDuty       →           post-mortem</span></span>
+<span class="line"><span>"agents stalled                   - what happened (timeline)</span></span>
+<span class="line"><span> cost 5x normal"                  - why (RCA, 5 whys)</span></span>
+<span class="line"><span>03:43 acknowledge                 - what to fix (action items)</span></span>
+<span class="line"><span>03:45 kill switch ON              - blameless</span></span>
+<span class="line"><span>03:46 mitigation                  - systemic changes</span></span>
+<span class="line"><span>03:50 hotfix</span></span>
+<span class="line"><span>04:10 monitoring restored</span></span></code></pre>
+<p>Hey folks, welcome 👋</p>
+<p>This chapter is about <strong>what to do</strong> when the agent in prod <strong>already broke</strong>. A <strong>mandatory</strong> skill for anyone shipping agents to production. Incidents are <strong>unavoidable</strong> — they can only be made <strong>cheaper</strong>.</p>
+<p>An hour. Quite practical, no excess terminology.</p>
+<h2 id="concept-an-incident-is-information-not-shame">Concept: an incident is <strong>information</strong>, not <strong>shame</strong></h2>
+<p>In classic engineering there’s a <strong>mature</strong> attitude toward incidents:</p>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>┌─────────────────────────────────────────────────────┐</span></span>
+<span class="line"><span>│  Immature team:                                     │</span></span>
+<span class="line"><span>│  - Incident = someone's mistake                     │</span></span>
+<span class="line"><span>│  - Post-mortem = blame hunt                         │</span></span>
+<span class="line"><span>│  - Action items = firing / reprimand                │</span></span>
+<span class="line"><span>│  - Result: people hide incidents                    │</span></span>
+<span class="line"><span>│                                                     │</span></span>
+<span class="line"><span>│  Mature team:                                       │</span></span>
+<span class="line"><span>│  - Incident = a signal about the system             │</span></span>
+<span class="line"><span>│  - Post-mortem = blameless analysis                 │</span></span>
+<span class="line"><span>│  - Action items = fix the SYSTEM, not the human     │</span></span>
+<span class="line"><span>│  - Result: every incident = improvement             │</span></span>
+<span class="line"><span>└─────────────────────────────────────────────────────┘</span></span></code></pre>
+<p>With agents — it <strong>gets worse</strong>. Since the agent is <strong>non-deterministic</strong>, incidents often <strong>don’t reproduce</strong> 100 %. That’s <strong>not a reason</strong> to chalk it up to “randomness” — it’s a reason to look <strong>systemically</strong>.</p>
+<h2 id="anatomy-of-an-agent-incident">Anatomy of an agent incident</h2>
+<p>A typical incident lifecycle for an agent system:</p>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>T0      Trigger (something went wrong)</span></span>
+<span class="line"><span>T+1m    Detection (alert / complaint)</span></span>
+<span class="line"><span>T+2m    Acknowledge (on-call takes it)</span></span>
+<span class="line"><span>T+5m    Mitigation (kill switch / failover)</span></span>
+<span class="line"><span>T+15m   Hotfix (if possible)</span></span>
+<span class="line"><span>T+30m   Resolution (service restored)</span></span>
+<span class="line"><span>T+1h    Stabilization (observation)</span></span>
+<span class="line"><span>T+24h   Post-mortem draft</span></span>
+<span class="line"><span>T+72h   Post-mortem review</span></span>
+<span class="line"><span>T+1w    Action items in motion</span></span></code></pre>
+<p>Each stage has its <strong>own</strong> rules.</p>
+<h2 id="stage-1-detection">Stage 1. Detection</h2>
+<p><strong>Good</strong> detection — when the <strong>alert fired</strong> before a user complaint.</p>
+<p>Metrics that <strong>must</strong> have alerts:</p>
+<ul>
+<li><strong>Error rate</strong> > 5 % over 5 minutes → P1</li>
+<li><strong>Cost rate</strong> > 2× baseline over 10 minutes → P1</li>
+<li><strong>Latency p95</strong> > 30 minutes → P2</li>
+<li><strong>Saturation</strong> (queue growing) → P2</li>
+<li><strong>Specific tool failures</strong> (e.g. deploy_tool fails 3 times) → P1</li>
+</ul>
+<p>Without alerts — you hear about issues <strong>through complaints</strong>, an hour or two later. <strong>Expensive.</strong></p>
+<h2 id="stage-2-acknowledge">Stage 2. Acknowledge</h2>
+<p>On-call sees the alert. <strong>5 minutes</strong> to acknowledge — else escalation. <strong>Discipline.</strong></p>
+<p>In chat — a <strong>dedicated incident channel</strong>:</p>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>#incident-2026-05-16-agent-stall</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>[03:43] @oncall acknowledged</span></span>
+<span class="line"><span>[03:44] @oncall investigating — cost 5x normal, no error spike</span></span>
+<span class="line"><span>[03:45] @oncall pulling logs from last 30 min</span></span>
+<span class="line"><span>...</span></span></code></pre>
+<p><strong>All</strong> actions in the channel, in timeline. Later — material for the post-mortem.</p>
+<h2 id="stage-3-mitigation">Stage 3. Mitigation</h2>
+<p><strong>First rule:</strong> stop the <strong>bleeding</strong> before chasing the root.</p>
+<p>Mitigations, from soft to hard:</p>
+<ol>
+<li><strong>Throttle</strong> — lower the rate (50 % of tasks only)</li>
+<li><strong>Pause new</strong> — feature flag, new tasks not accepted, current ones finish</li>
+<li><strong>Kill switch</strong> — all agents stopped, queue paused</li>
+<li><strong>Rollback</strong> — revert deploy to last known good</li>
+</ol>
+<p>Choice depends on the <strong>nature</strong> of the incident:</p>
+<ul>
+<li>Costs runaway → kill switch (immediately)</li>
+<li>Latency spike → throttle (soft)</li>
+<li>Regression after deploy → rollback</li>
+</ul>
+<p><strong>Don’t try</strong> to <strong>immediately</strong> “fix the root cause.” First <strong>stop the bleeding</strong>, then dig.</p>
+<h2 id="stage-4-diagnosis">Stage 4. Diagnosis</h2>
+<p>After mitigation — <strong>diagnosis</strong>. Now you use <strong>everything</strong> you built in M17 (logs, traces, audit log).</p>
+<p>Steps:</p>
+<ol>
+<li><strong>Timeline</strong> — what happened, when (from logs)</li>
+<li><strong>What changed?</strong> — deploy, config, model version, traffic pattern</li>
+<li><strong>Hypothesis</strong> — what could have caused it</li>
+<li><strong>Verification</strong> — confirm/refute with data</li>
+</ol>
+<h3 id="agent-incident-specifics">Agent-incident specifics</h3>
+<p>Unlike usual incidents:</p>
+<ul>
+<li><strong>Non-determinism</strong> — the same task may fail <strong>not every time</strong></li>
+<li><strong>Model drift</strong> — the provider may have <strong>silently</strong> rolled a new snapshot</li>
+<li><strong>Prompt injection</strong> — the attack may have come via user input</li>
+<li><strong>Cost runaway</strong> — usually caused by loops, not by <strong>one</strong> expensive task</li>
+</ul>
+<p>So <strong>dig more</strong> into:</p>
+<ul>
+<li>Session traces</li>
+<li>Tool-call logs</li>
+<li>Comparison against the baseline harness (M12)</li>
+</ul>
+<h2 id="stage-5-hotfix">Stage 5. Hotfix</h2>
+<p>If <strong>visibly</strong> something fixes it — hotfix. Small change, <strong>only</strong> what’s needed to stop further recurrences.</p>
+<p><strong>Don’t</strong> make the hotfix bigger than needed. <strong>Don’t</strong> refactor on the side. <strong>Don’t</strong> add “long wanted.” Hotfix = <strong>minimally</strong> sufficient fix.</p>
+<h2 id="stage-6-resolution--stabilisation">Stage 6. Resolution &#x26; stabilisation</h2>
+<p>Monitoring returns to baseline. Queue drains. Alerts clear.</p>
+<p><strong>Stabilisation period</strong> — 1–2 hours of active watch. It may <strong>recur</strong>, or <strong>another</strong> symptom may surface.</p>
+<h2 id="stage-7-post-mortem">Stage 7. Post-mortem</h2>
+<p><strong>Within 24–48 hours</strong> — write the post-mortem. Not when you’re hot, not a week later (when everyone’s forgotten).</p>
+<h3 id="structure">Structure</h3>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="markdown"><code><span class="line"><span style="color:#BD93F9;--shiki-light-font-weight:bold;--shiki-dark:#BD93F9;--shiki-dark-font-weight:bold"># Post-mortem: Agent stall 2026-05-16</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#BD93F9;--shiki-light-font-weight:bold;--shiki-dark:#BD93F9;--shiki-dark-font-weight:bold">## Summary</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">One paragraph: what happened, who was affected, how long.</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#BD93F9;--shiki-light-font-weight:bold;--shiki-dark:#BD93F9;--shiki-dark-font-weight:bold">## Impact</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">- Affected users: 230</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">- Failed sessions: 47</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">- Excess cost: $342</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">- Duration: 03:42 → 04:10 = 28 min</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#BD93F9;--shiki-light-font-weight:bold;--shiki-dark:#BD93F9;--shiki-dark-font-weight:bold">## Timeline (UTC)</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">- 03:42 — alert cost-rate > 2× baseline</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">- 03:43 — @oncall acknowledged</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">- 03:45 — identified loop in supervisor agent</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">- ... (full timeline from the incident channel)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#BD93F9;--shiki-light-font-weight:bold;--shiki-dark:#BD93F9;--shiki-dark-font-weight:bold">## Root cause</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">Supervisor agent fell into a loop because the worker returned invalid JSON,</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">and the supervisor's retry policy had no limit. The worker's updated prompt</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">added an instruction that broke the existing JSON schema.</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#BD93F9;--shiki-light-font-weight:bold;--shiki-dark:#BD93F9;--shiki-dark-font-weight:bold">## Contributing factors</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">- Worker prompt was changed 12 hours before the incident without a regression eval</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">- Supervisor retry policy had no hard cap (only exponential backoff)</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">- Cost alert threshold was too high (3× — updated to 2×)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#BD93F9;--shiki-light-font-weight:bold;--shiki-dark:#BD93F9;--shiki-dark-font-weight:bold">## What went well</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">- Alert fired one minute before cost runaway</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">- Kill switch activated in 3 minutes</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">- Mitigation effective, costs stabilised</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#BD93F9;--shiki-light-font-weight:bold;--shiki-dark:#BD93F9;--shiki-dark-font-weight:bold">## What went wrong</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">- No pre-deploy harness run for the prompt change</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">- Retry policy without a hard cap</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">- Post-mortem channel created only 5 minutes in</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#BD93F9;--shiki-light-font-weight:bold;--shiki-dark:#BD93F9;--shiki-dark-font-weight:bold">## Action items</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">| # | Action | Owner | Due |</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">|---|---|---|---|</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">| 1 | Add hard cap (max 5 retries) in supervisor | @alice | 2026-05-20 |</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">| 2 | Mandatory harness run on any prompt change | @bob | 2026-05-25 |</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">| 3 | Lower cost alert threshold to 1.5× | @carol | 2026-05-17 |</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">| 4 | Schema validation on worker output | @alice | 2026-05-22 |</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#BD93F9;--shiki-light-font-weight:bold;--shiki-dark:#BD93F9;--shiki-dark-font-weight:bold">## Lessons learned (system level)</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">- Agent prompts are </span><span style="color:#FFB86C;--shiki-light-font-weight:bold;--shiki-dark:#FFB86C;--shiki-dark-font-weight:bold">**code**</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">. They must go through the same gate (eval) as ordinary changes.</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">- Cost alerts are the earliest runaway signal. Keep the threshold low.</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">- Retry policies always need a hard cap. Exponential backoff isn't a substitute.</span></span></code></pre>
+<h3 id="rules-for-a-good-post-mortem">Rules for a good post-mortem</h3>
+<p><strong>1. Blameless.</strong> Not “Alice broke it,” but “the process let Alice break it.” Target — <strong>the system</strong>, not the person.</p>
+<p><strong>2. Concrete.</strong> Not “improve testing” — “add a regression suite for prompt changes by 2026-05-25.”</p>
+<p><strong>3. With owner and due date.</strong> Action item with no owner = won’t be done.</p>
+<p><strong>4. Accessible.</strong> Everyone on the team reads. Raises the collective understanding.</p>
+<p><strong>5. With follow-up.</strong> A month later — review which action items got done. Without follow-up post-mortems become theatre.</p>
+<h2 id="a-short-aside">A short aside ⚡</h2>
+<p>The most common post-mortem mistake with agents — <strong>blaming “LLM instability.”</strong> “Well, the model’s like that, sometimes it does that, what can you do.”</p>
+<p>That’s an <strong>excuse</strong>. Yes, the model is non-deterministic. But the <strong>system around it</strong> is deterministic. <strong>Budgets</strong>, <strong>retry policies</strong>, <strong>validation</strong>, <strong>kill switch</strong> — these are <strong>yours</strong>, not “the model’s fault.”</p>
+<p>If a post-mortem ends with “LLMs are stochastic, oh well” — <strong>that</strong> post-mortem <strong>didn’t do</strong> its job. There must be <strong>systemic</strong> actions.</p>
+<h2 id="incident-categories-and-typical-responses">Incident categories and typical responses</h2>
+<h3 id="1-cost-runaway">1. Cost runaway</h3>
+<p>Symptom: cost-rate spike.</p>
+<p>Causes:</p>
+<ul>
+<li>Loop (agent re-triggers itself)</li>
+<li>Retry with no cap</li>
+<li>One user sending huge prompts</li>
+</ul>
+<p>Response:</p>
+<ul>
+<li>Per-tenant rate limit</li>
+<li>Hard cap on retries</li>
+<li>Cost alert at 1.5× baseline</li>
+</ul>
+<h3 id="2-pass-rate-drop">2. Pass rate drop</h3>
+<p>Symptom: the harness shows a pass-rate drop after deploy.</p>
+<p>Causes:</p>
+<ul>
+<li>Prompt change</li>
+<li>Provider model update</li>
+<li>Dependency change</li>
+</ul>
+<p>Response:</p>
+<ul>
+<li>Pre-deploy harness gate</li>
+<li>Pin model ID</li>
+<li>Lock dependency versions</li>
+</ul>
+<h3 id="3-stuck-session">3. Stuck session</h3>
+<p>Symptom: sessions don’t finish.</p>
+<p>Causes:</p>
+<ul>
+<li>A tool doesn’t return (external API hang)</li>
+<li>Agent waiting for human input</li>
+<li>Deadlock between subtasks</li>
+</ul>
+<p>Response:</p>
+<ul>
+<li>Timeout per tool call</li>
+<li>Timeout per session</li>
+<li>Heartbeat monitor</li>
+</ul>
+<h3 id="4-data-exfiltration">4. Data exfiltration</h3>
+<p>Symptom: suspicious egress, or a leak complaint.</p>
+<p>Causes:</p>
+<ul>
+<li>Prompt injection</li>
+<li>Compromised MCP</li>
+<li>Bypassed sandbox</li>
+</ul>
+<p>Response:</p>
+<ul>
+<li><strong>Immediately</strong> kill switch</li>
+<li>Rotate ALL secrets</li>
+<li>Audit log review</li>
+<li>Forensics, incident isolation</li>
+</ul>
+<h3 id="5-cross-tenant-leak">5. Cross-tenant leak</h3>
+<p>Symptom: tenant A sees tenant B’s data.</p>
+<p>Causes:</p>
+<ul>
+<li>Shared cache without isolation</li>
+<li>Wrong tenant_id in the session</li>
+<li>Race condition in session management</li>
+</ul>
+<p>Response:</p>
+<ul>
+<li><strong>Immediately</strong> stop affected service</li>
+<li>Identify affected tenants</li>
+<li><strong>Notify</strong> clients (legal requirement in many jurisdictions)</li>
+<li>Forensics</li>
+</ul>
+<h2 id="training-chaos--gamedays">Training: chaos / gamedays</h2>
+<p>So the team <strong>doesn’t learn</strong> on live incidents — run <strong>gamedays</strong>. Quarterly:</p>
+<ol>
+<li>Someone on the team <strong>simulates</strong> an incident (kill a process, corrupt a config, simulate a spike)</li>
+<li>On-call <strong>walks</strong> through the response as <strong>on a live one</strong></li>
+<li>Measure: time-to-detection, time-to-mitigation</li>
+<li>Post-mortem — on the training incident</li>
+</ol>
+<p>It’s <strong>cheap</strong> and <strong>pays back</strong> on the <strong>first real</strong> incident.</p>
+<h2 id="practice-6090-minutes">Practice (60–90 minutes)</h2>
+<h3 id="task-1-30-minutes--runbook">Task 1 (30 minutes) — runbook</h3>
+<p>Write a <strong>runbook</strong> for one typical incident in <strong>your</strong> agent system. Template:</p>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="markdown"><code><span class="line"><span style="color:#BD93F9;--shiki-light-font-weight:bold;--shiki-dark:#BD93F9;--shiki-dark-font-weight:bold"># Runbook: Cost runaway</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#BD93F9;--shiki-light-font-weight:bold;--shiki-dark:#BD93F9;--shiki-dark-font-weight:bold">## How to detect</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">- Alert "cost-rate > 2× baseline"</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">- Manual: check Grafana dashboard "Agent Costs"</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#BD93F9;--shiki-light-font-weight:bold;--shiki-dark:#BD93F9;--shiki-dark-font-weight:bold">## Immediate actions</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">1. Acknowledge alert</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">2. Check kill switch toggle (#incident-channel)</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">3. If cost still climbing: activate kill switch</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#BD93F9;--shiki-light-font-weight:bold;--shiki-dark:#BD93F9;--shiki-dark-font-weight:bold">## Diagnosis</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">1. Open Grafana → Costs by Session</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">2. Find top-cost sessions</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">3. Open session logs in Loki</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">4. Look for loops in tool calls</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#BD93F9;--shiki-light-font-weight:bold;--shiki-dark:#BD93F9;--shiki-dark-font-weight:bold">## Resolution</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">- If loop: restart specific worker, file ticket</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">- If single large session: kill session, investigate</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#BD93F9;--shiki-light-font-weight:bold;--shiki-dark:#BD93F9;--shiki-dark-font-weight:bold">## Communication</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">- Update #incident channel every 5 min</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">- Notify affected tenants if > 30 min</span></span></code></pre>
+<h3 id="task-2-30-minutes--a-hypothetical-post-mortem">Task 2 (30 minutes) — a hypothetical post-mortem</h3>
+<p>Take a <strong>real</strong> incident from your practice (even a local one — “the agent burned $5 on the API in an hour”). Write a post-mortem <strong>to the template</strong> above. Find 2–3 systemic action items.</p>
+<h3 id="task-3-1530-minutes--gameday">Task 3 (15–30 minutes) — gameday</h3>
+<p>Agree with a colleague (or with yourself via a timer): one simulates an “alert” at a random moment during the day, the other <strong>walks</strong> through the response. Measure the time.</p>
+<h2 id="recap">Recap</h2>
+<ul>
+<li><strong>Incidents are information about the system</strong>, not shame on a person. Blameless always.</li>
+<li><strong>Stages:</strong> detect → ack → mitigate → diagnose → hotfix → resolve → post-mortem. Each has its own rules.</li>
+<li><strong>Post-mortem with action items, owner, due date.</strong> Without follow-up — theatre.</li>
+</ul>
+<h2 id="vibe-samurai">Vibe Samurai</h2>
+<aside class="skeptic">
+<p><strong>🥷 Vibe Samurai asks:</strong>
+“I have a small service, why do I need these procedures?”</p>
+<p><strong>Answer:</strong> The <strong>volume</strong> of procedure scales. Small service: <strong>minimum</strong> — runbook for 2–3 typical incidents, kill switch, alert on cost runaway. <strong>Post-mortems</strong> even in a small team — pay back at the first incident that would have <strong>recurred</strong> had you not written down the lesson. Big service — formal incident management, dedicated on-call, regular gamedays. <strong>Not everything</strong> at every level, but <strong>something</strong> at every level is mandatory. The minimum you <strong>never</strong> skip: kill switch + cost alert + runbook on runaway. <strong>Not perfect, but actually works.</strong></p>
+</aside>
+<h2 id="whats-next">What’s next</h2>
+<p>In <strong>M20 — Middle track finale</strong> — what you can do now, where to go, how to <strong>keep growing</strong> without the course. The 2026 industry map, growth directions, communities, resources. <strong>Stepping out</strong> into your own movement.</p>
+<p>If this clicked — share with anyone running an agent in prod <strong>without</strong> incident procedures. If you had an <strong>instructive</strong> incident — tell me in the comments, we’ll unpack it anonymously. Your feedback really helps polish the material.</p>
+<h2 id="-further-reading">📚 Further reading</h2>
+<p>Incident management is an old SRE discipline, and LLM agents added nothing radically new, only sharpened the old problems. So the base comes from those who’ve been at it for 20 years.</p>
+<p><strong>Google SRE — the foundation</strong></p>
+<ul>
+<li><strong>Postmortem Culture: Learning from Failure</strong> (SRE Book, ch. 15) — the canonical blameless-culture chapter, must-read in full: <a href="https://sre.google/sre-book/postmortem-culture/">sre.google/sre-book/postmortem-culture</a>.</li>
+<li><strong>Example postmortem</strong> (SRE Book) — a full sample post-mortem to lean on while writing your first: <a href="https://sre.google/sre-book/example-postmortem/">sre.google/sre-book/example-postmortem</a>.</li>
+<li><strong>Postmortem Action Items</strong> (USENIX ;login:, Lunney) — about the most painful part: what to do with action items after the post-mortem: <a href="https://sre.google/static/pdf/login_spring17_09_lunney.pdf">sre.google/static/pdf/login_spring17_09_lunney.pdf</a>.</li>
+</ul>
+<p><strong>Public incident case bank</strong></p>
+<ul>
+<li><strong>danluu/post-mortems</strong> — curated collection of public post-mortems; read one a week, build instinct: <a href="https://github.com/danluu/post-mortems">github.com/danluu/post-mortems</a>.</li>
+<li><strong>postmortems.app</strong> — a newer aggregator with tags and incident categories: <a href="https://postmortems.app/about">postmortems.app/about</a>.</li>
+</ul>
+<blockquote>
+<p><strong>Tip:</strong> start “an hour of other people’s post-mortems” every two weeks on the team — read one incident from danluu/post-mortems, discuss “would this break at our place?” Cheap prevention that catches real holes before they become your post-mortem.</p>
+</blockquote> <nav class="chapter-nav" data-astro-cid-a7sruqtr> <a href="/vibesamurai-site/courses/middle/m18/en" data-astro-cid-a7sruqtr> <span class="dir" data-astro-cid-a7sruqtr>← Back</span> <span class="title" data-astro-cid-a7sruqtr>M18 · Security in prod: secrets, sandbox, audit</span> </a> <a href="/vibesamurai-site/courses/middle/m20/en" data-astro-cid-a7sruqtr> <span class="dir" data-astro-cid-a7sruqtr>Next →</span> <span class="title" data-astro-cid-a7sruqtr>M20 · Finale: where to go after Middle</span> </a> </nav> </main>  </div> <script type="module">
+    import { gatingEnabled } from '../lib/supabase';
+    import { fetchChapter } from '../lib/auth';
+
+    const base = import.meta.env.BASE_URL;
+    let mermaidLib = null;
+
+    function scopeOf(root) {
+      return root === document ? document.querySelector('.reader-main') : root;
+    }
+
+    function addCopyBtns(root) {
+      const scope = scopeOf(root); if (!scope) return;
+      scope.querySelectorAll('pre').forEach((pre) => {
+        if (pre.closest('.code-tabs')) return;
+        if (pre.querySelector('.copy-btn')) return;
+        const btn = document.createElement('button');
+        btn.className = 'copy-btn';
+        btn.textContent = 'copy';
+        btn.addEventListener('click', async () => {
+          const code = pre.querySelector('code')?.textContent ?? pre.textContent ?? '';
+          await navigator.clipboard.writeText(code.trimEnd());
+          btn.textContent = '✓ copied';
+          setTimeout(() => { btn.textContent = 'copy'; }, 1600);
+        });
+        pre.appendChild(btn);
+      });
+    }
+
+    function tightenMermaidSvgs(retries = 6) {
+      let pending = false;
+      document.querySelectorAll('.mermaid svg').forEach((svg) => {
+        if (svg.dataset.tightened === '1') return;
+        try {
+          const bbox = svg.getBBox();
+          if (!bbox || bbox.width === 0) { pending = true; return; }
+          const pad = 6;
+          svg.setAttribute('viewBox',
+            `${bbox.x - pad} ${bbox.y - pad} ${bbox.width + pad * 2} ${bbox.height + pad * 2}`);
+          svg.removeAttribute('height');
+          svg.style.height = 'auto';
+          svg.style.maxWidth = '100%';
+          svg.style.display = 'block';
+          svg.dataset.tightened = '1';
+        } catch (e) { pending = true; }
+      });
+      if (pending && retries > 0) setTimeout(() => tightenMermaidSvgs(retries - 1), 120);
+    }
+
+    async function ensureMermaid() {
+      if (mermaidLib) return mermaidLib;
+      const mod = await import('https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs');
+      mermaidLib = mod.default;
+      mermaidLib.initialize({
+        startOnLoad: false, theme: 'neutral',
+        themeVariables: {
+          fontFamily: 'JetBrains Mono, ui-monospace, monospace',
+          primaryColor: '#f5f5f5', primaryBorderColor: '#222',
+          primaryTextColor: '#111', lineColor: '#444',
+        },
+        flowchart: { curve: 'basis', padding: 12, useMaxWidth: true },
+      });
+      return mermaidLib;
+    }
+
+    async function renderMermaid(root) {
+      const scope = scopeOf(root); if (!scope) return;
+      const matches = scope.querySelectorAll(
+        'pre[data-language="mermaid"], pre.language-mermaid, code.language-mermaid'
+      );
+      if (!matches.length) return;
+      matches.forEach((el) => {
+        const block = el.tagName === 'CODE' ? el.closest('pre') || el : el;
+        const codeEl = block.querySelector('code') || block;
+        const wrap = document.createElement('div');
+        wrap.className = 'mermaid';
+        wrap.textContent = codeEl.textContent;
+        block.replaceWith(wrap);
+      });
+      try {
+        const m = await ensureMermaid();
+        await m.run();
+        tightenMermaidSvgs();
+      } catch (err) {
+        console.warn('mermaid failed', err);
+        document.querySelectorAll('.mermaid:not(:has(svg))').forEach((el) => { el.style.display = 'none'; });
+      }
+    }
+
+    async function enhance(root = document) {
+      addCopyBtns(root);
+      await renderMermaid(root);
+    }
+
+    function paywallHtml(required, needLogin) {
+      const label = { beginner: 'Beginner (300 ₽)', middle: 'Beginner + Middle (500 ₽)', all: 'Весь пакет (700 ₽)' }[required] || '';
+      return `<div class="paywall">
+        <div class="paywall-ic">🔒</div>
+        <h3>Эта глава — в платном доступе</h3>
+        <p>Нужен тариф: <strong>${label}</strong>. Доступ навсегда, без подписки.</p>
+        ${needLogin ? '<p>Войди через Google и оформи доступ — продолжишь с любого устройства.</p>' : ''}
+        <a class="paywall-btn" href="${base}pricing">Открыть доступ →</a>
+        <a class="paywall-link" href="${base}account">Войти / мой аккаунт</a>
+      </div>`;
+    }
+
+    async function gatedFlow(mount) {
+      const slug = mount.dataset.slug;
+      const required = mount.dataset.required || 'beginner';
+      mount.innerHTML = '<p class="gate-msg">Проверяем доступ…</p>';
+      const res = await fetchChapter(slug);
+      if (res.ok) {
+        mount.innerHTML = res.html;
+        await enhance(mount);
+      } else if (res.status === 401) {
+        mount.innerHTML = paywallHtml(required, true);
+      } else if (res.status === 402) {
+        mount.innerHTML = paywallHtml(res.requiredTier || required, false);
+      } else {
+        mount.innerHTML = '<p class="gate-msg">Не удалось загрузить главу. Обнови страницу.</p>';
+      }
+    }
+
+    const mount = document.getElementById('gated-mount');
+    if (mount && gatingEnabled) gatedFlow(mount);
+    else enhance(document);
+  </script> </body> </html>

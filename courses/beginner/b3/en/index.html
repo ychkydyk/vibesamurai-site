@@ -1,0 +1,259 @@
+<!DOCTYPE html><html lang="en" data-astro-cid-a7sruqtr> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>First conversation — Vibesamurai</title><meta name="description" content="How to ask the agent and what to ask. Anatomy of a good request. When to accept, when to say 'no, redo it'."><meta property="og:title" content="First conversation"><meta property="og:type" content="article"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Inter:wght@300..800&family=JetBrains+Mono:wght@400..600&display=swap" rel="stylesheet"><link rel="stylesheet" href="/vibesamurai-site/_astro/_slug_.Cs4TX1wt.css">
+<style>.account-btn{display:inline-flex;align-items:center;gap:var(--space-2);font-family:var(--font-mono);font-size:var(--size-2);text-transform:uppercase;letter-spacing:.06em;padding:5px 10px;border:1px solid var(--rule);border-radius:999px;color:var(--text-soft);background:var(--surface);transition:border-color var(--d-fast),color var(--d-fast)}.account-btn:hover{border-color:var(--accent);color:var(--text)}.account-ic{width:18px;height:18px;display:grid;place-items:center;border-radius:50%;background:var(--accent);color:var(--accent-ink);font-weight:700;font-size:10px;line-height:1}.reader-rail .account-btn{padding:0;border:none;background:transparent}.reader-rail .account-label{display:none}.reader-rail .account-ic{width:32px;height:32px;font-size:13px}.rail-toggle{width:36px;height:36px;display:grid;place-items:center;background:var(--accent);border:1px solid var(--accent);border-radius:4px;cursor:pointer;transition:filter var(--d-fast),transform var(--d-fast);padding:0}.rail-toggle:hover{filter:brightness(1.08);transform:translateY(-1px)}.rail-toggle:active{transform:translateY(0)}.rail-toggle-icon{width:14px;height:12px;border-left:2px solid var(--accent-ink);border-right:2px solid var(--accent-ink);transition:transform var(--d-normal) var(--ease-standard)}.reader-app.sidebar-open .rail-toggle-icon{transform:rotate(0)}.reader-app:not(.sidebar-open) .rail-toggle-icon{transform:scaleX(.5)}.sidebar-backdrop{display:none;position:fixed;inset:0;background:#0000008c;z-index:140;border:0;padding:0;cursor:pointer}@media(max-width:900px){.reader-app.sidebar-open~.sidebar-backdrop{display:block}}.rail-spacer[data-astro-cid-ofsbkzh7]{flex:1}.reader-sidebar[data-astro-cid-khgtvzrl] .ru-tag[data-astro-cid-khgtvzrl]{font-style:normal;font-family:var(--font-mono);font-size:.7em;color:var(--text-mute);margin-left:4px;padding:1px 4px;border:1px solid var(--rule);border-radius:3px;text-transform:uppercase;vertical-align:middle}.chapter-eyebrow[data-astro-cid-a7sruqtr]{display:flex;justify-content:space-between;align-items:center;gap:var(--space-3)}.lang-toggle[data-astro-cid-a7sruqtr]{font-family:var(--font-mono);font-size:var(--size-2);padding:2px 8px;border:1px solid var(--rule);border-radius:4px;color:var(--text-mute);text-decoration:none;text-transform:uppercase;letter-spacing:.08em}.lang-toggle[data-astro-cid-a7sruqtr]:hover{color:var(--accent);border-color:var(--accent)}.code-tabs[data-astro-cid-hg66rjob]{margin:var(--space-5) 0}.code-tabs-nav[data-astro-cid-hg66rjob]{display:flex;gap:2px;margin-bottom:-1px;position:relative;z-index:1}.ctab[data-astro-cid-hg66rjob]{font-family:var(--font-mono);font-size:11px;text-transform:uppercase;letter-spacing:.07em;padding:5px 14px;border:1px solid #21222c;border-bottom:none;background:#1a1b23;color:#6272a4;cursor:pointer;border-radius:4px 4px 0 0;transition:color .12s,background .12s}.ctab[data-astro-cid-hg66rjob].is-active{background:#282a36;color:#f8f8f2;border-color:#21222c}.ctab[data-astro-cid-hg66rjob]:hover:not(.is-active){color:#cdd6f4}.ctab-panel[data-astro-cid-hg66rjob]{display:none}.ctab-panel[data-astro-cid-hg66rjob].is-active{display:block}.ctab-panel[data-astro-cid-hg66rjob] pre{margin-top:0!important;border-radius:0 6px 6px!important}
+</style></head> <body data-astro-cid-a7sruqtr> <div class="reader-app" data-astro-cid-a7sruqtr> <aside class="reader-rail" data-astro-cid-ofsbkzh7> <a href="/vibesamurai-site/" class="logo" aria-label="Vibesamurai home" data-astro-cid-ofsbkzh7>V</a> <button type="button" class="rail-toggle" id="sidebar-toggle" aria-label="Свернуть/развернуть оглавление" title="Свернуть/развернуть оглавление" data-astro-cid-ofsbkzh7> <span class="rail-toggle-icon" aria-hidden="true" data-astro-cid-ofsbkzh7></span> </button> <div class="rail-spacer" data-astro-cid-ofsbkzh7></div> <a href="/vibesamurai-site/account" class="account-btn" id="account-btn" aria-label="Аккаунт"> <span class="account-ic" id="account-ic">⌂</span> <span class="account-label" id="account-label">Войти</span> </a>  <script type="module" src="/vibesamurai-site/_astro/AccountButton.astro_astro_type_script_index_0_lang.CmD2sdn9.js"></script> </aside>  <button type="button" class="sidebar-backdrop" id="sidebar-backdrop" aria-label="Закрыть оглавление" tabindex="-1" data-astro-cid-ofsbkzh7></button>  <script type="module">const d="vs-sidebar-open",a="(max-width: 900px)";function t(e){const n=document.querySelector(".reader-app");n&&n.classList.toggle("sidebar-open",e)}function r(){return!window.matchMedia(a).matches}function s(){const e=localStorage.getItem(d),i=window.matchMedia(a).matches?!1:e!==null?e==="1":r();t(i),document.getElementById("sidebar-toggle")?.addEventListener("click",()=>{const c=!document.querySelector(".reader-app")?.classList.contains("sidebar-open");window.matchMedia(a).matches||localStorage.setItem(d,c?"1":"0"),t(c)}),document.getElementById("sidebar-backdrop")?.addEventListener("click",()=>t(!1)),document.querySelectorAll(".reader-sidebar a").forEach(o=>{o.addEventListener("click",()=>{window.matchMedia(a).matches&&t(!1)})})}document.readyState==="loading"?document.addEventListener("DOMContentLoaded",s):s();</script> <aside class="reader-sidebar" data-astro-cid-khgtvzrl> <div class="breadcrumb" data-astro-cid-khgtvzrl>Vibesamurai · Beginner Path · B3</div> <h4 data-astro-cid-khgtvzrl>In this course</h4> <ul data-astro-cid-khgtvzrl> <li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b1/en" class data-astro-cid-khgtvzrl> B1 · What is an AI agent  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b2/en" class data-astro-cid-khgtvzrl> B2 · Installing your first AI agent  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b3/en" class="current" data-astro-cid-khgtvzrl> B3 · First conversation  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b4/en" class data-astro-cid-khgtvzrl> B4 · What&#39;s a repo and why commit  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b5/en" class data-astro-cid-khgtvzrl> B5 · Building the first project (todo app)  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b6/en" class data-astro-cid-khgtvzrl> B6 · Reading the code the agent wrote  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b7/en" class data-astro-cid-khgtvzrl> B7 · Security for beginners  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b8/en" class data-astro-cid-khgtvzrl> B8 · Cursor vs Claude Code vs Codex CLI  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b9/en" class data-astro-cid-khgtvzrl> B9 · Deploying the first project  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b10/en" class data-astro-cid-khgtvzrl> B10 · How to evaluate the agent&#39;s output  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b11/en" class data-astro-cid-khgtvzrl> B11 · Capstone: build your own tool  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b12/en" class data-astro-cid-khgtvzrl> B12 · Where to go next  </a> </li> </ul>  </aside> <main class="reader-main" data-astro-cid-a7sruqtr> <div class="chapter-eyebrow" data-astro-cid-a7sruqtr> <span data-astro-cid-a7sruqtr>Beginner Path · b3</span> <a class="lang-toggle" href="/vibesamurai-site/courses/beginner/b3" aria-label="Switch to RU" data-astro-cid-a7sruqtr>RU</a> </div> <h1 class="chapter-title" data-astro-cid-a7sruqtr>B3 · First conversation</h1> <p class="chapter-subtitle" data-astro-cid-a7sruqtr>How to ask the agent and what to ask. Anatomy of a good request. When to accept, when to say &#39;no, redo it&#39;.</p> <h2 id="hook">Hook</h2>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>YOUR REQUEST:                 AGENT UNDERSTANDS:</span></span>
+<span class="line"><span>"make it pretty"      →       ??? (something, you won't guess)</span></span>
+<span class="line"><span>"change the Login    →        a specific edit</span></span>
+<span class="line"><span> button colour to blue"</span></span></code></pre>
+<p>Hey folks, welcome 👋</p>
+<p>In this chapter — the most important skill of the whole course: <strong>how to ask the agent so it gets you on the first try</strong>. No “magic prompts,” no “ChatGPT secret hacks from info-hawkers.” A simple structure that always works. Twenty minutes, and you’ll save yourself <strong>tens of hours</strong> over the coming months.</p>
+<h2 id="concept-a-request--a-small-contract">Concept: a request = a small contract</h2>
+<p>Think of each request to the agent as a <strong>mini-contract</strong>. Three things have to be in it:</p>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>┌─────────────────────────────────────────────────────┐</span></span>
+<span class="line"><span>│  1. WHAT TO DO       — concrete action              │</span></span>
+<span class="line"><span>│  2. WHERE            — file / folder / function     │</span></span>
+<span class="line"><span>│  3. HOW WE KNOW IT'S DONE — acceptance criterion    │</span></span>
+<span class="line"><span>└─────────────────────────────────────────────────────┘</span></span></code></pre>
+<p>That’s the <strong>base formula</strong>. If your request misses any of the three — the agent will guess. Sometimes right, sometimes not. Lottery.</p>
+<h3 id="bad-vs-good">Bad vs good</h3>
+<p><strong>Bad:</strong></p>
+<blockquote>
+<p>“Help with authorization”</p>
+</blockquote>
+<p>What’s wrong: unclear <em>what</em> to help with, <em>where</em> the code is, <em>what</em> counts as done. The agent will invent its own story — usually not yours.</p>
+<p><strong>Good:</strong></p>
+<blockquote>
+<p>“In the file <code>src/login.js</code> there’s a sign-in form. Add a check that the password is at least 8 characters. Done when: 1) for passwords shorter than 8 a message ‘Password too short’ appears, 2) for long enough — the form submits as before.”</p>
+</blockquote>
+<p>What’s good: clear <em>what</em> (validation), <em>where</em> (<code>src/login.js</code>), <em>how we know</em> (two concrete behaviours).</p>
+<h2 id="anatomy-of-a-good-request">Anatomy of a good request</h2>
+<p>Doesn’t have to be bulky. The minimum — <strong>one sentence by the formula</strong>:</p>
+<blockquote>
+<p>”<what> in <where> so that &#x3C;HOW WE KNOW IT’S DONE>.”</where></what></p>
+</blockquote>
+<p>Extensions — as needed:</p>
+<ul>
+<li><strong>“First show me the plan”</strong> — if the task is bigger than one move</li>
+<li><strong>“Don’t touch X”</strong> — if there are areas not to go into</li>
+<li><strong>“Use Y”</strong> — if you have preferences on tools/libraries</li>
+<li><strong>“Ask if unclear”</strong> — gives the right to re-ask rather than guess</li>
+</ul>
+<h3 id="template-to-copy">Template to copy</h3>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>What: ...</span></span>
+<span class="line"><span>Where: ...</span></span>
+<span class="line"><span>How we know it's done: ...</span></span>
+<span class="line"><span>Don't touch: ...</span></span>
+<span class="line"><span>Show me the plan first.</span></span></code></pre>
+<p>Keep this template handy — open in a text editor or as a bookmark. The first weeks you’ll consult it often, later — reflexively.</p>
+<h2 id="typical-beginner-mistakes">Typical beginner mistakes</h2>
+<h3 id="1-help-me">1. “Help me”</h3>
+<p>The most common. What “help” means is undefined. The agent does something to its taste. Cure: always swap “help” for a concrete verb.</p>
+<h3 id="2-make-it-pretty">2. “Make it pretty”</h3>
+<p>What does “pretty” mean? Bigger font? Different colour? Animation? You won’t guess. Cure: show an example (“like this screenshot,” “like site X”), or give concrete parameters.</p>
+<h3 id="3-fix-the-bug">3. “Fix the bug”</h3>
+<p>Which bug? Where? How to reproduce? What should be there instead? Cure: <strong>describe the repro first</strong>, then the expectation.</p>
+<h3 id="4-a-wall-of-text">4. A wall of text</h3>
+<p>Also bad: 5 paragraphs with every possible detail. The agent burns context figuring out what’s important. Cure: short by formula + optional “don’t touch.”</p>
+<h3 id="5-do-what-you-think-is-best">5. “Do what you think is best”</h3>
+<p>Sounds polite, actually — abdicating responsibility. The agent will do “what it thinks,” which rarely matches what you wanted. Cure: state preferences yourself, even uncertain ones.</p>
+<h2 id="example-a-bad-request-travelling-to-a-good-one">Example: a bad request travelling to a good one</h2>
+<p><strong>Round 1.</strong> “Make me a business-card site.”</p>
+<p>— What goes on the site? Dark or light? Name, role, contacts? One file or a folder?</p>
+<p><strong>Round 2.</strong> “HTML page, dark theme, my name ‘Ivan Ivanov,’ role ‘AI engineer,’ three contacts: email, telegram, github.”</p>
+<p>— OK. Font preferences? Images/photos needed?</p>
+<p><strong>Round 3.</strong> “Sans-serif, no images. File <code>index.html</code> in the current folder. Done when: opening the file in a browser shows the name, role, and three clickable contacts on a dark background. Show the plan before starting.”</p>
+<p>That’s <strong>a request you don’t have to clarify</strong>. The agent knows what to do, <em>where</em>, <em>what</em> counts as done.</p>
+<p>Can you write that on the first try? Yes. After 2–3 weeks of practice it becomes reflex.</p>
+<h2 id="when-to-accept-when-to-say-no-redo">When to accept, when to say “no, redo”</h2>
+<p>If you draw one full “move” of a conversation with the agent on a napkin — it looks like:</p>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="mermaid"><code><span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">flowchart LR</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    U([Your request&#x3C;br/>by formula]) --> P[Agent thinks&#x3C;br/>and writes a plan]</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    P --> A[Agent acts&#x3C;br/>files / commands]</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    A --> R[You inspect&#x3C;br/>the result]</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    R -->|ok| OK([Accept&#x3C;br/>+ commit])</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    R -->|almost| F([Clarify&#x3C;br/>and redo])</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    R -->|not at all| X([Roll back&#x3C;br/>start over])</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    F -.-> U</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    X -.-> U</span></span></code></pre>
+<p>After the agent did something, you have three buttons:</p>
+<h3 id="-accept--when">✅ “Accept” — when</h3>
+<ul>
+<li>Result fully matches the “how we know it’s done” from the request</li>
+<li>No extra “bonus” changes you didn’t ask for</li>
+<li>Only the expected files changed</li>
+</ul>
+<h3 id="-clarify-and-redo--when">🔁 “Clarify and redo” — when</h3>
+<ul>
+<li>Most of it is right, but something is off</li>
+<li>You need small tweaks (text, colour, spacing)</li>
+<li>A nudge “OK, but use Geist instead of Inter” — normal workflow</li>
+</ul>
+<h3 id="-roll-back-start-over--when">❌ “Roll back, start over” — when</h3>
+<ul>
+<li>The agent did “not what was asked,” wandered off</li>
+<li>Files were touched that shouldn’t have been</li>
+<li>Clearly cheaper to rephrase the task from scratch than to fix it</li>
+</ul>
+<p>Rolling back is <strong>normal</strong>. It’s not “a failure” or “the agent is bad.” It’s a normal working motion. In git the rollback is <code>git restore</code> (or hitting “Reject” in Cursor). In Claude Code — say “revert the latest changes.”</p>
+<h2 id="practice-30-minutes">Practice (30 minutes)</h2>
+<h3 id="task-1-15-minutes--rewrite-a-bad-request">Task 1 (15 minutes) — rewrite a bad request</h3>
+<p>Take <strong>your</strong> real request you might give an agent. E.g. “build me a portfolio page,” “help with my CV,” “write a Telegram weather bot.” <strong>Rewrite by the formula</strong> WHAT / WHERE / HOW WE KNOW.</p>
+<p>Compare both versions. Which one is <strong>clearer to you</strong>? That’s the rule: if <strong>you</strong> can answer questions about it, the agent definitely can.</p>
+<h3 id="task-2-15-minutes--fire-a-good-request">Task 2 (15 minutes) — fire a good request</h3>
+<p>In an empty folder open <code>claude</code> and send your rewritten request. Look at the result. <strong>Check it against “how we know it’s done”</strong> — match or not?</p>
+<p>If yes — great, formula works. If not — what was missing in the formula? Note it for yourself. Apply next time.</p>
+<h2 id="recap">Recap</h2>
+<ul>
+<li><strong>Request = mini-contract</strong> of three parts: WHAT + WHERE + HOW WE KNOW.</li>
+<li><strong>Optional:</strong> “don’t touch,” “show me the plan first,” “use X.”</li>
+<li><strong>Three buttons after the result:</strong> accept / clarify-redo / roll-back-start-over. Rollback is normal.</li>
+</ul>
+<h2 id="vibe-samurai">Vibe Samurai</h2>
+<aside class="skeptic">
+<p><strong>🥷 Vibe Samurai asks:</strong>
+“That’s wasted time on phrasing! I want fast, not contract-writing.”</p>
+<p><strong>Answer:</strong> Ten seconds on the formula vs 10 minutes of “it did the wrong thing, I’m redoing.” Feels faster to “be short” — actually slower by multiples. Same as code review: “no need for tests, I write it right anyway” — everyone thought that, then caught bugs in prod. The formula is your mini-test before the request. <strong>Not perfect, but actually works.</strong></p>
+</aside>
+<h2 id="whats-next">What’s next</h2>
+<p>In <strong>B4 — What’s a repo and why commit</strong> we cover git in 20 minutes — only what’s needed to work safely with an agent. Without it, every agent mistake can become unrecoverable. With it — any mistake rolls back in one command.</p>
+<p>If this clicked — share with anyone working with an agent who keeps complaining “it did the wrong thing again.” If you have a recurring request that doesn’t land — write in the comments, we’ll unpack it together. Your feedback really helps.</p>
+<h2 id="-further-reading">📚 Further reading</h2>
+<p>The WHAT / WHERE / HOW WE KNOW formula is the first brick. If you want to hear the same idea in other words, from professionals — a short verified list.</p>
+<p><strong>Anthropic documentation</strong></p>
+<ul>
+<li><strong>Prompting best practices</strong> — <a href="https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/claude-prompting-best-practices">platform.claude.com/docs/en/build-with-claude/prompt-engineering/claude-prompting-best-practices</a>. Official guide on framing requests to Claude. Much overlaps with the chapter’s formula.</li>
+<li><strong>Best practices for Claude Code</strong> — <a href="https://code.claude.com/docs/en/best-practices">code.claude.com/docs/en/best-practices</a>. On talking to the agent in the terminal. The key idea “Explore first, then plan, then code” is exactly what we do with “show me the plan first.”</li>
+</ul>
+<p><strong>Video</strong></p>
+<ul>
+<li><strong>Prompting 101 — Code w/ Claude</strong> — <a href="https://www.youtube.com/watch?v=ysPbXH0LpIE">youtube.com/watch?v=ysPbXH0LpIE</a>. A short intro to the topic, lunch-break friendly.</li>
+</ul>
+<blockquote>
+<p><strong>Tip:</strong> keep a tab with <em>Prompting best practices</em> open the first week. Disputed phrasing questions are faster to settle there than to guess.</p>
+</blockquote> <nav class="chapter-nav" data-astro-cid-a7sruqtr> <a href="/vibesamurai-site/courses/beginner/b2/en" data-astro-cid-a7sruqtr> <span class="dir" data-astro-cid-a7sruqtr>← Back</span> <span class="title" data-astro-cid-a7sruqtr>B2 · Installing your first AI agent</span> </a> <a href="/vibesamurai-site/courses/beginner/b4/en" data-astro-cid-a7sruqtr> <span class="dir" data-astro-cid-a7sruqtr>Next →</span> <span class="title" data-astro-cid-a7sruqtr>B4 · What&#39;s a repo and why commit</span> </a> </nav> </main>  </div> <script type="module">
+    import { gatingEnabled } from '../lib/supabase';
+    import { fetchChapter } from '../lib/auth';
+
+    const base = import.meta.env.BASE_URL;
+    let mermaidLib = null;
+
+    function scopeOf(root) {
+      return root === document ? document.querySelector('.reader-main') : root;
+    }
+
+    function addCopyBtns(root) {
+      const scope = scopeOf(root); if (!scope) return;
+      scope.querySelectorAll('pre').forEach((pre) => {
+        if (pre.closest('.code-tabs')) return;
+        if (pre.querySelector('.copy-btn')) return;
+        const btn = document.createElement('button');
+        btn.className = 'copy-btn';
+        btn.textContent = 'copy';
+        btn.addEventListener('click', async () => {
+          const code = pre.querySelector('code')?.textContent ?? pre.textContent ?? '';
+          await navigator.clipboard.writeText(code.trimEnd());
+          btn.textContent = '✓ copied';
+          setTimeout(() => { btn.textContent = 'copy'; }, 1600);
+        });
+        pre.appendChild(btn);
+      });
+    }
+
+    function tightenMermaidSvgs(retries = 6) {
+      let pending = false;
+      document.querySelectorAll('.mermaid svg').forEach((svg) => {
+        if (svg.dataset.tightened === '1') return;
+        try {
+          const bbox = svg.getBBox();
+          if (!bbox || bbox.width === 0) { pending = true; return; }
+          const pad = 6;
+          svg.setAttribute('viewBox',
+            `${bbox.x - pad} ${bbox.y - pad} ${bbox.width + pad * 2} ${bbox.height + pad * 2}`);
+          svg.removeAttribute('height');
+          svg.style.height = 'auto';
+          svg.style.maxWidth = '100%';
+          svg.style.display = 'block';
+          svg.dataset.tightened = '1';
+        } catch (e) { pending = true; }
+      });
+      if (pending && retries > 0) setTimeout(() => tightenMermaidSvgs(retries - 1), 120);
+    }
+
+    async function ensureMermaid() {
+      if (mermaidLib) return mermaidLib;
+      const mod = await import('https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs');
+      mermaidLib = mod.default;
+      mermaidLib.initialize({
+        startOnLoad: false, theme: 'neutral',
+        themeVariables: {
+          fontFamily: 'JetBrains Mono, ui-monospace, monospace',
+          primaryColor: '#f5f5f5', primaryBorderColor: '#222',
+          primaryTextColor: '#111', lineColor: '#444',
+        },
+        flowchart: { curve: 'basis', padding: 12, useMaxWidth: true },
+      });
+      return mermaidLib;
+    }
+
+    async function renderMermaid(root) {
+      const scope = scopeOf(root); if (!scope) return;
+      const matches = scope.querySelectorAll(
+        'pre[data-language="mermaid"], pre.language-mermaid, code.language-mermaid'
+      );
+      if (!matches.length) return;
+      matches.forEach((el) => {
+        const block = el.tagName === 'CODE' ? el.closest('pre') || el : el;
+        const codeEl = block.querySelector('code') || block;
+        const wrap = document.createElement('div');
+        wrap.className = 'mermaid';
+        wrap.textContent = codeEl.textContent;
+        block.replaceWith(wrap);
+      });
+      try {
+        const m = await ensureMermaid();
+        await m.run();
+        tightenMermaidSvgs();
+      } catch (err) {
+        console.warn('mermaid failed', err);
+        document.querySelectorAll('.mermaid:not(:has(svg))').forEach((el) => { el.style.display = 'none'; });
+      }
+    }
+
+    async function enhance(root = document) {
+      addCopyBtns(root);
+      await renderMermaid(root);
+    }
+
+    function paywallHtml(required, needLogin) {
+      const label = { beginner: 'Beginner (300 ₽)', middle: 'Beginner + Middle (500 ₽)', all: 'Весь пакет (700 ₽)' }[required] || '';
+      return `<div class="paywall">
+        <div class="paywall-ic">🔒</div>
+        <h3>Эта глава — в платном доступе</h3>
+        <p>Нужен тариф: <strong>${label}</strong>. Доступ навсегда, без подписки.</p>
+        ${needLogin ? '<p>Войди через Google и оформи доступ — продолжишь с любого устройства.</p>' : ''}
+        <a class="paywall-btn" href="${base}pricing">Открыть доступ →</a>
+        <a class="paywall-link" href="${base}account">Войти / мой аккаунт</a>
+      </div>`;
+    }
+
+    async function gatedFlow(mount) {
+      const slug = mount.dataset.slug;
+      const required = mount.dataset.required || 'beginner';
+      mount.innerHTML = '<p class="gate-msg">Проверяем доступ…</p>';
+      const res = await fetchChapter(slug);
+      if (res.ok) {
+        mount.innerHTML = res.html;
+        await enhance(mount);
+      } else if (res.status === 401) {
+        mount.innerHTML = paywallHtml(required, true);
+      } else if (res.status === 402) {
+        mount.innerHTML = paywallHtml(res.requiredTier || required, false);
+      } else {
+        mount.innerHTML = '<p class="gate-msg">Не удалось загрузить главу. Обнови страницу.</p>';
+      }
+    }
+
+    const mount = document.getElementById('gated-mount');
+    if (mount && gatingEnabled) gatedFlow(mount);
+    else enhance(document);
+  </script> </body> </html>

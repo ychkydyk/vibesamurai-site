@@ -1,0 +1,299 @@
+<!DOCTYPE html><html lang="en" data-astro-cid-a7sruqtr> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>What&#39;s a repo and why commit — Vibesamurai</title><meta name="description" content="Git in 20 minutes — only what's needed. PR as a way to say 'stop, look at what I did'."><meta property="og:title" content="What's a repo and why commit"><meta property="og:type" content="article"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Inter:wght@300..800&family=JetBrains+Mono:wght@400..600&display=swap" rel="stylesheet"><link rel="stylesheet" href="/vibesamurai-site/_astro/_slug_.Cs4TX1wt.css">
+<style>.account-btn{display:inline-flex;align-items:center;gap:var(--space-2);font-family:var(--font-mono);font-size:var(--size-2);text-transform:uppercase;letter-spacing:.06em;padding:5px 10px;border:1px solid var(--rule);border-radius:999px;color:var(--text-soft);background:var(--surface);transition:border-color var(--d-fast),color var(--d-fast)}.account-btn:hover{border-color:var(--accent);color:var(--text)}.account-ic{width:18px;height:18px;display:grid;place-items:center;border-radius:50%;background:var(--accent);color:var(--accent-ink);font-weight:700;font-size:10px;line-height:1}.reader-rail .account-btn{padding:0;border:none;background:transparent}.reader-rail .account-label{display:none}.reader-rail .account-ic{width:32px;height:32px;font-size:13px}.rail-toggle{width:36px;height:36px;display:grid;place-items:center;background:var(--accent);border:1px solid var(--accent);border-radius:4px;cursor:pointer;transition:filter var(--d-fast),transform var(--d-fast);padding:0}.rail-toggle:hover{filter:brightness(1.08);transform:translateY(-1px)}.rail-toggle:active{transform:translateY(0)}.rail-toggle-icon{width:14px;height:12px;border-left:2px solid var(--accent-ink);border-right:2px solid var(--accent-ink);transition:transform var(--d-normal) var(--ease-standard)}.reader-app.sidebar-open .rail-toggle-icon{transform:rotate(0)}.reader-app:not(.sidebar-open) .rail-toggle-icon{transform:scaleX(.5)}.sidebar-backdrop{display:none;position:fixed;inset:0;background:#0000008c;z-index:140;border:0;padding:0;cursor:pointer}@media(max-width:900px){.reader-app.sidebar-open~.sidebar-backdrop{display:block}}.rail-spacer[data-astro-cid-ofsbkzh7]{flex:1}.reader-sidebar[data-astro-cid-khgtvzrl] .ru-tag[data-astro-cid-khgtvzrl]{font-style:normal;font-family:var(--font-mono);font-size:.7em;color:var(--text-mute);margin-left:4px;padding:1px 4px;border:1px solid var(--rule);border-radius:3px;text-transform:uppercase;vertical-align:middle}.chapter-eyebrow[data-astro-cid-a7sruqtr]{display:flex;justify-content:space-between;align-items:center;gap:var(--space-3)}.lang-toggle[data-astro-cid-a7sruqtr]{font-family:var(--font-mono);font-size:var(--size-2);padding:2px 8px;border:1px solid var(--rule);border-radius:4px;color:var(--text-mute);text-decoration:none;text-transform:uppercase;letter-spacing:.08em}.lang-toggle[data-astro-cid-a7sruqtr]:hover{color:var(--accent);border-color:var(--accent)}.code-tabs[data-astro-cid-hg66rjob]{margin:var(--space-5) 0}.code-tabs-nav[data-astro-cid-hg66rjob]{display:flex;gap:2px;margin-bottom:-1px;position:relative;z-index:1}.ctab[data-astro-cid-hg66rjob]{font-family:var(--font-mono);font-size:11px;text-transform:uppercase;letter-spacing:.07em;padding:5px 14px;border:1px solid #21222c;border-bottom:none;background:#1a1b23;color:#6272a4;cursor:pointer;border-radius:4px 4px 0 0;transition:color .12s,background .12s}.ctab[data-astro-cid-hg66rjob].is-active{background:#282a36;color:#f8f8f2;border-color:#21222c}.ctab[data-astro-cid-hg66rjob]:hover:not(.is-active){color:#cdd6f4}.ctab-panel[data-astro-cid-hg66rjob]{display:none}.ctab-panel[data-astro-cid-hg66rjob].is-active{display:block}.ctab-panel[data-astro-cid-hg66rjob] pre{margin-top:0!important;border-radius:0 6px 6px!important}
+</style></head> <body data-astro-cid-a7sruqtr> <div class="reader-app" data-astro-cid-a7sruqtr> <aside class="reader-rail" data-astro-cid-ofsbkzh7> <a href="/vibesamurai-site/" class="logo" aria-label="Vibesamurai home" data-astro-cid-ofsbkzh7>V</a> <button type="button" class="rail-toggle" id="sidebar-toggle" aria-label="Свернуть/развернуть оглавление" title="Свернуть/развернуть оглавление" data-astro-cid-ofsbkzh7> <span class="rail-toggle-icon" aria-hidden="true" data-astro-cid-ofsbkzh7></span> </button> <div class="rail-spacer" data-astro-cid-ofsbkzh7></div> <a href="/vibesamurai-site/account" class="account-btn" id="account-btn" aria-label="Аккаунт"> <span class="account-ic" id="account-ic">⌂</span> <span class="account-label" id="account-label">Войти</span> </a>  <script type="module" src="/vibesamurai-site/_astro/AccountButton.astro_astro_type_script_index_0_lang.CmD2sdn9.js"></script> </aside>  <button type="button" class="sidebar-backdrop" id="sidebar-backdrop" aria-label="Закрыть оглавление" tabindex="-1" data-astro-cid-ofsbkzh7></button>  <script type="module">const d="vs-sidebar-open",a="(max-width: 900px)";function t(e){const n=document.querySelector(".reader-app");n&&n.classList.toggle("sidebar-open",e)}function r(){return!window.matchMedia(a).matches}function s(){const e=localStorage.getItem(d),i=window.matchMedia(a).matches?!1:e!==null?e==="1":r();t(i),document.getElementById("sidebar-toggle")?.addEventListener("click",()=>{const c=!document.querySelector(".reader-app")?.classList.contains("sidebar-open");window.matchMedia(a).matches||localStorage.setItem(d,c?"1":"0"),t(c)}),document.getElementById("sidebar-backdrop")?.addEventListener("click",()=>t(!1)),document.querySelectorAll(".reader-sidebar a").forEach(o=>{o.addEventListener("click",()=>{window.matchMedia(a).matches&&t(!1)})})}document.readyState==="loading"?document.addEventListener("DOMContentLoaded",s):s();</script> <aside class="reader-sidebar" data-astro-cid-khgtvzrl> <div class="breadcrumb" data-astro-cid-khgtvzrl>Vibesamurai · Beginner Path · B4</div> <h4 data-astro-cid-khgtvzrl>In this course</h4> <ul data-astro-cid-khgtvzrl> <li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b1/en" class data-astro-cid-khgtvzrl> B1 · What is an AI agent  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b2/en" class data-astro-cid-khgtvzrl> B2 · Installing your first AI agent  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b3/en" class data-astro-cid-khgtvzrl> B3 · First conversation  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b4/en" class="current" data-astro-cid-khgtvzrl> B4 · What&#39;s a repo and why commit  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b5/en" class data-astro-cid-khgtvzrl> B5 · Building the first project (todo app)  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b6/en" class data-astro-cid-khgtvzrl> B6 · Reading the code the agent wrote  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b7/en" class data-astro-cid-khgtvzrl> B7 · Security for beginners  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b8/en" class data-astro-cid-khgtvzrl> B8 · Cursor vs Claude Code vs Codex CLI  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b9/en" class data-astro-cid-khgtvzrl> B9 · Deploying the first project  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b10/en" class data-astro-cid-khgtvzrl> B10 · How to evaluate the agent&#39;s output  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b11/en" class data-astro-cid-khgtvzrl> B11 · Capstone: build your own tool  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b12/en" class data-astro-cid-khgtvzrl> B12 · Where to go next  </a> </li> </ul>  </aside> <main class="reader-main" data-astro-cid-a7sruqtr> <div class="chapter-eyebrow" data-astro-cid-a7sruqtr> <span data-astro-cid-a7sruqtr>Beginner Path · b4</span> <a class="lang-toggle" href="/vibesamurai-site/courses/beginner/b4" aria-label="Switch to RU" data-astro-cid-a7sruqtr>RU</a> </div> <h1 class="chapter-title" data-astro-cid-a7sruqtr>B4 · What&#39;s a repo and why commit</h1> <p class="chapter-subtitle" data-astro-cid-a7sruqtr>Git in 20 minutes — only what&#39;s needed. PR as a way to say &#39;stop, look at what I did&#39;.</p> <h2 id="hook">Hook</h2>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>WITHOUT git:                   WITH git:</span></span>
+<span class="line"><span>Agent broke something.    →    Agent broke something.</span></span>
+<span class="line"><span>Something forever. 😱          git restore .  ←  everything rolled back 🙂</span></span></code></pre>
+<p>Hey folks, welcome 👋</p>
+<p>This chapter is about the <strong>main safety wheel</strong> of working with an agent. Before this you could only watch the agent and worry “what if it breaks something” — after it you have a <strong>physical roll-back button</strong> for any agent mistake. That changes confidence a lot.</p>
+<p>We take git exactly as much as needed for safety and the basic flow. Not “git mastery.” Twenty minutes.</p>
+<h2 id="concept-a-repository--a-folder-with-memory">Concept: a repository = a folder with memory</h2>
+<p>A <strong>repository</strong> (or just “repo”) is <strong>your project folder plus the memory of every change</strong> in it.</p>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>my-project/        ← regular folder</span></span>
+<span class="line"><span>├── index.html</span></span>
+<span class="line"><span>└── style.css</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>my-project-with-git/    ← repository</span></span>
+<span class="line"><span>├── .git/               ← this is what turns the folder into a repo</span></span>
+<span class="line"><span>├── index.html</span></span>
+<span class="line"><span>└── style.css</span></span></code></pre>
+<p>The hidden <code>.git/</code> folder is the “memory.” Inside it sits the history of <strong>every change</strong> in the project. Deleted a file — it’s in history. Changed a line — old version in history. At any moment you can return to “as it was.”</p>
+<h3 id="why-you-care-working-with-an-agent">Why you care, working with an agent</h3>
+<p>When the agent writes code in a regular folder — every change is <strong>irreversible</strong>. If it deleted a needed file, rewrote an important function, added a bug — you don’t have a “time machine.”</p>
+<p>When the agent writes code in <strong>a repository</strong> — every change can be <strong>rolled back with one command</strong>. That’s not theory, that’s just how it works.</p>
+<h2 id="the-minimum-git-commands-that-cover-90--of-tasks">The minimum git commands that cover 90 % of tasks</h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Command</th><th>What it does</th><th>When</th></tr></thead><tbody><tr><td><code>git init</code></td><td>Turn a folder into a repo</td><td>Once, at the start of a new project</td></tr><tr><td><code>git status</code></td><td>Show which files changed</td><td>Each time, as “what do I have now”</td></tr><tr><td><code>git add .</code></td><td>Stage all changes for saving</td><td>Before a commit</td></tr><tr><td><code>git commit -m "..."</code></td><td>Save changes into history</td><td>When something working landed</td></tr><tr><td><code>git restore .</code></td><td>Roll back <strong>uncommitted</strong> changes</td><td>When you broke something and want it back</td></tr><tr><td><code>git log --oneline</code></td><td>Show commit history</td><td>When you want to know “what have I been doing”</td></tr></tbody></table>
+<p>Remember these six. The rest — later.</p>
+<h3 id="the-changed--saved-loop-in-one-paragraph">The “changed → saved” loop in one paragraph</h3>
+<ol>
+<li>Change files (yourself or via the agent)</li>
+<li><code>git status</code> — check what changed</li>
+<li><code>git add .</code> — stage everything</li>
+<li><code>git commit -m "what I did"</code> — save into history</li>
+<li>Back to step 1</li>
+</ol>
+<p>If at step 1 you broke something and want to go back <strong>to the last commit</strong> — <code>git restore .</code>. Everything after the commit disappears. What’s in commits stays.</p>
+<h2 id="example-create-a-repo-and-make-a-first-commit">Example: create a repo and make a first commit</h2>
+<p>In the terminal:</p>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#50FA7B;--shiki-dark:#50FA7B">mkdir</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C"> my-first-repo</span></span>
+<span class="line"><span style="color:#8BE9FD;--shiki-dark:#8BE9FD">cd</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C"> my-first-repo</span></span>
+<span class="line"><span style="color:#50FA7B;--shiki-dark:#50FA7B">git</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C"> init</span></span></code></pre>
+<p>Done, you have a repo. Make a simple file:</p>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#8BE9FD;--shiki-dark:#8BE9FD">echo</span><span style="color:#E9F284;--shiki-dark:#E9F284"> "</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C"># My first repo</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#FF79C6;--shiki-dark:#FF79C6"> ></span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C"> README.md</span></span></code></pre>
+<p>Look at the state:</p>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#50FA7B;--shiki-dark:#50FA7B">git</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C"> status</span></span></code></pre>
+<p>Shows “Untracked files: README.md” — meaning “there’s a file, but not under memory yet.” Add to memory:</p>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#50FA7B;--shiki-dark:#50FA7B">git</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C"> add</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C"> .</span></span>
+<span class="line"><span style="color:#50FA7B;--shiki-dark:#50FA7B">git</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C"> commit</span><span style="color:#BD93F9;--shiki-dark:#BD93F9"> -m</span><span style="color:#E9F284;--shiki-dark:#E9F284"> "</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">first file</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span></span></code></pre>
+<p>Done. Now break something — say, deleted the file by accident:</p>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#50FA7B;--shiki-dark:#50FA7B">rm</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C"> README.md</span></span></code></pre>
+<p>Want it back:</p>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#50FA7B;--shiki-dark:#50FA7B">git</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C"> restore</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C"> README.md</span></span></code></pre>
+<p>File is back. That’s the <strong>time machine</strong> in action.</p>
+<h2 id="why-commit-often">Why commit often</h2>
+<p>Each commit is a <strong>rollback point</strong>. The more often you commit, the more points, the safer.</p>
+<p>A good rhythm with an agent:</p>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>1. Describe the task to the agent by the B3 formula</span></span>
+<span class="line"><span>2. Agent did it → checked → works</span></span>
+<span class="line"><span>3. git add . + git commit -m "short what we did"</span></span>
+<span class="line"><span>4. Next task</span></span></code></pre>
+<p>So <strong>every accepted edit = a commit</strong>. Ten tasks a day — ten commits. Normal.</p>
+<p>If at some point the agent did something weird and <strong>the previous commit was an hour ago</strong> — <code>git restore .</code> rolls back to an hour ago. Lost an hour, oh well. If the previous commit was <strong>a week ago</strong> — a week is lost. Feel the difference?</p>
+<blockquote>
+<p><em>Principle:</em> <strong>commits are free save points.</strong> Don’t be stingy. I even commit on “I’m sure it’ll work” first — never know.</p>
+</blockquote>
+<h2 id="github-gitlab-and-the-rest--just-storage">GitHub, GitLab, and the rest — just storage</h2>
+<p><code>git</code> is a program on your computer. <strong>GitHub</strong> is a service on the internet where you can <strong>store a copy of the repo</strong>. And — crucially — where you can make a <strong>pull request (PR)</strong>.</p>
+<p>A PR (or MR — Merge Request on GitLab) is a <strong>way to propose changes and get a review</strong> before they merge into the main branch.</p>
+<p>Why you care, working with an agent:</p>
+<ul>
+<li>When the agent does something serious — it can do it <strong>in a separate branch</strong>, open a PR, and you review the changes in a nice UI <strong>before</strong> accepting.</li>
+<li>In a team a PR is the standard way to say “colleague, look at what I did.”</li>
+</ul>
+<p>We won’t dive deep into PR flow at the Beginner stage. Enough to know: <strong>git is local</strong>, <strong>GitHub is “where others can see and discuss.”</strong></p>
+<h2 id="practice-30-minutes">Practice (30 minutes)</h2>
+<h3 id="task-1-15-minutes--your-first-repository">Task 1 (15 minutes) — your first repository</h3>
+<p>Walk through the full loop by hand:</p>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#50FA7B;--shiki-dark:#50FA7B">mkdir</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C"> hello-git</span></span>
+<span class="line"><span style="color:#8BE9FD;--shiki-dark:#8BE9FD">cd</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C"> hello-git</span></span>
+<span class="line"><span style="color:#50FA7B;--shiki-dark:#50FA7B">git</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C"> init</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6272A4;--shiki-dark:#6272A4"># create a file — any way you like</span></span>
+<span class="line"><span style="color:#8BE9FD;--shiki-dark:#8BE9FD">echo</span><span style="color:#E9F284;--shiki-dark:#E9F284"> "</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">hello world</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#FF79C6;--shiki-dark:#FF79C6"> ></span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C"> hello.txt</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#50FA7B;--shiki-dark:#50FA7B">git</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C"> status</span><span style="color:#6272A4;--shiki-dark:#6272A4">         # check the state</span></span>
+<span class="line"><span style="color:#50FA7B;--shiki-dark:#50FA7B">git</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C"> add</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C"> .</span></span>
+<span class="line"><span style="color:#50FA7B;--shiki-dark:#50FA7B">git</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C"> commit</span><span style="color:#BD93F9;--shiki-dark:#BD93F9"> -m</span><span style="color:#E9F284;--shiki-dark:#E9F284"> "</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">first file</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6272A4;--shiki-dark:#6272A4"># change the file</span></span>
+<span class="line"><span style="color:#8BE9FD;--shiki-dark:#8BE9FD">echo</span><span style="color:#E9F284;--shiki-dark:#E9F284"> "</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">hello git</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#FF79C6;--shiki-dark:#FF79C6"> ></span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C"> hello.txt</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#50FA7B;--shiki-dark:#50FA7B">git</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C"> status</span><span style="color:#6272A4;--shiki-dark:#6272A4">         # check again</span></span>
+<span class="line"><span style="color:#50FA7B;--shiki-dark:#50FA7B">git</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C"> restore</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C"> hello.txt</span><span style="color:#6272A4;--shiki-dark:#6272A4">    # rolled back</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6272A4;--shiki-dark:#6272A4"># verify — should be as it was after the commit</span></span>
+<span class="line"><span style="color:#50FA7B;--shiki-dark:#50FA7B">cat</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C"> hello.txt</span><span style="color:#6272A4;--shiki-dark:#6272A4">      # prints "hello world"</span></span></code></pre>
+<p>If the last <code>cat hello.txt</code> printed “hello world,” not “hello git” — <strong>congrats, the time machine works</strong>.</p>
+<h3 id="task-2-15-minutes--connect-with-the-agent">Task 2 (15 minutes) — connect with the agent</h3>
+<p>In the same folder (or any new one with <code>git init</code>):</p>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#50FA7B;--shiki-dark:#50FA7B">claude</span></span></code></pre>
+<p>Ask the agent:</p>
+<blockquote>
+<p>“Create a file <code>notes.md</code> with three bullet points about something useful.”</p>
+</blockquote>
+<p>After the agent did it — <strong>you yourself</strong> in the terminal:</p>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#50FA7B;--shiki-dark:#50FA7B">git</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C"> add</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C"> .</span></span>
+<span class="line"><span style="color:#50FA7B;--shiki-dark:#50FA7B">git</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C"> commit</span><span style="color:#BD93F9;--shiki-dark:#BD93F9"> -m</span><span style="color:#E9F284;--shiki-dark:#E9F284"> "</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">agent added notes</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span></span></code></pre>
+<p>Done, you saved <strong>the state after the agent’s edit</strong>. Next time the agent breaks something — <code>git restore .</code> brings you back exactly here.</p>
+<h2 id="recap">Recap</h2>
+<ul>
+<li><strong>Repo = folder + change memory</strong> (<code>.git/</code>).</li>
+<li><strong>Six commands</strong> cover 90 % of tasks: init, status, add, commit, restore, log.</li>
+<li><strong>Commit often</strong> — every accepted agent edit = a commit. Each commit = a rollback point.</li>
+</ul>
+<h2 id="vibe-samurai">Vibe Samurai</h2>
+<aside class="skeptic">
+<p><strong>🥷 Vibe Samurai asks:</strong>
+“I thought git was for serious programmers with teams. I’m solo, why do I need it?”</p>
+<p><strong>Answer:</strong> Git isn’t about “team work,” it’s about <strong>reversibility</strong>. A solo developer with git is a developer with a time machine. A solo developer without git only has the present moment. When you work with an agent writing code into your files — a time machine is <strong>mandatory</strong>, otherwise in two weeks you’ll be afraid to hit “apply.” <strong>Not perfect, but actually works</strong> — even my personal projects have git, otherwise hours of work disappear on nothing.</p>
+</aside>
+<h2 id="whats-next">What’s next</h2>
+<p>In <strong>B5 — Building the first project (todo app)</strong> we gather everything so far into one real mini-project: from scratch, with the agent, in a repo, with commits after each step. Forty to sixty minutes — and you have a working todo app in the browser. Concretely, not “conceptually.”</p>
+<p>If this clicked — share with anyone working with an agent “on a bare folder.” If you stumbled on any commands — write in the comments, usually solved in two minutes. Your feedback really helps.</p>
+<h2 id="-further-reading">📚 Further reading</h2>
+<p>The six commands from this chapter will last a long time. But sooner or later you’ll wonder “how is git built inside” — for that moment, a short list of official sources.</p>
+<p><strong>Books and docs</strong></p>
+<ul>
+<li><strong>Pro Git</strong> (Scott Chacon &#x26; Ben Straub, free online book, updated for Git 2.x) — <a href="https://git-scm.com/book/en/v2">git-scm.com/book/en/v2</a>. The canon. Chapters 1–2 are exactly what I’d cover in a “git deep dive” session.</li>
+<li><strong>GitHub Docs — About Git</strong> (a short explainer of “what’s a VCS” by GitHub themselves): <a href="https://docs.github.com/en/get-started/using-git/about-git">docs.github.com/en/get-started/using-git/about-git</a>.</li>
+<li><strong>GitHub Docs — Git basics</strong> (a minimal tutorial series: init, add, commit, push): <a href="https://docs.github.com/en/get-started/git-basics">docs.github.com/en/get-started/git-basics</a>.</li>
+</ul>
+<blockquote>
+<p><strong>Tip:</strong> don’t try to read Pro Git “all in a weekend.” Open the table of contents, read chapters 1–2, the rest — on demand. The book is a reference, not a lecture.</p>
+</blockquote> <nav class="chapter-nav" data-astro-cid-a7sruqtr> <a href="/vibesamurai-site/courses/beginner/b3/en" data-astro-cid-a7sruqtr> <span class="dir" data-astro-cid-a7sruqtr>← Back</span> <span class="title" data-astro-cid-a7sruqtr>B3 · First conversation</span> </a> <a href="/vibesamurai-site/courses/beginner/b5/en" data-astro-cid-a7sruqtr> <span class="dir" data-astro-cid-a7sruqtr>Next →</span> <span class="title" data-astro-cid-a7sruqtr>B5 · Building the first project (todo app)</span> </a> </nav> </main>  </div> <script type="module">
+    import { gatingEnabled } from '../lib/supabase';
+    import { fetchChapter } from '../lib/auth';
+
+    const base = import.meta.env.BASE_URL;
+    let mermaidLib = null;
+
+    function scopeOf(root) {
+      return root === document ? document.querySelector('.reader-main') : root;
+    }
+
+    function addCopyBtns(root) {
+      const scope = scopeOf(root); if (!scope) return;
+      scope.querySelectorAll('pre').forEach((pre) => {
+        if (pre.closest('.code-tabs')) return;
+        if (pre.querySelector('.copy-btn')) return;
+        const btn = document.createElement('button');
+        btn.className = 'copy-btn';
+        btn.textContent = 'copy';
+        btn.addEventListener('click', async () => {
+          const code = pre.querySelector('code')?.textContent ?? pre.textContent ?? '';
+          await navigator.clipboard.writeText(code.trimEnd());
+          btn.textContent = '✓ copied';
+          setTimeout(() => { btn.textContent = 'copy'; }, 1600);
+        });
+        pre.appendChild(btn);
+      });
+    }
+
+    function tightenMermaidSvgs(retries = 6) {
+      let pending = false;
+      document.querySelectorAll('.mermaid svg').forEach((svg) => {
+        if (svg.dataset.tightened === '1') return;
+        try {
+          const bbox = svg.getBBox();
+          if (!bbox || bbox.width === 0) { pending = true; return; }
+          const pad = 6;
+          svg.setAttribute('viewBox',
+            `${bbox.x - pad} ${bbox.y - pad} ${bbox.width + pad * 2} ${bbox.height + pad * 2}`);
+          svg.removeAttribute('height');
+          svg.style.height = 'auto';
+          svg.style.maxWidth = '100%';
+          svg.style.display = 'block';
+          svg.dataset.tightened = '1';
+        } catch (e) { pending = true; }
+      });
+      if (pending && retries > 0) setTimeout(() => tightenMermaidSvgs(retries - 1), 120);
+    }
+
+    async function ensureMermaid() {
+      if (mermaidLib) return mermaidLib;
+      const mod = await import('https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs');
+      mermaidLib = mod.default;
+      mermaidLib.initialize({
+        startOnLoad: false, theme: 'neutral',
+        themeVariables: {
+          fontFamily: 'JetBrains Mono, ui-monospace, monospace',
+          primaryColor: '#f5f5f5', primaryBorderColor: '#222',
+          primaryTextColor: '#111', lineColor: '#444',
+        },
+        flowchart: { curve: 'basis', padding: 12, useMaxWidth: true },
+      });
+      return mermaidLib;
+    }
+
+    async function renderMermaid(root) {
+      const scope = scopeOf(root); if (!scope) return;
+      const matches = scope.querySelectorAll(
+        'pre[data-language="mermaid"], pre.language-mermaid, code.language-mermaid'
+      );
+      if (!matches.length) return;
+      matches.forEach((el) => {
+        const block = el.tagName === 'CODE' ? el.closest('pre') || el : el;
+        const codeEl = block.querySelector('code') || block;
+        const wrap = document.createElement('div');
+        wrap.className = 'mermaid';
+        wrap.textContent = codeEl.textContent;
+        block.replaceWith(wrap);
+      });
+      try {
+        const m = await ensureMermaid();
+        await m.run();
+        tightenMermaidSvgs();
+      } catch (err) {
+        console.warn('mermaid failed', err);
+        document.querySelectorAll('.mermaid:not(:has(svg))').forEach((el) => { el.style.display = 'none'; });
+      }
+    }
+
+    async function enhance(root = document) {
+      addCopyBtns(root);
+      await renderMermaid(root);
+    }
+
+    function paywallHtml(required, needLogin) {
+      const label = { beginner: 'Beginner (300 ₽)', middle: 'Beginner + Middle (500 ₽)', all: 'Весь пакет (700 ₽)' }[required] || '';
+      return `<div class="paywall">
+        <div class="paywall-ic">🔒</div>
+        <h3>Эта глава — в платном доступе</h3>
+        <p>Нужен тариф: <strong>${label}</strong>. Доступ навсегда, без подписки.</p>
+        ${needLogin ? '<p>Войди через Google и оформи доступ — продолжишь с любого устройства.</p>' : ''}
+        <a class="paywall-btn" href="${base}pricing">Открыть доступ →</a>
+        <a class="paywall-link" href="${base}account">Войти / мой аккаунт</a>
+      </div>`;
+    }
+
+    async function gatedFlow(mount) {
+      const slug = mount.dataset.slug;
+      const required = mount.dataset.required || 'beginner';
+      mount.innerHTML = '<p class="gate-msg">Проверяем доступ…</p>';
+      const res = await fetchChapter(slug);
+      if (res.ok) {
+        mount.innerHTML = res.html;
+        await enhance(mount);
+      } else if (res.status === 401) {
+        mount.innerHTML = paywallHtml(required, true);
+      } else if (res.status === 402) {
+        mount.innerHTML = paywallHtml(res.requiredTier || required, false);
+      } else {
+        mount.innerHTML = '<p class="gate-msg">Не удалось загрузить главу. Обнови страницу.</p>';
+      }
+    }
+
+    const mount = document.getElementById('gated-mount');
+    if (mount && gatingEnabled) gatedFlow(mount);
+    else enhance(document);
+  </script> </body> </html>

@@ -1,0 +1,245 @@
+<!DOCTYPE html><html lang="en" data-astro-cid-a7sruqtr> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Installing your first AI agent — Vibesamurai</title><meta name="description" content="Putting Claude Code on Windows/Mac/Linux. Sign up, get a key, run the first command — and a short word on alternatives."><meta property="og:title" content="Installing your first AI agent"><meta property="og:type" content="article"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Inter:wght@300..800&family=JetBrains+Mono:wght@400..600&display=swap" rel="stylesheet"><link rel="stylesheet" href="/vibesamurai-site/_astro/_slug_.Cs4TX1wt.css">
+<style>.account-btn{display:inline-flex;align-items:center;gap:var(--space-2);font-family:var(--font-mono);font-size:var(--size-2);text-transform:uppercase;letter-spacing:.06em;padding:5px 10px;border:1px solid var(--rule);border-radius:999px;color:var(--text-soft);background:var(--surface);transition:border-color var(--d-fast),color var(--d-fast)}.account-btn:hover{border-color:var(--accent);color:var(--text)}.account-ic{width:18px;height:18px;display:grid;place-items:center;border-radius:50%;background:var(--accent);color:var(--accent-ink);font-weight:700;font-size:10px;line-height:1}.reader-rail .account-btn{padding:0;border:none;background:transparent}.reader-rail .account-label{display:none}.reader-rail .account-ic{width:32px;height:32px;font-size:13px}.rail-toggle{width:36px;height:36px;display:grid;place-items:center;background:var(--accent);border:1px solid var(--accent);border-radius:4px;cursor:pointer;transition:filter var(--d-fast),transform var(--d-fast);padding:0}.rail-toggle:hover{filter:brightness(1.08);transform:translateY(-1px)}.rail-toggle:active{transform:translateY(0)}.rail-toggle-icon{width:14px;height:12px;border-left:2px solid var(--accent-ink);border-right:2px solid var(--accent-ink);transition:transform var(--d-normal) var(--ease-standard)}.reader-app.sidebar-open .rail-toggle-icon{transform:rotate(0)}.reader-app:not(.sidebar-open) .rail-toggle-icon{transform:scaleX(.5)}.sidebar-backdrop{display:none;position:fixed;inset:0;background:#0000008c;z-index:140;border:0;padding:0;cursor:pointer}@media(max-width:900px){.reader-app.sidebar-open~.sidebar-backdrop{display:block}}.rail-spacer[data-astro-cid-ofsbkzh7]{flex:1}.reader-sidebar[data-astro-cid-khgtvzrl] .ru-tag[data-astro-cid-khgtvzrl]{font-style:normal;font-family:var(--font-mono);font-size:.7em;color:var(--text-mute);margin-left:4px;padding:1px 4px;border:1px solid var(--rule);border-radius:3px;text-transform:uppercase;vertical-align:middle}.chapter-eyebrow[data-astro-cid-a7sruqtr]{display:flex;justify-content:space-between;align-items:center;gap:var(--space-3)}.lang-toggle[data-astro-cid-a7sruqtr]{font-family:var(--font-mono);font-size:var(--size-2);padding:2px 8px;border:1px solid var(--rule);border-radius:4px;color:var(--text-mute);text-decoration:none;text-transform:uppercase;letter-spacing:.08em}.lang-toggle[data-astro-cid-a7sruqtr]:hover{color:var(--accent);border-color:var(--accent)}.code-tabs[data-astro-cid-hg66rjob]{margin:var(--space-5) 0}.code-tabs-nav[data-astro-cid-hg66rjob]{display:flex;gap:2px;margin-bottom:-1px;position:relative;z-index:1}.ctab[data-astro-cid-hg66rjob]{font-family:var(--font-mono);font-size:11px;text-transform:uppercase;letter-spacing:.07em;padding:5px 14px;border:1px solid #21222c;border-bottom:none;background:#1a1b23;color:#6272a4;cursor:pointer;border-radius:4px 4px 0 0;transition:color .12s,background .12s}.ctab[data-astro-cid-hg66rjob].is-active{background:#282a36;color:#f8f8f2;border-color:#21222c}.ctab[data-astro-cid-hg66rjob]:hover:not(.is-active){color:#cdd6f4}.ctab-panel[data-astro-cid-hg66rjob]{display:none}.ctab-panel[data-astro-cid-hg66rjob].is-active{display:block}.ctab-panel[data-astro-cid-hg66rjob] pre{margin-top:0!important;border-radius:0 6px 6px!important}
+</style></head> <body data-astro-cid-a7sruqtr> <div class="reader-app" data-astro-cid-a7sruqtr> <aside class="reader-rail" data-astro-cid-ofsbkzh7> <a href="/vibesamurai-site/" class="logo" aria-label="Vibesamurai home" data-astro-cid-ofsbkzh7>V</a> <button type="button" class="rail-toggle" id="sidebar-toggle" aria-label="Свернуть/развернуть оглавление" title="Свернуть/развернуть оглавление" data-astro-cid-ofsbkzh7> <span class="rail-toggle-icon" aria-hidden="true" data-astro-cid-ofsbkzh7></span> </button> <div class="rail-spacer" data-astro-cid-ofsbkzh7></div> <a href="/vibesamurai-site/account" class="account-btn" id="account-btn" aria-label="Аккаунт"> <span class="account-ic" id="account-ic">⌂</span> <span class="account-label" id="account-label">Войти</span> </a>  <script type="module" src="/vibesamurai-site/_astro/AccountButton.astro_astro_type_script_index_0_lang.CmD2sdn9.js"></script> </aside>  <button type="button" class="sidebar-backdrop" id="sidebar-backdrop" aria-label="Закрыть оглавление" tabindex="-1" data-astro-cid-ofsbkzh7></button>  <script type="module">const d="vs-sidebar-open",a="(max-width: 900px)";function t(e){const n=document.querySelector(".reader-app");n&&n.classList.toggle("sidebar-open",e)}function r(){return!window.matchMedia(a).matches}function s(){const e=localStorage.getItem(d),i=window.matchMedia(a).matches?!1:e!==null?e==="1":r();t(i),document.getElementById("sidebar-toggle")?.addEventListener("click",()=>{const c=!document.querySelector(".reader-app")?.classList.contains("sidebar-open");window.matchMedia(a).matches||localStorage.setItem(d,c?"1":"0"),t(c)}),document.getElementById("sidebar-backdrop")?.addEventListener("click",()=>t(!1)),document.querySelectorAll(".reader-sidebar a").forEach(o=>{o.addEventListener("click",()=>{window.matchMedia(a).matches&&t(!1)})})}document.readyState==="loading"?document.addEventListener("DOMContentLoaded",s):s();</script> <aside class="reader-sidebar" data-astro-cid-khgtvzrl> <div class="breadcrumb" data-astro-cid-khgtvzrl>Vibesamurai · Beginner Path · B2</div> <h4 data-astro-cid-khgtvzrl>In this course</h4> <ul data-astro-cid-khgtvzrl> <li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b1/en" class data-astro-cid-khgtvzrl> B1 · What is an AI agent  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b2/en" class="current" data-astro-cid-khgtvzrl> B2 · Installing your first AI agent  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b3/en" class data-astro-cid-khgtvzrl> B3 · First conversation  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b4/en" class data-astro-cid-khgtvzrl> B4 · What&#39;s a repo and why commit  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b5/en" class data-astro-cid-khgtvzrl> B5 · Building the first project (todo app)  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b6/en" class data-astro-cid-khgtvzrl> B6 · Reading the code the agent wrote  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b7/en" class data-astro-cid-khgtvzrl> B7 · Security for beginners  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b8/en" class data-astro-cid-khgtvzrl> B8 · Cursor vs Claude Code vs Codex CLI  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b9/en" class data-astro-cid-khgtvzrl> B9 · Deploying the first project  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b10/en" class data-astro-cid-khgtvzrl> B10 · How to evaluate the agent&#39;s output  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b11/en" class data-astro-cid-khgtvzrl> B11 · Capstone: build your own tool  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b12/en" class data-astro-cid-khgtvzrl> B12 · Where to go next  </a> </li> </ul>  </aside> <main class="reader-main" data-astro-cid-a7sruqtr> <div class="chapter-eyebrow" data-astro-cid-a7sruqtr> <span data-astro-cid-a7sruqtr>Beginner Path · b2</span> <a class="lang-toggle" href="/vibesamurai-site/courses/beginner/b2" aria-label="Switch to RU" data-astro-cid-a7sruqtr>RU</a> </div> <h1 class="chapter-title" data-astro-cid-a7sruqtr>B2 · Installing your first AI agent</h1> <p class="chapter-subtitle" data-astro-cid-a7sruqtr>Putting Claude Code on Windows/Mac/Linux. Sign up, get a key, run the first command — and a short word on alternatives.</p> <h2 id="hook">Hook</h2>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>YOU          +   TERMINAL   +   claude    =    first working agent</span></span>
+<span class="line"><span>(human)          (window)       (command)</span></span></code></pre>
+<p>Hey folks, welcome 👋</p>
+<p>In this chapter we install <strong>Claude Code</strong> — the magic <code>claude</code> command in the terminal that will do most of the heavy lifting for the rest of the course. Twenty minutes and you have an AI agent on your machine. Not scary at all — promise.</p>
+<h2 id="concept-whats-a-cli-and-why-we-start-with-claude-code">Concept: what’s a CLI and why we start with Claude Code</h2>
+<p><strong>CLI</strong> (Command Line Interface) is just a <strong>terminal window</strong> where you type commands and get answers. Not a graphical interface with buttons — text.</p>
+<p>Sounds archaic, but in 2026 it’s the <strong>most convenient format</strong> to work with an AI agent. Why:</p>
+<ul>
+<li>The agent finds it easy to “see” your folder and work with files</li>
+<li>You find it easy to copy commands from training materials</li>
+<li>It works the same across operating systems</li>
+</ul>
+<p>Among the tools we start with <strong>Claude Code</strong> for three reasons:</p>
+<ol>
+<li><strong>Friendliest install</strong> for a newcomer</li>
+<li><strong>Good defaults</strong> — you don’t have to configure 30 parameters first</li>
+<li><strong>Detailed prompts</strong> right inside the chat — ask a question, the agent explains <em>how</em> to use it</li>
+</ol>
+<p>In B8 we look at alternatives (Cursor, Codex CLI). For now — Claude Code.</p>
+<h2 id="example-install-in-5-minutes">Example: install in 5 minutes</h2>
+<h3 id="step-1-open-a-terminal">Step 1. Open a terminal</h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Your OS</th><th>What to press</th></tr></thead><tbody><tr><td><strong>macOS</strong></td><td>Spotlight (⌘ + Space) → “Terminal” → Enter</td></tr><tr><td><strong>Windows 11</strong></td><td>Start → “Terminal” (the new Windows Terminal)</td></tr><tr><td><strong>Linux</strong></td><td>Ctrl + Alt + T</td></tr></tbody></table>
+<p>A black (or white) window with a cursor opens. That’s the terminal. Don’t panic — we’ll type a few commands.</p>
+<h3 id="step-2-install-nodejs-if-you-dont-have-it">Step 2. Install Node.js (if you don’t have it)</h3>
+<p>Claude Code runs on top of <strong>Node.js</strong> — the standard engine for running modern CLI tools. Check:</p>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#50FA7B;--shiki-dark:#50FA7B">node</span><span style="color:#BD93F9;--shiki-dark:#BD93F9"> --version</span></span></code></pre>
+<p>If you see something like <code>v22.x.x</code> — great, move on. If it says “command not found” — install:</p>
+<ul>
+<li><strong>macOS:</strong> <code>brew install node</code> (if you have Homebrew) or download from <a href="https://nodejs.org">nodejs.org</a></li>
+<li><strong>Windows:</strong> download the installer from <a href="https://nodejs.org">nodejs.org</a>, run, “Next, Next, Finish”</li>
+<li><strong>Linux:</strong> <code>sudo apt install nodejs npm</code> (Ubuntu/Debian) or the equivalent for your distro</li>
+</ul>
+<p>After install <strong>close and reopen the terminal</strong>, otherwise <code>node --version</code> still won’t see it.</p>
+<h3 id="step-3-install-claude-code">Step 3. Install Claude Code</h3>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#50FA7B;--shiki-dark:#50FA7B">npm</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C"> install</span><span style="color:#BD93F9;--shiki-dark:#BD93F9"> -g</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C"> @anthropic-ai/claude-code</span></span></code></pre>
+<p><code>npm</code> is Node.js’s package manager. The command says “install globally (<code>-g</code>) the package <code>@anthropic-ai/claude-code</code>.” Takes a minute or two.</p>
+<p>Check:</p>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#50FA7B;--shiki-dark:#50FA7B">claude</span><span style="color:#BD93F9;--shiki-dark:#BD93F9"> --version</span></span></code></pre>
+<p>If it prints a version — you’re in. <strong>Full package</strong>, congratulations.</p>
+<h3 id="step-4-log-in">Step 4. Log in</h3>
+<p>Just type in the terminal:</p>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#50FA7B;--shiki-dark:#50FA7B">claude</span></span></code></pre>
+<p>A browser opens asking you to log into your Anthropic account. If you already have a Claude Pro/Max subscription — perfect, sign in with it. If not — you can start on the pay-per-use API; for learning, <strong>$5–10</strong> lasts the first few weeks.</p>
+<blockquote>
+<p><em>Personally</em> — I’m on the Max plan ($100/mo). For daily work it pays for itself in week one, but for learning it’s overpay. Start with the minimum.</p>
+</blockquote>
+<h3 id="step-5-first-command">Step 5. First command</h3>
+<p>After login you land in Claude Code’s interactive mode. Make an empty folder for experiments:</p>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#50FA7B;--shiki-dark:#50FA7B">mkdir</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C"> my-first-agent</span></span>
+<span class="line"><span style="color:#8BE9FD;--shiki-dark:#8BE9FD">cd</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C"> my-first-agent</span></span>
+<span class="line"><span style="color:#50FA7B;--shiki-dark:#50FA7B">claude</span></span></code></pre>
+<p>In the chat that opens, write:</p>
+<blockquote>
+<p>“Hi! Tell me briefly about yourself and what you can do.”</p>
+</blockquote>
+<p>The agent introduces itself, lists its tools, explains the rules. Congratulations — <strong>your first conversation with your AI agent has happened</strong>.</p>
+<h2 id="practice-2030-minutes">Practice (20–30 minutes)</h2>
+<h3 id="task-1-10-minutes--install">Task 1 (10 minutes) — install</h3>
+<p>Walk through all 5 steps end-to-end. If you got stuck somewhere — Google / ask in the course comments. <strong>Don’t skip.</strong> In the next chapter we’re already working in Claude Code full-on.</p>
+<h3 id="task-2-15-minutes--first-safe-request">Task 2 (15 minutes) — first “safe” request</h3>
+<p>In a fresh session (<code>claude</code> in any folder) ask:</p>
+<blockquote>
+<p>“Read every file in this folder and briefly describe what’s here. Don’t change anything.”</p>
+</blockquote>
+<p>If the folder is empty — it’ll say “empty.” If there’s something — it’ll describe it. That’s the <strong>“look, don’t touch” mode</strong> from B1. Lock in the habit of opening sessions with this.</p>
+<h2 id="recap">Recap</h2>
+<ul>
+<li><strong>Claude Code = a CLI agent</strong> from Anthropic. Installs via <code>npm</code>.</li>
+<li><strong>Pre-requirement: Node.js.</strong> Install it, then install claude.</li>
+<li><strong>First session — <code>claude</code> in the target folder + “look, don’t touch.”</strong></li>
+</ul>
+<h2 id="vibe-samurai">Vibe Samurai</h2>
+<aside class="skeptic">
+<p><strong>🥷 Vibe Samurai asks:</strong>
+“Why do I need any of this if there’s ChatGPT in the browser? I can ask it for code too.”</p>
+<p><strong>Answer:</strong> ChatGPT in the browser <strong>shows text</strong>. Then you copy it into files, check it, run it. Every time. Claude Code <strong>writes into your files itself, runs commands itself, and checks the result itself</strong>. The difference isn’t model smarts — it’s Claude in both. The difference is <strong>hands</strong>: Claude Code has them. Two weeks in, going back to “copy from browser” feels physically painful.</p>
+</aside>
+<h2 id="whats-next">What’s next</h2>
+<p>In <strong>B3 — First conversation</strong> we cover how to ask the agent so it gets you on the first try. Request structure, typical mistakes, when to agree, when to say “no, redo it.”</p>
+<p>If this clicked — share with anyone who’s been thinking about “touching AI” but doesn’t know where to start. If something didn’t go through on the install — write in the comments, it usually solves in two minutes, your feedback really helps polish the instructions.</p>
+<h2 id="-further-reading">📚 Further reading</h2>
+<p>If you got stuck somewhere on install or want to see how Claude Code gets configured “for grown-ups” — a short list of sources I’ll keep referencing.</p>
+<p><strong>Official docs</strong></p>
+<ul>
+<li><strong>Claude Code — Advanced setup</strong> (Anthropic’s official guide, covers npm/native/Homebrew): <a href="https://code.claude.com/docs/en/setup">code.claude.com/docs/en/setup</a>. If something didn’t go through at step 3 — open this first.</li>
+<li><strong>Claude API — Getting started</strong> (how API keys work if you went pay-per-use instead of subscription): <a href="https://docs.anthropic.com/en/api/getting-started">docs.anthropic.com/en/api/getting-started</a>.</li>
+<li><strong>Anthropic Console — API keys</strong> (the page where you actually create the key): <a href="https://console.anthropic.com/settings/keys">console.anthropic.com/settings/keys</a>. The key is shown <strong>once</strong> — copy it immediately.</li>
+</ul>
+<p><strong>GitHub repos</strong></p>
+<ul>
+<li><strong>anthropics/claude-code</strong> — the official repo; shows current releases and issues: <a href="https://github.com/anthropics/claude-code">github.com/anthropics/claude-code</a>.</li>
+</ul>
+<blockquote>
+<p><strong>Tip:</strong> before asking “why doesn’t it work” — skim the Advanced setup page. 80 % of common install errors are solved by its first two sections.</p>
+</blockquote> <nav class="chapter-nav" data-astro-cid-a7sruqtr> <a href="/vibesamurai-site/courses/beginner/b1/en" data-astro-cid-a7sruqtr> <span class="dir" data-astro-cid-a7sruqtr>← Back</span> <span class="title" data-astro-cid-a7sruqtr>B1 · What is an AI agent</span> </a> <a href="/vibesamurai-site/courses/beginner/b3/en" data-astro-cid-a7sruqtr> <span class="dir" data-astro-cid-a7sruqtr>Next →</span> <span class="title" data-astro-cid-a7sruqtr>B3 · First conversation</span> </a> </nav> </main>  </div> <script type="module">
+    import { gatingEnabled } from '../lib/supabase';
+    import { fetchChapter } from '../lib/auth';
+
+    const base = import.meta.env.BASE_URL;
+    let mermaidLib = null;
+
+    function scopeOf(root) {
+      return root === document ? document.querySelector('.reader-main') : root;
+    }
+
+    function addCopyBtns(root) {
+      const scope = scopeOf(root); if (!scope) return;
+      scope.querySelectorAll('pre').forEach((pre) => {
+        if (pre.closest('.code-tabs')) return;
+        if (pre.querySelector('.copy-btn')) return;
+        const btn = document.createElement('button');
+        btn.className = 'copy-btn';
+        btn.textContent = 'copy';
+        btn.addEventListener('click', async () => {
+          const code = pre.querySelector('code')?.textContent ?? pre.textContent ?? '';
+          await navigator.clipboard.writeText(code.trimEnd());
+          btn.textContent = '✓ copied';
+          setTimeout(() => { btn.textContent = 'copy'; }, 1600);
+        });
+        pre.appendChild(btn);
+      });
+    }
+
+    function tightenMermaidSvgs(retries = 6) {
+      let pending = false;
+      document.querySelectorAll('.mermaid svg').forEach((svg) => {
+        if (svg.dataset.tightened === '1') return;
+        try {
+          const bbox = svg.getBBox();
+          if (!bbox || bbox.width === 0) { pending = true; return; }
+          const pad = 6;
+          svg.setAttribute('viewBox',
+            `${bbox.x - pad} ${bbox.y - pad} ${bbox.width + pad * 2} ${bbox.height + pad * 2}`);
+          svg.removeAttribute('height');
+          svg.style.height = 'auto';
+          svg.style.maxWidth = '100%';
+          svg.style.display = 'block';
+          svg.dataset.tightened = '1';
+        } catch (e) { pending = true; }
+      });
+      if (pending && retries > 0) setTimeout(() => tightenMermaidSvgs(retries - 1), 120);
+    }
+
+    async function ensureMermaid() {
+      if (mermaidLib) return mermaidLib;
+      const mod = await import('https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs');
+      mermaidLib = mod.default;
+      mermaidLib.initialize({
+        startOnLoad: false, theme: 'neutral',
+        themeVariables: {
+          fontFamily: 'JetBrains Mono, ui-monospace, monospace',
+          primaryColor: '#f5f5f5', primaryBorderColor: '#222',
+          primaryTextColor: '#111', lineColor: '#444',
+        },
+        flowchart: { curve: 'basis', padding: 12, useMaxWidth: true },
+      });
+      return mermaidLib;
+    }
+
+    async function renderMermaid(root) {
+      const scope = scopeOf(root); if (!scope) return;
+      const matches = scope.querySelectorAll(
+        'pre[data-language="mermaid"], pre.language-mermaid, code.language-mermaid'
+      );
+      if (!matches.length) return;
+      matches.forEach((el) => {
+        const block = el.tagName === 'CODE' ? el.closest('pre') || el : el;
+        const codeEl = block.querySelector('code') || block;
+        const wrap = document.createElement('div');
+        wrap.className = 'mermaid';
+        wrap.textContent = codeEl.textContent;
+        block.replaceWith(wrap);
+      });
+      try {
+        const m = await ensureMermaid();
+        await m.run();
+        tightenMermaidSvgs();
+      } catch (err) {
+        console.warn('mermaid failed', err);
+        document.querySelectorAll('.mermaid:not(:has(svg))').forEach((el) => { el.style.display = 'none'; });
+      }
+    }
+
+    async function enhance(root = document) {
+      addCopyBtns(root);
+      await renderMermaid(root);
+    }
+
+    function paywallHtml(required, needLogin) {
+      const label = { beginner: 'Beginner (300 ₽)', middle: 'Beginner + Middle (500 ₽)', all: 'Весь пакет (700 ₽)' }[required] || '';
+      return `<div class="paywall">
+        <div class="paywall-ic">🔒</div>
+        <h3>Эта глава — в платном доступе</h3>
+        <p>Нужен тариф: <strong>${label}</strong>. Доступ навсегда, без подписки.</p>
+        ${needLogin ? '<p>Войди через Google и оформи доступ — продолжишь с любого устройства.</p>' : ''}
+        <a class="paywall-btn" href="${base}pricing">Открыть доступ →</a>
+        <a class="paywall-link" href="${base}account">Войти / мой аккаунт</a>
+      </div>`;
+    }
+
+    async function gatedFlow(mount) {
+      const slug = mount.dataset.slug;
+      const required = mount.dataset.required || 'beginner';
+      mount.innerHTML = '<p class="gate-msg">Проверяем доступ…</p>';
+      const res = await fetchChapter(slug);
+      if (res.ok) {
+        mount.innerHTML = res.html;
+        await enhance(mount);
+      } else if (res.status === 401) {
+        mount.innerHTML = paywallHtml(required, true);
+      } else if (res.status === 402) {
+        mount.innerHTML = paywallHtml(res.requiredTier || required, false);
+      } else {
+        mount.innerHTML = '<p class="gate-msg">Не удалось загрузить главу. Обнови страницу.</p>';
+      }
+    }
+
+    const mount = document.getElementById('gated-mount');
+    if (mount && gatingEnabled) gatedFlow(mount);
+    else enhance(document);
+  </script> </body> </html>

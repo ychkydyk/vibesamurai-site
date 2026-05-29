@@ -1,0 +1,376 @@
+<!DOCTYPE html><html lang="en" data-astro-cid-a7sruqtr> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Reading the code the agent wrote — Vibesamurai</title><meta name="description" content="Basic orientation in the code the agent created. Not 'learn to code' — stop being blind in your own project."><meta property="og:title" content="Reading the code the agent wrote"><meta property="og:type" content="article"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Inter:wght@300..800&family=JetBrains+Mono:wght@400..600&display=swap" rel="stylesheet"><link rel="stylesheet" href="/vibesamurai-site/_astro/_slug_.Cs4TX1wt.css">
+<style>.account-btn{display:inline-flex;align-items:center;gap:var(--space-2);font-family:var(--font-mono);font-size:var(--size-2);text-transform:uppercase;letter-spacing:.06em;padding:5px 10px;border:1px solid var(--rule);border-radius:999px;color:var(--text-soft);background:var(--surface);transition:border-color var(--d-fast),color var(--d-fast)}.account-btn:hover{border-color:var(--accent);color:var(--text)}.account-ic{width:18px;height:18px;display:grid;place-items:center;border-radius:50%;background:var(--accent);color:var(--accent-ink);font-weight:700;font-size:10px;line-height:1}.reader-rail .account-btn{padding:0;border:none;background:transparent}.reader-rail .account-label{display:none}.reader-rail .account-ic{width:32px;height:32px;font-size:13px}.rail-toggle{width:36px;height:36px;display:grid;place-items:center;background:var(--accent);border:1px solid var(--accent);border-radius:4px;cursor:pointer;transition:filter var(--d-fast),transform var(--d-fast);padding:0}.rail-toggle:hover{filter:brightness(1.08);transform:translateY(-1px)}.rail-toggle:active{transform:translateY(0)}.rail-toggle-icon{width:14px;height:12px;border-left:2px solid var(--accent-ink);border-right:2px solid var(--accent-ink);transition:transform var(--d-normal) var(--ease-standard)}.reader-app.sidebar-open .rail-toggle-icon{transform:rotate(0)}.reader-app:not(.sidebar-open) .rail-toggle-icon{transform:scaleX(.5)}.sidebar-backdrop{display:none;position:fixed;inset:0;background:#0000008c;z-index:140;border:0;padding:0;cursor:pointer}@media(max-width:900px){.reader-app.sidebar-open~.sidebar-backdrop{display:block}}.rail-spacer[data-astro-cid-ofsbkzh7]{flex:1}.reader-sidebar[data-astro-cid-khgtvzrl] .ru-tag[data-astro-cid-khgtvzrl]{font-style:normal;font-family:var(--font-mono);font-size:.7em;color:var(--text-mute);margin-left:4px;padding:1px 4px;border:1px solid var(--rule);border-radius:3px;text-transform:uppercase;vertical-align:middle}.chapter-eyebrow[data-astro-cid-a7sruqtr]{display:flex;justify-content:space-between;align-items:center;gap:var(--space-3)}.lang-toggle[data-astro-cid-a7sruqtr]{font-family:var(--font-mono);font-size:var(--size-2);padding:2px 8px;border:1px solid var(--rule);border-radius:4px;color:var(--text-mute);text-decoration:none;text-transform:uppercase;letter-spacing:.08em}.lang-toggle[data-astro-cid-a7sruqtr]:hover{color:var(--accent);border-color:var(--accent)}.code-tabs[data-astro-cid-hg66rjob]{margin:var(--space-5) 0}.code-tabs-nav[data-astro-cid-hg66rjob]{display:flex;gap:2px;margin-bottom:-1px;position:relative;z-index:1}.ctab[data-astro-cid-hg66rjob]{font-family:var(--font-mono);font-size:11px;text-transform:uppercase;letter-spacing:.07em;padding:5px 14px;border:1px solid #21222c;border-bottom:none;background:#1a1b23;color:#6272a4;cursor:pointer;border-radius:4px 4px 0 0;transition:color .12s,background .12s}.ctab[data-astro-cid-hg66rjob].is-active{background:#282a36;color:#f8f8f2;border-color:#21222c}.ctab[data-astro-cid-hg66rjob]:hover:not(.is-active){color:#cdd6f4}.ctab-panel[data-astro-cid-hg66rjob]{display:none}.ctab-panel[data-astro-cid-hg66rjob].is-active{display:block}.ctab-panel[data-astro-cid-hg66rjob] pre{margin-top:0!important;border-radius:0 6px 6px!important}
+</style></head> <body data-astro-cid-a7sruqtr> <div class="reader-app" data-astro-cid-a7sruqtr> <aside class="reader-rail" data-astro-cid-ofsbkzh7> <a href="/vibesamurai-site/" class="logo" aria-label="Vibesamurai home" data-astro-cid-ofsbkzh7>V</a> <button type="button" class="rail-toggle" id="sidebar-toggle" aria-label="Свернуть/развернуть оглавление" title="Свернуть/развернуть оглавление" data-astro-cid-ofsbkzh7> <span class="rail-toggle-icon" aria-hidden="true" data-astro-cid-ofsbkzh7></span> </button> <div class="rail-spacer" data-astro-cid-ofsbkzh7></div> <a href="/vibesamurai-site/account" class="account-btn" id="account-btn" aria-label="Аккаунт"> <span class="account-ic" id="account-ic">⌂</span> <span class="account-label" id="account-label">Войти</span> </a>  <script type="module" src="/vibesamurai-site/_astro/AccountButton.astro_astro_type_script_index_0_lang.CmD2sdn9.js"></script> </aside>  <button type="button" class="sidebar-backdrop" id="sidebar-backdrop" aria-label="Закрыть оглавление" tabindex="-1" data-astro-cid-ofsbkzh7></button>  <script type="module">const d="vs-sidebar-open",a="(max-width: 900px)";function t(e){const n=document.querySelector(".reader-app");n&&n.classList.toggle("sidebar-open",e)}function r(){return!window.matchMedia(a).matches}function s(){const e=localStorage.getItem(d),i=window.matchMedia(a).matches?!1:e!==null?e==="1":r();t(i),document.getElementById("sidebar-toggle")?.addEventListener("click",()=>{const c=!document.querySelector(".reader-app")?.classList.contains("sidebar-open");window.matchMedia(a).matches||localStorage.setItem(d,c?"1":"0"),t(c)}),document.getElementById("sidebar-backdrop")?.addEventListener("click",()=>t(!1)),document.querySelectorAll(".reader-sidebar a").forEach(o=>{o.addEventListener("click",()=>{window.matchMedia(a).matches&&t(!1)})})}document.readyState==="loading"?document.addEventListener("DOMContentLoaded",s):s();</script> <aside class="reader-sidebar" data-astro-cid-khgtvzrl> <div class="breadcrumb" data-astro-cid-khgtvzrl>Vibesamurai · Beginner Path · B6</div> <h4 data-astro-cid-khgtvzrl>In this course</h4> <ul data-astro-cid-khgtvzrl> <li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b1/en" class data-astro-cid-khgtvzrl> B1 · What is an AI agent  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b2/en" class data-astro-cid-khgtvzrl> B2 · Installing your first AI agent  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b3/en" class data-astro-cid-khgtvzrl> B3 · First conversation  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b4/en" class data-astro-cid-khgtvzrl> B4 · What&#39;s a repo and why commit  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b5/en" class data-astro-cid-khgtvzrl> B5 · Building the first project (todo app)  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b6/en" class="current" data-astro-cid-khgtvzrl> B6 · Reading the code the agent wrote  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b7/en" class data-astro-cid-khgtvzrl> B7 · Security for beginners  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b8/en" class data-astro-cid-khgtvzrl> B8 · Cursor vs Claude Code vs Codex CLI  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b9/en" class data-astro-cid-khgtvzrl> B9 · Deploying the first project  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b10/en" class data-astro-cid-khgtvzrl> B10 · How to evaluate the agent&#39;s output  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b11/en" class data-astro-cid-khgtvzrl> B11 · Capstone: build your own tool  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b12/en" class data-astro-cid-khgtvzrl> B12 · Where to go next  </a> </li> </ul>  </aside> <main class="reader-main" data-astro-cid-a7sruqtr> <div class="chapter-eyebrow" data-astro-cid-a7sruqtr> <span data-astro-cid-a7sruqtr>Beginner Path · b6</span> <a class="lang-toggle" href="/vibesamurai-site/courses/beginner/b6" aria-label="Switch to RU" data-astro-cid-a7sruqtr>RU</a> </div> <h1 class="chapter-title" data-astro-cid-a7sruqtr>B6 · Reading the code the agent wrote</h1> <p class="chapter-subtitle" data-astro-cid-a7sruqtr>Basic orientation in the code the agent created. Not &#39;learn to code&#39; — stop being blind in your own project.</p> <h2 id="hook">Hook</h2>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>WITHOUT orientation:             WITH orientation:</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>"Something in JS,         →     index.html — page structure</span></span>
+<span class="line"><span> I don't get it..."              style.css  — how it looks</span></span>
+<span class="line"><span>                                 app.js     — what happens on click</span></span>
+<span class="line"><span>                                                ↑</span></span>
+<span class="line"><span>                                       roughly clear</span></span></code></pre>
+<p>Hey folks, welcome 👋</p>
+<p>This chapter is <strong>not about learning to program</strong>. And it’s not “read Cormen and you’ll get your project.” It’s about <strong>basic orientation</strong>: you open a file, see code, and <strong>roughly understand</strong> what this thing does. Not line by line, not perfectly — but you understand where the logic lives, where the styling lives, and where to look if something broke.</p>
+<p>Twenty to thirty minutes. After it you won’t be afraid to open files the agent wrote.</p>
+<h2 id="concept-orientation--programming">Concept: orientation ≠ programming</h2>
+<p>Imagine you moved into a new flat. To <strong>live</strong> there you don’t need to know how the wiring inside the walls works. You need to know: that’s the switch, that’s the socket, that’s the meter. If a fuse blew — you know where to look.</p>
+<p>Same with code. To <strong>work with an agent</strong> you don’t need every language construct. You need to know:</p>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>┌─────────────────────────────────────────────────────┐</span></span>
+<span class="line"><span>│  1. WHICH FILE IS RESPONSIBLE FOR WHAT              │</span></span>
+<span class="line"><span>│  2. WHERE IN THE FILE IS LOGIC, WHERE IS STYLING    │</span></span>
+<span class="line"><span>│  3. HOW TO LOCATE A SPECIFIC FEATURE IN THE CODE    │</span></span>
+<span class="line"><span>└─────────────────────────────────────────────────────┘</span></span></code></pre>
+<p>That’s enough to:</p>
+<ul>
+<li>Tell the agent “fix this specific chunk,” not “fix it somewhere”</li>
+<li>Notice if the agent touches things it shouldn’t</li>
+<li>Roughly understand a console error</li>
+</ul>
+<h2 id="minimum-orientation-by-file-types">Minimum orientation by file types</h2>
+<p>Most learning projects consist of a few typical file types. Memorise on “this is about what”:</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Extension</th><th>What’s inside</th><th>Why</th></tr></thead><tbody><tr><td><code>.html</code></td><td><strong>Page structure</strong></td><td>What’s on the page — heading, buttons, form, list</td></tr><tr><td><code>.css</code></td><td><strong>Styling</strong></td><td>Colours, fonts, spacing, sizes</td></tr><tr><td><code>.js</code></td><td><strong>Logic</strong></td><td>What happens on actions — click, input, reload</td></tr><tr><td><code>.json</code></td><td><strong>Data/config</strong></td><td>Dependency list, configs, saved state</td></tr><tr><td><code>.md</code></td><td><strong>Text for humans</strong></td><td>README, documentation, notes</td></tr></tbody></table>
+<p>That’s the <strong>bare minimum</strong>. If a project has <code>.html</code>, <code>.css</code>, <code>.js</code> — you already know which to look in for what.</p>
+<h3 id="a-couple-more-important-files">A couple more important files</h3>
+<ul>
+<li><code>package.json</code> — list of <strong>dependencies</strong> (what the project uses) and <strong>run scripts</strong>. If it doesn’t start, this is usually checked first.</li>
+<li><code>README.md</code> — <strong>project instructions</strong>. Decent agents write it. If present — read it; “how to run” and “what is this” are there.</li>
+<li><code>.gitignore</code> — list of what <strong>not to store in git</strong>. Usually <code>node_modules/</code>, <code>.env</code>, temp files.</li>
+</ul>
+<h2 id="example-looking-inside-the-todo-app-from-b5">Example: looking inside the todo app from B5</h2>
+<p>Open the <code>my-todo/</code> folder in a text editor. E.g. <a href="https://code.visualstudio.com">VS Code</a> — free, on every OS, the agent loves it.</p>
+<p>You see:</p>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>my-todo/</span></span>
+<span class="line"><span>├── index.html</span></span>
+<span class="line"><span>├── style.css</span></span>
+<span class="line"><span>├── app.js</span></span>
+<span class="line"><span>└── README.md</span></span></code></pre>
+<p>From the names it’s already roughly clear — structure, style, logic, description.</p>
+<h3 id="round-1-peek-at-indexhtml">Round 1. Peek at <code>index.html</code></h3>
+<p>Opened — see something like:</p>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="html"><code><span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">&#x3C;!</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">DOCTYPE</span><span style="color:#50FA7B;--shiki-light-font-style:italic;--shiki-dark:#50FA7B;--shiki-dark-font-style:italic"> html</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">></span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">&#x3C;</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">html</span><span style="color:#50FA7B;--shiki-light-font-style:italic;--shiki-dark:#50FA7B;--shiki-dark-font-style:italic"> lang</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">=</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">en</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">></span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">&#x3C;</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">head</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">></span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">  &#x3C;</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">title</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">>My todo list&#x3C;/</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">title</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">></span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">  &#x3C;</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">link</span><span style="color:#50FA7B;--shiki-light-font-style:italic;--shiki-dark:#50FA7B;--shiki-dark-font-style:italic"> rel</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">=</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">stylesheet</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#50FA7B;--shiki-light-font-style:italic;--shiki-dark:#50FA7B;--shiki-dark-font-style:italic"> href</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">=</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">style.css</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">></span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">&#x3C;/</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">head</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">></span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">&#x3C;</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">body</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">></span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">  &#x3C;</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">h1</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">>My todo list&#x3C;/</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">h1</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">></span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">  &#x3C;</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">input</span><span style="color:#50FA7B;--shiki-light-font-style:italic;--shiki-dark:#50FA7B;--shiki-dark-font-style:italic"> id</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">=</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">task-input</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#50FA7B;--shiki-light-font-style:italic;--shiki-dark:#50FA7B;--shiki-dark-font-style:italic"> placeholder</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">=</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">New task</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">></span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">  &#x3C;</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">button</span><span style="color:#50FA7B;--shiki-light-font-style:italic;--shiki-dark:#50FA7B;--shiki-dark-font-style:italic"> id</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">=</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">add-btn</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">>Add&#x3C;/</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">button</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">></span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">  &#x3C;</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">ul</span><span style="color:#50FA7B;--shiki-light-font-style:italic;--shiki-dark:#50FA7B;--shiki-dark-font-style:italic"> id</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">=</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">task-list</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">>&#x3C;/</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">ul</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">></span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">  &#x3C;</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">script</span><span style="color:#50FA7B;--shiki-light-font-style:italic;--shiki-dark:#50FA7B;--shiki-dark-font-style:italic"> src</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">=</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">app.js</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">>&#x3C;/</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">script</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">></span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">&#x3C;/</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">body</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">></span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">&#x3C;/</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">html</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">></span></span></code></pre>
+<p>Don’t try to understand <strong>every line</strong>. Just glance and pick out the familiar parts:</p>
+<ul>
+<li><code>&#x3C;title>My todo list&#x3C;/title></code> — browser tab title</li>
+<li><code>&#x3C;h1>My todo list&#x3C;/h1></code> — big heading on the page</li>
+<li><code>&#x3C;input ...></code> — input field where you type a task</li>
+<li><code>&#x3C;button ...>Add&#x3C;/button></code> — that button</li>
+<li><code>&#x3C;ul id="task-list"></code> — empty list where tasks get added</li>
+<li><code>&#x3C;link rel="stylesheet" href="style.css"></code> — “pull styling from <code>style.css</code>”</li>
+<li><code>&#x3C;script src="app.js">&#x3C;/script></code> — “pull logic from <code>app.js</code>”</li>
+</ul>
+<p>See? You <strong>already</strong> can point and say — “here’s the heading, here’s the button.” That’s the <strong>full package</strong> for our task.</p>
+<h3 id="round-2-peek-at-stylecss">Round 2. Peek at <code>style.css</code></h3>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="css"><code><span class="line"><span style="color:#FF79C6;--shiki-dark:#FF79C6">body</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2"> {</span></span>
+<span class="line"><span style="color:#8BE9FD;--shiki-dark:#8BE9FD">  font-family</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">:</span><span style="color:#BD93F9;--shiki-dark:#BD93F9"> sans-serif</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">;</span></span>
+<span class="line"><span style="color:#8BE9FD;--shiki-dark:#8BE9FD">  max-width</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">:</span><span style="color:#BD93F9;--shiki-dark:#BD93F9"> 600</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">px</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">;</span></span>
+<span class="line"><span style="color:#8BE9FD;--shiki-dark:#8BE9FD">  margin</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">:</span><span style="color:#BD93F9;--shiki-dark:#BD93F9"> 40</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">px</span><span style="color:#BD93F9;--shiki-dark:#BD93F9"> auto</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">;</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#FF79C6;--shiki-dark:#FF79C6">button</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2"> {</span></span>
+<span class="line"><span style="color:#8BE9FD;--shiki-dark:#8BE9FD">  background</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">:</span><span style="color:#BD93F9;--shiki-dark:#BD93F9"> #4CAF50</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">;</span></span>
+<span class="line"><span style="color:#8BE9FD;--shiki-dark:#8BE9FD">  color</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">:</span><span style="color:#BD93F9;--shiki-dark:#BD93F9"> white</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">;</span></span>
+<span class="line"><span style="color:#8BE9FD;--shiki-dark:#8BE9FD">  border</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">:</span><span style="color:#BD93F9;--shiki-dark:#BD93F9"> none</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">;</span></span>
+<span class="line"><span style="color:#8BE9FD;--shiki-dark:#8BE9FD">  padding</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">:</span><span style="color:#BD93F9;--shiki-dark:#BD93F9"> 8</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">px</span><span style="color:#BD93F9;--shiki-dark:#BD93F9"> 16</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">px</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">;</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#50FA7B;--shiki-light-font-style:italic;--shiki-dark:#50FA7B;--shiki-dark-font-style:italic">.done</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2"> {</span></span>
+<span class="line"><span style="color:#8BE9FD;--shiki-dark:#8BE9FD">  text-decoration</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">:</span><span style="color:#BD93F9;--shiki-dark:#BD93F9"> line-through</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">;</span></span>
+<span class="line"><span style="color:#8BE9FD;--shiki-dark:#8BE9FD">  color</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">:</span><span style="color:#BD93F9;--shiki-dark:#BD93F9"> gray</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">;</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">}</span></span></code></pre>
+<p>Same logic — <strong>recognise the familiar</strong>:</p>
+<ul>
+<li><code>font-family: sans-serif</code> — what font</li>
+<li><code>background: #4CAF50</code> — colour (green)</li>
+<li><code>text-decoration: line-through</code> — strikethrough text</li>
+<li><code>.done</code> — about a completed task</li>
+</ul>
+<p>Again, <strong>without details</strong> — you know <strong>this is styling</strong>, and if you want to change the button colour — it’s here.</p>
+<h3 id="round-3-peek-at-appjs">Round 3. Peek at <code>app.js</code></h3>
+<p>Scariest by looks, same logic. Look <strong>at comments and names</strong>:</p>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#FF79C6;--shiki-dark:#FF79C6">const</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2"> input </span><span style="color:#FF79C6;--shiki-dark:#FF79C6">=</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2"> document.</span><span style="color:#50FA7B;--shiki-dark:#50FA7B">getElementById</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">(</span><span style="color:#E9F284;--shiki-dark:#E9F284">'</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">task-input</span><span style="color:#E9F284;--shiki-dark:#E9F284">'</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">);</span></span>
+<span class="line"><span style="color:#FF79C6;--shiki-dark:#FF79C6">const</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2"> addBtn </span><span style="color:#FF79C6;--shiki-dark:#FF79C6">=</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2"> document.</span><span style="color:#50FA7B;--shiki-dark:#50FA7B">getElementById</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">(</span><span style="color:#E9F284;--shiki-dark:#E9F284">'</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">add-btn</span><span style="color:#E9F284;--shiki-dark:#E9F284">'</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">);</span></span>
+<span class="line"><span style="color:#FF79C6;--shiki-dark:#FF79C6">const</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2"> list </span><span style="color:#FF79C6;--shiki-dark:#FF79C6">=</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2"> document.</span><span style="color:#50FA7B;--shiki-dark:#50FA7B">getElementById</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">(</span><span style="color:#E9F284;--shiki-dark:#E9F284">'</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">task-list</span><span style="color:#E9F284;--shiki-dark:#E9F284">'</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">);</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">addBtn.</span><span style="color:#50FA7B;--shiki-dark:#50FA7B">addEventListener</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">(</span><span style="color:#E9F284;--shiki-dark:#E9F284">'</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">click</span><span style="color:#E9F284;--shiki-dark:#E9F284">'</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">, () </span><span style="color:#FF79C6;--shiki-dark:#FF79C6">=></span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2"> {</span></span>
+<span class="line"><span style="color:#6272A4;--shiki-dark:#6272A4">  // what happens when "Add" is clicked</span></span>
+<span class="line"><span style="color:#FF79C6;--shiki-dark:#FF79C6">  const</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2"> text </span><span style="color:#FF79C6;--shiki-dark:#FF79C6">=</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2"> input.value;</span></span>
+<span class="line"><span style="color:#FF79C6;--shiki-dark:#FF79C6">  if</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2"> (</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">!</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">text) </span><span style="color:#FF79C6;--shiki-dark:#FF79C6">return</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">;</span></span>
+<span class="line"><span style="color:#50FA7B;--shiki-dark:#50FA7B">  addTask</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">(text);</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">  input.value </span><span style="color:#FF79C6;--shiki-dark:#FF79C6">=</span><span style="color:#E9F284;--shiki-dark:#E9F284"> ''</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">;</span></span>
+<span class="line"><span style="color:#50FA7B;--shiki-dark:#50FA7B">  saveTasks</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">();</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">});</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#FF79C6;--shiki-dark:#FF79C6">function</span><span style="color:#50FA7B;--shiki-dark:#50FA7B"> addTask</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">(</span><span style="color:#FFB86C;--shiki-light-font-style:italic;--shiki-dark:#FFB86C;--shiki-dark-font-style:italic">text</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">) {</span></span>
+<span class="line"><span style="color:#6272A4;--shiki-dark:#6272A4">  // create a new list element</span></span>
+<span class="line"><span style="color:#FF79C6;--shiki-dark:#FF79C6">  ...</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#FF79C6;--shiki-dark:#FF79C6">function</span><span style="color:#50FA7B;--shiki-dark:#50FA7B"> saveTasks</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">() {</span></span>
+<span class="line"><span style="color:#6272A4;--shiki-dark:#6272A4">  // save to localStorage</span></span>
+<span class="line"><span style="color:#FF79C6;--shiki-dark:#FF79C6">  ...</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">}</span></span></code></pre>
+<p>What we <strong>understand without knowing JS</strong>:</p>
+<ul>
+<li><code>addBtn.addEventListener('click', ...)</code> — “when addBtn is clicked, do this”</li>
+<li><code>addTask(text)</code> — function that adds a task</li>
+<li><code>saveTasks()</code> — function that saves</li>
+<li>Names <strong>speak for themselves</strong> — <code>addTask</code>, <code>saveTasks</code>, <code>taskInput</code></li>
+</ul>
+<p>So later when you want to change something in saving — you <strong>know</strong> to dig into <code>saveTasks</code> in <code>app.js</code>.</p>
+<h2 id="trick-1-ask-the-agent-for-an-explainer">Trick #1: ask the agent for an explainer</h2>
+<p>The most underrated move for a newcomer. When a file doesn’t make sense — <strong>ask the agent to explain</strong>:</p>
+<blockquote>
+<p>“Explain in three sentences what <code>app.js</code> does. No code, plain words, as for someone who’s never seen JavaScript.”</p>
+</blockquote>
+<p>The agent says something like:</p>
+<blockquote>
+<p>“This file implements the todo app’s logic. When you click ‘Add,’ it takes the text from the input, creates a new list element, and saves all tasks in browser memory (localStorage). Reloading the page doesn’t lose tasks — they’re loaded back from that memory.”</p>
+</blockquote>
+<p>That’s it, you have a <strong>file map</strong>. Not perfect, but enough.</p>
+<h2 id="trick-2-show-me-where-x">Trick #2: “show me where X”</h2>
+<p>When something needs changing and you don’t know where it lives, don’t go hunting — <strong>ask</strong>:</p>
+<blockquote>
+<p>“Which file and which line has the code that saves tasks to localStorage? Show me the chunk itself.”</p>
+</blockquote>
+<p>The agent shows the exact spot. Then you either ask it to change there, or look with your own eyes to confirm <strong>that’s what’s changing</strong>.</p>
+<h2 id="trick-3-track-what-the-agent-touches">Trick #3: track what the agent touches</h2>
+<p>In Claude Code after every change you see which files were modified. That’s critical to avoid missing “accidental” edits.</p>
+<p>If you asked “change the button colour” and the agent touches <code>app.js</code> — stop, something’s off. Why the logic? Ask:</p>
+<blockquote>
+<p>“Why did you change <code>app.js</code>? I only asked for the button colour. Revert that change.”</p>
+</blockquote>
+<p>It’s normal — <strong>to re-ask</strong>. It’s not “distrust of the agent,” it’s <strong>basic hygiene</strong>.</p>
+<h2 id="what-to-do-when-nothing-makes-sense-at-all">What to do when “nothing makes sense at all”</h2>
+<h3 id="case-1-opened-a-file-500-lines-head-spinning">Case 1. Opened a file, 500 lines, head spinning</h3>
+<p>Don’t panic. <strong>Nobody reads 500 lines in a row.</strong> Do this:</p>
+<ol>
+<li>Ask the agent: “give me a table of contents for this file — what functions, what each does, one line each”</li>
+<li>Find the one for what you care about</li>
+<li>Ask to show <strong>just that one</strong></li>
+</ol>
+<h3 id="case-2-you-see-a-function-name--dont-know-what-it-means">Case 2. You see a function name — don’t know what it means</h3>
+<p>Ask the agent: “what does <code>setInterval</code> mean here, in plain words?” Not a <strong>stupid question</strong>. The best way to learn — ask in context on a live example.</p>
+<h3 id="case-3-console-error--heap-of-red-text">Case 3. Console error — heap of red text</h3>
+<p>Copy the <strong>first</strong> error (usually the most important) and ask:</p>
+<blockquote>
+<p>“This error appeared in the browser console: <code>&#x3C;paste></code>. What does it mean and where to fix it?”</p>
+</blockquote>
+<p>The agent shows file, line, and usually proposes the fix.</p>
+<h2 id="practice-2030-minutes">Practice (20–30 minutes)</h2>
+<h3 id="task-1-15-minutes--explainers">Task 1 (15 minutes) — explainers</h3>
+<p>Open your <code>my-todo</code> from B5 (or any folder with agent code). For <strong>each</strong> file ask the agent:</p>
+<blockquote>
+<p>“Explain in three sentences what this file does. No code, plain words.”</p>
+</blockquote>
+<p>Rewrite the answers <strong>in your own words</strong> into a notebook or README. Not for show — the process itself <strong>cements understanding</strong>.</p>
+<h3 id="task-2-15-minutes--find-the-feature">Task 2 (15 minutes) — find the feature</h3>
+<p>Open <code>app.js</code> (or another logic file). Find the function for <strong>one concrete feature</strong> — e.g. “delete a task” or “save to localStorage.” Do two things:</p>
+<ol>
+<li>Say out loud (or write) — what this function does step by step, in your words</li>
+<li>Cross-check with the agent: “function <code>&#x3C;name></code> — do I understand correctly that it works like this?”</li>
+</ol>
+<p>If yes — great, you just <strong>read real code</strong>. If not — the agent corrects, you extend your understanding.</p>
+<h2 id="recap">Recap</h2>
+<ul>
+<li><strong>Orientation ≠ programming.</strong> Knowing “which file does what” is already 80 % of the benefit.</li>
+<li><strong>Extensions speak for themselves:</strong> <code>.html</code> — structure, <code>.css</code> — styling, <code>.js</code> — logic, <code>.json</code> — config, <code>.md</code> — text.</li>
+<li><strong>Top trick — ask the agent for explainers</strong>, don’t “learn the language.” In context, on a live example, bit by bit.</li>
+</ul>
+<h2 id="vibe-samurai">Vibe Samurai</h2>
+<aside class="skeptic">
+<p><strong>🥷 Vibe Samurai asks:</strong>
+“What if I just don’t want to read code at all? I’m not a programmer — I thought the agent does it all.”</p>
+<p><strong>Answer:</strong> Nobody’s asking you to read code <strong>line by line</strong>. But if you never <strong>open</strong> your files, something interesting happens: you become <strong>fully dependent</strong> on the agent, which sometimes doesn’t know what it did either. Minimum orientation is <strong>your control over your own project</strong>. Like driving a car without knowing where the hood is: you can drive, but if something rattles — you’re helpless. <strong>Not perfect, but actually works</strong> — even minimal code reading turns you from passenger into driver.</p>
+</aside>
+<h2 id="whats-next">What’s next</h2>
+<p>In <strong>B7 — Security for beginners</strong> we cover <strong>what not to give the agent</strong> and <strong>how to protect yourself</strong> while learning. No paranoia, no naivety — a few simple rules that save you from 90 % of typical screw-ups: API keys, secrets, folders better not to expose.</p>
+<p>If this clicked — share with anyone working with an agent but <strong>never looking at the code</strong>. If you have a file you don’t get — drop a chunk in the comments, we’ll unpack together. <strong>A like and a comment is extra appreciated</strong>, your feedback really helps polish the material.</p>
+<h2 id="-further-reading">📚 Further reading</h2>
+<p>Reading other people’s code is a <strong>skill</strong> trained separately from writing. Below — about that skill and references nice to use when you “didn’t get a word.”</p>
+<p><strong>Articles on code reading</strong></p>
+<ul>
+<li><strong>“How to Read Code Written by Someone Else”</strong> (Towards Data Science) — short walkthrough of techniques: trace from the output, find tests, use “Go to definition”: <a href="https://towardsdatascience.com/the-most-efficient-way-to-read-code-written-by-someone-else-cb1a05102b76/">towardsdatascience.com/the-most-efficient-way-to-read-code-written-by-someone-else</a>.</li>
+<li><strong>“How to read someone else’s code!”</strong> (MIT Media Lab, classic short note by Henry Lieberman): <a href="https://web.media.mit.edu/~lieber/Teaching/IISDW/Read-Code.html">web.media.mit.edu/~lieber/Teaching/IISDW/Read-Code.html</a>. Old but honest — teaches “don’t try to understand everything at once.”</li>
+</ul>
+<p><strong>References</strong></p>
+<ul>
+<li><strong>MDN — JavaScript Guide</strong> (if the project is JS — the <strong>only</strong> reference worth keeping in a tab): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide">developer.mozilla.org/en-US/docs/Web/JavaScript/Guide</a>.</li>
+<li><strong>MDN — Window.localStorage</strong> (a typical thing in learning projects: “how the agent saves state in the browser”): <a href="https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage">developer.mozilla.org/en-US/docs/Web/API/Window/localStorage</a>.</li>
+<li><strong>VS Code — Getting Started</strong> (how to use “Go to definition,” symbol search, and why they matter when reading code): <a href="https://code.visualstudio.com/docs/getstarted/getting-started">code.visualstudio.com/docs/getstarted/getting-started</a>.</li>
+</ul>
+<blockquote>
+<p><strong>Tip:</strong> habit — see an unfamiliar word in code, <strong>immediately</strong> look it up on MDN or ask the agent to explain “in plain words.” In a month a vocabulary builds itself.</p>
+</blockquote> <nav class="chapter-nav" data-astro-cid-a7sruqtr> <a href="/vibesamurai-site/courses/beginner/b5/en" data-astro-cid-a7sruqtr> <span class="dir" data-astro-cid-a7sruqtr>← Back</span> <span class="title" data-astro-cid-a7sruqtr>B5 · Building the first project (todo app)</span> </a> <a href="/vibesamurai-site/courses/beginner/b7/en" data-astro-cid-a7sruqtr> <span class="dir" data-astro-cid-a7sruqtr>Next →</span> <span class="title" data-astro-cid-a7sruqtr>B7 · Security for beginners</span> </a> </nav> </main>  </div> <script type="module">
+    import { gatingEnabled } from '../lib/supabase';
+    import { fetchChapter } from '../lib/auth';
+
+    const base = import.meta.env.BASE_URL;
+    let mermaidLib = null;
+
+    function scopeOf(root) {
+      return root === document ? document.querySelector('.reader-main') : root;
+    }
+
+    function addCopyBtns(root) {
+      const scope = scopeOf(root); if (!scope) return;
+      scope.querySelectorAll('pre').forEach((pre) => {
+        if (pre.closest('.code-tabs')) return;
+        if (pre.querySelector('.copy-btn')) return;
+        const btn = document.createElement('button');
+        btn.className = 'copy-btn';
+        btn.textContent = 'copy';
+        btn.addEventListener('click', async () => {
+          const code = pre.querySelector('code')?.textContent ?? pre.textContent ?? '';
+          await navigator.clipboard.writeText(code.trimEnd());
+          btn.textContent = '✓ copied';
+          setTimeout(() => { btn.textContent = 'copy'; }, 1600);
+        });
+        pre.appendChild(btn);
+      });
+    }
+
+    function tightenMermaidSvgs(retries = 6) {
+      let pending = false;
+      document.querySelectorAll('.mermaid svg').forEach((svg) => {
+        if (svg.dataset.tightened === '1') return;
+        try {
+          const bbox = svg.getBBox();
+          if (!bbox || bbox.width === 0) { pending = true; return; }
+          const pad = 6;
+          svg.setAttribute('viewBox',
+            `${bbox.x - pad} ${bbox.y - pad} ${bbox.width + pad * 2} ${bbox.height + pad * 2}`);
+          svg.removeAttribute('height');
+          svg.style.height = 'auto';
+          svg.style.maxWidth = '100%';
+          svg.style.display = 'block';
+          svg.dataset.tightened = '1';
+        } catch (e) { pending = true; }
+      });
+      if (pending && retries > 0) setTimeout(() => tightenMermaidSvgs(retries - 1), 120);
+    }
+
+    async function ensureMermaid() {
+      if (mermaidLib) return mermaidLib;
+      const mod = await import('https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs');
+      mermaidLib = mod.default;
+      mermaidLib.initialize({
+        startOnLoad: false, theme: 'neutral',
+        themeVariables: {
+          fontFamily: 'JetBrains Mono, ui-monospace, monospace',
+          primaryColor: '#f5f5f5', primaryBorderColor: '#222',
+          primaryTextColor: '#111', lineColor: '#444',
+        },
+        flowchart: { curve: 'basis', padding: 12, useMaxWidth: true },
+      });
+      return mermaidLib;
+    }
+
+    async function renderMermaid(root) {
+      const scope = scopeOf(root); if (!scope) return;
+      const matches = scope.querySelectorAll(
+        'pre[data-language="mermaid"], pre.language-mermaid, code.language-mermaid'
+      );
+      if (!matches.length) return;
+      matches.forEach((el) => {
+        const block = el.tagName === 'CODE' ? el.closest('pre') || el : el;
+        const codeEl = block.querySelector('code') || block;
+        const wrap = document.createElement('div');
+        wrap.className = 'mermaid';
+        wrap.textContent = codeEl.textContent;
+        block.replaceWith(wrap);
+      });
+      try {
+        const m = await ensureMermaid();
+        await m.run();
+        tightenMermaidSvgs();
+      } catch (err) {
+        console.warn('mermaid failed', err);
+        document.querySelectorAll('.mermaid:not(:has(svg))').forEach((el) => { el.style.display = 'none'; });
+      }
+    }
+
+    async function enhance(root = document) {
+      addCopyBtns(root);
+      await renderMermaid(root);
+    }
+
+    function paywallHtml(required, needLogin) {
+      const label = { beginner: 'Beginner (300 ₽)', middle: 'Beginner + Middle (500 ₽)', all: 'Весь пакет (700 ₽)' }[required] || '';
+      return `<div class="paywall">
+        <div class="paywall-ic">🔒</div>
+        <h3>Эта глава — в платном доступе</h3>
+        <p>Нужен тариф: <strong>${label}</strong>. Доступ навсегда, без подписки.</p>
+        ${needLogin ? '<p>Войди через Google и оформи доступ — продолжишь с любого устройства.</p>' : ''}
+        <a class="paywall-btn" href="${base}pricing">Открыть доступ →</a>
+        <a class="paywall-link" href="${base}account">Войти / мой аккаунт</a>
+      </div>`;
+    }
+
+    async function gatedFlow(mount) {
+      const slug = mount.dataset.slug;
+      const required = mount.dataset.required || 'beginner';
+      mount.innerHTML = '<p class="gate-msg">Проверяем доступ…</p>';
+      const res = await fetchChapter(slug);
+      if (res.ok) {
+        mount.innerHTML = res.html;
+        await enhance(mount);
+      } else if (res.status === 401) {
+        mount.innerHTML = paywallHtml(required, true);
+      } else if (res.status === 402) {
+        mount.innerHTML = paywallHtml(res.requiredTier || required, false);
+      } else {
+        mount.innerHTML = '<p class="gate-msg">Не удалось загрузить главу. Обнови страницу.</p>';
+      }
+    }
+
+    const mount = document.getElementById('gated-mount');
+    if (mount && gatingEnabled) gatedFlow(mount);
+    else enhance(document);
+  </script> </body> </html>

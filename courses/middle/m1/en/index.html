@@ -1,0 +1,266 @@
+<!DOCTYPE html><html lang="en" data-astro-cid-a7sruqtr> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>What is agentic AI in the SDLC — Vibesamurai</title><meta name="description" content="Plan → Act → Evaluate, the contributor model, and why an agent is a colleague, not a reference manual."><meta property="og:title" content="What is agentic AI in the SDLC"><meta property="og:type" content="article"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Inter:wght@300..800&family=JetBrains+Mono:wght@400..600&display=swap" rel="stylesheet"><link rel="stylesheet" href="/vibesamurai-site/_astro/_slug_.Cs4TX1wt.css">
+<style>.account-btn{display:inline-flex;align-items:center;gap:var(--space-2);font-family:var(--font-mono);font-size:var(--size-2);text-transform:uppercase;letter-spacing:.06em;padding:5px 10px;border:1px solid var(--rule);border-radius:999px;color:var(--text-soft);background:var(--surface);transition:border-color var(--d-fast),color var(--d-fast)}.account-btn:hover{border-color:var(--accent);color:var(--text)}.account-ic{width:18px;height:18px;display:grid;place-items:center;border-radius:50%;background:var(--accent);color:var(--accent-ink);font-weight:700;font-size:10px;line-height:1}.reader-rail .account-btn{padding:0;border:none;background:transparent}.reader-rail .account-label{display:none}.reader-rail .account-ic{width:32px;height:32px;font-size:13px}.rail-toggle{width:36px;height:36px;display:grid;place-items:center;background:var(--accent);border:1px solid var(--accent);border-radius:4px;cursor:pointer;transition:filter var(--d-fast),transform var(--d-fast);padding:0}.rail-toggle:hover{filter:brightness(1.08);transform:translateY(-1px)}.rail-toggle:active{transform:translateY(0)}.rail-toggle-icon{width:14px;height:12px;border-left:2px solid var(--accent-ink);border-right:2px solid var(--accent-ink);transition:transform var(--d-normal) var(--ease-standard)}.reader-app.sidebar-open .rail-toggle-icon{transform:rotate(0)}.reader-app:not(.sidebar-open) .rail-toggle-icon{transform:scaleX(.5)}.sidebar-backdrop{display:none;position:fixed;inset:0;background:#0000008c;z-index:140;border:0;padding:0;cursor:pointer}@media(max-width:900px){.reader-app.sidebar-open~.sidebar-backdrop{display:block}}.rail-spacer[data-astro-cid-ofsbkzh7]{flex:1}.reader-sidebar[data-astro-cid-khgtvzrl] .ru-tag[data-astro-cid-khgtvzrl]{font-style:normal;font-family:var(--font-mono);font-size:.7em;color:var(--text-mute);margin-left:4px;padding:1px 4px;border:1px solid var(--rule);border-radius:3px;text-transform:uppercase;vertical-align:middle}.chapter-eyebrow[data-astro-cid-a7sruqtr]{display:flex;justify-content:space-between;align-items:center;gap:var(--space-3)}.lang-toggle[data-astro-cid-a7sruqtr]{font-family:var(--font-mono);font-size:var(--size-2);padding:2px 8px;border:1px solid var(--rule);border-radius:4px;color:var(--text-mute);text-decoration:none;text-transform:uppercase;letter-spacing:.08em}.lang-toggle[data-astro-cid-a7sruqtr]:hover{color:var(--accent);border-color:var(--accent)}.code-tabs[data-astro-cid-hg66rjob]{margin:var(--space-5) 0}.code-tabs-nav[data-astro-cid-hg66rjob]{display:flex;gap:2px;margin-bottom:-1px;position:relative;z-index:1}.ctab[data-astro-cid-hg66rjob]{font-family:var(--font-mono);font-size:11px;text-transform:uppercase;letter-spacing:.07em;padding:5px 14px;border:1px solid #21222c;border-bottom:none;background:#1a1b23;color:#6272a4;cursor:pointer;border-radius:4px 4px 0 0;transition:color .12s,background .12s}.ctab[data-astro-cid-hg66rjob].is-active{background:#282a36;color:#f8f8f2;border-color:#21222c}.ctab[data-astro-cid-hg66rjob]:hover:not(.is-active){color:#cdd6f4}.ctab-panel[data-astro-cid-hg66rjob]{display:none}.ctab-panel[data-astro-cid-hg66rjob].is-active{display:block}.ctab-panel[data-astro-cid-hg66rjob] pre{margin-top:0!important;border-radius:0 6px 6px!important}
+</style></head> <body data-astro-cid-a7sruqtr> <div class="reader-app" data-astro-cid-a7sruqtr> <aside class="reader-rail" data-astro-cid-ofsbkzh7> <a href="/vibesamurai-site/" class="logo" aria-label="Vibesamurai home" data-astro-cid-ofsbkzh7>V</a> <button type="button" class="rail-toggle" id="sidebar-toggle" aria-label="Свернуть/развернуть оглавление" title="Свернуть/развернуть оглавление" data-astro-cid-ofsbkzh7> <span class="rail-toggle-icon" aria-hidden="true" data-astro-cid-ofsbkzh7></span> </button> <div class="rail-spacer" data-astro-cid-ofsbkzh7></div> <a href="/vibesamurai-site/account" class="account-btn" id="account-btn" aria-label="Аккаунт"> <span class="account-ic" id="account-ic">⌂</span> <span class="account-label" id="account-label">Войти</span> </a>  <script type="module" src="/vibesamurai-site/_astro/AccountButton.astro_astro_type_script_index_0_lang.CmD2sdn9.js"></script> </aside>  <button type="button" class="sidebar-backdrop" id="sidebar-backdrop" aria-label="Закрыть оглавление" tabindex="-1" data-astro-cid-ofsbkzh7></button>  <script type="module">const d="vs-sidebar-open",a="(max-width: 900px)";function t(e){const n=document.querySelector(".reader-app");n&&n.classList.toggle("sidebar-open",e)}function r(){return!window.matchMedia(a).matches}function s(){const e=localStorage.getItem(d),i=window.matchMedia(a).matches?!1:e!==null?e==="1":r();t(i),document.getElementById("sidebar-toggle")?.addEventListener("click",()=>{const c=!document.querySelector(".reader-app")?.classList.contains("sidebar-open");window.matchMedia(a).matches||localStorage.setItem(d,c?"1":"0"),t(c)}),document.getElementById("sidebar-backdrop")?.addEventListener("click",()=>t(!1)),document.querySelectorAll(".reader-sidebar a").forEach(o=>{o.addEventListener("click",()=>{window.matchMedia(a).matches&&t(!1)})})}document.readyState==="loading"?document.addEventListener("DOMContentLoaded",s):s();</script> <aside class="reader-sidebar" data-astro-cid-khgtvzrl> <div class="breadcrumb" data-astro-cid-khgtvzrl>Vibesamurai · Middle Path · M1</div> <h4 data-astro-cid-khgtvzrl>In this course</h4> <ul data-astro-cid-khgtvzrl> <li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m1/en" class="current" data-astro-cid-khgtvzrl> M1 · What is agentic AI in the SDLC  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m2/en" class data-astro-cid-khgtvzrl> M2 · Architecting agent boundaries  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m3/en" class data-astro-cid-khgtvzrl> M3 · Observability and human-in-the-loop  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m4/en" class data-astro-cid-khgtvzrl> M4 · Tool inventory and permissions  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m5/en" class data-astro-cid-khgtvzrl> M5 · MCP deep dive  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m6/en" class data-astro-cid-khgtvzrl> M6 · Claude Code CLI mastery  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m7/en" class data-astro-cid-khgtvzrl> M7 · GPT-5.3 Codex CLI and OpenAI agents  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m8/en" class data-astro-cid-khgtvzrl> M8 · Cursor Composer + IDE agents  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m9/en" class data-astro-cid-khgtvzrl> M9 · Memory strategies  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m10/en" class data-astro-cid-khgtvzrl> M10 · State, drift, continuity  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m11/en" class data-astro-cid-khgtvzrl> M11 · Evaluating agents: metrics over vibes  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m12/en" class data-astro-cid-khgtvzrl> M12 · Regression tests for agents  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m13/en" class data-astro-cid-khgtvzrl> M13 · Tuning: what to change when metrics don&#39;t move  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m14/en" class data-astro-cid-khgtvzrl> M14 · One agent, many steps: pipelines and orchestration  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m15/en" class data-astro-cid-khgtvzrl> M15 · Multi-agent: roles, communication, supervisor  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m16/en" class data-astro-cid-khgtvzrl> M16 · When multi-agent is overkill. Anti-patterns  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m17/en" class data-astro-cid-khgtvzrl> M17 · Production: deploying agents to live environments  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m18/en" class data-astro-cid-khgtvzrl> M18 · Security in prod: secrets, sandbox, audit  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m19/en" class data-astro-cid-khgtvzrl> M19 · Incidents &amp; post-mortems  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/middle/m20/en" class data-astro-cid-khgtvzrl> M20 · Finale: where to go after Middle  </a> </li> </ul>  </aside> <main class="reader-main" data-astro-cid-a7sruqtr> <div class="chapter-eyebrow" data-astro-cid-a7sruqtr> <span data-astro-cid-a7sruqtr>Middle Path · m1</span> <a class="lang-toggle" href="/vibesamurai-site/courses/middle/m1" aria-label="Switch to RU" data-astro-cid-a7sruqtr>RU</a> </div> <h1 class="chapter-title" data-astro-cid-a7sruqtr>M1 · What is agentic AI in the SDLC</h1> <p class="chapter-subtitle" data-astro-cid-a7sruqtr>Plan → Act → Evaluate, the contributor model, and why an agent is a colleague, not a reference manual.</p> <h2 id="why-this-chapter-if-youre-already-shipping-prod">Why this chapter, if you’re already shipping prod</h2>
+<p>Hey folks, welcome 👋</p>
+<p>If you’re a middle developer with two years in production repos, I’ve got bad news: everything you know about IDE assistants and autocomplete from the last six months is out of date. Not because the tools got worse — because <strong>the paradigm shifted</strong>.</p>
+<p>The AI tool used to be a <strong>reference manual with a hand</strong> — it suggested a line, completed a function, explained an API. It fundamentally couldn’t open a PR, run tests, refactor three files in a row, notice that the build broke, and fix it.</p>
+<p>Now it can. And not one or two experimental tools — the <strong>whole zoo</strong>: Claude Code, Cursor, Codex CLI, Devin, GitHub Copilot Workspace, Aider, Continue. In 2026 each of them isn’t an “assistant,” it’s a <strong>contributor</strong>. They work through the same interface you do: files, branches, PRs, reviews.</p>
+<p>This chapter is about how to stop thinking in terms of “help in code” and start thinking in terms of <strong>“how do I build a team of humans and agents and keep control over the repo.”</strong></p>
+<h2 id="the-three-phases-of-an-agent-plan--act--evaluate">The three phases of an agent: plan → act → evaluate</h2>
+<p>In any sensibly structured agentic pipeline there are three mandatory phases that sit on top of the usual SDLC — the agent assists at every step, but the cycle stays recognisable:</p>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="mermaid"><code><span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">flowchart LR</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    Task([Task from you]) --> Plan[PLAN&#x3C;br/>agent describes&#x3C;br/>what and in what order]</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    Plan -->|you approved| Act[ACT&#x3C;br/>agent changes&#x3C;br/>code / tests / PR]</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    Act --> Eval[EVALUATE&#x3C;br/>tests, linter,&#x3C;br/>success criterion]</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    Eval -->|ok| Ship([Merge / ship])</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    Eval -->|did not converge| Replan([Revise / replan])</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    Replan -.-> Plan</span></span></code></pre>
+<ol>
+<li><strong>Plan.</strong> The agent states <em>what exactly</em> it’s about to do, <em>in what order</em>, <em>under what assumptions</em>, <strong>before</strong> it changes anything. It’s an explicit artifact — a markdown plan, JSON, structured output.</li>
+<li><strong>Act.</strong> The agent executes the plan in a clearly bounded scope: a branch, a sandbox, a set of allowed tools. Each action is a separate step with inputs/outputs.</li>
+<li><strong>Evaluate.</strong> The agent or an external system compares the result against the success criterion. If it doesn’t converge — back to plan for revision.</li>
+</ol>
+<p>The critical point: <strong>the plan is not a by-product, it’s the contract.</strong> If you skipped the plan, you skipped the moment when you could still say “stop, let’s do it differently.” Once act has started — fixes are an order of magnitude more expensive.</p>
+<p>If something just clicked in your head — “this is waterfall with feedback” — yes, it is. The difference is that the cycle now takes minutes, not weeks. And that’s exactly why <strong>the discipline of plan/act/evaluate matters more than ever</strong>: without it the cycle degenerates into chaos at 1000 commits per hour.</p>
+<h2 id="a-contributor-not-a-reference-manual">A contributor, not a reference manual</h2>
+<p>The core mental model of this chapter:</p>
+<blockquote>
+<p><strong>An agent is a new team member on probation.</strong></p>
+</blockquote>
+<p>Almost everything we’ll do from here on derives from this model:</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>What you do with a new junior</th><th>What you do with an agent</th></tr></thead><tbody><tr><td>You don’t hand them prod credentials on day one</td><td>You don’t pass <code>--dangerously-skip-permissions</code></td></tr><tr><td>You do code review</td><td>You read the plan and the diff before merge</td></tr><tr><td>You explain context and conventions</td><td>You write <code>CLAUDE.md</code> / <code>.cursorrules</code> / <code>AGENTS.md</code></td></tr><tr><td>You give a small task with a clear DoD</td><td>You give a clear success criterion</td></tr><tr><td>You ask “why did you do it that way”</td><td>You request justification in the plan</td></tr><tr><td>You teach them to admit they don’t know</td><td>You structure tools so it can say “I don’t know”</td></tr></tbody></table>
+<p>This isn’t an analogy for the sake of it. It’s a <strong>working management model</strong>: reuse your people-management skills, and most of the agent-work patterns become obvious immediately.</p>
+<h2 id="github-as-system-of-record-and-control-plane">GitHub as system of record and control plane</h2>
+<p>In a world where your team has both humans and agents — you need a <strong>single source of truth</strong>. In 2026 that point is <strong>GitHub</strong> (or GitLab, or Forgejo — for the purposes of this course the difference is small).</p>
+<p>Why GitHub:</p>
+<ul>
+<li><strong>Every change is visible.</strong> The PR <em>is</em> the artifact of the plan and execution.</li>
+<li><strong>Every change is reversible.</strong> Revert works the same for humans and agents.</li>
+<li><strong>Every change is auditable.</strong> Who did what, when, against which ticket — all in commit log, PR review, issue tracker.</li>
+<li><strong>Every change is delegatable.</strong> An agent can open a PR; a human can merge it. Or the other way — a human opens a plan, an agent finishes the work.</li>
+</ul>
+<p>We’ll repeat this thought across the course until it hurts: <strong>GitHub isn’t code hosting, it’s the control plane of your hybrid human/agent team.</strong> If your agent doesn’t work through PRs, you’ve lost half the benefits.</p>
+<p>In M3 we’ll talk about the <strong>degree-of-autonomy ladder</strong>. At the bottom — the agent only proposes a plan, everything is merged by a human. At the top — the agent opens PRs by itself, runs tests, replies to review comments. Where exactly you want to sit on that ladder is an architectural decision; it depends on risk and on the maturity of your observation system.</p>
+<h2 id="the-anti-patterns-i-see-most-often">The anti-patterns I see most often</h2>
+<p>The four kinds of mistakes that middle developers make in the first couple of months of agentic flow <strong>honestly drive me up the wall</strong>. Let’s get them out of the way so you don’t repeat them.</p>
+<h3 id="1-give-the-agent-prod-creds-its-smart">1. “Give the agent prod creds, it’s smart”</h3>
+<p>No. It’s not <strong>smart</strong> — it’s <em>capable</em>. Those aren’t the same thing. A capable employee without context will crash prod faster than an incapable one, because the capable one has the hands. No prod creds in an agent session. Ever. More on this in M4 (least-privilege scoping).</p>
+<h3 id="2-i-told-it-in-one-line-itll-figure-out-the-rest">2. “I told it in one line, it’ll figure out the rest”</h3>
+<p>The agent isn’t a telepath. If the task doesn’t state a success criterion, the agent will decide for itself what counts as “done.” And it <strong>almost always</strong> won’t be what you meant. A good request is a spec, not a command. We unpack this in M7 (prompt engineering).</p>
+<h3 id="3-why-read-the-plan-i-trust-the-model">3. “Why read the plan, I trust the model”</h3>
+<p>Trust isn’t the absence of checking. It’s <strong>the willingness to accept the consequences of checking</strong>. If you don’t read the plan, you don’t trust — you just closed your eyes. Those are different things.</p>
+<h3 id="4-its-a-pr-from-the-agent-its-easier-to-accept-than-to-dig-in">4. “It’s a PR from the agent, it’s easier to accept than to dig in”</h3>
+<p>The most dangerous attitude. An agent PR has to go through <strong>the same review</strong> as a human PR — and in the first months of adoption, often a stricter one. In M11 (review patterns) we’ll assemble a checklist for reviewing agent code.</p>
+<h2 id="your-first-deliberate-agentic-cycle">Your first deliberate agentic cycle</h2>
+<p>Take a minimal, safe, <strong>illustrative</strong> example. Open Claude Code in any of your repos and ask it to build a plan <strong>with no right to change anything</strong>:</p>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#50FA7B;--shiki-dark:#50FA7B">claude</span><span style="color:#BD93F9;--shiki-dark:#BD93F9"> --permission-mode</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C"> plan</span><span style="color:#FF79C6;--shiki-dark:#FF79C6"> \</span></span>
+<span class="line"><span style="color:#E9F284;--shiki-dark:#E9F284">  "</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">Read the repo. Suggest three places where cognitive complexity could be reduced. </span><span style="color:#FF79C6;--shiki-dark:#FF79C6">\</span></span>
+<span class="line"><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">   For each suggestion — file, reason, and rough cost in lines. </span><span style="color:#FF79C6;--shiki-dark:#FF79C6">\</span></span>
+<span class="line"><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">   Do not modify any files.</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span></span></code></pre>
+<p>What matters here:</p>
+<ul>
+<li><code>--permission-mode plan</code> is an <strong>architectural boundary</strong>, not a cosmetic one. The agent physically cannot modify a file.</li>
+<li>The request contains a <strong>success criterion</strong> (“three places, with file, reason, cost”).</li>
+<li>The request explicitly bounds the scope of actions (“do not modify”).</li>
+</ul>
+<p>Read the plan. Estimate how well it matches your own picture of the repo. If it matches at 80 %+ — the model sees your code adequately, you can go further. If it matches at 30 % — the model lacks the right context, <strong>the problem is not the model, the problem is the context</strong> you gave it. Maybe a <code>CLAUDE.md</code> is needed, or extra explainer files.</p>
+<p>This exercise is the foundation of the whole course. <strong>Reading the plan before allowing action</strong> is the skill that separates a middle developer in the agentic world from a middle developer in a world without agents.</p>
+<h2 id="a-programmatic-note-register-c">A programmatic note (register C)</h2>
+<p>Friends.</p>
+<p>The zoo of models and tools will grow every month. What’s Claude Code today might still be Claude Code in a year, or be something completely different, or be embedded in the IDE. You can’t memorise specific buttons and flags — they go out of date faster than you can read about them.</p>
+<p>What <strong>won’t</strong> go stale:</p>
+<ul>
+<li><strong>Plan → Act → Evaluate</strong> as a discipline.</li>
+<li>The <strong>contributor model</strong> as a mental frame.</li>
+<li>A <strong>GitHub-like control plane</strong> as the source of truth.</li>
+<li><strong>Taste, discipline, understanding the client</strong> as the foundation.</li>
+</ul>
+<p>Train your eye, not your fingers. Your head matters more than the AI.</p>
+<h2 id="recap">Recap</h2>
+<ul>
+<li><strong>The paradigm shifted</strong>: the AI tool became a contributor, not a reference manual.</li>
+<li><strong>Plan → Act → Evaluate</strong> — three mandatory phases. The plan is a contract, not a by-product.</li>
+<li><strong>Agent = new employee on probation.</strong> Manage it like a junior.</li>
+<li><strong>GitHub is the control plane.</strong> Every agentic action must be visible, reversible, auditable.</li>
+<li><strong>Four anti-patterns:</strong> prod creds, unclear request, unread plan, lenient review.</li>
+<li><strong>Baseline exercise:</strong> <code>--permission-mode plan</code> + explicit success criterion + reading the plan before actions.</li>
+</ul>
+<h2 id="whats-next">What’s next</h2>
+<p>In <strong>M2 — Architecting agent boundaries</strong> we go deeper: how to formulate inputs/outputs, how to separate plan from reasoning, how to put validation gates between phases. That’s already an engineering task — we’ll draw concrete flow diagrams and write concrete code.</p>
+<p>If this clicked — share the chapter with your team chats, especially leads and architects. If you have specific scenarios you’d like me to unpack — write in the course comments, your feedback genuinely helps polish the material.</p>
+<h2 id="-further-reading">📚 Further reading</h2>
+<p>If you want a firmer grip on the paradigm shift — a short list I check myself. Nothing extra, all freely available.</p>
+<p><strong>Concept and paradigm</strong></p>
+<ul>
+<li><strong>Andrej Karpathy — “Software Is Changing (Again)”</strong> — <a href="https://www.youtube.com/watch?v=LCEmiRjPEtQ">youtube.com/watch?v=LCEmiRjPEtQ</a>. Keynote at AI Startup School (June 2025): why we’re moving from 1.0/2.0 to Software 3.0 and what this means for coding discipline.</li>
+<li><strong>Anthropic — “Building effective agents”</strong> — <a href="https://www.anthropic.com/research/building-effective-agents">anthropic.com/research/building-effective-agents</a>. A systemic view from the provider: which patterns (workflows vs agents) actually work, and which are overkill.</li>
+</ul>
+<p><strong>Certification and official programs</strong></p>
+<ul>
+<li><strong>Microsoft Learn — Study guide for Exam GH-600</strong> — <a href="https://learn.microsoft.com/en-us/credentials/certifications/resources/study-guides/gh-600">learn.microsoft.com/en-us/credentials/certifications/resources/study-guides/gh-600</a>. The official study guide for GitHub Certified: Agentic AI Developer; this course maps to it.</li>
+<li><strong>microsoft/ai-agents-for-beginners</strong> — <a href="https://github.com/microsoft/ai-agents-for-beginners">github.com/microsoft/ai-agents-for-beginners</a>. 12 lessons for a zero start; overlaps with our M1 and reads nicely on top for anyone who wants “one more time, simpler.”</li>
+</ul>
+<blockquote>
+<p><strong>Tip:</strong> before M2, skim the Anthropic article. The workflows/agents split it draws is something we keep coming back to all of Part I.</p>
+</blockquote>
+<hr>
+<p><strong>Maps to:</strong> GH-600 §1.1 — <em>Agentic AI fundamentals</em>, Microsoft Learn — <em>Foundations of agentic AI</em></p> <nav class="chapter-nav" data-astro-cid-a7sruqtr> <span data-astro-cid-a7sruqtr></span> <span data-astro-cid-a7sruqtr></span> </nav> </main>  </div> <script type="module">
+    import { gatingEnabled } from '../lib/supabase';
+    import { fetchChapter } from '../lib/auth';
+
+    const base = import.meta.env.BASE_URL;
+    let mermaidLib = null;
+
+    function scopeOf(root) {
+      return root === document ? document.querySelector('.reader-main') : root;
+    }
+
+    function addCopyBtns(root) {
+      const scope = scopeOf(root); if (!scope) return;
+      scope.querySelectorAll('pre').forEach((pre) => {
+        if (pre.closest('.code-tabs')) return;
+        if (pre.querySelector('.copy-btn')) return;
+        const btn = document.createElement('button');
+        btn.className = 'copy-btn';
+        btn.textContent = 'copy';
+        btn.addEventListener('click', async () => {
+          const code = pre.querySelector('code')?.textContent ?? pre.textContent ?? '';
+          await navigator.clipboard.writeText(code.trimEnd());
+          btn.textContent = '✓ copied';
+          setTimeout(() => { btn.textContent = 'copy'; }, 1600);
+        });
+        pre.appendChild(btn);
+      });
+    }
+
+    function tightenMermaidSvgs(retries = 6) {
+      let pending = false;
+      document.querySelectorAll('.mermaid svg').forEach((svg) => {
+        if (svg.dataset.tightened === '1') return;
+        try {
+          const bbox = svg.getBBox();
+          if (!bbox || bbox.width === 0) { pending = true; return; }
+          const pad = 6;
+          svg.setAttribute('viewBox',
+            `${bbox.x - pad} ${bbox.y - pad} ${bbox.width + pad * 2} ${bbox.height + pad * 2}`);
+          svg.removeAttribute('height');
+          svg.style.height = 'auto';
+          svg.style.maxWidth = '100%';
+          svg.style.display = 'block';
+          svg.dataset.tightened = '1';
+        } catch (e) { pending = true; }
+      });
+      if (pending && retries > 0) setTimeout(() => tightenMermaidSvgs(retries - 1), 120);
+    }
+
+    async function ensureMermaid() {
+      if (mermaidLib) return mermaidLib;
+      const mod = await import('https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs');
+      mermaidLib = mod.default;
+      mermaidLib.initialize({
+        startOnLoad: false, theme: 'neutral',
+        themeVariables: {
+          fontFamily: 'JetBrains Mono, ui-monospace, monospace',
+          primaryColor: '#f5f5f5', primaryBorderColor: '#222',
+          primaryTextColor: '#111', lineColor: '#444',
+        },
+        flowchart: { curve: 'basis', padding: 12, useMaxWidth: true },
+      });
+      return mermaidLib;
+    }
+
+    async function renderMermaid(root) {
+      const scope = scopeOf(root); if (!scope) return;
+      const matches = scope.querySelectorAll(
+        'pre[data-language="mermaid"], pre.language-mermaid, code.language-mermaid'
+      );
+      if (!matches.length) return;
+      matches.forEach((el) => {
+        const block = el.tagName === 'CODE' ? el.closest('pre') || el : el;
+        const codeEl = block.querySelector('code') || block;
+        const wrap = document.createElement('div');
+        wrap.className = 'mermaid';
+        wrap.textContent = codeEl.textContent;
+        block.replaceWith(wrap);
+      });
+      try {
+        const m = await ensureMermaid();
+        await m.run();
+        tightenMermaidSvgs();
+      } catch (err) {
+        console.warn('mermaid failed', err);
+        document.querySelectorAll('.mermaid:not(:has(svg))').forEach((el) => { el.style.display = 'none'; });
+      }
+    }
+
+    async function enhance(root = document) {
+      addCopyBtns(root);
+      await renderMermaid(root);
+    }
+
+    function paywallHtml(required, needLogin) {
+      const label = { beginner: 'Beginner (300 ₽)', middle: 'Beginner + Middle (500 ₽)', all: 'Весь пакет (700 ₽)' }[required] || '';
+      return `<div class="paywall">
+        <div class="paywall-ic">🔒</div>
+        <h3>Эта глава — в платном доступе</h3>
+        <p>Нужен тариф: <strong>${label}</strong>. Доступ навсегда, без подписки.</p>
+        ${needLogin ? '<p>Войди через Google и оформи доступ — продолжишь с любого устройства.</p>' : ''}
+        <a class="paywall-btn" href="${base}pricing">Открыть доступ →</a>
+        <a class="paywall-link" href="${base}account">Войти / мой аккаунт</a>
+      </div>`;
+    }
+
+    async function gatedFlow(mount) {
+      const slug = mount.dataset.slug;
+      const required = mount.dataset.required || 'beginner';
+      mount.innerHTML = '<p class="gate-msg">Проверяем доступ…</p>';
+      const res = await fetchChapter(slug);
+      if (res.ok) {
+        mount.innerHTML = res.html;
+        await enhance(mount);
+      } else if (res.status === 401) {
+        mount.innerHTML = paywallHtml(required, true);
+      } else if (res.status === 402) {
+        mount.innerHTML = paywallHtml(res.requiredTier || required, false);
+      } else {
+        mount.innerHTML = '<p class="gate-msg">Не удалось загрузить главу. Обнови страницу.</p>';
+      }
+    }
+
+    const mount = document.getElementById('gated-mount');
+    if (mount && gatingEnabled) gatedFlow(mount);
+    else enhance(document);
+  </script> </body> </html>

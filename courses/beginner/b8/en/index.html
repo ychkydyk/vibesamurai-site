@@ -1,0 +1,352 @@
+<!DOCTYPE html><html lang="en" data-astro-cid-a7sruqtr> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Cursor vs Claude Code vs Codex CLI — Vibesamurai</title><meta name="description" content="Map of the agent zoo. What to pick by task, what I personally use, and why 'the best' tool doesn't exist."><meta property="og:title" content="Cursor vs Claude Code vs Codex CLI"><meta property="og:type" content="article"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Inter:wght@300..800&family=JetBrains+Mono:wght@400..600&display=swap" rel="stylesheet"><link rel="stylesheet" href="/vibesamurai-site/_astro/_slug_.Cs4TX1wt.css">
+<style>.account-btn{display:inline-flex;align-items:center;gap:var(--space-2);font-family:var(--font-mono);font-size:var(--size-2);text-transform:uppercase;letter-spacing:.06em;padding:5px 10px;border:1px solid var(--rule);border-radius:999px;color:var(--text-soft);background:var(--surface);transition:border-color var(--d-fast),color var(--d-fast)}.account-btn:hover{border-color:var(--accent);color:var(--text)}.account-ic{width:18px;height:18px;display:grid;place-items:center;border-radius:50%;background:var(--accent);color:var(--accent-ink);font-weight:700;font-size:10px;line-height:1}.reader-rail .account-btn{padding:0;border:none;background:transparent}.reader-rail .account-label{display:none}.reader-rail .account-ic{width:32px;height:32px;font-size:13px}.rail-toggle{width:36px;height:36px;display:grid;place-items:center;background:var(--accent);border:1px solid var(--accent);border-radius:4px;cursor:pointer;transition:filter var(--d-fast),transform var(--d-fast);padding:0}.rail-toggle:hover{filter:brightness(1.08);transform:translateY(-1px)}.rail-toggle:active{transform:translateY(0)}.rail-toggle-icon{width:14px;height:12px;border-left:2px solid var(--accent-ink);border-right:2px solid var(--accent-ink);transition:transform var(--d-normal) var(--ease-standard)}.reader-app.sidebar-open .rail-toggle-icon{transform:rotate(0)}.reader-app:not(.sidebar-open) .rail-toggle-icon{transform:scaleX(.5)}.sidebar-backdrop{display:none;position:fixed;inset:0;background:#0000008c;z-index:140;border:0;padding:0;cursor:pointer}@media(max-width:900px){.reader-app.sidebar-open~.sidebar-backdrop{display:block}}.rail-spacer[data-astro-cid-ofsbkzh7]{flex:1}.reader-sidebar[data-astro-cid-khgtvzrl] .ru-tag[data-astro-cid-khgtvzrl]{font-style:normal;font-family:var(--font-mono);font-size:.7em;color:var(--text-mute);margin-left:4px;padding:1px 4px;border:1px solid var(--rule);border-radius:3px;text-transform:uppercase;vertical-align:middle}.chapter-eyebrow[data-astro-cid-a7sruqtr]{display:flex;justify-content:space-between;align-items:center;gap:var(--space-3)}.lang-toggle[data-astro-cid-a7sruqtr]{font-family:var(--font-mono);font-size:var(--size-2);padding:2px 8px;border:1px solid var(--rule);border-radius:4px;color:var(--text-mute);text-decoration:none;text-transform:uppercase;letter-spacing:.08em}.lang-toggle[data-astro-cid-a7sruqtr]:hover{color:var(--accent);border-color:var(--accent)}.code-tabs[data-astro-cid-hg66rjob]{margin:var(--space-5) 0}.code-tabs-nav[data-astro-cid-hg66rjob]{display:flex;gap:2px;margin-bottom:-1px;position:relative;z-index:1}.ctab[data-astro-cid-hg66rjob]{font-family:var(--font-mono);font-size:11px;text-transform:uppercase;letter-spacing:.07em;padding:5px 14px;border:1px solid #21222c;border-bottom:none;background:#1a1b23;color:#6272a4;cursor:pointer;border-radius:4px 4px 0 0;transition:color .12s,background .12s}.ctab[data-astro-cid-hg66rjob].is-active{background:#282a36;color:#f8f8f2;border-color:#21222c}.ctab[data-astro-cid-hg66rjob]:hover:not(.is-active){color:#cdd6f4}.ctab-panel[data-astro-cid-hg66rjob]{display:none}.ctab-panel[data-astro-cid-hg66rjob].is-active{display:block}.ctab-panel[data-astro-cid-hg66rjob] pre{margin-top:0!important;border-radius:0 6px 6px!important}
+</style></head> <body data-astro-cid-a7sruqtr> <div class="reader-app" data-astro-cid-a7sruqtr> <aside class="reader-rail" data-astro-cid-ofsbkzh7> <a href="/vibesamurai-site/" class="logo" aria-label="Vibesamurai home" data-astro-cid-ofsbkzh7>V</a> <button type="button" class="rail-toggle" id="sidebar-toggle" aria-label="Свернуть/развернуть оглавление" title="Свернуть/развернуть оглавление" data-astro-cid-ofsbkzh7> <span class="rail-toggle-icon" aria-hidden="true" data-astro-cid-ofsbkzh7></span> </button> <div class="rail-spacer" data-astro-cid-ofsbkzh7></div> <a href="/vibesamurai-site/account" class="account-btn" id="account-btn" aria-label="Аккаунт"> <span class="account-ic" id="account-ic">⌂</span> <span class="account-label" id="account-label">Войти</span> </a>  <script type="module" src="/vibesamurai-site/_astro/AccountButton.astro_astro_type_script_index_0_lang.CmD2sdn9.js"></script> </aside>  <button type="button" class="sidebar-backdrop" id="sidebar-backdrop" aria-label="Закрыть оглавление" tabindex="-1" data-astro-cid-ofsbkzh7></button>  <script type="module">const d="vs-sidebar-open",a="(max-width: 900px)";function t(e){const n=document.querySelector(".reader-app");n&&n.classList.toggle("sidebar-open",e)}function r(){return!window.matchMedia(a).matches}function s(){const e=localStorage.getItem(d),i=window.matchMedia(a).matches?!1:e!==null?e==="1":r();t(i),document.getElementById("sidebar-toggle")?.addEventListener("click",()=>{const c=!document.querySelector(".reader-app")?.classList.contains("sidebar-open");window.matchMedia(a).matches||localStorage.setItem(d,c?"1":"0"),t(c)}),document.getElementById("sidebar-backdrop")?.addEventListener("click",()=>t(!1)),document.querySelectorAll(".reader-sidebar a").forEach(o=>{o.addEventListener("click",()=>{window.matchMedia(a).matches&&t(!1)})})}document.readyState==="loading"?document.addEventListener("DOMContentLoaded",s):s();</script> <aside class="reader-sidebar" data-astro-cid-khgtvzrl> <div class="breadcrumb" data-astro-cid-khgtvzrl>Vibesamurai · Beginner Path · B8</div> <h4 data-astro-cid-khgtvzrl>In this course</h4> <ul data-astro-cid-khgtvzrl> <li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b1/en" class data-astro-cid-khgtvzrl> B1 · What is an AI agent  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b2/en" class data-astro-cid-khgtvzrl> B2 · Installing your first AI agent  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b3/en" class data-astro-cid-khgtvzrl> B3 · First conversation  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b4/en" class data-astro-cid-khgtvzrl> B4 · What&#39;s a repo and why commit  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b5/en" class data-astro-cid-khgtvzrl> B5 · Building the first project (todo app)  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b6/en" class data-astro-cid-khgtvzrl> B6 · Reading the code the agent wrote  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b7/en" class data-astro-cid-khgtvzrl> B7 · Security for beginners  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b8/en" class="current" data-astro-cid-khgtvzrl> B8 · Cursor vs Claude Code vs Codex CLI  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b9/en" class data-astro-cid-khgtvzrl> B9 · Deploying the first project  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b10/en" class data-astro-cid-khgtvzrl> B10 · How to evaluate the agent&#39;s output  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b11/en" class data-astro-cid-khgtvzrl> B11 · Capstone: build your own tool  </a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/beginner/b12/en" class data-astro-cid-khgtvzrl> B12 · Where to go next  </a> </li> </ul>  </aside> <main class="reader-main" data-astro-cid-a7sruqtr> <div class="chapter-eyebrow" data-astro-cid-a7sruqtr> <span data-astro-cid-a7sruqtr>Beginner Path · b8</span> <a class="lang-toggle" href="/vibesamurai-site/courses/beginner/b8" aria-label="Switch to RU" data-astro-cid-a7sruqtr>RU</a> </div> <h1 class="chapter-title" data-astro-cid-a7sruqtr>B8 · Cursor vs Claude Code vs Codex CLI</h1> <p class="chapter-subtitle" data-astro-cid-a7sruqtr>Map of the agent zoo. What to pick by task, what I personally use, and why &#39;the best&#39; tool doesn&#39;t exist.</p> <h2 id="hook">Hook</h2>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>ONE AGENT?                   OR A ZOO?</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>Claude Code      →           Claude Code   ← primary</span></span>
+<span class="line"><span>(all fine)                   Cursor        ← when IDE is more comfortable</span></span>
+<span class="line"><span>                             Codex CLI     ← when Claude limits hit</span></span>
+<span class="line"><span>                             ...</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>100% of tasks                90% smooth, 10% backup plan</span></span></code></pre>
+<p>Hey folks, welcome 👋</p>
+<p>This chapter is a <strong>map of the zoo</strong>. I’ll tell you which main agents exist, how they differ, and <strong>what I use myself</strong>. No holy wars “X beats Y.” In reality each tool has its <strong>own zone</strong>, and a normal “vibe-coder” in 2026 usually keeps <strong>two or three</strong> within reach.</p>
+<p>Twenty minutes — and you have a full picture to pick the first or second tool <strong>for yourself</strong>, not “because a blogger said so.”</p>
+<h2 id="concept-three-agent-forms">Concept: three agent forms</h2>
+<p>All current agents split into <strong>three types</strong> by interaction form:</p>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>┌─────────────────────────────────────────────────────┐</span></span>
+<span class="line"><span>│  1. CLI       — terminal-based (Claude Code, Codex) │</span></span>
+<span class="line"><span>│  2. IDE       — inside the editor (Cursor, Windsurf)│</span></span>
+<span class="line"><span>│  3. Web       — in the browser (claude.ai, ChatGPT) │</span></span>
+<span class="line"><span>└─────────────────────────────────────────────────────┘</span></span></code></pre>
+<p>CLI is the most “bare” and universal. IDE is the most comfortable for editor-people. Web is the most limited (no hands, see B2).</p>
+<p>In this chapter we compare the <strong>first two</strong> — CLI and IDE. Web agents as a “primary” tool we don’t recommend.</p>
+<h2 id="the-big-three">The big three</h2>
+<h3 id="claude-code-anthropic">Claude Code (Anthropic)</h3>
+<p><strong>What it is:</strong> a CLI agent. You run <code>claude</code> in the project folder, talk via the terminal.</p>
+<p><strong>Pros:</strong></p>
+<ul>
+<li><strong>Strongest defaults</strong> for a newcomer — built-in safety, clear prompts</li>
+<li><strong>Permission model</strong> — asks before every dangerous action</li>
+<li><strong>MCP, hooks, subagents, skills</strong> — extends to any workflow</li>
+<li><strong>CLAUDE.md in the project</strong> — settings and context auto-loaded</li>
+<li><strong>Pro/Max subscription</strong> — flat monthly cost, no per-token billing</li>
+</ul>
+<p><strong>Cons:</strong></p>
+<ul>
+<li><strong>Limits on Pro/Max</strong> — heavy use can hit a cap (5–6 hours of active session)</li>
+<li><strong>Less “IDE magic”</strong> — no inline tab autocomplete like Cursor</li>
+<li><strong>CLI</strong> — some find text-based work unfamiliar</li>
+</ul>
+<p><strong>Best for:</strong></p>
+<ul>
+<li>Beginners — because of <strong>trustable defaults</strong></li>
+<li>People working on <strong>several projects a day</strong> — fast switching</li>
+<li>People who value <strong>transparency</strong> of agent behaviour</li>
+</ul>
+<h3 id="codex-cli-openai">Codex CLI (OpenAI)</h3>
+<p><strong>What it is:</strong> OpenAI’s CLI agent. Similar form to Claude Code (terminal, files, MCP), but <strong>under the hood</strong> GPT models and an <strong>OS-level sandbox</strong>.</p>
+<p><strong>Pros:</strong></p>
+<ul>
+<li><strong>Built-in OS sandbox</strong> (macOS sandbox-exec, Linux seccomp, Windows Job Objects) — the agent <strong>can’t</strong> leave the folder/network without explicit permission</li>
+<li><strong>AGENTS.md</strong> — equivalent of CLAUDE.md (often symlinked so both agents read one file)</li>
+<li><strong>GPT models</strong> — different “brain,” sometimes stronger on some tasks, weaker on others</li>
+<li><strong>OpenAI Plus/Pro</strong> — separate subscription, doesn’t eat Claude limits</li>
+</ul>
+<p><strong>Cons:</strong></p>
+<ul>
+<li><strong>Separate subscription</strong> ($20–200/month at OpenAI) — duplication if you already have Claude</li>
+<li><strong>Fewer ready integrations</strong> (skills, hooks — simpler than Claude Code so far)</li>
+<li><strong>Docs are patchy</strong> — ecosystem younger</li>
+</ul>
+<p><strong>Best for:</strong></p>
+<ul>
+<li>People who <strong>hit Claude limits</strong> and don’t want week-long downtime</li>
+<li>People who want a <strong>second brain</strong> — ask two models the same question and compare</li>
+<li>People who value <strong>OS-level sandbox</strong> (production machines)</li>
+</ul>
+<h3 id="cursor-cursor">Cursor (Cursor)</h3>
+<p><strong>What it is:</strong> a full <strong>IDE</strong> (VS Code fork) with a built-in AI agent. You open the project like in an editor and work <strong>inside it</strong>.</p>
+<p><strong>Pros:</strong></p>
+<ul>
+<li><strong>Most comfortable UX</strong> for people used to VS Code/JetBrains</li>
+<li><strong>Composer</strong> — mode where the agent works across several files at once</li>
+<li><strong>AI tab completion</strong> — finishes code as you type (the “magic” experience)</li>
+<li><strong>Reject/Accept on every change</strong> — convenient visual control</li>
+<li><strong><code>.cursor/rules/</code></strong> — rules for the agent tied to the project</li>
+</ul>
+<p><strong>Cons:</strong></p>
+<ul>
+<li><strong>Subscription</strong> ($20+/month separate from Claude/OpenAI)</li>
+<li><strong>Locked to one app</strong> — if Cursor crashes, you’re stopped</li>
+<li><strong>Easier to confuse a newcomer</strong> — many buttons, modes</li>
+</ul>
+<p><strong>Best for:</strong></p>
+<ul>
+<li>People who <strong>already work in VS Code</strong> and don’t want the terminal</li>
+<li>People who need to <strong>see code in front of them</strong> at all times</li>
+<li>People making <strong>big projects with dozens of files</strong></li>
+</ul>
+<h2 id="comparison-table">Comparison table</h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Parameter</th><th>Claude Code</th><th>Codex CLI</th><th>Cursor</th></tr></thead><tbody><tr><td><strong>Form</strong></td><td>CLI</td><td>CLI</td><td>IDE</td></tr><tr><td><strong>Base model</strong></td><td>Claude (Opus/Sonnet)</td><td>GPT-5/Codex</td><td>Claude/GPT/Gemini (your pick)</td></tr><tr><td><strong>Subscription</strong></td><td>Pro $20 / Max $100+</td><td>Plus $20 / Pro $200</td><td>$20+/month</td></tr><tr><td><strong>Permissions</strong></td><td>allow/deny + prompt</td><td>OS sandbox</td><td>per-edit accept/reject</td></tr><tr><td><strong>Extensions</strong></td><td>MCP, hooks, skills, subagents</td><td>MCP, AGENTS.md</td><td>rules, MCP</td></tr><tr><td><strong>Learning curve</strong></td><td>Low</td><td>Low</td><td>Medium</td></tr><tr><td><strong>Best for</strong></td><td>Beginner, daily work</td><td>Heavy use, sandbox</td><td>IDE fans, big projects</td></tr></tbody></table>
+<h2 id="less-famous-but-worthy">Less famous but worthy</h2>
+<h3 id="windsurf-codeium">Windsurf (Codeium)</h3>
+<p><strong>IDE agent</strong>, Cursor’s competitor. Strength — <strong>Cascade</strong> (agent that understands the whole project’s context). Good in big monorepos. UX is a bit “simpler” than Cursor.</p>
+<h3 id="aider-open-source">Aider (open-source)</h3>
+<p><strong>CLI</strong>, open-source. Plugs into <strong>any</strong> model (Claude, GPT, local). Minimalist but powerful for those who want full freedom. <strong>Not for the absolute beginner.</strong></p>
+<h3 id="cline-open-source-vs-code-plugin">Cline (open-source, VS Code plugin)</h3>
+<p><strong>Free plugin</strong> that turns VS Code into something Cursor-like. You bring your Claude/OpenAI key. Excellent if you <strong>don’t want a separate Cursor subscription</strong>.</p>
+<h2 id="my-personal-stack">My personal stack</h2>
+<blockquote>
+<p><em>As of May 2026, I run:</em></p>
+</blockquote>
+<ul>
+<li><strong>Claude Code Max</strong> — primary work, 80–90 % of the time</li>
+<li><strong>Codex CLI Plus</strong> — when I hit Claude limits (happens on big projects late in the day) or for a second opinion</li>
+<li><strong>Cursor</strong> — for long refactors where it’s handy to see diffs</li>
+<li><strong>Claude.ai in the browser</strong> — for purely conversational tasks (plans, explanations, ideas)</li>
+</ul>
+<p>This is <strong>not “the right way”</strong> — it’s what’s comfortable for <strong>me</strong>. Yours may differ.</p>
+<blockquote>
+<p><em>Principle:</em> don’t build a “zoo” upfront. Start with <strong>one</strong>. When you hit its limits — you’ll know which second to add. <strong>Not perfect, but actually works.</strong></p>
+</blockquote>
+<h2 id="how-to-pick-the-first">How to pick the first</h2>
+<p>If <strong>beginner and want a fast start</strong> → <strong>Claude Code</strong>. Softest defaults, best onboarding docs, no configuration needed.</p>
+<p>If <strong>already used to VS Code and don’t want the terminal</strong> → <strong>Cursor</strong> (or <strong>Cline</strong> as a free alternative).</p>
+<p>If <strong>you already have OpenAI Pro and don’t want Anthropic</strong> → <strong>Codex CLI</strong>. Works similarly, ecosystem growing.</p>
+<p>If <strong>budget is zero</strong> → <strong>Cline + a free API key</strong> (e.g. Anthropic API free tier). Not “super smooth,” but a <strong>working</strong> combo for learning.</p>
+<h2 id="how-to-add-a-second-one-when-the-time-comes">How to add a second one (when the time comes)</h2>
+<p>Signals it’s time to add a second tool:</p>
+<ol>
+<li><strong>Hitting limits regularly</strong> on one and losing an hour “because the quota ran out”</li>
+<li><strong>Noticed a weak spot</strong> — e.g. your agent is bad at SQL, the other is great</li>
+<li><strong>You want something missing</strong> — e.g. OS-sandbox or Composer mode</li>
+</ol>
+<p>Then <strong>install a second</strong>, keep one <strong>CLAUDE.md / AGENTS.md</strong> (via symlink) per project, and use it per task.</p>
+<h2 id="practice-20-minutes">Practice (20 minutes)</h2>
+<h3 id="task-1-10-minutes--assess-your-workflow">Task 1 (10 minutes) — assess your workflow</h3>
+<p>After a couple of weeks on Claude Code from B2–B7, answer yourself three questions:</p>
+<ol>
+<li>Where was it <strong>uncomfortable</strong>? (Terminal? Limits? Something else?)</li>
+<li>What would I <strong>like</strong> to have? (Inline hints? Sandbox? Second opinion?)</li>
+<li>Which tool <strong>fills exactly</strong> that gap?</li>
+</ol>
+<p>If the answers are “all fine” — great, <strong>don’t multiply entities</strong>. One Claude Code covers most beginners.</p>
+<h3 id="task-2-10-minutes--try-an-alternative">Task 2 (10 minutes) — try an alternative</h3>
+<p>Install <strong>one</strong> alternative (Cursor or Cline or Codex CLI). Do <strong>the same task</strong> as in B5 (todo app). Compare:</p>
+<ul>
+<li>What was smoother?</li>
+<li>Where did you get confused?</li>
+<li>In which tool did the code itself come out cleaner?</li>
+</ul>
+<p>Note your conclusions — that’s <strong>your personal benchmark</strong>.</p>
+<h2 id="recap">Recap</h2>
+<ul>
+<li><strong>Big three:</strong> Claude Code (CLI), Codex CLI (CLI), Cursor (IDE). Plus solid alternatives (Windsurf, Aider, Cline).</li>
+<li><strong>One tool</strong> covers 80 %+ of a beginner’s tasks. <strong>Don’t grow a zoo</strong> preemptively.</li>
+<li><strong>Signal to add a second:</strong> limits, weak spots, a specific missing feature.</li>
+</ul>
+<h2 id="vibe-samurai">Vibe Samurai</h2>
+<aside class="skeptic">
+<p><strong>🥷 Vibe Samurai asks:</strong>
+“Why do you recommend Claude Code and not the cheapest/free option? Is this an ad?”</p>
+<p><strong>Answer:</strong> If Anthropic were free — I’d recommend free. Right now <strong>Claude Code</strong> is the <strong>best onboarding for an absolute beginner</strong> among paid, and <strong>Cline</strong> is the best free. I genuinely work on Claude Max ($100/month) because it <strong>pays back</strong> in week one — for <strong>my</strong> work. For <strong>your</strong> learning — Pro ($20) is plenty, or honestly free Cline on a free-tier API. <strong>No ad</strong> — I have no relationship with any of these companies. If a tool ships tomorrow that’s <strong>clearly better</strong> — I’ll recommend it. <strong>Not perfect, but actually works</strong> — pick by budget and comfort, not by brand.</p>
+</aside>
+<h2 id="whats-next">What’s next</h2>
+<p>In <strong>B9 — Deploying the first project</strong> we cover how to make your todo app (or any other project) <strong>available on the internet by a link</strong>. No servers, no admin — via <strong>GitHub Pages</strong> or <strong>Cloudflare Pages</strong>, free, 15 minutes to result. The moment of “<strong>I have</strong> a link, I can send it to a friend.”</p>
+<p>If this clicked — share with anyone stuck on one tool and afraid to try another. If you have your own combo — write in the comments, we’ll discuss. <strong>A like and a comment is extra appreciated</strong>, your feedback really helps polish the material.</p>
+<h2 id="-further-reading">📚 Further reading</h2>
+<p>If you want your <strong>own</strong> opinion rather than my stack — recent comparisons and official docs for each tool. All links are late 2025 / early 2026, current at the time of writing.</p>
+<p><strong>Comparisons (independent)</strong></p>
+<ul>
+<li><strong>“Claude Code vs Cursor: Complete comparison guide in 2026”</strong> (Northflank, Feb 2026) — long piece with benchmarks on speed, tokens, real tasks: <a href="https://northflank.com/blog/claude-code-vs-cursor-comparison">northflank.com/blog/claude-code-vs-cursor-comparison</a>.</li>
+<li><strong>“Claude Code vs Cursor: What to Choose in 2026”</strong> (Builder.io) — short, no fluff, clear table: <a href="https://www.builder.io/blog/cursor-vs-claude-code">builder.io/blog/cursor-vs-claude-code</a>.</li>
+</ul>
+<p><strong>Official docs</strong></p>
+<ul>
+<li><strong>Claude Code Docs</strong> — <a href="https://code.claude.com/docs">code.claude.com/docs</a>.</li>
+<li><strong>Cursor Docs</strong> — <a href="https://cursor.com/en-US/docs">cursor.com/en-US/docs</a>. The Agent / Rules / MCP sections — what I summarised in one paragraph.</li>
+<li><strong>OpenAI Codex CLI</strong> — <a href="https://developers.openai.com/codex/cli">developers.openai.com/codex/cli</a> and the repo <a href="https://github.com/openai/codex">github.com/openai/codex</a>. Rust binary, active changelog.</li>
+</ul>
+<blockquote>
+<p><strong>Tip:</strong> before paying for a second tool — read <strong>both</strong> independent articles. Often the feature you want is already in what you have, just not enabled.</p>
+</blockquote> <nav class="chapter-nav" data-astro-cid-a7sruqtr> <a href="/vibesamurai-site/courses/beginner/b7/en" data-astro-cid-a7sruqtr> <span class="dir" data-astro-cid-a7sruqtr>← Back</span> <span class="title" data-astro-cid-a7sruqtr>B7 · Security for beginners</span> </a> <a href="/vibesamurai-site/courses/beginner/b9/en" data-astro-cid-a7sruqtr> <span class="dir" data-astro-cid-a7sruqtr>Next →</span> <span class="title" data-astro-cid-a7sruqtr>B9 · Deploying the first project</span> </a> </nav> </main>  </div> <script type="module">
+    import { gatingEnabled } from '../lib/supabase';
+    import { fetchChapter } from '../lib/auth';
+
+    const base = import.meta.env.BASE_URL;
+    let mermaidLib = null;
+
+    function scopeOf(root) {
+      return root === document ? document.querySelector('.reader-main') : root;
+    }
+
+    function addCopyBtns(root) {
+      const scope = scopeOf(root); if (!scope) return;
+      scope.querySelectorAll('pre').forEach((pre) => {
+        if (pre.closest('.code-tabs')) return;
+        if (pre.querySelector('.copy-btn')) return;
+        const btn = document.createElement('button');
+        btn.className = 'copy-btn';
+        btn.textContent = 'copy';
+        btn.addEventListener('click', async () => {
+          const code = pre.querySelector('code')?.textContent ?? pre.textContent ?? '';
+          await navigator.clipboard.writeText(code.trimEnd());
+          btn.textContent = '✓ copied';
+          setTimeout(() => { btn.textContent = 'copy'; }, 1600);
+        });
+        pre.appendChild(btn);
+      });
+    }
+
+    function tightenMermaidSvgs(retries = 6) {
+      let pending = false;
+      document.querySelectorAll('.mermaid svg').forEach((svg) => {
+        if (svg.dataset.tightened === '1') return;
+        try {
+          const bbox = svg.getBBox();
+          if (!bbox || bbox.width === 0) { pending = true; return; }
+          const pad = 6;
+          svg.setAttribute('viewBox',
+            `${bbox.x - pad} ${bbox.y - pad} ${bbox.width + pad * 2} ${bbox.height + pad * 2}`);
+          svg.removeAttribute('height');
+          svg.style.height = 'auto';
+          svg.style.maxWidth = '100%';
+          svg.style.display = 'block';
+          svg.dataset.tightened = '1';
+        } catch (e) { pending = true; }
+      });
+      if (pending && retries > 0) setTimeout(() => tightenMermaidSvgs(retries - 1), 120);
+    }
+
+    async function ensureMermaid() {
+      if (mermaidLib) return mermaidLib;
+      const mod = await import('https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs');
+      mermaidLib = mod.default;
+      mermaidLib.initialize({
+        startOnLoad: false, theme: 'neutral',
+        themeVariables: {
+          fontFamily: 'JetBrains Mono, ui-monospace, monospace',
+          primaryColor: '#f5f5f5', primaryBorderColor: '#222',
+          primaryTextColor: '#111', lineColor: '#444',
+        },
+        flowchart: { curve: 'basis', padding: 12, useMaxWidth: true },
+      });
+      return mermaidLib;
+    }
+
+    async function renderMermaid(root) {
+      const scope = scopeOf(root); if (!scope) return;
+      const matches = scope.querySelectorAll(
+        'pre[data-language="mermaid"], pre.language-mermaid, code.language-mermaid'
+      );
+      if (!matches.length) return;
+      matches.forEach((el) => {
+        const block = el.tagName === 'CODE' ? el.closest('pre') || el : el;
+        const codeEl = block.querySelector('code') || block;
+        const wrap = document.createElement('div');
+        wrap.className = 'mermaid';
+        wrap.textContent = codeEl.textContent;
+        block.replaceWith(wrap);
+      });
+      try {
+        const m = await ensureMermaid();
+        await m.run();
+        tightenMermaidSvgs();
+      } catch (err) {
+        console.warn('mermaid failed', err);
+        document.querySelectorAll('.mermaid:not(:has(svg))').forEach((el) => { el.style.display = 'none'; });
+      }
+    }
+
+    async function enhance(root = document) {
+      addCopyBtns(root);
+      await renderMermaid(root);
+    }
+
+    function paywallHtml(required, needLogin) {
+      const label = { beginner: 'Beginner (300 ₽)', middle: 'Beginner + Middle (500 ₽)', all: 'Весь пакет (700 ₽)' }[required] || '';
+      return `<div class="paywall">
+        <div class="paywall-ic">🔒</div>
+        <h3>Эта глава — в платном доступе</h3>
+        <p>Нужен тариф: <strong>${label}</strong>. Доступ навсегда, без подписки.</p>
+        ${needLogin ? '<p>Войди через Google и оформи доступ — продолжишь с любого устройства.</p>' : ''}
+        <a class="paywall-btn" href="${base}pricing">Открыть доступ →</a>
+        <a class="paywall-link" href="${base}account">Войти / мой аккаунт</a>
+      </div>`;
+    }
+
+    async function gatedFlow(mount) {
+      const slug = mount.dataset.slug;
+      const required = mount.dataset.required || 'beginner';
+      mount.innerHTML = '<p class="gate-msg">Проверяем доступ…</p>';
+      const res = await fetchChapter(slug);
+      if (res.ok) {
+        mount.innerHTML = res.html;
+        await enhance(mount);
+      } else if (res.status === 401) {
+        mount.innerHTML = paywallHtml(required, true);
+      } else if (res.status === 402) {
+        mount.innerHTML = paywallHtml(res.requiredTier || required, false);
+      } else {
+        mount.innerHTML = '<p class="gate-msg">Не удалось загрузить главу. Обнови страницу.</p>';
+      }
+    }
+
+    const mount = document.getElementById('gated-mount');
+    if (mount && gatingEnabled) gatedFlow(mount);
+    else enhance(document);
+  </script> </body> </html>
