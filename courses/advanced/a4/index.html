@@ -1,0 +1,220 @@
+<!DOCTYPE html><html lang="en"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Design system как контракт — Vibesamurai</title><meta name="description" content="Бренд-токены (палитра, шрифты, тон, табу-слова) как машинно-читаемый контракт для генеративных пайплайнов и Figma. Меньше брифов на словах — больше повторяемости."><meta property="og:title" content="Design system как контракт"><meta property="og:type" content="article"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Inter:wght@300..800&family=JetBrains+Mono:wght@400..600&display=swap" rel="stylesheet"><link rel="stylesheet" href="/vibesamurai-site/_astro/_slug_.Cs4TX1wt.css">
+<style>.account-btn{display:inline-flex;align-items:center;gap:var(--space-2);font-family:var(--font-mono);font-size:var(--size-2);text-transform:uppercase;letter-spacing:.06em;padding:5px 10px;border:1px solid var(--rule);border-radius:999px;color:var(--text-soft);background:var(--surface);transition:border-color var(--d-fast),color var(--d-fast)}.account-btn:hover{border-color:var(--accent);color:var(--text)}.account-ic{width:18px;height:18px;display:grid;place-items:center;border-radius:50%;background:var(--accent);color:var(--accent-ink);font-weight:700;font-size:10px;line-height:1}.reader-rail .account-btn{padding:0;border:none;background:transparent}.reader-rail .account-label{display:none}.reader-rail .account-ic{width:32px;height:32px;font-size:13px}.rail-toggle{width:36px;height:36px;display:grid;place-items:center;background:var(--accent);border:1px solid var(--accent);border-radius:4px;cursor:pointer;transition:filter var(--d-fast),transform var(--d-fast);padding:0}.rail-toggle:hover{filter:brightness(1.08);transform:translateY(-1px)}.rail-toggle:active{transform:translateY(0)}.rail-toggle-icon{width:14px;height:12px;border-left:2px solid var(--accent-ink);border-right:2px solid var(--accent-ink);transition:transform var(--d-normal) var(--ease-standard)}.reader-app.sidebar-open .rail-toggle-icon{transform:rotate(0)}.reader-app:not(.sidebar-open) .rail-toggle-icon{transform:scaleX(.5)}.sidebar-backdrop{display:none;position:fixed;inset:0;background:#0000008c;z-index:140;border:0;padding:0;cursor:pointer}@media(max-width:900px){.reader-app.sidebar-open~.sidebar-backdrop{display:block}}.rail-spacer[data-astro-cid-ofsbkzh7]{flex:1}.reader-sidebar[data-astro-cid-khgtvzrl] .soon[data-astro-cid-khgtvzrl]{display:block;color:var(--text-mute);font-size:var(--size-2);padding:var(--space-1) 0}.reader-sidebar[data-astro-cid-khgtvzrl] .soon[data-astro-cid-khgtvzrl] em[data-astro-cid-khgtvzrl]{font-style:normal;font-family:var(--font-mono);font-size:.85em;color:var(--accent);margin-left:4px;text-transform:uppercase;letter-spacing:.1em}.code-tabs[data-astro-cid-hg66rjob]{margin:var(--space-5) 0}.code-tabs-nav[data-astro-cid-hg66rjob]{display:flex;gap:2px;margin-bottom:-1px;position:relative;z-index:1}.ctab[data-astro-cid-hg66rjob]{font-family:var(--font-mono);font-size:11px;text-transform:uppercase;letter-spacing:.07em;padding:5px 14px;border:1px solid #21222c;border-bottom:none;background:#1a1b23;color:#6272a4;cursor:pointer;border-radius:4px 4px 0 0;transition:color .12s,background .12s}.ctab[data-astro-cid-hg66rjob].is-active{background:#282a36;color:#f8f8f2;border-color:#21222c}.ctab[data-astro-cid-hg66rjob]:hover:not(.is-active){color:#cdd6f4}.ctab-panel[data-astro-cid-hg66rjob]{display:none}.ctab-panel[data-astro-cid-hg66rjob].is-active{display:block}.ctab-panel[data-astro-cid-hg66rjob] pre{margin-top:0!important;border-radius:0 6px 6px!important}
+</style></head> <body> <div class="reader-app"> <aside class="reader-rail" data-astro-cid-ofsbkzh7> <a href="/vibesamurai-site/" class="logo" aria-label="Vibesamurai home" data-astro-cid-ofsbkzh7>V</a> <button type="button" class="rail-toggle" id="sidebar-toggle" aria-label="Свернуть/развернуть оглавление" title="Свернуть/развернуть оглавление" data-astro-cid-ofsbkzh7> <span class="rail-toggle-icon" aria-hidden="true" data-astro-cid-ofsbkzh7></span> </button> <div class="rail-spacer" data-astro-cid-ofsbkzh7></div> <a href="/vibesamurai-site/account" class="account-btn" id="account-btn" aria-label="Аккаунт"> <span class="account-ic" id="account-ic">⌂</span> <span class="account-label" id="account-label">Войти</span> </a>  <script type="module" src="/vibesamurai-site/_astro/AccountButton.astro_astro_type_script_index_0_lang.CmD2sdn9.js"></script> </aside>  <button type="button" class="sidebar-backdrop" id="sidebar-backdrop" aria-label="Закрыть оглавление" tabindex="-1" data-astro-cid-ofsbkzh7></button>  <script type="module">const d="vs-sidebar-open",a="(max-width: 900px)";function t(e){const n=document.querySelector(".reader-app");n&&n.classList.toggle("sidebar-open",e)}function r(){return!window.matchMedia(a).matches}function s(){const e=localStorage.getItem(d),i=window.matchMedia(a).matches?!1:e!==null?e==="1":r();t(i),document.getElementById("sidebar-toggle")?.addEventListener("click",()=>{const c=!document.querySelector(".reader-app")?.classList.contains("sidebar-open");window.matchMedia(a).matches||localStorage.setItem(d,c?"1":"0"),t(c)}),document.getElementById("sidebar-backdrop")?.addEventListener("click",()=>t(!1)),document.querySelectorAll(".reader-sidebar a").forEach(o=>{o.addEventListener("click",()=>{window.matchMedia(a).matches&&t(!1)})})}document.readyState==="loading"?document.addEventListener("DOMContentLoaded",s):s();</script> <aside class="reader-sidebar" data-astro-cid-khgtvzrl> <div class="breadcrumb" data-astro-cid-khgtvzrl>Vibesamurai · Advanced Path · a4</div> <h4 data-astro-cid-khgtvzrl>В этом курсе</h4> <ul data-astro-cid-khgtvzrl> <li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a1" class data-astro-cid-khgtvzrl>A1 · Стек AI-студии 2026</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a2" class data-astro-cid-khgtvzrl>A2 · Multi-modal контракт</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a3" class data-astro-cid-khgtvzrl>A3 · Local vs Cloud матрица</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a4" class="current" data-astro-cid-khgtvzrl>A4 · Design system как контракт</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a5" class data-astro-cid-khgtvzrl>A5 · Image generation для бренда</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a6" class data-astro-cid-khgtvzrl>A6 · Marketplace + product photoshoot</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a7" class data-astro-cid-khgtvzrl>A7 · Video generation pipelines</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a8" class data-astro-cid-khgtvzrl>A8 · Identity-preserving generation</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a9" class data-astro-cid-khgtvzrl>A9 · TouchDesigner + StreamDiffusion</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a10" class data-astro-cid-khgtvzrl>A10 · Audio-reactive AV-инсталляции</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a11" class data-astro-cid-khgtvzrl>A11 · Interactive booths: STT+LLM+TTS+CV</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a12" class data-astro-cid-khgtvzrl>A12 · Telemetry → control loop</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a13" class data-astro-cid-khgtvzrl>A13 · Private RAG для архива</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a14" class data-astro-cid-khgtvzrl>A14 · Локальные LLM на 8GB VRAM</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a15" class data-astro-cid-khgtvzrl>A15 · RunPod Flash + vLLM</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a16" class data-astro-cid-khgtvzrl>A16 · Кастомные MCP-серверы</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a17" class data-astro-cid-khgtvzrl>A17 · Token economics через модальности</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a18" class data-astro-cid-khgtvzrl>A18 · Eval для креативного output</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a19" class data-astro-cid-khgtvzrl>A19 · Security в творческой студии</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a20" class data-astro-cid-khgtvzrl>A20 · Capstone: запуск студии</a> </li> </ul>  </aside> <main class="reader-main"> <div class="chapter-eyebrow">Advanced Path · a4</div> <h1 class="chapter-title">A4 · Design system как контракт</h1> <p class="chapter-subtitle">Бренд-токены (палитра, шрифты, тон, табу-слова) как машинно-читаемый контракт для генеративных пайплайнов и Figma. Меньше брифов на словах — больше повторяемости.</p> <h2 id="что-строим">Что строим</h2>
+<p>Машинно-читаемый бренд-контракт, который потребляют одновременно: код агента (Astro/React), Figma MCP, промпт-шаблоны для FLUX/Seedance, motion-presets для TouchDesigner. Если бренд-токены — JSON, а не PDF гайд, всё это работает без ручного перетыкания.</p>
+<h2 id="контракт-бренда">Контракт бренда</h2>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="json"><code><span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">{</span></span>
+<span class="line"><span style="color:#8BE9FE;--shiki-dark:#8BE9FE">  "</span><span style="color:#8BE9FD;--shiki-dark:#8BE9FD">brand</span><span style="color:#8BE9FE;--shiki-dark:#8BE9FE">"</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">:</span><span style="color:#E9F284;--shiki-dark:#E9F284"> "</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">wedoit</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">,</span></span>
+<span class="line"><span style="color:#8BE9FE;--shiki-dark:#8BE9FE">  "</span><span style="color:#8BE9FD;--shiki-dark:#8BE9FD">version</span><span style="color:#8BE9FE;--shiki-dark:#8BE9FE">"</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">:</span><span style="color:#E9F284;--shiki-dark:#E9F284"> "</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">2026-05</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">,</span></span>
+<span class="line"><span style="color:#8BE9FE;--shiki-dark:#8BE9FE">  "</span><span style="color:#8BE9FD;--shiki-dark:#8BE9FD">palette</span><span style="color:#8BE9FE;--shiki-dark:#8BE9FE">"</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">:</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2"> {</span></span>
+<span class="line"><span style="color:#8BE9FE;--shiki-dark:#8BE9FE">    "</span><span style="color:#8BE9FD;--shiki-dark:#8BE9FD">bg</span><span style="color:#8BE9FE;--shiki-dark:#8BE9FE">"</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">:</span><span style="color:#E9F284;--shiki-dark:#E9F284">      "</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">#0A0A0A</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">,</span></span>
+<span class="line"><span style="color:#8BE9FE;--shiki-dark:#8BE9FE">    "</span><span style="color:#8BE9FD;--shiki-dark:#8BE9FD">accent</span><span style="color:#8BE9FE;--shiki-dark:#8BE9FE">"</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">:</span><span style="color:#E9F284;--shiki-dark:#E9F284">  "</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">#C8FF00</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">,</span></span>
+<span class="line"><span style="color:#8BE9FE;--shiki-dark:#8BE9FE">    "</span><span style="color:#8BE9FD;--shiki-dark:#8BE9FD">text</span><span style="color:#8BE9FE;--shiki-dark:#8BE9FE">"</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">:</span><span style="color:#E9F284;--shiki-dark:#E9F284">    "</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">#FAFAFA</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">,</span></span>
+<span class="line"><span style="color:#8BE9FE;--shiki-dark:#8BE9FE">    "</span><span style="color:#8BE9FD;--shiki-dark:#8BE9FD">muted</span><span style="color:#8BE9FE;--shiki-dark:#8BE9FE">"</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">:</span><span style="color:#E9F284;--shiki-dark:#E9F284">   "</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">#8A8A8A</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">  },</span></span>
+<span class="line"><span style="color:#8BE9FE;--shiki-dark:#8BE9FE">  "</span><span style="color:#8BE9FD;--shiki-dark:#8BE9FD">typography</span><span style="color:#8BE9FE;--shiki-dark:#8BE9FE">"</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">:</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2"> {</span></span>
+<span class="line"><span style="color:#8BE9FE;--shiki-dark:#8BE9FE">    "</span><span style="color:#8BE9FD;--shiki-dark:#8BE9FD">display</span><span style="color:#8BE9FE;--shiki-dark:#8BE9FE">"</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">:</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2"> { </span><span style="color:#8BE9FE;--shiki-dark:#8BE9FE">"</span><span style="color:#8BE9FD;--shiki-dark:#8BE9FD">family</span><span style="color:#8BE9FE;--shiki-dark:#8BE9FE">"</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">:</span><span style="color:#E9F284;--shiki-dark:#E9F284"> "</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">Inter</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">, </span><span style="color:#8BE9FE;--shiki-dark:#8BE9FE">"</span><span style="color:#8BE9FD;--shiki-dark:#8BE9FD">weights</span><span style="color:#8BE9FE;--shiki-dark:#8BE9FE">"</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">:</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2"> [</span><span style="color:#BD93F9;--shiki-dark:#BD93F9">700</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">, </span><span style="color:#BD93F9;--shiki-dark:#BD93F9">800</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">] },</span></span>
+<span class="line"><span style="color:#8BE9FE;--shiki-dark:#8BE9FE">    "</span><span style="color:#8BE9FD;--shiki-dark:#8BE9FD">body</span><span style="color:#8BE9FE;--shiki-dark:#8BE9FE">"</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">:</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    { </span><span style="color:#8BE9FE;--shiki-dark:#8BE9FE">"</span><span style="color:#8BE9FD;--shiki-dark:#8BE9FD">family</span><span style="color:#8BE9FE;--shiki-dark:#8BE9FE">"</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">:</span><span style="color:#E9F284;--shiki-dark:#E9F284"> "</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">Inter</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">, </span><span style="color:#8BE9FE;--shiki-dark:#8BE9FE">"</span><span style="color:#8BE9FD;--shiki-dark:#8BE9FD">weights</span><span style="color:#8BE9FE;--shiki-dark:#8BE9FE">"</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">:</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2"> [</span><span style="color:#BD93F9;--shiki-dark:#BD93F9">400</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">, </span><span style="color:#BD93F9;--shiki-dark:#BD93F9">500</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">] },</span></span>
+<span class="line"><span style="color:#8BE9FE;--shiki-dark:#8BE9FE">    "</span><span style="color:#8BE9FD;--shiki-dark:#8BE9FD">mono</span><span style="color:#8BE9FE;--shiki-dark:#8BE9FE">"</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">:</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    { </span><span style="color:#8BE9FE;--shiki-dark:#8BE9FE">"</span><span style="color:#8BE9FD;--shiki-dark:#8BE9FD">family</span><span style="color:#8BE9FE;--shiki-dark:#8BE9FE">"</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">:</span><span style="color:#E9F284;--shiki-dark:#E9F284"> "</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">JetBrains Mono</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">, </span><span style="color:#8BE9FE;--shiki-dark:#8BE9FE">"</span><span style="color:#8BE9FD;--shiki-dark:#8BE9FD">weights</span><span style="color:#8BE9FE;--shiki-dark:#8BE9FE">"</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">:</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2"> [</span><span style="color:#BD93F9;--shiki-dark:#BD93F9">400</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">, </span><span style="color:#BD93F9;--shiki-dark:#BD93F9">500</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">] }</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">  },</span></span>
+<span class="line"><span style="color:#8BE9FE;--shiki-dark:#8BE9FE">  "</span><span style="color:#8BE9FD;--shiki-dark:#8BE9FD">voice</span><span style="color:#8BE9FE;--shiki-dark:#8BE9FE">"</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">:</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2"> {</span></span>
+<span class="line"><span style="color:#8BE9FE;--shiki-dark:#8BE9FE">    "</span><span style="color:#8BE9FD;--shiki-dark:#8BE9FD">tone</span><span style="color:#8BE9FE;--shiki-dark:#8BE9FE">"</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">:</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">   [</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">спокойный</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">, </span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">конкретный</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">, </span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">без пафоса</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">],</span></span>
+<span class="line"><span style="color:#8BE9FE;--shiki-dark:#8BE9FE">    "</span><span style="color:#8BE9FD;--shiki-dark:#8BE9FD">tabu</span><span style="color:#8BE9FE;--shiki-dark:#8BE9FE">"</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">:</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">   [</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">революция</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">, </span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">уникальный</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">, </span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">инновационный</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">],</span></span>
+<span class="line"><span style="color:#8BE9FE;--shiki-dark:#8BE9FE">    "</span><span style="color:#8BE9FD;--shiki-dark:#8BE9FD">person</span><span style="color:#8BE9FE;--shiki-dark:#8BE9FE">"</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">:</span><span style="color:#E9F284;--shiki-dark:#E9F284"> "</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">second-singular</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">  },</span></span>
+<span class="line"><span style="color:#8BE9FE;--shiki-dark:#8BE9FE">  "</span><span style="color:#8BE9FD;--shiki-dark:#8BE9FD">image_prompt_template</span><span style="color:#8BE9FE;--shiki-dark:#8BE9FE">"</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">:</span><span style="color:#E9F284;--shiki-dark:#E9F284"> "</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">high-contrast editorial, near-black background #0A0A0A, single chartreuse accent #C8FF00, Inter-style sans-serif typography elements, minimal composition, --ar 4:5</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">,</span></span>
+<span class="line"><span style="color:#8BE9FE;--shiki-dark:#8BE9FE">  "</span><span style="color:#8BE9FD;--shiki-dark:#8BE9FD">motion_prompt_template</span><span style="color:#8BE9FE;--shiki-dark:#8BE9FE">"</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">:</span><span style="color:#E9F284;--shiki-dark:#E9F284"> "</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">slow controlled motion, 24fps, low contrast camera move, no zoom-burst, no glitch</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">,</span></span>
+<span class="line"><span style="color:#8BE9FE;--shiki-dark:#8BE9FE">  "</span><span style="color:#8BE9FD;--shiki-dark:#8BE9FD">negatives</span><span style="color:#8BE9FE;--shiki-dark:#8BE9FE">"</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">:</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2"> [</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">neon glow</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">, </span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">rainbow</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">, </span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">vintage film grain</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">, </span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">cute mascot</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">]</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">}</span></span></code></pre>
+<p>Этот файл — единственный источник правды о бренде. Все остальные артефакты — его производные.</p>
+<h2 id="куда-подключается">Куда подключается</h2>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>brand-tokens.json</span></span>
+<span class="line"><span>   ├── site/tailwind.config        (через token transformer)</span></span>
+<span class="line"><span>   ├── figma-tokens-plugin         (через Figma Variables import)</span></span>
+<span class="line"><span>   ├── prompts/image/*.tpl         (jinja interpolation)</span></span>
+<span class="line"><span>   ├── prompts/video/*.tpl</span></span>
+<span class="line"><span>   ├── ts-types/brand.d.ts         (type-safe в TS-коде)</span></span>
+<span class="line"><span>   └── td-presets/wedoit.toe       (через TD parameters)</span></span></code></pre>
+<p>Меняется один файл — синхронно меняется бренд везде, без ручной пересинхронизации. Это и есть «design system as code».</p>
+<h2 id="реальный-кейс-wedoit-rebrand-с-volt">Реальный кейс: WEDOIT (rebrand с VOLT)</h2>
+<p>Из проекта агентства WEDOIT (бывшее VOLT, см. memory <code>feedback_wedoit_brand</code>):</p>
+<ul>
+<li><strong>Бренд-токены</strong>: <code>#0A0A0A</code> (bg) + <code>#C8FF00</code> (accent) + Inter (display/body) + pill-теги (border-radius 999px).</li>
+<li><strong>Источник правды</strong>: Figma MDM design-system + <code>brand-tokens.json</code> в репо.</li>
+<li><strong>Эталон вёрстки</strong>: <code>C:\Claude\kp-agency\</code> — оттуда копируется при старте нового КП/landing/review-сайта.</li>
+<li><strong>Промпт для генеративки</strong>: «editorial monochrome composition, near-black background <code>#0A0A0A</code>, single chartreuse accent <code>#C8FF00</code>, geometric forms, no neon glow».</li>
+</ul>
+<p>Когда стартует новый клиент-проект (rubber_kp, ai-festival, flag-review, svib-review) — копируется <code>brand-tokens.json</code>, прогоняется через одинаковые шаблоны, получается визуально консистентный набор артефактов: сайт + КП + 12 image-постов + 3 motion-вариации.</p>
+<h2 id="промпт-шаблон-с-токенами">Промпт-шаблон с токенами</h2>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="python"><code><span class="line"><span style="color:#FF79C6;--shiki-dark:#FF79C6">import</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2"> json, jinja2</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">brand </span><span style="color:#FF79C6;--shiki-dark:#FF79C6">=</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2"> json.loads(Path(</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">brand-tokens.json</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">).read_text())</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">tpl </span><span style="color:#FF79C6;--shiki-dark:#FF79C6">=</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2"> jinja2.Template(brand[</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">image_prompt_template</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">] </span><span style="color:#FF79C6;--shiki-dark:#FF79C6">+</span><span style="color:#E9F284;--shiki-dark:#E9F284"> "</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C"> — </span><span style="color:#BD93F9;--shiki-dark:#BD93F9">{{</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C"> scene </span><span style="color:#BD93F9;--shiki-dark:#BD93F9">}}</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">)</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">prompt </span><span style="color:#FF79C6;--shiki-dark:#FF79C6">=</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2"> tpl.render(</span><span style="color:#FFB86C;--shiki-light-font-style:italic;--shiki-dark:#FFB86C;--shiki-dark-font-style:italic">scene</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">=</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">кадр студии, две фигуры, без лиц, минимализм</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">)</span></span>
+<span class="line"><span style="color:#6272A4;--shiki-dark:#6272A4"># → "high-contrast editorial, near-black background #0A0A0A, single</span></span>
+<span class="line"><span style="color:#6272A4;--shiki-dark:#6272A4">#    chartreuse accent #C8FF00, Inter-style sans-serif typography</span></span>
+<span class="line"><span style="color:#6272A4;--shiki-dark:#6272A4">#    elements, minimal composition, --ar 4:5 — кадр студии, две</span></span>
+<span class="line"><span style="color:#6272A4;--shiki-dark:#6272A4">#    фигуры, без лиц, минимализм"</span></span></code></pre>
+<p>Любой новый промпт в проекте строится из шаблона + scene. Шаблон версионируется отдельно от scene-абзацев.</p>
+<h2 id="воркфлоу-с-figma-mcp">Воркфлоу с Figma MCP</h2>
+<p>Figma MCP позволяет агенту читать и писать дизайн-файл. Важные нюансы из практики (см. memory <code>reference_figma_mcp</code>):</p>
+<ul>
+<li><strong><code>use_figma</code> пишет в существующие страницы</strong>, новые страницы НЕ коммитятся. Создавайте страницу-черновик заранее.</li>
+<li><strong><code>use_figma</code> не возвращает значения</strong> — после вызова надо перечитать через <code>get_design_context</code>, чтобы убедиться, что коммит прошёл.</li>
+<li><strong><code>resize</code> ломает auto-layout hug</strong> — после resize вернуть <code>layoutSizingHorizontal = "AUTO"</code>, иначе плывёт.</li>
+<li><strong>Стили шрифтов</strong> — Figma хранит как «Montserrat» без пробелов в weight (<code>Inter Bold</code>, не <code>Inter Bold-700</code>).</li>
+</ul>
+<p>Скрипт <code>figma-sync.mjs</code> читает <code>brand-tokens.json</code>, обновляет Figma Variables через MCP, проверяет, что палитра и шрифты совпадают. Запускается перед началом проекта и при rebrand.</p>
+<h2 id="контракт-voice-тон-голоса-для-llm">Контракт voice (тон голоса) для LLM</h2>
+<p><code>voice.tone</code> и <code>voice.tabu</code> передаём в системный промпт LLM, который пишет тексты под бренд:</p>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>SYSTEM: Ты пишешь тексты для бренда {{brand}}. Тон: {{voice.tone | join(', ')}}.</span></span>
+<span class="line"><span>Строго запрещены слова и формулировки: {{voice.tabu | join(', ')}}.</span></span>
+<span class="line"><span>Обращение: {{voice.person}} (например, «ты делаешь», не «вы делаете», не «мы»).</span></span></code></pre>
+<p>Это не «совет агенту», это контракт: если он использует «революция» — текст откатываем и переписываем. Дополнительно — пост-валидатор: regex на табу-слова, exit code != 0 при нарушении.</p>
+<h2 id="подводные-камни">Подводные камни</h2>
+<ul>
+<li><strong>Гайд в PDF — это не дизайн-система</strong> — пока бренд лежит человекочитаемым PDF, агент его не «видит». Только машинно-читаемый JSON/YAML.</li>
+<li><strong>Versioning</strong> — <code>brand@2026-05</code> vs <code>brand@2026-06</code>. Старые артефакты должны помнить версию (в lineage из A2), чтобы можно было повторить ровно «как тогда».</li>
+<li><strong>Несоответствие токенов и Figma Variables</strong> — синхронизатор должен валить CI, если расходятся.</li>
+<li><strong>Чрезмерная детализация шаблона</strong> — длинный image_prompt_template подавляет scene-абзац. Держите шаблон ≤30 слов, остальное — в scene.</li>
+<li><strong>Tabu-список без пост-валидатора</strong> — LLM регулярно нарушит запрет. Регулярка + откат — обязательны.</li>
+</ul>
+<h2 id="recap">Recap</h2>
+<ul>
+<li>Бренд-контракт = JSON-файл с палитрой, шрифтами, тоном, табу-словами и шаблонами промптов.</li>
+<li>Подключается в код, в Figma (через MCP/Variables), в промпты, в TD-пресеты — единый источник правды.</li>
+<li>Tabu-список + post-validator (regex) — без них бренд-голос плывёт.</li>
+<li>Версионируйте бренд; lineage артефактов должна помнить версию.</li>
+</ul>
+<h2 id="дальше-посмотреть-и-почитать">Дальше: посмотреть и почитать</h2>
+<ul>
+<li><strong>Design Tokens Community Group — Format spec</strong> — <a href="https://tr.designtokens.org/format/">tr.designtokens.org/format</a>. Стандарт оформления design tokens, совместимый со Style Dictionary, Tokens Studio.</li>
+<li><strong>Style Dictionary</strong> — <a href="https://styledictionary.com/">styledictionary.com</a>. Translator токенов в любые форматы (CSS, iOS, Android, Figma).</li>
+<li><strong>Tokens Studio for Figma</strong> — <a href="https://tokens.studio/">tokens.studio</a>. Плагин, синхронизирующий Figma Variables с git-репо токенов.</li>
+<li><strong>Figma docs — Variables</strong> — <a href="https://help.figma.com/hc/en-us/articles/15145852043927">help.figma.com/hc/en-us/articles/15145852043927</a>. Базовая модель variables, на которую ложится MCP-синхронизация.</li>
+</ul> <nav class="chapter-nav"> <a href="/vibesamurai-site/courses/advanced/a3"> <span class="dir">← Назад</span> <span class="title">A3 · Local vs Cloud матрица</span> </a> <a href="/vibesamurai-site/courses/advanced/a5"> <span class="dir">Дальше →</span> <span class="title">A5 · Image generation для бренда</span> </a> </nav> </main> </div> <script type="module">
+    import { gatingEnabled } from '../lib/supabase';
+    import { fetchChapter } from '../lib/auth';
+
+    const base = import.meta.env.BASE_URL;
+    let mermaidLib = null;
+
+    function scopeOf(root) {
+      return root === document ? document.querySelector('.reader-main') : root;
+    }
+
+    function addCopyBtns(root) {
+      const scope = scopeOf(root); if (!scope) return;
+      scope.querySelectorAll('pre').forEach((pre) => {
+        if (pre.closest('.code-tabs')) return;
+        if (pre.querySelector('.copy-btn')) return;
+        const btn = document.createElement('button');
+        btn.className = 'copy-btn';
+        btn.textContent = 'copy';
+        btn.addEventListener('click', async () => {
+          const code = pre.querySelector('code')?.textContent ?? pre.textContent ?? '';
+          await navigator.clipboard.writeText(code.trimEnd());
+          btn.textContent = '✓ copied';
+          setTimeout(() => { btn.textContent = 'copy'; }, 1600);
+        });
+        pre.appendChild(btn);
+      });
+    }
+
+    function tightenMermaidSvgs(retries = 6) {
+      let pending = false;
+      document.querySelectorAll('.mermaid svg').forEach((svg) => {
+        if (svg.dataset.tightened === '1') return;
+        try {
+          const bbox = svg.getBBox();
+          if (!bbox || bbox.width === 0) { pending = true; return; }
+          const pad = 6;
+          svg.setAttribute('viewBox',
+            `${bbox.x - pad} ${bbox.y - pad} ${bbox.width + pad * 2} ${bbox.height + pad * 2}`);
+          svg.removeAttribute('height');
+          svg.style.height = 'auto';
+          svg.style.maxWidth = '100%';
+          svg.style.display = 'block';
+          svg.dataset.tightened = '1';
+        } catch (e) { pending = true; }
+      });
+      if (pending && retries > 0) setTimeout(() => tightenMermaidSvgs(retries - 1), 120);
+    }
+
+    async function ensureMermaid() {
+      if (mermaidLib) return mermaidLib;
+      const mod = await import('https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs');
+      mermaidLib = mod.default;
+      mermaidLib.initialize({
+        startOnLoad: false, theme: 'neutral',
+        themeVariables: {
+          fontFamily: 'JetBrains Mono, ui-monospace, monospace',
+          primaryColor: '#f5f5f5', primaryBorderColor: '#222',
+          primaryTextColor: '#111', lineColor: '#444',
+        },
+        flowchart: { curve: 'basis', padding: 12, useMaxWidth: true },
+      });
+      return mermaidLib;
+    }
+
+    async function renderMermaid(root) {
+      const scope = scopeOf(root); if (!scope) return;
+      const matches = scope.querySelectorAll(
+        'pre[data-language="mermaid"], pre.language-mermaid, code.language-mermaid'
+      );
+      if (!matches.length) return;
+      matches.forEach((el) => {
+        const block = el.tagName === 'CODE' ? el.closest('pre') || el : el;
+        const codeEl = block.querySelector('code') || block;
+        const wrap = document.createElement('div');
+        wrap.className = 'mermaid';
+        wrap.textContent = codeEl.textContent;
+        block.replaceWith(wrap);
+      });
+      try {
+        const m = await ensureMermaid();
+        await m.run();
+        tightenMermaidSvgs();
+      } catch (err) {
+        console.warn('mermaid failed', err);
+        document.querySelectorAll('.mermaid:not(:has(svg))').forEach((el) => { el.style.display = 'none'; });
+      }
+    }
+
+    async function enhance(root = document) {
+      addCopyBtns(root);
+      await renderMermaid(root);
+    }
+
+    function paywallHtml(required, needLogin) {
+      const label = { beginner: 'Beginner (300 ₽)', middle: 'Beginner + Middle (500 ₽)', all: 'Весь пакет (700 ₽)' }[required] || '';
+      return `<div class="paywall">
+        <div class="paywall-ic">🔒</div>
+        <h3>Эта глава — в платном доступе</h3>
+        <p>Нужен тариф: <strong>${label}</strong>. Доступ навсегда, без подписки.</p>
+        ${needLogin ? '<p>Войди через Google и оформи доступ — продолжишь с любого устройства.</p>' : ''}
+        <a class="paywall-btn" href="${base}pricing">Открыть доступ →</a>
+        <a class="paywall-link" href="${base}account">Войти / мой аккаунт</a>
+      </div>`;
+    }
+
+    async function gatedFlow(mount) {
+      const slug = mount.dataset.slug;
+      const required = mount.dataset.required || 'beginner';
+      mount.innerHTML = '<p class="gate-msg">Проверяем доступ…</p>';
+      const res = await fetchChapter(slug);
+      if (res.ok) {
+        mount.innerHTML = res.html;
+        await enhance(mount);
+      } else if (res.status === 401) {
+        mount.innerHTML = paywallHtml(required, true);
+      } else if (res.status === 402) {
+        mount.innerHTML = paywallHtml(res.requiredTier || required, false);
+      } else {
+        mount.innerHTML = '<p class="gate-msg">Не удалось загрузить главу. Обнови страницу.</p>';
+      }
+    }
+
+    const mount = document.getElementById('gated-mount');
+    if (mount && gatingEnabled) gatedFlow(mount);
+    else enhance(document);
+  </script> </body> </html>

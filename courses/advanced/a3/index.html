@@ -1,0 +1,291 @@
+<!DOCTYPE html><html lang="en"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Local vs Cloud: decision matrix — Vibesamurai</title><meta name="description" content="Что держим локально, что — в облаке. Решение по cost, latency, privacy и амортизации железа. Чтобы не платить дважды за то, что можно посчитать на своём GPU."><meta property="og:title" content="Local vs Cloud: decision matrix"><meta property="og:type" content="article"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Inter:wght@300..800&family=JetBrains+Mono:wght@400..600&display=swap" rel="stylesheet"><link rel="stylesheet" href="/vibesamurai-site/_astro/_slug_.Cs4TX1wt.css">
+<style>.account-btn{display:inline-flex;align-items:center;gap:var(--space-2);font-family:var(--font-mono);font-size:var(--size-2);text-transform:uppercase;letter-spacing:.06em;padding:5px 10px;border:1px solid var(--rule);border-radius:999px;color:var(--text-soft);background:var(--surface);transition:border-color var(--d-fast),color var(--d-fast)}.account-btn:hover{border-color:var(--accent);color:var(--text)}.account-ic{width:18px;height:18px;display:grid;place-items:center;border-radius:50%;background:var(--accent);color:var(--accent-ink);font-weight:700;font-size:10px;line-height:1}.reader-rail .account-btn{padding:0;border:none;background:transparent}.reader-rail .account-label{display:none}.reader-rail .account-ic{width:32px;height:32px;font-size:13px}.rail-toggle{width:36px;height:36px;display:grid;place-items:center;background:var(--accent);border:1px solid var(--accent);border-radius:4px;cursor:pointer;transition:filter var(--d-fast),transform var(--d-fast);padding:0}.rail-toggle:hover{filter:brightness(1.08);transform:translateY(-1px)}.rail-toggle:active{transform:translateY(0)}.rail-toggle-icon{width:14px;height:12px;border-left:2px solid var(--accent-ink);border-right:2px solid var(--accent-ink);transition:transform var(--d-normal) var(--ease-standard)}.reader-app.sidebar-open .rail-toggle-icon{transform:rotate(0)}.reader-app:not(.sidebar-open) .rail-toggle-icon{transform:scaleX(.5)}.sidebar-backdrop{display:none;position:fixed;inset:0;background:#0000008c;z-index:140;border:0;padding:0;cursor:pointer}@media(max-width:900px){.reader-app.sidebar-open~.sidebar-backdrop{display:block}}.rail-spacer[data-astro-cid-ofsbkzh7]{flex:1}.reader-sidebar[data-astro-cid-khgtvzrl] .soon[data-astro-cid-khgtvzrl]{display:block;color:var(--text-mute);font-size:var(--size-2);padding:var(--space-1) 0}.reader-sidebar[data-astro-cid-khgtvzrl] .soon[data-astro-cid-khgtvzrl] em[data-astro-cid-khgtvzrl]{font-style:normal;font-family:var(--font-mono);font-size:.85em;color:var(--accent);margin-left:4px;text-transform:uppercase;letter-spacing:.1em}.code-tabs[data-astro-cid-hg66rjob]{margin:var(--space-5) 0}.code-tabs-nav[data-astro-cid-hg66rjob]{display:flex;gap:2px;margin-bottom:-1px;position:relative;z-index:1}.ctab[data-astro-cid-hg66rjob]{font-family:var(--font-mono);font-size:11px;text-transform:uppercase;letter-spacing:.07em;padding:5px 14px;border:1px solid #21222c;border-bottom:none;background:#1a1b23;color:#6272a4;cursor:pointer;border-radius:4px 4px 0 0;transition:color .12s,background .12s}.ctab[data-astro-cid-hg66rjob].is-active{background:#282a36;color:#f8f8f2;border-color:#21222c}.ctab[data-astro-cid-hg66rjob]:hover:not(.is-active){color:#cdd6f4}.ctab-panel[data-astro-cid-hg66rjob]{display:none}.ctab-panel[data-astro-cid-hg66rjob].is-active{display:block}.ctab-panel[data-astro-cid-hg66rjob] pre{margin-top:0!important;border-radius:0 6px 6px!important}
+</style></head> <body> <div class="reader-app"> <aside class="reader-rail" data-astro-cid-ofsbkzh7> <a href="/vibesamurai-site/" class="logo" aria-label="Vibesamurai home" data-astro-cid-ofsbkzh7>V</a> <button type="button" class="rail-toggle" id="sidebar-toggle" aria-label="Свернуть/развернуть оглавление" title="Свернуть/развернуть оглавление" data-astro-cid-ofsbkzh7> <span class="rail-toggle-icon" aria-hidden="true" data-astro-cid-ofsbkzh7></span> </button> <div class="rail-spacer" data-astro-cid-ofsbkzh7></div> <a href="/vibesamurai-site/account" class="account-btn" id="account-btn" aria-label="Аккаунт"> <span class="account-ic" id="account-ic">⌂</span> <span class="account-label" id="account-label">Войти</span> </a>  <script type="module" src="/vibesamurai-site/_astro/AccountButton.astro_astro_type_script_index_0_lang.CmD2sdn9.js"></script> </aside>  <button type="button" class="sidebar-backdrop" id="sidebar-backdrop" aria-label="Закрыть оглавление" tabindex="-1" data-astro-cid-ofsbkzh7></button>  <script type="module">const d="vs-sidebar-open",a="(max-width: 900px)";function t(e){const n=document.querySelector(".reader-app");n&&n.classList.toggle("sidebar-open",e)}function r(){return!window.matchMedia(a).matches}function s(){const e=localStorage.getItem(d),i=window.matchMedia(a).matches?!1:e!==null?e==="1":r();t(i),document.getElementById("sidebar-toggle")?.addEventListener("click",()=>{const c=!document.querySelector(".reader-app")?.classList.contains("sidebar-open");window.matchMedia(a).matches||localStorage.setItem(d,c?"1":"0"),t(c)}),document.getElementById("sidebar-backdrop")?.addEventListener("click",()=>t(!1)),document.querySelectorAll(".reader-sidebar a").forEach(o=>{o.addEventListener("click",()=>{window.matchMedia(a).matches&&t(!1)})})}document.readyState==="loading"?document.addEventListener("DOMContentLoaded",s):s();</script> <aside class="reader-sidebar" data-astro-cid-khgtvzrl> <div class="breadcrumb" data-astro-cid-khgtvzrl>Vibesamurai · Advanced Path · a3</div> <h4 data-astro-cid-khgtvzrl>В этом курсе</h4> <ul data-astro-cid-khgtvzrl> <li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a1" class data-astro-cid-khgtvzrl>A1 · Стек AI-студии 2026</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a2" class data-astro-cid-khgtvzrl>A2 · Multi-modal контракт</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a3" class="current" data-astro-cid-khgtvzrl>A3 · Local vs Cloud матрица</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a4" class data-astro-cid-khgtvzrl>A4 · Design system как контракт</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a5" class data-astro-cid-khgtvzrl>A5 · Image generation для бренда</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a6" class data-astro-cid-khgtvzrl>A6 · Marketplace + product photoshoot</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a7" class data-astro-cid-khgtvzrl>A7 · Video generation pipelines</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a8" class data-astro-cid-khgtvzrl>A8 · Identity-preserving generation</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a9" class data-astro-cid-khgtvzrl>A9 · TouchDesigner + StreamDiffusion</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a10" class data-astro-cid-khgtvzrl>A10 · Audio-reactive AV-инсталляции</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a11" class data-astro-cid-khgtvzrl>A11 · Interactive booths: STT+LLM+TTS+CV</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a12" class data-astro-cid-khgtvzrl>A12 · Telemetry → control loop</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a13" class data-astro-cid-khgtvzrl>A13 · Private RAG для архива</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a14" class data-astro-cid-khgtvzrl>A14 · Локальные LLM на 8GB VRAM</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a15" class data-astro-cid-khgtvzrl>A15 · RunPod Flash + vLLM</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a16" class data-astro-cid-khgtvzrl>A16 · Кастомные MCP-серверы</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a17" class data-astro-cid-khgtvzrl>A17 · Token economics через модальности</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a18" class data-astro-cid-khgtvzrl>A18 · Eval для креативного output</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a19" class data-astro-cid-khgtvzrl>A19 · Security в творческой студии</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a20" class data-astro-cid-khgtvzrl>A20 · Capstone: запуск студии</a> </li> </ul>  </aside> <main class="reader-main"> <div class="chapter-eyebrow">Advanced Path · a3</div> <h1 class="chapter-title">A3 · Local vs Cloud матрица</h1> <p class="chapter-subtitle">Что держим локально, что — в облаке. Решение по cost, latency, privacy и амортизации железа. Чтобы не платить дважды за то, что можно посчитать на своём GPU.</p> <h2 id="что-строим">Что строим</h2>
+<p>Decision matrix «локально vs облако» для каждого узла пайплайна студии: LLM, image, video, audio, RAG, CV. Решение принимаем не по идеологии («приватность важна» / «зачем своё железо»), а по четырём количественным осям.</p>
+<h2 id="четыре-оси-решения">Четыре оси решения</h2>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>┌───────────────────────────────────────────────────────────┐</span></span>
+<span class="line"><span>│  ОСЬ              ЛОКАЛЬНО                  ОБЛАКО        │</span></span>
+<span class="line"><span>├───────────────────────────────────────────────────────────┤</span></span>
+<span class="line"><span>│  Cost per unit    амортизация GPU           per-call $    │</span></span>
+<span class="line"><span>│  Latency          1–10 c (тёплая модель)    100–500 ms    │</span></span>
+<span class="line"><span>│  Privacy          данные не уходят          контракт+TLS  │</span></span>
+<span class="line"><span>│  Freshness        замороженная модель       свежий weight │</span></span>
+<span class="line"><span>└───────────────────────────────────────────────────────────┘</span></span></code></pre>
+<p>Решение per-узел: не «вся студия локально» и не «вся студия в облаке».</p>
+<h2 id="когда-локально-выгоднее">Когда локально выгоднее</h2>
+<p>Локальное обоснованно при выполнении хотя бы двух условий:</p>
+<ol>
+<li><strong>Регулярная нагрузка</strong> — узел вызывается ≥1000 раз/месяц (иначе амортизация GPU не отбивается).</li>
+<li><strong>Privacy-чувствительные данные</strong> — клиентские документы, приватный архив, лица.</li>
+<li><strong>Качество модели достаточное</strong> — open-weight модель решает задачу не хуже cloud-альтернативы.</li>
+<li><strong>Latency не критичен</strong> — терпите 5–10 c на запрос (или железо мощное).</li>
+</ol>
+<p>Типичные «локально-выгодные» узлы:</p>
+<ul>
+<li><strong>LLM для курации/классификации</strong> — Qwen3.5-21B-Deckard, llama.cpp на 8GB VRAM + 64GB RAM. См. A14.</li>
+<li><strong>ASR</strong> — Whisper large-v3 локально, $0 за час аудио. Кейс tg_archive.</li>
+<li><strong>OCR</strong> — Tesseract / PaddleOCR, мгновенно и без сетевых задержек.</li>
+<li><strong>Embeddings</strong> — BGE-M3 локально, нулевая цена индексирования архива (см. A13).</li>
+<li><strong>TTS для стенда</strong> — Fish Speech на 127.0.0.1:7870, кешируется (см. A11).</li>
+</ul>
+<h2 id="когда-облако-выгоднее">Когда облако выгоднее</h2>
+<p>Cloud обоснован, когда:</p>
+<ol>
+<li><strong>Разовая или нерегулярная задача</strong> — генерация финального ролика для клиента (одна штука в месяц).</li>
+<li><strong>Нужна модель frontier-уровня</strong> — для финального копирайта/анализа никакой open-weight модели мая 2026 не хватит как Opus 4.7.</li>
+<li><strong>Latency критичен и железа нет</strong> — масштабируемый inference через RunPod Flash / vLLM (см. A15).</li>
+<li><strong>Задача редкая, но дорогая в инфре</strong> — большой image-генератор раз в неделю не оправдывает своё железо.</li>
+</ol>
+<p>Типичные «облако-выгодные» узлы:</p>
+<ul>
+<li><strong>Финальный текст</strong> — Claude Opus 4.7 для финального копирайта/КП/договоров.</li>
+<li><strong>Креативный image для бренда</strong> — FLUX 2 через FAL, GPT Image 2 через OpenAI.</li>
+<li><strong>Video</strong> — Seedance 2.0 / Kling 3.0 / Runway. Локальное видео-поколение редко оправдано в 2026.</li>
+<li><strong>Identity training</strong> — Soul ID training, LoRA на cloud GPU (быстрее и дешевле, чем держать H100 локально).</li>
+</ul>
+<h2 id="гибрид-cascade-local--cloud">Гибрид: cascade Local → Cloud</h2>
+<p>Самый ROI-сильный паттерн — каскад. Дешёвая локальная модель фильтрует/префильтрует, дорогое cloud — добивает финал.</p>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>вход ──► LOCAL Qwen3.5  ──► классификация / черновик</span></span>
+<span class="line"><span>                            │</span></span>
+<span class="line"><span>                            ▼</span></span>
+<span class="line"><span>                     достаточно хорошо? ── да ──► OUTPUT</span></span>
+<span class="line"><span>                            │</span></span>
+<span class="line"><span>                            нет</span></span>
+<span class="line"><span>                            ▼</span></span>
+<span class="line"><span>              CLOUD Sonnet/Opus  ──► финал ── OUTPUT</span></span></code></pre>
+<p>Кейс: курация контента для канала. Локальный Qwen разбирает 10 000 постов в день, отбирает 50 кандидатов; Sonnet 4.6 ранжирует кандидатов; Opus 4.7 пишет финальный текст для топ-5. Из 10 000 LLM-вызовов в облако уходит ~55. Стоимость падает на два порядка.</p>
+<h2 id="decision-таблица-для-типичных-узлов">Decision-таблица для типичных узлов</h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Узел</th><th>Локально</th><th>Облако</th><th>Победитель в студии</th></tr></thead><tbody><tr><td>LLM, классификация (>1k/день)</td><td>Qwen3.5-21B, ~5 t/s</td><td>Haiku, $0.8/1M out</td><td>Local</td></tr><tr><td>LLM, финальный копирайт</td><td>Qwen3.5, качество ~B</td><td>Opus 4.7, качество A+</td><td>Cloud</td></tr><tr><td>Embeddings для RAG</td><td>BGE-M3, мгновенно</td><td>text-embedding-3</td><td>Local</td></tr><tr><td>ASR (архив >100 ч)</td><td>Whisper large-v3</td><td>Deepgram, $0.0043/мин</td><td>Local</td></tr><tr><td>Image, бренд-креатив</td><td>FLUX SDXL локально</td><td>FLUX 2 через FAL</td><td>Cloud (качество, скорость)</td></tr><tr><td>Image, превью/моки</td><td>ComfyUI локально</td><td>—</td><td>Local</td></tr><tr><td>Video gen</td><td>— (8GB слабо)</td><td>Seedance/Kling</td><td>Cloud</td></tr><tr><td>TTS для стенда</td><td>Fish Speech</td><td>ElevenLabs</td><td>Local (кеш + privacy)</td></tr><tr><td>TTS для финального ролика</td><td>Fish Speech</td><td>ElevenLabs</td><td>Cloud (качество)</td></tr><tr><td>CV для стенда</td><td>MediaPipe/YOLO</td><td>—</td><td>Local (latency)</td></tr><tr><td>Soul ID / LoRA training</td><td>требует H100</td><td>Higgsfield / FAL</td><td>Cloud</td></tr></tbody></table>
+<h2 id="реальный-кейс-как-разнесён-стек-одной-студии">Реальный кейс: как разнесён стек одной студии</h2>
+<p>Из практики проекта производства AI-контента:</p>
+<ul>
+<li><strong>Локально (4070 8GB + 64GB RAM):</strong> Qwen3.5-21B-Deckard (курация), BGE-M3 (RAG), Whisper (ASR), Fish Speech (TTS стенд), MediaPipe (CV), ComfyUI (превью).</li>
+<li><strong>Облако (paid API, по необходимости):</strong> Claude Opus 4.7 (финал), FLUX 2 / GPT Image 2 (бренд), Seedance 2.0 / Runway Unlimited (видео), Higgsfield Soul ID (идентичность).</li>
+<li><strong>Облако (own GPU pool):</strong> RunPod Flash для vLLM-инференса Qwen3.5 на масштабе (когда локальных 5 t/s не хватает).</li>
+</ul>
+<p>Месячная экономика: ~70% LLM-вызовов закрываются локально, ~30% — облаком. Видео и финальная графика — целиком облако.</p>
+<h2 id="подводные-камни">Подводные камни</h2>
+<ul>
+<li><strong>«Локалка медленная — куплю A100»</strong> — посчитайте сначала real-time-нагрузку. На 1000 вызовов/месяц A100 за $1500/мес не окупается ни одной картинкой.</li>
+<li><strong>«Зачем локалка — у меня кредиты»</strong> — кредиты заканчиваются. Локальный узел в архитектуре = страховка от смены цен и блокировок.</li>
+<li><strong>«Локально приватнее всегда»</strong> — нет. Если ваш «локальный» сервер в датацентре провайдера с правом доступа сотрудников — это та же «облако», только хуже логированное.</li>
+<li><strong>Замороженная модель</strong> — open-weight Qwen3.5 в мае 2026 не знает события июня 2026. Для актуальных задач локалка не подходит.</li>
+<li><strong>Электричество</strong> — 4070 на 24/7 inference это +200–300 Вт постоянной нагрузки. На больших объёмах это реальные деньги.</li>
+</ul>
+<h2 id="recap">Recap</h2>
+<ul>
+<li>Decision per-узел, не per-стек. Локально выгодно при ≥1000 вызовов/мес + privacy + достаточное качество.</li>
+<li>Cascade Local → Cloud — самый ROI-сильный паттерн: дешёвая фильтрация локально, финал в облаке.</li>
+<li>Локально: классификация, embeddings, ASR, RAG, CV, TTS-кеш. Облако: финал-текст, image/video gen, Soul ID training.</li>
+<li>Не считать «локально приватнее» по умолчанию — приватность считается по конкретной угрозе.</li>
+</ul>
+<h2 id="дальше-посмотреть-и-почитать">Дальше: посмотреть и почитать</h2>
+<ul>
+<li><strong>llama.cpp</strong> — <a href="https://github.com/ggerganov/llama.cpp">github.com/ggerganov/llama.cpp</a>. Эталонный локальный inference для quantized моделей.</li>
+<li><strong>vLLM</strong> — <a href="https://docs.vllm.ai/">docs.vllm.ai</a>. Production-grade inference; используется в RunPod Flash deployments.</li>
+<li><strong>Hugging Face — LLM leaderboards</strong> — <a href="https://huggingface.co/spaces/open-llm-leaderboard/open_llm_leaderboard">huggingface.co/spaces/open-llm-leaderboard</a>. Чтобы трезво оценить, на что способны open-weight модели на текущий месяц.</li>
+<li><strong>RunPod Flash</strong> — <a href="https://docs.runpod.io/serverless/flash">docs.runpod.io/serverless/flash</a>. GA с 2026-04-30 — <code>@Endpoint</code> без Docker, FlashBoot, 500MB limit.</li>
+</ul> <nav class="chapter-nav"> <a href="/vibesamurai-site/courses/advanced/a2"> <span class="dir">← Назад</span> <span class="title">A2 · Multi-modal контракт</span> </a> <a href="/vibesamurai-site/courses/advanced/a4"> <span class="dir">Дальше →</span> <span class="title">A4 · Design system как контракт</span> </a> </nav> </main> </div> <script type="module">
+    import { gatingEnabled } from '../lib/supabase';
+    import { fetchChapter } from '../lib/auth';
+
+    const base = import.meta.env.BASE_URL;
+    let mermaidLib = null;
+
+    function scopeOf(root) {
+      return root === document ? document.querySelector('.reader-main') : root;
+    }
+
+    function addCopyBtns(root) {
+      const scope = scopeOf(root); if (!scope) return;
+      scope.querySelectorAll('pre').forEach((pre) => {
+        if (pre.closest('.code-tabs')) return;
+        if (pre.querySelector('.copy-btn')) return;
+        const btn = document.createElement('button');
+        btn.className = 'copy-btn';
+        btn.textContent = 'copy';
+        btn.addEventListener('click', async () => {
+          const code = pre.querySelector('code')?.textContent ?? pre.textContent ?? '';
+          await navigator.clipboard.writeText(code.trimEnd());
+          btn.textContent = '✓ copied';
+          setTimeout(() => { btn.textContent = 'copy'; }, 1600);
+        });
+        pre.appendChild(btn);
+      });
+    }
+
+    function tightenMermaidSvgs(retries = 6) {
+      let pending = false;
+      document.querySelectorAll('.mermaid svg').forEach((svg) => {
+        if (svg.dataset.tightened === '1') return;
+        try {
+          const bbox = svg.getBBox();
+          if (!bbox || bbox.width === 0) { pending = true; return; }
+          const pad = 6;
+          svg.setAttribute('viewBox',
+            `${bbox.x - pad} ${bbox.y - pad} ${bbox.width + pad * 2} ${bbox.height + pad * 2}`);
+          svg.removeAttribute('height');
+          svg.style.height = 'auto';
+          svg.style.maxWidth = '100%';
+          svg.style.display = 'block';
+          svg.dataset.tightened = '1';
+        } catch (e) { pending = true; }
+      });
+      if (pending && retries > 0) setTimeout(() => tightenMermaidSvgs(retries - 1), 120);
+    }
+
+    async function ensureMermaid() {
+      if (mermaidLib) return mermaidLib;
+      const mod = await import('https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs');
+      mermaidLib = mod.default;
+      mermaidLib.initialize({
+        startOnLoad: false, theme: 'neutral',
+        themeVariables: {
+          fontFamily: 'JetBrains Mono, ui-monospace, monospace',
+          primaryColor: '#f5f5f5', primaryBorderColor: '#222',
+          primaryTextColor: '#111', lineColor: '#444',
+        },
+        flowchart: { curve: 'basis', padding: 12, useMaxWidth: true },
+      });
+      return mermaidLib;
+    }
+
+    async function renderMermaid(root) {
+      const scope = scopeOf(root); if (!scope) return;
+      const matches = scope.querySelectorAll(
+        'pre[data-language="mermaid"], pre.language-mermaid, code.language-mermaid'
+      );
+      if (!matches.length) return;
+      matches.forEach((el) => {
+        const block = el.tagName === 'CODE' ? el.closest('pre') || el : el;
+        const codeEl = block.querySelector('code') || block;
+        const wrap = document.createElement('div');
+        wrap.className = 'mermaid';
+        wrap.textContent = codeEl.textContent;
+        block.replaceWith(wrap);
+      });
+      try {
+        const m = await ensureMermaid();
+        await m.run();
+        tightenMermaidSvgs();
+      } catch (err) {
+        console.warn('mermaid failed', err);
+        document.querySelectorAll('.mermaid:not(:has(svg))').forEach((el) => { el.style.display = 'none'; });
+      }
+    }
+
+    async function enhance(root = document) {
+      addCopyBtns(root);
+      await renderMermaid(root);
+    }
+
+    function paywallHtml(required, needLogin) {
+      const label = { beginner: 'Beginner (300 ₽)', middle: 'Beginner + Middle (500 ₽)', all: 'Весь пакет (700 ₽)' }[required] || '';
+      return `<div class="paywall">
+        <div class="paywall-ic">🔒</div>
+        <h3>Эта глава — в платном доступе</h3>
+        <p>Нужен тариф: <strong>${label}</strong>. Доступ навсегда, без подписки.</p>
+        ${needLogin ? '<p>Войди через Google и оформи доступ — продолжишь с любого устройства.</p>' : ''}
+        <a class="paywall-btn" href="${base}pricing">Открыть доступ →</a>
+        <a class="paywall-link" href="${base}account">Войти / мой аккаунт</a>
+      </div>`;
+    }
+
+    async function gatedFlow(mount) {
+      const slug = mount.dataset.slug;
+      const required = mount.dataset.required || 'beginner';
+      mount.innerHTML = '<p class="gate-msg">Проверяем доступ…</p>';
+      const res = await fetchChapter(slug);
+      if (res.ok) {
+        mount.innerHTML = res.html;
+        await enhance(mount);
+      } else if (res.status === 401) {
+        mount.innerHTML = paywallHtml(required, true);
+      } else if (res.status === 402) {
+        mount.innerHTML = paywallHtml(res.requiredTier || required, false);
+      } else {
+        mount.innerHTML = '<p class="gate-msg">Не удалось загрузить главу. Обнови страницу.</p>';
+      }
+    }
+
+    const mount = document.getElementById('gated-mount');
+    if (mount && gatingEnabled) gatedFlow(mount);
+    else enhance(document);
+  </script> </body> </html>

@@ -1,0 +1,244 @@
+<!DOCTYPE html><html lang="en"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Security в творческой студии — Vibesamurai</title><meta name="description" content="Secrets никогда в чате, watermark/IP, tunnels без .git/.env, claude-process-allowlist, security_monitor. Реальные инциденты и их урок."><meta property="og:title" content="Security в творческой студии"><meta property="og:type" content="article"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Inter:wght@300..800&family=JetBrains+Mono:wght@400..600&display=swap" rel="stylesheet"><link rel="stylesheet" href="/vibesamurai-site/_astro/_slug_.Cs4TX1wt.css">
+<style>.account-btn{display:inline-flex;align-items:center;gap:var(--space-2);font-family:var(--font-mono);font-size:var(--size-2);text-transform:uppercase;letter-spacing:.06em;padding:5px 10px;border:1px solid var(--rule);border-radius:999px;color:var(--text-soft);background:var(--surface);transition:border-color var(--d-fast),color var(--d-fast)}.account-btn:hover{border-color:var(--accent);color:var(--text)}.account-ic{width:18px;height:18px;display:grid;place-items:center;border-radius:50%;background:var(--accent);color:var(--accent-ink);font-weight:700;font-size:10px;line-height:1}.reader-rail .account-btn{padding:0;border:none;background:transparent}.reader-rail .account-label{display:none}.reader-rail .account-ic{width:32px;height:32px;font-size:13px}.rail-toggle{width:36px;height:36px;display:grid;place-items:center;background:var(--accent);border:1px solid var(--accent);border-radius:4px;cursor:pointer;transition:filter var(--d-fast),transform var(--d-fast);padding:0}.rail-toggle:hover{filter:brightness(1.08);transform:translateY(-1px)}.rail-toggle:active{transform:translateY(0)}.rail-toggle-icon{width:14px;height:12px;border-left:2px solid var(--accent-ink);border-right:2px solid var(--accent-ink);transition:transform var(--d-normal) var(--ease-standard)}.reader-app.sidebar-open .rail-toggle-icon{transform:rotate(0)}.reader-app:not(.sidebar-open) .rail-toggle-icon{transform:scaleX(.5)}.sidebar-backdrop{display:none;position:fixed;inset:0;background:#0000008c;z-index:140;border:0;padding:0;cursor:pointer}@media(max-width:900px){.reader-app.sidebar-open~.sidebar-backdrop{display:block}}.rail-spacer[data-astro-cid-ofsbkzh7]{flex:1}.reader-sidebar[data-astro-cid-khgtvzrl] .soon[data-astro-cid-khgtvzrl]{display:block;color:var(--text-mute);font-size:var(--size-2);padding:var(--space-1) 0}.reader-sidebar[data-astro-cid-khgtvzrl] .soon[data-astro-cid-khgtvzrl] em[data-astro-cid-khgtvzrl]{font-style:normal;font-family:var(--font-mono);font-size:.85em;color:var(--accent);margin-left:4px;text-transform:uppercase;letter-spacing:.1em}.code-tabs[data-astro-cid-hg66rjob]{margin:var(--space-5) 0}.code-tabs-nav[data-astro-cid-hg66rjob]{display:flex;gap:2px;margin-bottom:-1px;position:relative;z-index:1}.ctab[data-astro-cid-hg66rjob]{font-family:var(--font-mono);font-size:11px;text-transform:uppercase;letter-spacing:.07em;padding:5px 14px;border:1px solid #21222c;border-bottom:none;background:#1a1b23;color:#6272a4;cursor:pointer;border-radius:4px 4px 0 0;transition:color .12s,background .12s}.ctab[data-astro-cid-hg66rjob].is-active{background:#282a36;color:#f8f8f2;border-color:#21222c}.ctab[data-astro-cid-hg66rjob]:hover:not(.is-active){color:#cdd6f4}.ctab-panel[data-astro-cid-hg66rjob]{display:none}.ctab-panel[data-astro-cid-hg66rjob].is-active{display:block}.ctab-panel[data-astro-cid-hg66rjob] pre{margin-top:0!important;border-radius:0 6px 6px!important}
+</style></head> <body> <div class="reader-app"> <aside class="reader-rail" data-astro-cid-ofsbkzh7> <a href="/vibesamurai-site/" class="logo" aria-label="Vibesamurai home" data-astro-cid-ofsbkzh7>V</a> <button type="button" class="rail-toggle" id="sidebar-toggle" aria-label="Свернуть/развернуть оглавление" title="Свернуть/развернуть оглавление" data-astro-cid-ofsbkzh7> <span class="rail-toggle-icon" aria-hidden="true" data-astro-cid-ofsbkzh7></span> </button> <div class="rail-spacer" data-astro-cid-ofsbkzh7></div> <a href="/vibesamurai-site/account" class="account-btn" id="account-btn" aria-label="Аккаунт"> <span class="account-ic" id="account-ic">⌂</span> <span class="account-label" id="account-label">Войти</span> </a>  <script type="module" src="/vibesamurai-site/_astro/AccountButton.astro_astro_type_script_index_0_lang.CmD2sdn9.js"></script> </aside>  <button type="button" class="sidebar-backdrop" id="sidebar-backdrop" aria-label="Закрыть оглавление" tabindex="-1" data-astro-cid-ofsbkzh7></button>  <script type="module">const d="vs-sidebar-open",a="(max-width: 900px)";function t(e){const n=document.querySelector(".reader-app");n&&n.classList.toggle("sidebar-open",e)}function r(){return!window.matchMedia(a).matches}function s(){const e=localStorage.getItem(d),i=window.matchMedia(a).matches?!1:e!==null?e==="1":r();t(i),document.getElementById("sidebar-toggle")?.addEventListener("click",()=>{const c=!document.querySelector(".reader-app")?.classList.contains("sidebar-open");window.matchMedia(a).matches||localStorage.setItem(d,c?"1":"0"),t(c)}),document.getElementById("sidebar-backdrop")?.addEventListener("click",()=>t(!1)),document.querySelectorAll(".reader-sidebar a").forEach(o=>{o.addEventListener("click",()=>{window.matchMedia(a).matches&&t(!1)})})}document.readyState==="loading"?document.addEventListener("DOMContentLoaded",s):s();</script> <aside class="reader-sidebar" data-astro-cid-khgtvzrl> <div class="breadcrumb" data-astro-cid-khgtvzrl>Vibesamurai · Advanced Path · a19</div> <h4 data-astro-cid-khgtvzrl>В этом курсе</h4> <ul data-astro-cid-khgtvzrl> <li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a1" class data-astro-cid-khgtvzrl>A1 · Стек AI-студии 2026</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a2" class data-astro-cid-khgtvzrl>A2 · Multi-modal контракт</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a3" class data-astro-cid-khgtvzrl>A3 · Local vs Cloud матрица</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a4" class data-astro-cid-khgtvzrl>A4 · Design system как контракт</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a5" class data-astro-cid-khgtvzrl>A5 · Image generation для бренда</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a6" class data-astro-cid-khgtvzrl>A6 · Marketplace + product photoshoot</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a7" class data-astro-cid-khgtvzrl>A7 · Video generation pipelines</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a8" class data-astro-cid-khgtvzrl>A8 · Identity-preserving generation</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a9" class data-astro-cid-khgtvzrl>A9 · TouchDesigner + StreamDiffusion</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a10" class data-astro-cid-khgtvzrl>A10 · Audio-reactive AV-инсталляции</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a11" class data-astro-cid-khgtvzrl>A11 · Interactive booths: STT+LLM+TTS+CV</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a12" class data-astro-cid-khgtvzrl>A12 · Telemetry → control loop</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a13" class data-astro-cid-khgtvzrl>A13 · Private RAG для архива</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a14" class data-astro-cid-khgtvzrl>A14 · Локальные LLM на 8GB VRAM</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a15" class data-astro-cid-khgtvzrl>A15 · RunPod Flash + vLLM</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a16" class data-astro-cid-khgtvzrl>A16 · Кастомные MCP-серверы</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a17" class data-astro-cid-khgtvzrl>A17 · Token economics через модальности</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a18" class data-astro-cid-khgtvzrl>A18 · Eval для креативного output</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a19" class="current" data-astro-cid-khgtvzrl>A19 · Security в творческой студии</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a20" class data-astro-cid-khgtvzrl>A20 · Capstone: запуск студии</a> </li> </ul>  </aside> <main class="reader-main"> <div class="chapter-eyebrow">Advanced Path · a19</div> <h1 class="chapter-title">A19 · Security в творческой студии</h1> <p class="chapter-subtitle">Secrets никогда в чате, watermark/IP, tunnels без .git/.env, claude-process-allowlist, security_monitor. Реальные инциденты и их урок.</p> <h2 id="что-строим">Что строим</h2>
+<p>Прикладной security-стек креативной студии. Middle (M18) дал базу production security. Advanced — про конкретные риски, которые возникают именно у студии: утечки через tunnels, IP-нарушения в генеративке, секреты в логах, авто-publish прод-артефактов.</p>
+<h2 id="главное-правило-secrets-не-в-контексте">Главное правило: secrets не в контексте</h2>
+<p>Из практики (memory <code>feedback_no_secrets_in_chat</code>): Claude никогда не читает значения секретов и не передаёт в сеть/API/контекст. Только <strong>имя переменной + метаданные</strong>: наличие, mtime, hash.</p>
+<p>Конкретно:</p>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="python"><code><span class="line"><span style="color:#6272A4;--shiki-dark:#6272A4"># плохо — секрет уходит в чат / лог / vendor API</span></span>
+<span class="line"><span style="color:#8BE9FD;--shiki-dark:#8BE9FD">print</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">(</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">f</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">"DEBUG: API_KEY=</span><span style="color:#BD93F9;--shiki-dark:#BD93F9">{</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">os.environ[</span><span style="color:#E9F284;--shiki-dark:#E9F284">'</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">ANTHROPIC_API_KEY</span><span style="color:#E9F284;--shiki-dark:#E9F284">'</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">]</span><span style="color:#BD93F9;--shiki-dark:#BD93F9">}</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">"</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6272A4;--shiki-dark:#6272A4"># хорошо — только метаданные</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">env_status </span><span style="color:#FF79C6;--shiki-dark:#FF79C6">=</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2"> {</span></span>
+<span class="line"><span style="color:#E9F284;--shiki-dark:#E9F284">    "</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">ANTHROPIC_API_KEY</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">: {</span></span>
+<span class="line"><span style="color:#E9F284;--shiki-dark:#E9F284">        "</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">present</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">: </span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">ANTHROPIC_API_KEY</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#FF79C6;--shiki-dark:#FF79C6"> in</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2"> os.environ,</span></span>
+<span class="line"><span style="color:#E9F284;--shiki-dark:#E9F284">        "</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">length</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">: </span><span style="color:#8BE9FD;--shiki-dark:#8BE9FD">len</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">(os.environ.get(</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">ANTHROPIC_API_KEY</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">, </span><span style="color:#E9F284;--shiki-dark:#E9F284">""</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">)),</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    }</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">}</span></span></code></pre>
+<p>Это правило применяется при отладке, при agent-сессиях, в логах. Никогда не «давайте я гляну на ключ».</p>
+<h2 id="анонс-правок-перед-инструментом">Анонс правок перед инструментом</h2>
+<p>Из практики (memory <code>feedback_announce_edits</code>): перед каждым Edit/Write — одна строка «→ файл: что меняю».</p>
+<p>Это секьюрити-правило, не косметика: пользователь видит каждое изменение <strong>до</strong> его исполнения, ловит «не то» до commit.</p>
+<p>В Claude Code включается через скилл-инструкцию или CLAUDE.md. Без анонса агент часто правит «по соседству» — это ловится только в diff после.</p>
+<h2 id="tunnels-без-gitenv">Tunnels без .git/.env</h2>
+<p>Инцидент-учебник (memory <code>feedback_tunnel_no_dotgit</code>): 5 мая 2026 — открытый туннель отдал <code>.git</code>/<code>.env</code>/<code>.claude</code>/<code>.ssh</code> через сетевой http.server.</p>
+<p>Правило:</p>
+<ul>
+<li><strong>перед <code>cloudflared</code>/<code>ngrok</code>/<code>http.server</code></strong> проверяем root на dotfiles;</li>
+<li>отдаём отдельный <code>dist/</code>, не весь репо;</li>
+<li>никогда не <code>http.server</code> на корне репозитория.</li>
+</ul>
+<p>Скрипт проверки:</p>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="python"><code><span class="line"><span style="color:#FF79C6;--shiki-dark:#FF79C6">def</span><span style="color:#50FA7B;--shiki-dark:#50FA7B"> safe_serve_root_check</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">(</span><span style="color:#FFB86C;--shiki-light-font-style:italic;--shiki-dark:#FFB86C;--shiki-dark-font-style:italic">root</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">:</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2"> Path):</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    bad </span><span style="color:#FF79C6;--shiki-dark:#FF79C6">=</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2"> []</span></span>
+<span class="line"><span style="color:#FF79C6;--shiki-dark:#FF79C6">    for</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2"> entry </span><span style="color:#FF79C6;--shiki-dark:#FF79C6">in</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2"> root.iterdir():</span></span>
+<span class="line"><span style="color:#FF79C6;--shiki-dark:#FF79C6">        if</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2"> entry.name.startswith(</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">.</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">) </span><span style="color:#FF79C6;--shiki-dark:#FF79C6">and</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2"> entry.name </span><span style="color:#FF79C6;--shiki-dark:#FF79C6">not</span><span style="color:#FF79C6;--shiki-dark:#FF79C6"> in</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2"> {</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">.well-known</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">}:</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">            bad.append(</span><span style="color:#8BE9FD;--shiki-light-font-style:italic;--shiki-dark:#8BE9FD;--shiki-dark-font-style:italic">str</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">(entry))</span></span>
+<span class="line"><span style="color:#FF79C6;--shiki-dark:#FF79C6">    if</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2"> bad:</span></span>
+<span class="line"><span style="color:#FF79C6;--shiki-dark:#FF79C6">        raise</span><span style="color:#8BE9FD;--shiki-light-font-style:italic;--shiki-dark:#8BE9FD;--shiki-dark-font-style:italic"> SystemExit</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">(</span></span>
+<span class="line"><span style="color:#FF79C6;--shiki-dark:#FF79C6">            f</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">"⛔ нельзя серверить: найдены dotfiles </span><span style="color:#BD93F9;--shiki-dark:#BD93F9">{</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">bad</span><span style="color:#BD93F9;--shiki-dark:#BD93F9">}</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">\n</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">"</span></span>
+<span class="line"><span style="color:#FF79C6;--shiki-dark:#FF79C6">            f</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">"перенесите контент в dist/ и серверьте его."</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">        )</span></span></code></pre>
+<p>Запускать <strong>до</strong> каждого <code>python -m http.server</code> или <code>cloudflared tunnel --url</code>.</p>
+<p>Дополнительно: правило <code>feedback_no_wildcard_http_server</code> — <code>0.0.0.0</code>/<code>::</code> запрещены, всегда <code>--bind 127.0.0.1</code>. Туннель экспонирует только заданный port на localhost, не весь интерфейс.</p>
+<h2 id="claude-process-allowlist">Claude-process-allowlist</h2>
+<p>Из практики (memory <code>feedback_claude_process_allowlist</code>): при запуске python + cloudflared — пишем PID в <code>allowed_tunnels.txt</code>, <code>--bind 127.0.0.1</code>, порты из <code>claude_managed_ports</code>.</p>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="python"><code><span class="line"><span style="color:#6272A4;--shiki-dark:#6272A4"># claude_managed_ports.json:</span></span>
+<span class="line"><span style="color:#6272A4;--shiki-dark:#6272A4"># {"reserved": [8000, 8765, 7870, 8080], "preview": [4321], "external": []}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#FF79C6;--shiki-dark:#FF79C6">def</span><span style="color:#50FA7B;--shiki-dark:#50FA7B"> start_local_server</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">(</span><span style="color:#FFB86C;--shiki-light-font-style:italic;--shiki-dark:#FFB86C;--shiki-dark-font-style:italic">port</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">:</span><span style="color:#8BE9FD;--shiki-light-font-style:italic;--shiki-dark:#8BE9FD;--shiki-dark-font-style:italic"> int</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">, </span><span style="color:#FFB86C;--shiki-light-font-style:italic;--shiki-dark:#FFB86C;--shiki-dark-font-style:italic">name</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">:</span><span style="color:#8BE9FD;--shiki-light-font-style:italic;--shiki-dark:#8BE9FD;--shiki-dark-font-style:italic"> str</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">):</span></span>
+<span class="line"><span style="color:#FF79C6;--shiki-dark:#FF79C6">    if</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2"> port </span><span style="color:#FF79C6;--shiki-dark:#FF79C6">not</span><span style="color:#FF79C6;--shiki-dark:#FF79C6"> in</span><span style="color:#BD93F9;--shiki-dark:#BD93F9"> MANAGED_PORTS</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">[</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">reserved</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">] </span><span style="color:#FF79C6;--shiki-dark:#FF79C6">+</span><span style="color:#BD93F9;--shiki-dark:#BD93F9"> MANAGED_PORTS</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">[</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">preview</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">]:</span></span>
+<span class="line"><span style="color:#FF79C6;--shiki-dark:#FF79C6">        raise</span><span style="color:#8BE9FD;--shiki-light-font-style:italic;--shiki-dark:#8BE9FD;--shiki-dark-font-style:italic"> SystemExit</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">(</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">f</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">"порт </span><span style="color:#BD93F9;--shiki-dark:#BD93F9">{</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">port</span><span style="color:#BD93F9;--shiki-dark:#BD93F9">}</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C"> не в claude_managed_ports"</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">)</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    proc </span><span style="color:#FF79C6;--shiki-dark:#FF79C6">=</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2"> subprocess.Popen([</span><span style="color:#BD93F9;--shiki-dark:#BD93F9">...</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">])</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    Path(</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">allowed_tunnels.txt</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">).open(</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">a</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">).write(</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">f</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">"</span><span style="color:#BD93F9;--shiki-dark:#BD93F9">{</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">proc.pid</span><span style="color:#BD93F9;--shiki-dark:#BD93F9">}</span><span style="color:#BD93F9;--shiki-dark:#BD93F9"> {</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">name</span><span style="color:#BD93F9;--shiki-dark:#BD93F9">}</span><span style="color:#BD93F9;--shiki-dark:#BD93F9"> {</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">port</span><span style="color:#BD93F9;--shiki-dark:#BD93F9">}</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">\n</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">"</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">)</span></span>
+<span class="line"><span style="color:#FF79C6;--shiki-dark:#FF79C6">    return</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2"> proc</span></span></code></pre>
+<p><code>security_monitor</code> (memory <code>project_security_monitor</code>) — фоновый PS-монитор в <code>C:\Claude\security_monitor\</code>. Передан в окно MCP-админки; <code>HANDOFF.md</code> — точка входа. Он сверяет реальные процессы с <code>allowed_tunnels.txt</code> и алертит расхождения.</p>
+<h2 id="tg_archive--никаких-cron">tg_archive — никаких cron</h2>
+<p>Из практики (memory <code>feedback_no_tg_archive_cron</code>): <code>tg_archive</code> только ручной запуск. Не регистрировать <code>TgArchiveSync</code>. Не вызывать <code>install_tg_sync_scheduler.ps1</code>.</p>
+<p>Причина: cron + pywinauto регулярно ломали себе состояние (гонки за UI Telegram), терялся контекст, индекс приходил в нерасшифровываемое состояние. Ручной запуск — гарантия, что вы знаете, когда система пишет в архив.</p>
+<h2 id="ip-watermarking-лица">IP, watermarking, лица</h2>
+<p>Генеративный креатив — минное поле IP/лиц. Что обязательно:</p>
+<ol>
+<li><strong>Использование чужих лиц</strong> — нужен договор. Для Soul ID training — explicit consent.</li>
+<li><strong>Watermark на черновиках</strong> — клиент не должен случайно опубликовать «непринятую» версию. Полупрозрачный watermark на превью.</li>
+<li><strong>Лицензия выходных image/video</strong> — у каждого провайдера свои условия. FAL/RunPod — commercial ok, Higgsfield Soul — отдельные tier-условия. Перед coммерч. использованием — проверяем.</li>
+<li><strong>Реалистичные сгенерированные лица</strong> — в РФ + ЕС регулируется (deepfake-законы развиваются). Маркируйте AI-generated content где применимо.</li>
+</ol>
+<h2 id="stack-security-audit">Stack security audit</h2>
+<p>Правило (memory <code>feedback_stack_security_audit</code>): перед выбором стека/новой зависимости проверяем:</p>
+<ul>
+<li><strong>GitHub Advisories</strong> для каждой dependency;</li>
+<li><strong>OSV</strong> — open source vulnerability база;</li>
+<li><strong>Дату последнего релиза</strong> — заброшенные библиотеки = риск;</li>
+<li><strong>archived-статус</strong> — заархивированный репо без maintenance.</li>
+</ul>
+<p>Не «так все делают», а пруфами. Особенно для MCP-серверов (см. A16) и custom nodes ComfyUI (см. <code>feedback_comfyui_node_security</code>).</p>
+<h2 id="security-pre-deploy-чеклист">Security pre-deploy чеклист</h2>
+<p>Правило (memory <code>feedback_security_predeploy</code>): обязательный чеклист перед каждым деплоем стенда:</p>
+<ol>
+<li><code>.env</code> не в commit (<code>.gitignore</code> actual, <code>git status</code> clean от секретов);</li>
+<li>порты — из <code>claude_managed_ports</code>, никаких неожиданных;</li>
+<li>tunnels — только <code>dist/</code>, без корня репо;</li>
+<li>локальные эндпоинты — <code>127.0.0.1</code> only;</li>
+<li>демо-токен в <code>.env</code>, не в коде;</li>
+<li>logs не пишут чувствительные поля;</li>
+<li>supply chain: новые MCP / custom nodes — прошли аудит.</li>
+</ol>
+<p>Без чеклиста любой деплой потенциально неисправен. Раскатываем пункты в make-таргет / CI-шаг, чтобы не зависело от «помню или не помню».</p>
+<h2 id="реальные-кейсы">Реальные кейсы</h2>
+<h3 id="tsoy_booth-security-check-task">tsoy_booth security check task</h3>
+<p><code>TsoyBoothSecurityCheck</code> — Windows-задача раз в 30 минут, через pythonw без окна. Проверяет state стенда (порты, процессы, allowed_tunnels.txt). Работает независимо от стенда. См. <code>project_tsoy_security_task</code>.</p>
+<h3 id="mcp-security_monitor">MCP security_monitor</h3>
+<p>Фоновый PS-монитор сверяет состояние с <code>mcp-admin/mcps.json</code>. Любое расхождение в <code>~/.claude.json</code> алертит. См. <code>project_mcp_setup</code>.</p>
+<h3 id="git-private-by-default">Git private by default</h3>
+<p>Правило (memory <code>feedback_git_private_default</code>): <strong>все</strong> git-репо приватные по умолчанию. <code>gh repo create --private</code> всегда. Public — только вручную пользователем после явного намерения.</p>
+<h2 id="подводные-камни">Подводные камни</h2>
+<ul>
+<li><strong>«Вылью .env в чат, чтобы клод посмотрел»</strong> — никогда. Имена + метаданные, не значения.</li>
+<li><strong><code>0.0.0.0</code> «временно для теста»</strong> — забывается до прода. Никаких <code>0.0.0.0</code>.</li>
+<li><strong>Watermark «потом добавим»</strong> — обычно не добавляют. Watermark по умолчанию на drafts.</li>
+<li><strong><code>gh repo create</code> без <code>--private</code></strong> — иногда public. Привычка ставить <code>--private</code>.</li>
+<li><strong><code>-y</code> при установке skills/nodes</strong> — bypass подтверждения. Не используйте.</li>
+</ul>
+<h2 id="recap">Recap</h2>
+<ul>
+<li>Secrets — никогда в контексте. Имена + метаданные.</li>
+<li>Tunnels — только <code>dist/</code>, никаких dotfiles, проверка перед стартом.</li>
+<li><code>127.0.0.1</code> only, claude_managed_ports, allowed_tunnels.txt + security_monitor.</li>
+<li>IP/лица/watermark — учитываются на стадии планирования, не пост-фактум.</li>
+<li>Stack security audit перед каждой новой dependency.</li>
+<li>Pre-deploy checklist обязателен; git-репо private by default.</li>
+</ul>
+<h2 id="дальше-посмотреть-и-почитать">Дальше: посмотреть и почитать</h2>
+<ul>
+<li><strong>OWASP — Top 10 for LLM Applications</strong> — <a href="https://owasp.org/www-project-top-10-for-large-language-model-applications/">owasp.org/www-project-top-10-for-large-language-model-applications</a>. База угроз для LLM-приложений.</li>
+<li><strong>GitHub Advisory Database</strong> — <a href="https://github.com/advisories">github.com/advisories</a>. Главный источник по dependency vulnerabilities.</li>
+<li><strong>OSV — Open Source Vulnerabilities</strong> — <a href="https://osv.dev/">osv.dev</a>. Вторая база, дополняет GH Advisories.</li>
+<li><strong>EU AI Act — текст и таймлайн</strong> — <a href="https://artificialintelligenceact.eu/">artificialintelligenceact.eu</a>. Регулятор для маркировки AI-content в ЕС.</li>
+</ul> <nav class="chapter-nav"> <a href="/vibesamurai-site/courses/advanced/a18"> <span class="dir">← Назад</span> <span class="title">A18 · Eval для креативного output</span> </a> <a href="/vibesamurai-site/courses/advanced/a20"> <span class="dir">Дальше →</span> <span class="title">A20 · Capstone: запуск студии</span> </a> </nav> </main> </div> <script type="module">
+    import { gatingEnabled } from '../lib/supabase';
+    import { fetchChapter } from '../lib/auth';
+
+    const base = import.meta.env.BASE_URL;
+    let mermaidLib = null;
+
+    function scopeOf(root) {
+      return root === document ? document.querySelector('.reader-main') : root;
+    }
+
+    function addCopyBtns(root) {
+      const scope = scopeOf(root); if (!scope) return;
+      scope.querySelectorAll('pre').forEach((pre) => {
+        if (pre.closest('.code-tabs')) return;
+        if (pre.querySelector('.copy-btn')) return;
+        const btn = document.createElement('button');
+        btn.className = 'copy-btn';
+        btn.textContent = 'copy';
+        btn.addEventListener('click', async () => {
+          const code = pre.querySelector('code')?.textContent ?? pre.textContent ?? '';
+          await navigator.clipboard.writeText(code.trimEnd());
+          btn.textContent = '✓ copied';
+          setTimeout(() => { btn.textContent = 'copy'; }, 1600);
+        });
+        pre.appendChild(btn);
+      });
+    }
+
+    function tightenMermaidSvgs(retries = 6) {
+      let pending = false;
+      document.querySelectorAll('.mermaid svg').forEach((svg) => {
+        if (svg.dataset.tightened === '1') return;
+        try {
+          const bbox = svg.getBBox();
+          if (!bbox || bbox.width === 0) { pending = true; return; }
+          const pad = 6;
+          svg.setAttribute('viewBox',
+            `${bbox.x - pad} ${bbox.y - pad} ${bbox.width + pad * 2} ${bbox.height + pad * 2}`);
+          svg.removeAttribute('height');
+          svg.style.height = 'auto';
+          svg.style.maxWidth = '100%';
+          svg.style.display = 'block';
+          svg.dataset.tightened = '1';
+        } catch (e) { pending = true; }
+      });
+      if (pending && retries > 0) setTimeout(() => tightenMermaidSvgs(retries - 1), 120);
+    }
+
+    async function ensureMermaid() {
+      if (mermaidLib) return mermaidLib;
+      const mod = await import('https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs');
+      mermaidLib = mod.default;
+      mermaidLib.initialize({
+        startOnLoad: false, theme: 'neutral',
+        themeVariables: {
+          fontFamily: 'JetBrains Mono, ui-monospace, monospace',
+          primaryColor: '#f5f5f5', primaryBorderColor: '#222',
+          primaryTextColor: '#111', lineColor: '#444',
+        },
+        flowchart: { curve: 'basis', padding: 12, useMaxWidth: true },
+      });
+      return mermaidLib;
+    }
+
+    async function renderMermaid(root) {
+      const scope = scopeOf(root); if (!scope) return;
+      const matches = scope.querySelectorAll(
+        'pre[data-language="mermaid"], pre.language-mermaid, code.language-mermaid'
+      );
+      if (!matches.length) return;
+      matches.forEach((el) => {
+        const block = el.tagName === 'CODE' ? el.closest('pre') || el : el;
+        const codeEl = block.querySelector('code') || block;
+        const wrap = document.createElement('div');
+        wrap.className = 'mermaid';
+        wrap.textContent = codeEl.textContent;
+        block.replaceWith(wrap);
+      });
+      try {
+        const m = await ensureMermaid();
+        await m.run();
+        tightenMermaidSvgs();
+      } catch (err) {
+        console.warn('mermaid failed', err);
+        document.querySelectorAll('.mermaid:not(:has(svg))').forEach((el) => { el.style.display = 'none'; });
+      }
+    }
+
+    async function enhance(root = document) {
+      addCopyBtns(root);
+      await renderMermaid(root);
+    }
+
+    function paywallHtml(required, needLogin) {
+      const label = { beginner: 'Beginner (300 ₽)', middle: 'Beginner + Middle (500 ₽)', all: 'Весь пакет (700 ₽)' }[required] || '';
+      return `<div class="paywall">
+        <div class="paywall-ic">🔒</div>
+        <h3>Эта глава — в платном доступе</h3>
+        <p>Нужен тариф: <strong>${label}</strong>. Доступ навсегда, без подписки.</p>
+        ${needLogin ? '<p>Войди через Google и оформи доступ — продолжишь с любого устройства.</p>' : ''}
+        <a class="paywall-btn" href="${base}pricing">Открыть доступ →</a>
+        <a class="paywall-link" href="${base}account">Войти / мой аккаунт</a>
+      </div>`;
+    }
+
+    async function gatedFlow(mount) {
+      const slug = mount.dataset.slug;
+      const required = mount.dataset.required || 'beginner';
+      mount.innerHTML = '<p class="gate-msg">Проверяем доступ…</p>';
+      const res = await fetchChapter(slug);
+      if (res.ok) {
+        mount.innerHTML = res.html;
+        await enhance(mount);
+      } else if (res.status === 401) {
+        mount.innerHTML = paywallHtml(required, true);
+      } else if (res.status === 402) {
+        mount.innerHTML = paywallHtml(res.requiredTier || required, false);
+      } else {
+        mount.innerHTML = '<p class="gate-msg">Не удалось загрузить главу. Обнови страницу.</p>';
+      }
+    }
+
+    const mount = document.getElementById('gated-mount');
+    if (mount && gatingEnabled) gatedFlow(mount);
+    else enhance(document);
+  </script> </body> </html>

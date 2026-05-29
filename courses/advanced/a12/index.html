@@ -1,0 +1,243 @@
+<!DOCTYPE html><html lang="en"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Telemetry → control loop — Vibesamurai</title><meta name="description" content="Замкнутая петля сенсор → событие → LLM → команда визуалу. WS-протокол, идемпотентность событий, backpressure. Диагностика TD main-thread hang."><meta property="og:title" content="Telemetry → control loop"><meta property="og:type" content="article"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Inter:wght@300..800&family=JetBrains+Mono:wght@400..600&display=swap" rel="stylesheet"><link rel="stylesheet" href="/vibesamurai-site/_astro/_slug_.Cs4TX1wt.css">
+<style>.account-btn{display:inline-flex;align-items:center;gap:var(--space-2);font-family:var(--font-mono);font-size:var(--size-2);text-transform:uppercase;letter-spacing:.06em;padding:5px 10px;border:1px solid var(--rule);border-radius:999px;color:var(--text-soft);background:var(--surface);transition:border-color var(--d-fast),color var(--d-fast)}.account-btn:hover{border-color:var(--accent);color:var(--text)}.account-ic{width:18px;height:18px;display:grid;place-items:center;border-radius:50%;background:var(--accent);color:var(--accent-ink);font-weight:700;font-size:10px;line-height:1}.reader-rail .account-btn{padding:0;border:none;background:transparent}.reader-rail .account-label{display:none}.reader-rail .account-ic{width:32px;height:32px;font-size:13px}.rail-toggle{width:36px;height:36px;display:grid;place-items:center;background:var(--accent);border:1px solid var(--accent);border-radius:4px;cursor:pointer;transition:filter var(--d-fast),transform var(--d-fast);padding:0}.rail-toggle:hover{filter:brightness(1.08);transform:translateY(-1px)}.rail-toggle:active{transform:translateY(0)}.rail-toggle-icon{width:14px;height:12px;border-left:2px solid var(--accent-ink);border-right:2px solid var(--accent-ink);transition:transform var(--d-normal) var(--ease-standard)}.reader-app.sidebar-open .rail-toggle-icon{transform:rotate(0)}.reader-app:not(.sidebar-open) .rail-toggle-icon{transform:scaleX(.5)}.sidebar-backdrop{display:none;position:fixed;inset:0;background:#0000008c;z-index:140;border:0;padding:0;cursor:pointer}@media(max-width:900px){.reader-app.sidebar-open~.sidebar-backdrop{display:block}}.rail-spacer[data-astro-cid-ofsbkzh7]{flex:1}.reader-sidebar[data-astro-cid-khgtvzrl] .soon[data-astro-cid-khgtvzrl]{display:block;color:var(--text-mute);font-size:var(--size-2);padding:var(--space-1) 0}.reader-sidebar[data-astro-cid-khgtvzrl] .soon[data-astro-cid-khgtvzrl] em[data-astro-cid-khgtvzrl]{font-style:normal;font-family:var(--font-mono);font-size:.85em;color:var(--accent);margin-left:4px;text-transform:uppercase;letter-spacing:.1em}.code-tabs[data-astro-cid-hg66rjob]{margin:var(--space-5) 0}.code-tabs-nav[data-astro-cid-hg66rjob]{display:flex;gap:2px;margin-bottom:-1px;position:relative;z-index:1}.ctab[data-astro-cid-hg66rjob]{font-family:var(--font-mono);font-size:11px;text-transform:uppercase;letter-spacing:.07em;padding:5px 14px;border:1px solid #21222c;border-bottom:none;background:#1a1b23;color:#6272a4;cursor:pointer;border-radius:4px 4px 0 0;transition:color .12s,background .12s}.ctab[data-astro-cid-hg66rjob].is-active{background:#282a36;color:#f8f8f2;border-color:#21222c}.ctab[data-astro-cid-hg66rjob]:hover:not(.is-active){color:#cdd6f4}.ctab-panel[data-astro-cid-hg66rjob]{display:none}.ctab-panel[data-astro-cid-hg66rjob].is-active{display:block}.ctab-panel[data-astro-cid-hg66rjob] pre{margin-top:0!important;border-radius:0 6px 6px!important}
+</style></head> <body> <div class="reader-app"> <aside class="reader-rail" data-astro-cid-ofsbkzh7> <a href="/vibesamurai-site/" class="logo" aria-label="Vibesamurai home" data-astro-cid-ofsbkzh7>V</a> <button type="button" class="rail-toggle" id="sidebar-toggle" aria-label="Свернуть/развернуть оглавление" title="Свернуть/развернуть оглавление" data-astro-cid-ofsbkzh7> <span class="rail-toggle-icon" aria-hidden="true" data-astro-cid-ofsbkzh7></span> </button> <div class="rail-spacer" data-astro-cid-ofsbkzh7></div> <a href="/vibesamurai-site/account" class="account-btn" id="account-btn" aria-label="Аккаунт"> <span class="account-ic" id="account-ic">⌂</span> <span class="account-label" id="account-label">Войти</span> </a>  <script type="module" src="/vibesamurai-site/_astro/AccountButton.astro_astro_type_script_index_0_lang.CmD2sdn9.js"></script> </aside>  <button type="button" class="sidebar-backdrop" id="sidebar-backdrop" aria-label="Закрыть оглавление" tabindex="-1" data-astro-cid-ofsbkzh7></button>  <script type="module">const d="vs-sidebar-open",a="(max-width: 900px)";function t(e){const n=document.querySelector(".reader-app");n&&n.classList.toggle("sidebar-open",e)}function r(){return!window.matchMedia(a).matches}function s(){const e=localStorage.getItem(d),i=window.matchMedia(a).matches?!1:e!==null?e==="1":r();t(i),document.getElementById("sidebar-toggle")?.addEventListener("click",()=>{const c=!document.querySelector(".reader-app")?.classList.contains("sidebar-open");window.matchMedia(a).matches||localStorage.setItem(d,c?"1":"0"),t(c)}),document.getElementById("sidebar-backdrop")?.addEventListener("click",()=>t(!1)),document.querySelectorAll(".reader-sidebar a").forEach(o=>{o.addEventListener("click",()=>{window.matchMedia(a).matches&&t(!1)})})}document.readyState==="loading"?document.addEventListener("DOMContentLoaded",s):s();</script> <aside class="reader-sidebar" data-astro-cid-khgtvzrl> <div class="breadcrumb" data-astro-cid-khgtvzrl>Vibesamurai · Advanced Path · a12</div> <h4 data-astro-cid-khgtvzrl>В этом курсе</h4> <ul data-astro-cid-khgtvzrl> <li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a1" class data-astro-cid-khgtvzrl>A1 · Стек AI-студии 2026</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a2" class data-astro-cid-khgtvzrl>A2 · Multi-modal контракт</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a3" class data-astro-cid-khgtvzrl>A3 · Local vs Cloud матрица</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a4" class data-astro-cid-khgtvzrl>A4 · Design system как контракт</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a5" class data-astro-cid-khgtvzrl>A5 · Image generation для бренда</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a6" class data-astro-cid-khgtvzrl>A6 · Marketplace + product photoshoot</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a7" class data-astro-cid-khgtvzrl>A7 · Video generation pipelines</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a8" class data-astro-cid-khgtvzrl>A8 · Identity-preserving generation</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a9" class data-astro-cid-khgtvzrl>A9 · TouchDesigner + StreamDiffusion</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a10" class data-astro-cid-khgtvzrl>A10 · Audio-reactive AV-инсталляции</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a11" class data-astro-cid-khgtvzrl>A11 · Interactive booths: STT+LLM+TTS+CV</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a12" class="current" data-astro-cid-khgtvzrl>A12 · Telemetry → control loop</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a13" class data-astro-cid-khgtvzrl>A13 · Private RAG для архива</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a14" class data-astro-cid-khgtvzrl>A14 · Локальные LLM на 8GB VRAM</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a15" class data-astro-cid-khgtvzrl>A15 · RunPod Flash + vLLM</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a16" class data-astro-cid-khgtvzrl>A16 · Кастомные MCP-серверы</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a17" class data-astro-cid-khgtvzrl>A17 · Token economics через модальности</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a18" class data-astro-cid-khgtvzrl>A18 · Eval для креативного output</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a19" class data-astro-cid-khgtvzrl>A19 · Security в творческой студии</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a20" class data-astro-cid-khgtvzrl>A20 · Capstone: запуск студии</a> </li> </ul>  </aside> <main class="reader-main"> <div class="chapter-eyebrow">Advanced Path · a12</div> <h1 class="chapter-title">A12 · Telemetry → control loop</h1> <p class="chapter-subtitle">Замкнутая петля сенсор → событие → LLM → команда визуалу. WS-протокол, идемпотентность событий, backpressure. Диагностика TD main-thread hang.</p> <h2 id="что-строим">Что строим</h2>
+<p>Управляющую петлю инсталляции: CV/sensor — событие — LLM-логика — команда визуалу. Это шаг вперёд от A11: там стенд реагировал на голос, здесь — на состояние пространства (число людей, позы, активность, MIDI/OSC). Latency event→команда ≤ 200 ms.</p>
+<h2 id="архитектура-петли">Архитектура петли</h2>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>SENSOR (CV/IMU/MIDI/OSC) ─► event_bus ─► dispatcher ─► LLM (опционально) ─► action ─► visual</span></span>
+<span class="line"><span>                                            │                                 │</span></span>
+<span class="line"><span>                                            └──────► state store ◄────────────┘</span></span></code></pre>
+<p>Не каждый сенсорный сэмпл идёт в LLM. Большинство событий — простые (новое лицо вошло, кто-то поднял руку) и обрабатываются без LLM по правилам. LLM включается, когда нужен «контекстный» ответ.</p>
+<h2 id="ws-протокол-событий">WS-протокол событий</h2>
+<p>Базовый формат события — компактный JSON с идемпотентным id:</p>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="json"><code><span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">{</span></span>
+<span class="line"><span style="color:#8BE9FE;--shiki-dark:#8BE9FE">  "</span><span style="color:#8BE9FD;--shiki-dark:#8BE9FD">id</span><span style="color:#8BE9FE;--shiki-dark:#8BE9FE">"</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">:</span><span style="color:#E9F284;--shiki-dark:#E9F284"> "</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">evt_2026-05-29T14:22:11_a83f</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">,</span></span>
+<span class="line"><span style="color:#8BE9FE;--shiki-dark:#8BE9FE">  "</span><span style="color:#8BE9FD;--shiki-dark:#8BE9FD">ts</span><span style="color:#8BE9FE;--shiki-dark:#8BE9FE">"</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">:</span><span style="color:#BD93F9;--shiki-dark:#BD93F9"> 1748525531.221</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">,</span></span>
+<span class="line"><span style="color:#8BE9FE;--shiki-dark:#8BE9FE">  "</span><span style="color:#8BE9FD;--shiki-dark:#8BE9FD">source</span><span style="color:#8BE9FE;--shiki-dark:#8BE9FE">"</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">:</span><span style="color:#E9F284;--shiki-dark:#E9F284"> "</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">cv:camera_main</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">,</span></span>
+<span class="line"><span style="color:#8BE9FE;--shiki-dark:#8BE9FE">  "</span><span style="color:#8BE9FD;--shiki-dark:#8BE9FD">kind</span><span style="color:#8BE9FE;--shiki-dark:#8BE9FE">"</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">:</span><span style="color:#E9F284;--shiki-dark:#E9F284"> "</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">person.detected</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">,</span></span>
+<span class="line"><span style="color:#8BE9FE;--shiki-dark:#8BE9FE">  "</span><span style="color:#8BE9FD;--shiki-dark:#8BE9FD">payload</span><span style="color:#8BE9FE;--shiki-dark:#8BE9FE">"</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">:</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2"> { </span><span style="color:#8BE9FE;--shiki-dark:#8BE9FE">"</span><span style="color:#8BE9FD;--shiki-dark:#8BE9FD">track_id</span><span style="color:#8BE9FE;--shiki-dark:#8BE9FE">"</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">:</span><span style="color:#BD93F9;--shiki-dark:#BD93F9"> 7</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">, </span><span style="color:#8BE9FE;--shiki-dark:#8BE9FE">"</span><span style="color:#8BE9FD;--shiki-dark:#8BE9FD">pose</span><span style="color:#8BE9FE;--shiki-dark:#8BE9FE">"</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">:</span><span style="color:#E9F284;--shiki-dark:#E9F284"> "</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">standing</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">, </span><span style="color:#8BE9FE;--shiki-dark:#8BE9FE">"</span><span style="color:#8BE9FD;--shiki-dark:#8BE9FD">confidence</span><span style="color:#8BE9FE;--shiki-dark:#8BE9FE">"</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">:</span><span style="color:#BD93F9;--shiki-dark:#BD93F9"> 0.91</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2"> },</span></span>
+<span class="line"><span style="color:#8BE9FE;--shiki-dark:#8BE9FE">  "</span><span style="color:#8BE9FD;--shiki-dark:#8BE9FD">ttl_ms</span><span style="color:#8BE9FE;--shiki-dark:#8BE9FE">"</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">:</span><span style="color:#BD93F9;--shiki-dark:#BD93F9"> 1500</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">}</span></span></code></pre>
+<p>Поля:</p>
+<ul>
+<li><code>id</code> — уникален, дедупликация на стороне dispatcher;</li>
+<li><code>ts</code> — клиентское время, для упорядочивания;</li>
+<li><code>source</code> — кто прислал, для маршрутизации;</li>
+<li><code>kind</code> — тип события, по нему dispatcher выбирает rule/handler;</li>
+<li><code>payload</code> — данные события;</li>
+<li><code>ttl_ms</code> — если событие не обработано в окне, оно невалидно (актуально для visual-команд).</li>
+</ul>
+<h2 id="идемпотентность">Идемпотентность</h2>
+<p>Сенсор может прислать одно и то же событие дважды (retry, дублированный поток). Без идемпотентности визуал выдаст «двойной триггер».</p>
+<p>Простой дедуп — TTL-кэш на <code>id</code>:</p>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="python"><code><span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">recent_ids </span><span style="color:#FF79C6;--shiki-dark:#FF79C6">=</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2"> TTLCache(</span><span style="color:#FFB86C;--shiki-light-font-style:italic;--shiki-dark:#FFB86C;--shiki-dark-font-style:italic">maxsize</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">=</span><span style="color:#BD93F9;--shiki-dark:#BD93F9">10000</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">, </span><span style="color:#FFB86C;--shiki-light-font-style:italic;--shiki-dark:#FFB86C;--shiki-dark-font-style:italic">ttl</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">=</span><span style="color:#BD93F9;--shiki-dark:#BD93F9">10</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#FF79C6;--shiki-dark:#FF79C6">def</span><span style="color:#50FA7B;--shiki-dark:#50FA7B"> handle</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">(</span><span style="color:#FFB86C;--shiki-light-font-style:italic;--shiki-dark:#FFB86C;--shiki-dark-font-style:italic">event</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">:</span><span style="color:#8BE9FD;--shiki-light-font-style:italic;--shiki-dark:#8BE9FD;--shiki-dark-font-style:italic"> dict</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">):</span></span>
+<span class="line"><span style="color:#FF79C6;--shiki-dark:#FF79C6">    if</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2"> event[</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">id</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">] </span><span style="color:#FF79C6;--shiki-dark:#FF79C6">in</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2"> recent_ids:</span></span>
+<span class="line"><span style="color:#FF79C6;--shiki-dark:#FF79C6">        return</span><span style="color:#6272A4;--shiki-dark:#6272A4">  # дубль</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    recent_ids[event[</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">id</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">]] </span><span style="color:#FF79C6;--shiki-dark:#FF79C6">=</span><span style="color:#BD93F9;--shiki-dark:#BD93F9"> True</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    route(event)</span></span></code></pre>
+<p>Для команд визуалу — <code>command_id</code> тоже идемпотентен. Если визуал уже выполнил команду — повтор игнорируется.</p>
+<h2 id="backpressure">Backpressure</h2>
+<p>Сенсорный поток может быть 30–60 событий/с. Visual handler — медленнее (особенно если каждое событие просит StreamDiffusion перерендер). Без backpressure очередь распухает, latency растёт, в худшем случае процесс OOM-падает.</p>
+<p>Стратегии:</p>
+<ol>
+<li><strong>Drop policy</strong> — за окном N мс берём только последнее событие данного kind (актуально для непрерывных потоков: позиция, громкость).</li>
+<li><strong>Sample</strong> — берём каждый K-й сэмпл.</li>
+<li><strong>Aggregate</strong> — внутри окна агрегируем (mean / max / count) и шлём одну сводную команду.</li>
+</ol>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="python"><code><span class="line"><span style="color:#FF79C6;--shiki-dark:#FF79C6">from</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2"> collections </span><span style="color:#FF79C6;--shiki-dark:#FF79C6">import</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2"> deque</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#FF79C6;--shiki-dark:#FF79C6">class</span><span style="color:#8BE9FD;--shiki-dark:#8BE9FD"> WindowAggregator</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">:</span></span>
+<span class="line"><span style="color:#FF79C6;--shiki-dark:#FF79C6">    def</span><span style="color:#BD93F9;--shiki-dark:#BD93F9"> __init__</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">(</span><span style="color:#BD93F9;--shiki-light-font-style:italic;--shiki-dark:#BD93F9;--shiki-dark-font-style:italic">self</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">, </span><span style="color:#FFB86C;--shiki-light-font-style:italic;--shiki-dark:#FFB86C;--shiki-dark-font-style:italic">window_ms</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">=</span><span style="color:#BD93F9;--shiki-dark:#BD93F9">100</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">):</span></span>
+<span class="line"><span style="color:#BD93F9;--shiki-light-font-style:italic;--shiki-dark:#BD93F9;--shiki-dark-font-style:italic">        self</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">.window_ms </span><span style="color:#FF79C6;--shiki-dark:#FF79C6">=</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2"> window_ms</span></span>
+<span class="line"><span style="color:#BD93F9;--shiki-light-font-style:italic;--shiki-dark:#BD93F9;--shiki-dark-font-style:italic">        self</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">.buffer </span><span style="color:#FF79C6;--shiki-dark:#FF79C6">=</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2"> deque()</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#FF79C6;--shiki-dark:#FF79C6">    def</span><span style="color:#50FA7B;--shiki-dark:#50FA7B"> push</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">(</span><span style="color:#BD93F9;--shiki-light-font-style:italic;--shiki-dark:#BD93F9;--shiki-dark-font-style:italic">self</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">, </span><span style="color:#FFB86C;--shiki-light-font-style:italic;--shiki-dark:#FFB86C;--shiki-dark-font-style:italic">event</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">):</span></span>
+<span class="line"><span style="color:#BD93F9;--shiki-light-font-style:italic;--shiki-dark:#BD93F9;--shiki-dark-font-style:italic">        self</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">.buffer.append(event)</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">        cutoff </span><span style="color:#FF79C6;--shiki-dark:#FF79C6">=</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2"> time.monotonic() </span><span style="color:#FF79C6;--shiki-dark:#FF79C6">*</span><span style="color:#BD93F9;--shiki-dark:#BD93F9"> 1000</span><span style="color:#FF79C6;--shiki-dark:#FF79C6"> -</span><span style="color:#BD93F9;--shiki-light-font-style:italic;--shiki-dark:#BD93F9;--shiki-dark-font-style:italic"> self</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">.window_ms</span></span>
+<span class="line"><span style="color:#FF79C6;--shiki-dark:#FF79C6">        while</span><span style="color:#BD93F9;--shiki-light-font-style:italic;--shiki-dark:#BD93F9;--shiki-dark-font-style:italic"> self</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">.buffer </span><span style="color:#FF79C6;--shiki-dark:#FF79C6">and</span><span style="color:#BD93F9;--shiki-light-font-style:italic;--shiki-dark:#BD93F9;--shiki-dark-font-style:italic"> self</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">.buffer[</span><span style="color:#BD93F9;--shiki-dark:#BD93F9">0</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">][</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">ts</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">] </span><span style="color:#FF79C6;--shiki-dark:#FF79C6">*</span><span style="color:#BD93F9;--shiki-dark:#BD93F9"> 1000</span><span style="color:#FF79C6;--shiki-dark:#FF79C6"> &#x3C;</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2"> cutoff:</span></span>
+<span class="line"><span style="color:#BD93F9;--shiki-light-font-style:italic;--shiki-dark:#BD93F9;--shiki-dark-font-style:italic">            self</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">.buffer.popleft()</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#FF79C6;--shiki-dark:#FF79C6">    def</span><span style="color:#50FA7B;--shiki-dark:#50FA7B"> aggregate</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">(</span><span style="color:#BD93F9;--shiki-light-font-style:italic;--shiki-dark:#BD93F9;--shiki-dark-font-style:italic">self</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">):</span></span>
+<span class="line"><span style="color:#FF79C6;--shiki-dark:#FF79C6">        if</span><span style="color:#FF79C6;--shiki-dark:#FF79C6"> not</span><span style="color:#BD93F9;--shiki-light-font-style:italic;--shiki-dark:#BD93F9;--shiki-dark-font-style:italic"> self</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">.buffer:</span></span>
+<span class="line"><span style="color:#FF79C6;--shiki-dark:#FF79C6">            return</span><span style="color:#BD93F9;--shiki-dark:#BD93F9"> None</span></span>
+<span class="line"><span style="color:#FF79C6;--shiki-dark:#FF79C6">        return</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2"> {</span></span>
+<span class="line"><span style="color:#E9F284;--shiki-dark:#E9F284">            "</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">count</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">: </span><span style="color:#8BE9FD;--shiki-dark:#8BE9FD">len</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">(</span><span style="color:#BD93F9;--shiki-light-font-style:italic;--shiki-dark:#BD93F9;--shiki-dark-font-style:italic">self</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">.buffer),</span></span>
+<span class="line"><span style="color:#E9F284;--shiki-dark:#E9F284">            "</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">latest</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">: </span><span style="color:#BD93F9;--shiki-light-font-style:italic;--shiki-dark:#BD93F9;--shiki-dark-font-style:italic">self</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">.buffer[</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">-</span><span style="color:#BD93F9;--shiki-dark:#BD93F9">1</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">],</span></span>
+<span class="line"><span style="color:#E9F284;--shiki-dark:#E9F284">            "</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">mean_confidence</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">: mean(e[</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">payload</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">][</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">confidence</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">] </span><span style="color:#FF79C6;--shiki-dark:#FF79C6">for</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2"> e </span><span style="color:#FF79C6;--shiki-dark:#FF79C6">in</span><span style="color:#BD93F9;--shiki-light-font-style:italic;--shiki-dark:#BD93F9;--shiki-dark-font-style:italic"> self</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">.buffer),</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">        }</span></span></code></pre>
+<h2 id="когда-подключать-llm">Когда подключать LLM</h2>
+<p>LLM в петле — это +200–800 ms на запрос. Подключаем только когда правила недостаточно:</p>
+<ul>
+<li><strong>Не нужен LLM</strong>: «человек вошёл — fade-in», «громкость >0.7 — pulse», «MIDI note 60 — scene 3».</li>
+<li><strong>Нужен LLM</strong>: «несколько людей разной возрастной группы — какой message показать», «активность сцены изменилась — переписать subtitle для текущего видео».</li>
+</ul>
+<p>Кэш ответов LLM на event-key обязателен — иначе платите за повторяющиеся ситуации.</p>
+<h2 id="реальный-кейс-pmef-neuromirror">Реальный кейс: PMEF neuromirror</h2>
+<p>Из memory <code>project_pmef_neuromirror</code>: ИИ-зеркало для ПМЭФ. Галерея <code>https://neuromirror-mockups.pages.dev</code>, backend <code>C:\Rendered\AK\ayna\ayna</code>.</p>
+<p>Петля:</p>
+<ul>
+<li><strong>Sensor</strong> — камера + CV (6 архетипов из <code>content/archetypes.json</code>).</li>
+<li><strong>Event</strong> — <code>person.archetype_matched</code> с <code>archetype_id</code>.</li>
+<li><strong>Rule</strong> — каждому архетипу соответствует подобранный текст и визуал; LLM подключается только для генерации «персонализированной» части реплики.</li>
+<li><strong>Action</strong> — визуал зеркала меняется (фон, типографика, motion).</li>
+</ul>
+<p>Spec для CV-подрядчика: <code>spec/{API,METRICS,WS_PROTOCOL}.md</code> — собственный контракт WS-протокола, чтобы CV-команда работала независимо.</p>
+<h2 id="td-main-thread-hang-диагностика">TD main-thread hang: диагностика</h2>
+<p>Из практики (memory <code>project_td_audioreact_hang</code>): Clode_React.toe залипает на <code>:44444</code>/<code>:7878</code> даже <strong>без</strong> WS-клиента.</p>
+<p>Чек-лист (повторяет диагностику из memory):</p>
+<ol>
+<li><strong>par_bindings</strong> — все ли параметры разрешены? Висящий bind на отсутствующий operator валит main thread.</li>
+<li><strong>pack_json</strong> — не парсится ли невалидный JSON синхронно? Перенесите в <code>td.run('...', delayFrames=1)</code>.</li>
+<li><strong>frame_exec</strong> — нет ли тяжёлой работы в frame_exec? Каждый frame_exec выполняется на main thread.</li>
+</ol>
+<p>Простое правило: WS-сервер и frame_exec в TD должны быть в <strong>разных</strong> потоках. Иначе хэндлер блокирует кадр, кадр блокирует хэндлер — взаимная блокировка.</p>
+<h2 id="подводные-камни">Подводные камни</h2>
+<ul>
+<li><strong>«Каждый сэмпл — событие»</strong> — нет. Сенсорные потоки агрегируются. 30 fps × 60 c = 1800 событий/мин — это не «событие», это телеметрия.</li>
+<li><strong>Без TTL-кэша id</strong> — два сенсора шлют одно событие, визуал реагирует дважды. Дедуп обязателен.</li>
+<li><strong>LLM в каждой петле</strong> — деньги и latency. Только когда правила недостаточно.</li>
+<li><strong>OOM при росте очереди</strong> — мониторьте размер queue, при превышении — drop старых событий, не накапливайте.</li>
+<li><strong>Логирование на main thread</strong> — медленные writes блокируют петлю. Логи в отдельный поток + async sink.</li>
+</ul>
+<h2 id="recap">Recap</h2>
+<ul>
+<li>Петля = SENSOR → event_bus → dispatcher → (rule or LLM) → action → visual.</li>
+<li>WS-события: id (идемпотентность), ts, source, kind, payload, ttl_ms.</li>
+<li>Backpressure: drop / sample / aggregate. Без неё petля разваливается.</li>
+<li>LLM подключаем только когда правил недостаточно; кэш ответов обязателен.</li>
+<li>TD main-thread hang — известная боль. WS-сервер и frame_exec — в разных потоках.</li>
+</ul>
+<h2 id="дальше-посмотреть-и-почитать">Дальше: посмотреть и почитать</h2>
+<ul>
+<li><strong>OSC (Open Sound Control) spec</strong> — <a href="https://opensoundcontrol.org/spec-1_0.html">opensoundcontrol.org/spec-1_0</a>. Стандартный протокол для AV-event-обмена.</li>
+<li><strong>NATS / Redis Streams</strong> — <a href="https://nats.io/">nats.io</a>, <a href="https://redis.io/docs/data-types/streams/">redis.io/docs/data-types/streams</a>. Готовые event-bus, если в проекте больше двух сенсоров.</li>
+<li><strong>MediaPipe Tasks API</strong> — <a href="https://developers.google.com/mediapipe/solutions/tasks">developers.google.com/mediapipe/solutions/tasks</a>. Готовые CV-таски с event-style callback.</li>
+<li><strong>Twelve-Factor App § XII — Concurrency</strong> — <a href="https://12factor.net/concurrency">12factor.net/concurrency</a>. Базовая модель worker/process для петель.</li>
+</ul> <nav class="chapter-nav"> <a href="/vibesamurai-site/courses/advanced/a11"> <span class="dir">← Назад</span> <span class="title">A11 · Interactive booths: STT+LLM+TTS+CV</span> </a> <a href="/vibesamurai-site/courses/advanced/a13"> <span class="dir">Дальше →</span> <span class="title">A13 · Private RAG для архива</span> </a> </nav> </main> </div> <script type="module">
+    import { gatingEnabled } from '../lib/supabase';
+    import { fetchChapter } from '../lib/auth';
+
+    const base = import.meta.env.BASE_URL;
+    let mermaidLib = null;
+
+    function scopeOf(root) {
+      return root === document ? document.querySelector('.reader-main') : root;
+    }
+
+    function addCopyBtns(root) {
+      const scope = scopeOf(root); if (!scope) return;
+      scope.querySelectorAll('pre').forEach((pre) => {
+        if (pre.closest('.code-tabs')) return;
+        if (pre.querySelector('.copy-btn')) return;
+        const btn = document.createElement('button');
+        btn.className = 'copy-btn';
+        btn.textContent = 'copy';
+        btn.addEventListener('click', async () => {
+          const code = pre.querySelector('code')?.textContent ?? pre.textContent ?? '';
+          await navigator.clipboard.writeText(code.trimEnd());
+          btn.textContent = '✓ copied';
+          setTimeout(() => { btn.textContent = 'copy'; }, 1600);
+        });
+        pre.appendChild(btn);
+      });
+    }
+
+    function tightenMermaidSvgs(retries = 6) {
+      let pending = false;
+      document.querySelectorAll('.mermaid svg').forEach((svg) => {
+        if (svg.dataset.tightened === '1') return;
+        try {
+          const bbox = svg.getBBox();
+          if (!bbox || bbox.width === 0) { pending = true; return; }
+          const pad = 6;
+          svg.setAttribute('viewBox',
+            `${bbox.x - pad} ${bbox.y - pad} ${bbox.width + pad * 2} ${bbox.height + pad * 2}`);
+          svg.removeAttribute('height');
+          svg.style.height = 'auto';
+          svg.style.maxWidth = '100%';
+          svg.style.display = 'block';
+          svg.dataset.tightened = '1';
+        } catch (e) { pending = true; }
+      });
+      if (pending && retries > 0) setTimeout(() => tightenMermaidSvgs(retries - 1), 120);
+    }
+
+    async function ensureMermaid() {
+      if (mermaidLib) return mermaidLib;
+      const mod = await import('https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs');
+      mermaidLib = mod.default;
+      mermaidLib.initialize({
+        startOnLoad: false, theme: 'neutral',
+        themeVariables: {
+          fontFamily: 'JetBrains Mono, ui-monospace, monospace',
+          primaryColor: '#f5f5f5', primaryBorderColor: '#222',
+          primaryTextColor: '#111', lineColor: '#444',
+        },
+        flowchart: { curve: 'basis', padding: 12, useMaxWidth: true },
+      });
+      return mermaidLib;
+    }
+
+    async function renderMermaid(root) {
+      const scope = scopeOf(root); if (!scope) return;
+      const matches = scope.querySelectorAll(
+        'pre[data-language="mermaid"], pre.language-mermaid, code.language-mermaid'
+      );
+      if (!matches.length) return;
+      matches.forEach((el) => {
+        const block = el.tagName === 'CODE' ? el.closest('pre') || el : el;
+        const codeEl = block.querySelector('code') || block;
+        const wrap = document.createElement('div');
+        wrap.className = 'mermaid';
+        wrap.textContent = codeEl.textContent;
+        block.replaceWith(wrap);
+      });
+      try {
+        const m = await ensureMermaid();
+        await m.run();
+        tightenMermaidSvgs();
+      } catch (err) {
+        console.warn('mermaid failed', err);
+        document.querySelectorAll('.mermaid:not(:has(svg))').forEach((el) => { el.style.display = 'none'; });
+      }
+    }
+
+    async function enhance(root = document) {
+      addCopyBtns(root);
+      await renderMermaid(root);
+    }
+
+    function paywallHtml(required, needLogin) {
+      const label = { beginner: 'Beginner (300 ₽)', middle: 'Beginner + Middle (500 ₽)', all: 'Весь пакет (700 ₽)' }[required] || '';
+      return `<div class="paywall">
+        <div class="paywall-ic">🔒</div>
+        <h3>Эта глава — в платном доступе</h3>
+        <p>Нужен тариф: <strong>${label}</strong>. Доступ навсегда, без подписки.</p>
+        ${needLogin ? '<p>Войди через Google и оформи доступ — продолжишь с любого устройства.</p>' : ''}
+        <a class="paywall-btn" href="${base}pricing">Открыть доступ →</a>
+        <a class="paywall-link" href="${base}account">Войти / мой аккаунт</a>
+      </div>`;
+    }
+
+    async function gatedFlow(mount) {
+      const slug = mount.dataset.slug;
+      const required = mount.dataset.required || 'beginner';
+      mount.innerHTML = '<p class="gate-msg">Проверяем доступ…</p>';
+      const res = await fetchChapter(slug);
+      if (res.ok) {
+        mount.innerHTML = res.html;
+        await enhance(mount);
+      } else if (res.status === 401) {
+        mount.innerHTML = paywallHtml(required, true);
+      } else if (res.status === 402) {
+        mount.innerHTML = paywallHtml(res.requiredTier || required, false);
+      } else {
+        mount.innerHTML = '<p class="gate-msg">Не удалось загрузить главу. Обнови страницу.</p>';
+      }
+    }
+
+    const mount = document.getElementById('gated-mount');
+    if (mount && gatingEnabled) gatedFlow(mount);
+    else enhance(document);
+  </script> </body> </html>

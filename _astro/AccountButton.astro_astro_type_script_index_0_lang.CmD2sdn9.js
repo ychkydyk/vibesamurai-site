@@ -1,0 +1,1 @@
+import{i,g as s}from"./supabase.DFO7Wus_.js";async function u(){if(!i)return;const e=s();if(!e)return;const{data:o}=await e.auth.getUser(),t=o.user,n=document.getElementById("account-ic"),a=document.getElementById("account-label");if(t&&n&&a){const c=(t.email?.[0]||t.user_metadata?.name?.[0]||"•").toUpperCase();n.textContent=c,a.textContent="Аккаунт"}}u();

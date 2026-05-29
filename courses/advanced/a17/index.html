@@ -1,0 +1,318 @@
+<!DOCTYPE html><html lang="en"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Token economics через модальности — Vibesamurai</title><meta name="description" content="Стоимость кадра, секунды видео, 1k токенов. Каскад Haiku→Sonnet→Opus + prompt caching + Batch API. Обязательный gate перед платной генерацией."><meta property="og:title" content="Token economics через модальности"><meta property="og:type" content="article"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Inter:wght@300..800&family=JetBrains+Mono:wght@400..600&display=swap" rel="stylesheet"><link rel="stylesheet" href="/vibesamurai-site/_astro/_slug_.Cs4TX1wt.css">
+<style>.account-btn{display:inline-flex;align-items:center;gap:var(--space-2);font-family:var(--font-mono);font-size:var(--size-2);text-transform:uppercase;letter-spacing:.06em;padding:5px 10px;border:1px solid var(--rule);border-radius:999px;color:var(--text-soft);background:var(--surface);transition:border-color var(--d-fast),color var(--d-fast)}.account-btn:hover{border-color:var(--accent);color:var(--text)}.account-ic{width:18px;height:18px;display:grid;place-items:center;border-radius:50%;background:var(--accent);color:var(--accent-ink);font-weight:700;font-size:10px;line-height:1}.reader-rail .account-btn{padding:0;border:none;background:transparent}.reader-rail .account-label{display:none}.reader-rail .account-ic{width:32px;height:32px;font-size:13px}.rail-toggle{width:36px;height:36px;display:grid;place-items:center;background:var(--accent);border:1px solid var(--accent);border-radius:4px;cursor:pointer;transition:filter var(--d-fast),transform var(--d-fast);padding:0}.rail-toggle:hover{filter:brightness(1.08);transform:translateY(-1px)}.rail-toggle:active{transform:translateY(0)}.rail-toggle-icon{width:14px;height:12px;border-left:2px solid var(--accent-ink);border-right:2px solid var(--accent-ink);transition:transform var(--d-normal) var(--ease-standard)}.reader-app.sidebar-open .rail-toggle-icon{transform:rotate(0)}.reader-app:not(.sidebar-open) .rail-toggle-icon{transform:scaleX(.5)}.sidebar-backdrop{display:none;position:fixed;inset:0;background:#0000008c;z-index:140;border:0;padding:0;cursor:pointer}@media(max-width:900px){.reader-app.sidebar-open~.sidebar-backdrop{display:block}}.rail-spacer[data-astro-cid-ofsbkzh7]{flex:1}.reader-sidebar[data-astro-cid-khgtvzrl] .soon[data-astro-cid-khgtvzrl]{display:block;color:var(--text-mute);font-size:var(--size-2);padding:var(--space-1) 0}.reader-sidebar[data-astro-cid-khgtvzrl] .soon[data-astro-cid-khgtvzrl] em[data-astro-cid-khgtvzrl]{font-style:normal;font-family:var(--font-mono);font-size:.85em;color:var(--accent);margin-left:4px;text-transform:uppercase;letter-spacing:.1em}.code-tabs[data-astro-cid-hg66rjob]{margin:var(--space-5) 0}.code-tabs-nav[data-astro-cid-hg66rjob]{display:flex;gap:2px;margin-bottom:-1px;position:relative;z-index:1}.ctab[data-astro-cid-hg66rjob]{font-family:var(--font-mono);font-size:11px;text-transform:uppercase;letter-spacing:.07em;padding:5px 14px;border:1px solid #21222c;border-bottom:none;background:#1a1b23;color:#6272a4;cursor:pointer;border-radius:4px 4px 0 0;transition:color .12s,background .12s}.ctab[data-astro-cid-hg66rjob].is-active{background:#282a36;color:#f8f8f2;border-color:#21222c}.ctab[data-astro-cid-hg66rjob]:hover:not(.is-active){color:#cdd6f4}.ctab-panel[data-astro-cid-hg66rjob]{display:none}.ctab-panel[data-astro-cid-hg66rjob].is-active{display:block}.ctab-panel[data-astro-cid-hg66rjob] pre{margin-top:0!important;border-radius:0 6px 6px!important}
+</style></head> <body> <div class="reader-app"> <aside class="reader-rail" data-astro-cid-ofsbkzh7> <a href="/vibesamurai-site/" class="logo" aria-label="Vibesamurai home" data-astro-cid-ofsbkzh7>V</a> <button type="button" class="rail-toggle" id="sidebar-toggle" aria-label="Свернуть/развернуть оглавление" title="Свернуть/развернуть оглавление" data-astro-cid-ofsbkzh7> <span class="rail-toggle-icon" aria-hidden="true" data-astro-cid-ofsbkzh7></span> </button> <div class="rail-spacer" data-astro-cid-ofsbkzh7></div> <a href="/vibesamurai-site/account" class="account-btn" id="account-btn" aria-label="Аккаунт"> <span class="account-ic" id="account-ic">⌂</span> <span class="account-label" id="account-label">Войти</span> </a>  <script type="module" src="/vibesamurai-site/_astro/AccountButton.astro_astro_type_script_index_0_lang.CmD2sdn9.js"></script> </aside>  <button type="button" class="sidebar-backdrop" id="sidebar-backdrop" aria-label="Закрыть оглавление" tabindex="-1" data-astro-cid-ofsbkzh7></button>  <script type="module">const d="vs-sidebar-open",a="(max-width: 900px)";function t(e){const n=document.querySelector(".reader-app");n&&n.classList.toggle("sidebar-open",e)}function r(){return!window.matchMedia(a).matches}function s(){const e=localStorage.getItem(d),i=window.matchMedia(a).matches?!1:e!==null?e==="1":r();t(i),document.getElementById("sidebar-toggle")?.addEventListener("click",()=>{const c=!document.querySelector(".reader-app")?.classList.contains("sidebar-open");window.matchMedia(a).matches||localStorage.setItem(d,c?"1":"0"),t(c)}),document.getElementById("sidebar-backdrop")?.addEventListener("click",()=>t(!1)),document.querySelectorAll(".reader-sidebar a").forEach(o=>{o.addEventListener("click",()=>{window.matchMedia(a).matches&&t(!1)})})}document.readyState==="loading"?document.addEventListener("DOMContentLoaded",s):s();</script> <aside class="reader-sidebar" data-astro-cid-khgtvzrl> <div class="breadcrumb" data-astro-cid-khgtvzrl>Vibesamurai · Advanced Path · a17</div> <h4 data-astro-cid-khgtvzrl>В этом курсе</h4> <ul data-astro-cid-khgtvzrl> <li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a1" class data-astro-cid-khgtvzrl>A1 · Стек AI-студии 2026</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a2" class data-astro-cid-khgtvzrl>A2 · Multi-modal контракт</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a3" class data-astro-cid-khgtvzrl>A3 · Local vs Cloud матрица</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a4" class data-astro-cid-khgtvzrl>A4 · Design system как контракт</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a5" class data-astro-cid-khgtvzrl>A5 · Image generation для бренда</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a6" class data-astro-cid-khgtvzrl>A6 · Marketplace + product photoshoot</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a7" class data-astro-cid-khgtvzrl>A7 · Video generation pipelines</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a8" class data-astro-cid-khgtvzrl>A8 · Identity-preserving generation</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a9" class data-astro-cid-khgtvzrl>A9 · TouchDesigner + StreamDiffusion</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a10" class data-astro-cid-khgtvzrl>A10 · Audio-reactive AV-инсталляции</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a11" class data-astro-cid-khgtvzrl>A11 · Interactive booths: STT+LLM+TTS+CV</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a12" class data-astro-cid-khgtvzrl>A12 · Telemetry → control loop</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a13" class data-astro-cid-khgtvzrl>A13 · Private RAG для архива</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a14" class data-astro-cid-khgtvzrl>A14 · Локальные LLM на 8GB VRAM</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a15" class data-astro-cid-khgtvzrl>A15 · RunPod Flash + vLLM</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a16" class data-astro-cid-khgtvzrl>A16 · Кастомные MCP-серверы</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a17" class="current" data-astro-cid-khgtvzrl>A17 · Token economics через модальности</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a18" class data-astro-cid-khgtvzrl>A18 · Eval для креативного output</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a19" class data-astro-cid-khgtvzrl>A19 · Security в творческой студии</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a20" class data-astro-cid-khgtvzrl>A20 · Capstone: запуск студии</a> </li> </ul>  </aside> <main class="reader-main"> <div class="chapter-eyebrow">Advanced Path · a17</div> <h1 class="chapter-title">A17 · Token economics через модальности</h1> <p class="chapter-subtitle">Стоимость кадра, секунды видео, 1k токенов. Каскад Haiku→Sonnet→Opus + prompt caching + Batch API. Обязательный gate перед платной генерацией.</p> <h2 id="что-строим">Что строим</h2>
+<p>Единая система учёта стоимости через все модальности студии: text (LLM), image, video, audio. Цель — заранее знать, сколько стоит проект, видеть драйверы стоимости, обязательно подтверждать перед платной генерацией.</p>
+<h2 id="базовые-цифры-мая-2026">Базовые цифры мая 2026</h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Модальность</th><th>Узел</th><th>Цена за единицу</th><th>Единица</th></tr></thead><tbody><tr><td>Text</td><td>Claude Haiku 4.5</td><td>$0.8/1M out</td><td>output token</td></tr><tr><td>Text</td><td>Claude Sonnet 4.6</td><td>$3/1M out</td><td>output token</td></tr><tr><td>Text</td><td>Claude Opus 4.7</td><td>$15/1M out</td><td>output token</td></tr><tr><td>Text (local)</td><td>Qwen3.5-21B</td><td>$0</td><td>+ 200W электричества</td></tr><tr><td>Image</td><td>FLUX 2</td><td>$0.04</td><td>кадр</td></tr><tr><td>Image</td><td>GPT Image 2</td><td>$0.07</td><td>кадр</td></tr><tr><td>Video</td><td>Seedance 2.0</td><td>$0.30</td><td>секунда</td></tr><tr><td>Video</td><td>Kling 3.0</td><td>$0.40</td><td>секунда</td></tr><tr><td>Video</td><td>Runway Unlimited</td><td>fixed</td><td>месяц</td></tr><tr><td>Audio TTS</td><td>ElevenLabs</td><td>$0.18</td><td>1k символов</td></tr><tr><td>Audio TTS</td><td>Fish Speech local</td><td>$0</td><td>+ 200W</td></tr><tr><td>Identity</td><td>Soul ID training</td><td>$20</td><td>one-time</td></tr><tr><td>Embeddings</td><td>OpenAI text-embedding-3</td><td>$0.02</td><td>1M токенов</td></tr><tr><td>Embeddings</td><td>BGE-M3 local</td><td>$0</td><td>+ 200W</td></tr></tbody></table>
+<p>Цены меняются каждые 1–3 месяца. Перед началом проекта — пересверяемся (правило <code>feedback_verify_fresh_info</code>).</p>
+<h2 id="что-дёшево-что-дорого">Что дёшево, что дорого</h2>
+<p>Порядок стоимости:</p>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>LLM text             $        text       1</span></span>
+<span class="line"><span>embeddings local     $0       text       0</span></span>
+<span class="line"><span>LLM Opus             $$$      text       100</span></span>
+<span class="line"><span>image                $$       1 кадр     400-700×LLM</span></span>
+<span class="line"><span>video 6s             $$$$$    1 клип     3000-4000×LLM</span></span>
+<span class="line"><span>Soul ID one-time     $$$$     1 trening  20000×LLM</span></span></code></pre>
+<p>Один платный image-кадр стоит как 500 LLM-вызовов. Один 6-секундный видео-клип — как 1800. Это объясняет, почему video — самая «считаемая» модальность.</p>
+<h2 id="каскад-haiku--sonnet--opus">Каскад Haiku → Sonnet → Opus</h2>
+<p>Из practiked (memory <code>feedback_course_translation_pipeline</code>): для пакетных задач (типа перевод курса) используем каскад: Haiku → Sonnet → Opus + prompt caching + Batch API. Примеры в чат — Sonnet, финал — Opus.</p>
+<p>Логика:</p>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>ВСЕ ЗАПРОСЫ ──► Haiku ($0.8/1M)         ──► 80% задач закрыты дёшево</span></span>
+<span class="line"><span>                  │</span></span>
+<span class="line"><span>       neсложно?  │</span></span>
+<span class="line"><span>                  ├── да ──► OUTPUT</span></span>
+<span class="line"><span>                  │</span></span>
+<span class="line"><span>                  └── нет ──► Sonnet ($3/1M)     ──► 18% задач</span></span>
+<span class="line"><span>                              │</span></span>
+<span class="line"><span>                              ├── приемлемо? ──► OUTPUT</span></span>
+<span class="line"><span>                              │</span></span>
+<span class="line"><span>                              └── нет ──► Opus ($15/1M)  ──► 2% задач</span></span>
+<span class="line"><span>                                            │</span></span>
+<span class="line"><span>                                            └──► OUTPUT</span></span></code></pre>
+<p>Эффективная стоимость на запрос: <code>0.8 * 0.8 + 3 * 0.18 + 15 * 0.02 = 0.64 + 0.54 + 0.30 ≈ $1.48 / 1M</code>. Это в 10 раз дешевле, чем гонять всё через Opus.</p>
+<h2 id="prompt-caching">Prompt caching</h2>
+<p>При повторных вызовах с одинаковым префиксом — Anthropic кэширует префикс на 5 минут. Стоимость cached input → 10% от обычной.</p>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="python"><code><span class="line"><span style="color:#6272A4;--shiki-dark:#6272A4"># первый вызов: кэширует префикс</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">client.messages.create(</span></span>
+<span class="line"><span style="color:#FFB86C;--shiki-light-font-style:italic;--shiki-dark:#FFB86C;--shiki-dark-font-style:italic">    model</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">=</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">claude-sonnet-4-6</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">,</span></span>
+<span class="line"><span style="color:#FFB86C;--shiki-light-font-style:italic;--shiki-dark:#FFB86C;--shiki-dark-font-style:italic">    messages</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">=</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">[{</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">role</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">: </span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">user</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">, </span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">content</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">: [</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">        {</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">type</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">: </span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">text</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">, </span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">text</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">: </span><span style="color:#BD93F9;--shiki-dark:#BD93F9">LONG_SYSTEM_PROMPT</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">, </span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">cache_control</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">: {</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">type</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">: </span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">ephemeral</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">}},</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">        {</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">type</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">: </span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">text</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">, </span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">text</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">: </span><span style="color:#BD93F9;--shiki-dark:#BD93F9">USER_QUESTION</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">},</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    ]}],</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6272A4;--shiki-dark:#6272A4"># второй и далее (в течение 5 минут): префикс из кэша, -90% input cost</span></span></code></pre>
+<p>Когда оправдано: партии запросов с одинаковым system prompt; интерактивный агент с длинным CLAUDE.md. Прямой ROI: на стенде с 1000 вопросов/час и system prompt в 8k токенов prompt caching экономит десятки долларов в день.</p>
+<h2 id="batch-api">Batch API</h2>
+<p>Anthropic Batch API: запросы выполняются в течение 24 часов (но обычно сильно быстрее), стоимость — 50% от обычной.</p>
+<p>Когда оправдано:</p>
+<ul>
+<li>не интерактивные задачи (ночной курсовой ingest, перевод, классификация архива);</li>
+<li>партия от 1000 запросов;</li>
+<li>ok ждать минуты-часы.</li>
+</ul>
+<p>В каскаде Haiku → Sonnet → Opus прогон Batch API даёт ещё −50%. Combined с prompt caching — до −80% против «голого» интерактива.</p>
+<h2 id="tokenomics-gate-обязательно">Tokenomics gate (обязательно)</h2>
+<p>Главное правило студии (memory <code>feedback_tokenomics_confirm</code> + <code>feedback_analysis_tokenomics_gate</code>): <strong>перед любой платной генерацией</strong> (LLM-анализ, image, video) — считаем стоимость и ждём явного <code>[y/N]</code> подтверждения.</p>
+<p>Без бэк-доры, без bypass-флагов. И в админке, и в CLI.</p>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="python"><code><span class="line"><span style="color:#FF79C6;--shiki-dark:#FF79C6">def</span><span style="color:#50FA7B;--shiki-dark:#50FA7B"> gate</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">(</span><span style="color:#FFB86C;--shiki-light-font-style:italic;--shiki-dark:#FFB86C;--shiki-dark-font-style:italic">label</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">:</span><span style="color:#8BE9FD;--shiki-light-font-style:italic;--shiki-dark:#8BE9FD;--shiki-dark-font-style:italic"> str</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">, </span><span style="color:#FFB86C;--shiki-light-font-style:italic;--shiki-dark:#FFB86C;--shiki-dark-font-style:italic">cost_usd</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">:</span><span style="color:#8BE9FD;--shiki-light-font-style:italic;--shiki-dark:#8BE9FD;--shiki-dark-font-style:italic"> float</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">):</span></span>
+<span class="line"><span style="color:#8BE9FD;--shiki-dark:#8BE9FD">    print</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">(</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">f</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">"</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">\n</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">=== TOKENOMICS GATE ==="</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">)</span></span>
+<span class="line"><span style="color:#8BE9FD;--shiki-dark:#8BE9FD">    print</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">(</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">f</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">"Задача: </span><span style="color:#BD93F9;--shiki-dark:#BD93F9">{</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">label</span><span style="color:#BD93F9;--shiki-dark:#BD93F9">}</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">"</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">)</span></span>
+<span class="line"><span style="color:#8BE9FD;--shiki-dark:#8BE9FD">    print</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">(</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">f</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">"Оценка: $</span><span style="color:#BD93F9;--shiki-dark:#BD93F9">{</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">cost_usd</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">:.2f</span><span style="color:#BD93F9;--shiki-dark:#BD93F9">}</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">"</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">)</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    confirm </span><span style="color:#FF79C6;--shiki-dark:#FF79C6">=</span><span style="color:#8BE9FD;--shiki-dark:#8BE9FD"> input</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">(</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">[y/N] продолжить? </span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">).strip().lower()</span></span>
+<span class="line"><span style="color:#FF79C6;--shiki-dark:#FF79C6">    if</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2"> confirm </span><span style="color:#FF79C6;--shiki-dark:#FF79C6">!=</span><span style="color:#E9F284;--shiki-dark:#E9F284"> "</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">y</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">:</span></span>
+<span class="line"><span style="color:#FF79C6;--shiki-dark:#FF79C6">        raise</span><span style="color:#8BE9FD;--shiki-light-font-style:italic;--shiki-dark:#8BE9FD;--shiki-dark-font-style:italic"> SystemExit</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">(</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">отменено пользователем</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">)</span></span></code></pre>
+<p>Это не «осторожность для слабонервных». Один забытый цикл по 200 видео — $480 за пять минут. Gate ловит это до того, как деньги уходят.</p>
+<h2 id="реальный-кейс-ночной-перевод-курса">Реальный кейс: ночной перевод курса</h2>
+<p>Задача: перевести Beginner + Middle (32 главы × ~10k символов = 320k символов исходника). Каскад:</p>
+<ol>
+<li><strong>Haiku</strong> — первичный перевод всех 32 глав (<code>max_tokens=12000</code>). Стоимость: $32 × 12000 / 1M × 0.8 ≈ $0.31.</li>
+<li><strong>Sonnet</strong> — review результата Haiku, отметка глав, требующих доводки. Стоимость: $0.6.</li>
+<li><strong>Opus</strong> — финал по отмеченным главам (5 из 32). Стоимость: $5 × 12k × 15 / 1M = $0.90.</li>
+</ol>
+<p>Итог: ~$2 за полный перевод курса (Batch API + prompt caching стянут в ~$1).</p>
+<p>В лоб через Opus: 32 × 12k × 15 / 1M = $5.76. Разница не катастрофическая на 32 главах, но при масштабе (300 материалов) — десятки долларов экономии.</p>
+<h2 id="подводные-камни">Подводные камни</h2>
+<ul>
+<li><strong>Считать input-токены тоже</strong> — output дороже, но input на больших prompts тоже копит. Особенно с RAG (большой контекст).</li>
+<li><strong>Caching работает только при идентичном префиксе</strong> — измените 1 символ в system prompt → кэш промахнулся.</li>
+<li><strong>Batch API не для интерактива</strong> — ответы приходят пачкой, не in real-time.</li>
+<li><strong>«Локалка бесплатно»</strong> — нет. 4070 на 24/7 inference = +200–300W = реальные деньги на электричестве.</li>
+<li><strong>Скрытые расходы</strong> — Soul ID training, S3 storage для кэша, Cloudflare bandwidth. Включайте в учёт.</li>
+</ul>
+<h2 id="recap">Recap</h2>
+<ul>
+<li>Цены меняются раз в 1–3 месяца — пересверяемся перед каждым проектом.</li>
+<li>Один image ≈ 500 LLM-вызовов; один видео-клип ≈ 1800 LLM-вызовов. Это меняет архитектуру.</li>
+<li>Каскад Haiku → Sonnet → Opus экономит ~10× против «всё через Opus».</li>
+<li>Prompt caching + Batch API — −80% на партиях.</li>
+<li>Tokenomics gate перед платной генерацией — обязателен. Без bypass.</li>
+</ul>
+<h2 id="дальше-посмотреть-и-почитать">Дальше: посмотреть и почитать</h2>
+<ul>
+<li><strong>Anthropic — Pricing</strong> — <a href="https://www.anthropic.com/pricing">anthropic.com/pricing</a>. Текущие цены и Batch API discount.</li>
+<li><strong>Anthropic — Prompt caching</strong> — <a href="https://docs.anthropic.com/en/docs/build-with-claude/prompt-caching">docs.anthropic.com/en/docs/build-with-claude/prompt-caching</a>. Как, когда работает, что кэшируется.</li>
+<li><strong>Anthropic — Batch API</strong> — <a href="https://docs.anthropic.com/en/docs/build-with-claude/batch-processing">docs.anthropic.com/en/docs/build-with-claude/batch-processing</a>. −50% на не-интерактивные задачи.</li>
+<li><strong>Artificial Analysis Pricing</strong> — <a href="https://artificialanalysis.ai/text-to-image">artificialanalysis.ai/text-to-image</a>, <a href="https://artificialanalysis.ai/text-to-video">artificialanalysis.ai/text-to-video</a>. Независимые сравнения image/video цен.</li>
+</ul> <nav class="chapter-nav"> <a href="/vibesamurai-site/courses/advanced/a16"> <span class="dir">← Назад</span> <span class="title">A16 · Кастомные MCP-серверы</span> </a> <a href="/vibesamurai-site/courses/advanced/a18"> <span class="dir">Дальше →</span> <span class="title">A18 · Eval для креативного output</span> </a> </nav> </main> </div> <script type="module">
+    import { gatingEnabled } from '../lib/supabase';
+    import { fetchChapter } from '../lib/auth';
+
+    const base = import.meta.env.BASE_URL;
+    let mermaidLib = null;
+
+    function scopeOf(root) {
+      return root === document ? document.querySelector('.reader-main') : root;
+    }
+
+    function addCopyBtns(root) {
+      const scope = scopeOf(root); if (!scope) return;
+      scope.querySelectorAll('pre').forEach((pre) => {
+        if (pre.closest('.code-tabs')) return;
+        if (pre.querySelector('.copy-btn')) return;
+        const btn = document.createElement('button');
+        btn.className = 'copy-btn';
+        btn.textContent = 'copy';
+        btn.addEventListener('click', async () => {
+          const code = pre.querySelector('code')?.textContent ?? pre.textContent ?? '';
+          await navigator.clipboard.writeText(code.trimEnd());
+          btn.textContent = '✓ copied';
+          setTimeout(() => { btn.textContent = 'copy'; }, 1600);
+        });
+        pre.appendChild(btn);
+      });
+    }
+
+    function tightenMermaidSvgs(retries = 6) {
+      let pending = false;
+      document.querySelectorAll('.mermaid svg').forEach((svg) => {
+        if (svg.dataset.tightened === '1') return;
+        try {
+          const bbox = svg.getBBox();
+          if (!bbox || bbox.width === 0) { pending = true; return; }
+          const pad = 6;
+          svg.setAttribute('viewBox',
+            `${bbox.x - pad} ${bbox.y - pad} ${bbox.width + pad * 2} ${bbox.height + pad * 2}`);
+          svg.removeAttribute('height');
+          svg.style.height = 'auto';
+          svg.style.maxWidth = '100%';
+          svg.style.display = 'block';
+          svg.dataset.tightened = '1';
+        } catch (e) { pending = true; }
+      });
+      if (pending && retries > 0) setTimeout(() => tightenMermaidSvgs(retries - 1), 120);
+    }
+
+    async function ensureMermaid() {
+      if (mermaidLib) return mermaidLib;
+      const mod = await import('https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs');
+      mermaidLib = mod.default;
+      mermaidLib.initialize({
+        startOnLoad: false, theme: 'neutral',
+        themeVariables: {
+          fontFamily: 'JetBrains Mono, ui-monospace, monospace',
+          primaryColor: '#f5f5f5', primaryBorderColor: '#222',
+          primaryTextColor: '#111', lineColor: '#444',
+        },
+        flowchart: { curve: 'basis', padding: 12, useMaxWidth: true },
+      });
+      return mermaidLib;
+    }
+
+    async function renderMermaid(root) {
+      const scope = scopeOf(root); if (!scope) return;
+      const matches = scope.querySelectorAll(
+        'pre[data-language="mermaid"], pre.language-mermaid, code.language-mermaid'
+      );
+      if (!matches.length) return;
+      matches.forEach((el) => {
+        const block = el.tagName === 'CODE' ? el.closest('pre') || el : el;
+        const codeEl = block.querySelector('code') || block;
+        const wrap = document.createElement('div');
+        wrap.className = 'mermaid';
+        wrap.textContent = codeEl.textContent;
+        block.replaceWith(wrap);
+      });
+      try {
+        const m = await ensureMermaid();
+        await m.run();
+        tightenMermaidSvgs();
+      } catch (err) {
+        console.warn('mermaid failed', err);
+        document.querySelectorAll('.mermaid:not(:has(svg))').forEach((el) => { el.style.display = 'none'; });
+      }
+    }
+
+    async function enhance(root = document) {
+      addCopyBtns(root);
+      await renderMermaid(root);
+    }
+
+    function paywallHtml(required, needLogin) {
+      const label = { beginner: 'Beginner (300 ₽)', middle: 'Beginner + Middle (500 ₽)', all: 'Весь пакет (700 ₽)' }[required] || '';
+      return `<div class="paywall">
+        <div class="paywall-ic">🔒</div>
+        <h3>Эта глава — в платном доступе</h3>
+        <p>Нужен тариф: <strong>${label}</strong>. Доступ навсегда, без подписки.</p>
+        ${needLogin ? '<p>Войди через Google и оформи доступ — продолжишь с любого устройства.</p>' : ''}
+        <a class="paywall-btn" href="${base}pricing">Открыть доступ →</a>
+        <a class="paywall-link" href="${base}account">Войти / мой аккаунт</a>
+      </div>`;
+    }
+
+    async function gatedFlow(mount) {
+      const slug = mount.dataset.slug;
+      const required = mount.dataset.required || 'beginner';
+      mount.innerHTML = '<p class="gate-msg">Проверяем доступ…</p>';
+      const res = await fetchChapter(slug);
+      if (res.ok) {
+        mount.innerHTML = res.html;
+        await enhance(mount);
+      } else if (res.status === 401) {
+        mount.innerHTML = paywallHtml(required, true);
+      } else if (res.status === 402) {
+        mount.innerHTML = paywallHtml(res.requiredTier || required, false);
+      } else {
+        mount.innerHTML = '<p class="gate-msg">Не удалось загрузить главу. Обнови страницу.</p>';
+      }
+    }
+
+    const mount = document.getElementById('gated-mount');
+    if (mount && gatingEnabled) gatedFlow(mount);
+    else enhance(document);
+  </script> </body> </html>

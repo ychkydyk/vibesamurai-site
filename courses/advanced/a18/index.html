@@ -1,0 +1,275 @@
+<!DOCTYPE html><html lang="en"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Eval для креативного output — Vibesamurai</title><meta name="description" content="Virality predictor, hook strength, retention risk, brand fit. Когда оцениваем человеком, когда автоматом. A/B на инсталляции и клиент-ревью."><meta property="og:title" content="Eval для креативного output"><meta property="og:type" content="article"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Inter:wght@300..800&family=JetBrains+Mono:wght@400..600&display=swap" rel="stylesheet"><link rel="stylesheet" href="/vibesamurai-site/_astro/_slug_.Cs4TX1wt.css">
+<style>.account-btn{display:inline-flex;align-items:center;gap:var(--space-2);font-family:var(--font-mono);font-size:var(--size-2);text-transform:uppercase;letter-spacing:.06em;padding:5px 10px;border:1px solid var(--rule);border-radius:999px;color:var(--text-soft);background:var(--surface);transition:border-color var(--d-fast),color var(--d-fast)}.account-btn:hover{border-color:var(--accent);color:var(--text)}.account-ic{width:18px;height:18px;display:grid;place-items:center;border-radius:50%;background:var(--accent);color:var(--accent-ink);font-weight:700;font-size:10px;line-height:1}.reader-rail .account-btn{padding:0;border:none;background:transparent}.reader-rail .account-label{display:none}.reader-rail .account-ic{width:32px;height:32px;font-size:13px}.rail-toggle{width:36px;height:36px;display:grid;place-items:center;background:var(--accent);border:1px solid var(--accent);border-radius:4px;cursor:pointer;transition:filter var(--d-fast),transform var(--d-fast);padding:0}.rail-toggle:hover{filter:brightness(1.08);transform:translateY(-1px)}.rail-toggle:active{transform:translateY(0)}.rail-toggle-icon{width:14px;height:12px;border-left:2px solid var(--accent-ink);border-right:2px solid var(--accent-ink);transition:transform var(--d-normal) var(--ease-standard)}.reader-app.sidebar-open .rail-toggle-icon{transform:rotate(0)}.reader-app:not(.sidebar-open) .rail-toggle-icon{transform:scaleX(.5)}.sidebar-backdrop{display:none;position:fixed;inset:0;background:#0000008c;z-index:140;border:0;padding:0;cursor:pointer}@media(max-width:900px){.reader-app.sidebar-open~.sidebar-backdrop{display:block}}.rail-spacer[data-astro-cid-ofsbkzh7]{flex:1}.reader-sidebar[data-astro-cid-khgtvzrl] .soon[data-astro-cid-khgtvzrl]{display:block;color:var(--text-mute);font-size:var(--size-2);padding:var(--space-1) 0}.reader-sidebar[data-astro-cid-khgtvzrl] .soon[data-astro-cid-khgtvzrl] em[data-astro-cid-khgtvzrl]{font-style:normal;font-family:var(--font-mono);font-size:.85em;color:var(--accent);margin-left:4px;text-transform:uppercase;letter-spacing:.1em}.code-tabs[data-astro-cid-hg66rjob]{margin:var(--space-5) 0}.code-tabs-nav[data-astro-cid-hg66rjob]{display:flex;gap:2px;margin-bottom:-1px;position:relative;z-index:1}.ctab[data-astro-cid-hg66rjob]{font-family:var(--font-mono);font-size:11px;text-transform:uppercase;letter-spacing:.07em;padding:5px 14px;border:1px solid #21222c;border-bottom:none;background:#1a1b23;color:#6272a4;cursor:pointer;border-radius:4px 4px 0 0;transition:color .12s,background .12s}.ctab[data-astro-cid-hg66rjob].is-active{background:#282a36;color:#f8f8f2;border-color:#21222c}.ctab[data-astro-cid-hg66rjob]:hover:not(.is-active){color:#cdd6f4}.ctab-panel[data-astro-cid-hg66rjob]{display:none}.ctab-panel[data-astro-cid-hg66rjob].is-active{display:block}.ctab-panel[data-astro-cid-hg66rjob] pre{margin-top:0!important;border-radius:0 6px 6px!important}
+</style></head> <body> <div class="reader-app"> <aside class="reader-rail" data-astro-cid-ofsbkzh7> <a href="/vibesamurai-site/" class="logo" aria-label="Vibesamurai home" data-astro-cid-ofsbkzh7>V</a> <button type="button" class="rail-toggle" id="sidebar-toggle" aria-label="Свернуть/развернуть оглавление" title="Свернуть/развернуть оглавление" data-astro-cid-ofsbkzh7> <span class="rail-toggle-icon" aria-hidden="true" data-astro-cid-ofsbkzh7></span> </button> <div class="rail-spacer" data-astro-cid-ofsbkzh7></div> <a href="/vibesamurai-site/account" class="account-btn" id="account-btn" aria-label="Аккаунт"> <span class="account-ic" id="account-ic">⌂</span> <span class="account-label" id="account-label">Войти</span> </a>  <script type="module" src="/vibesamurai-site/_astro/AccountButton.astro_astro_type_script_index_0_lang.CmD2sdn9.js"></script> </aside>  <button type="button" class="sidebar-backdrop" id="sidebar-backdrop" aria-label="Закрыть оглавление" tabindex="-1" data-astro-cid-ofsbkzh7></button>  <script type="module">const d="vs-sidebar-open",a="(max-width: 900px)";function t(e){const n=document.querySelector(".reader-app");n&&n.classList.toggle("sidebar-open",e)}function r(){return!window.matchMedia(a).matches}function s(){const e=localStorage.getItem(d),i=window.matchMedia(a).matches?!1:e!==null?e==="1":r();t(i),document.getElementById("sidebar-toggle")?.addEventListener("click",()=>{const c=!document.querySelector(".reader-app")?.classList.contains("sidebar-open");window.matchMedia(a).matches||localStorage.setItem(d,c?"1":"0"),t(c)}),document.getElementById("sidebar-backdrop")?.addEventListener("click",()=>t(!1)),document.querySelectorAll(".reader-sidebar a").forEach(o=>{o.addEventListener("click",()=>{window.matchMedia(a).matches&&t(!1)})})}document.readyState==="loading"?document.addEventListener("DOMContentLoaded",s):s();</script> <aside class="reader-sidebar" data-astro-cid-khgtvzrl> <div class="breadcrumb" data-astro-cid-khgtvzrl>Vibesamurai · Advanced Path · a18</div> <h4 data-astro-cid-khgtvzrl>В этом курсе</h4> <ul data-astro-cid-khgtvzrl> <li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a1" class data-astro-cid-khgtvzrl>A1 · Стек AI-студии 2026</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a2" class data-astro-cid-khgtvzrl>A2 · Multi-modal контракт</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a3" class data-astro-cid-khgtvzrl>A3 · Local vs Cloud матрица</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a4" class data-astro-cid-khgtvzrl>A4 · Design system как контракт</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a5" class data-astro-cid-khgtvzrl>A5 · Image generation для бренда</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a6" class data-astro-cid-khgtvzrl>A6 · Marketplace + product photoshoot</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a7" class data-astro-cid-khgtvzrl>A7 · Video generation pipelines</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a8" class data-astro-cid-khgtvzrl>A8 · Identity-preserving generation</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a9" class data-astro-cid-khgtvzrl>A9 · TouchDesigner + StreamDiffusion</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a10" class data-astro-cid-khgtvzrl>A10 · Audio-reactive AV-инсталляции</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a11" class data-astro-cid-khgtvzrl>A11 · Interactive booths: STT+LLM+TTS+CV</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a12" class data-astro-cid-khgtvzrl>A12 · Telemetry → control loop</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a13" class data-astro-cid-khgtvzrl>A13 · Private RAG для архива</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a14" class data-astro-cid-khgtvzrl>A14 · Локальные LLM на 8GB VRAM</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a15" class data-astro-cid-khgtvzrl>A15 · RunPod Flash + vLLM</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a16" class data-astro-cid-khgtvzrl>A16 · Кастомные MCP-серверы</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a17" class data-astro-cid-khgtvzrl>A17 · Token economics через модальности</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a18" class="current" data-astro-cid-khgtvzrl>A18 · Eval для креативного output</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a19" class data-astro-cid-khgtvzrl>A19 · Security в творческой студии</a> </li><li data-astro-cid-khgtvzrl> <a href="/vibesamurai-site/courses/advanced/a20" class data-astro-cid-khgtvzrl>A20 · Capstone: запуск студии</a> </li> </ul>  </aside> <main class="reader-main"> <div class="chapter-eyebrow">Advanced Path · a18</div> <h1 class="chapter-title">A18 · Eval для креативного output</h1> <p class="chapter-subtitle">Virality predictor, hook strength, retention risk, brand fit. Когда оцениваем человеком, когда автоматом. A/B на инсталляции и клиент-ревью.</p> <h2 id="что-строим">Что строим</h2>
+<p>Eval-пайплайн для креативного output: измерение того, что обычно «оценивается на глаз». Цель — повторяемый процесс отбора лучшего варианта из N, а не «глянул сценарий, давайте этот».</p>
+<p>Middle (M11–M13) дал базу eval для кода и текста. Advanced — про eval <strong>визуального</strong> и <strong>аудио-видео</strong> креатива.</p>
+<h2 id="три-уровня-оценки">Три уровня оценки</h2>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>УРОВЕНЬ        ЧТО МЕРИМ                        КТО / ЧТО</span></span>
+<span class="line"><span>─────────────────────────────────────────────────────────────</span></span>
+<span class="line"><span>авто-метрики   тех. соответствие                скрипт</span></span>
+<span class="line"><span>               (палитра, разрешение, fps,</span></span>
+<span class="line"><span>                пропорции, табу-слова)</span></span>
+<span class="line"><span>─────────────────────────────────────────────────────────────</span></span>
+<span class="line"><span>авто-AI eval   virality / brand fit /           AI-сервисы</span></span>
+<span class="line"><span>               hook strength / retention        (Higgsfield</span></span>
+<span class="line"><span>                                                 virality_predictor)</span></span>
+<span class="line"><span>─────────────────────────────────────────────────────────────</span></span>
+<span class="line"><span>человек        художественная оценка,           клиент / арт-дир /</span></span>
+<span class="line"><span>               клиентский фидбек                ревью-сайт</span></span></code></pre>
+<p>Уровни — последовательны. Авто-метрики (низкая стоимость) фильтруют технический брак. AI eval сужает топ-N. Человек принимает финал.</p>
+<h2 id="авто-метрики-технический-фильтр">Авто-метрики: технический фильтр</h2>
+<p>Что измеряем без AI:</p>
+<ul>
+<li><strong>палитра</strong>: гистограмма цветов попадает в брендовый диапазон (<code>#0A0A0A</code> ± 10, <code>#C8FF00</code> ± 20);</li>
+<li><strong>резкость</strong>: Laplacian variance — отсев размытых кадров;</li>
+<li><strong>пропорции</strong>: 4:5 / 9:16 / 16:9 строго;</li>
+<li><strong>discrepancies</strong>: лишние объекты, рекламные плашки (через CLIP-zero-shot);</li>
+<li><strong>табу-слова в субтитрах</strong>: regex.</li>
+</ul>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="python"><code><span class="line"><span style="color:#FF79C6;--shiki-dark:#FF79C6">def</span><span style="color:#50FA7B;--shiki-dark:#50FA7B"> auto_check</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">(</span><span style="color:#FFB86C;--shiki-light-font-style:italic;--shiki-dark:#FFB86C;--shiki-dark-font-style:italic">image_path</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">:</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2"> Path, </span><span style="color:#FFB86C;--shiki-light-font-style:italic;--shiki-dark:#FFB86C;--shiki-dark-font-style:italic">brand</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">:</span><span style="color:#8BE9FD;--shiki-light-font-style:italic;--shiki-dark:#8BE9FD;--shiki-dark-font-style:italic"> dict</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">) </span><span style="color:#FF79C6;--shiki-dark:#FF79C6">-></span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2"> list[</span><span style="color:#8BE9FD;--shiki-light-font-style:italic;--shiki-dark:#8BE9FD;--shiki-dark-font-style:italic">str</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">]:</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    img </span><span style="color:#FF79C6;--shiki-dark:#FF79C6">=</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2"> cv2.imread(</span><span style="color:#8BE9FD;--shiki-light-font-style:italic;--shiki-dark:#8BE9FD;--shiki-dark-font-style:italic">str</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">(image_path))</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    errors </span><span style="color:#FF79C6;--shiki-dark:#FF79C6">=</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2"> []</span></span>
+<span class="line"><span style="color:#FF79C6;--shiki-dark:#FF79C6">    if</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2"> avg_color_diff(img, brand[</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">palette</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">]) </span><span style="color:#FF79C6;--shiki-dark:#FF79C6">></span><span style="color:#BD93F9;--shiki-dark:#BD93F9"> 0.15</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">:</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">        errors.append(</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">палитра вне бренда</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">)</span></span>
+<span class="line"><span style="color:#FF79C6;--shiki-dark:#FF79C6">    if</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2"> cv2.Laplacian(img, cv2.</span><span style="color:#BD93F9;--shiki-dark:#BD93F9">CV_64F</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">).var() </span><span style="color:#FF79C6;--shiki-dark:#FF79C6">&#x3C;</span><span style="color:#BD93F9;--shiki-dark:#BD93F9"> 50</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">:</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">        errors.append(</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">кадр размыт</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">)</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    h, w </span><span style="color:#FF79C6;--shiki-dark:#FF79C6">=</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2"> img.shape[</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">:</span><span style="color:#BD93F9;--shiki-dark:#BD93F9">2</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">]</span></span>
+<span class="line"><span style="color:#FF79C6;--shiki-dark:#FF79C6">    if</span><span style="color:#8BE9FD;--shiki-dark:#8BE9FD"> abs</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">((w</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">/</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">h) </span><span style="color:#FF79C6;--shiki-dark:#FF79C6">-</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2"> brand[</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">target_ar</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">]) </span><span style="color:#FF79C6;--shiki-dark:#FF79C6">></span><span style="color:#BD93F9;--shiki-dark:#BD93F9"> 0.05</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">:</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">        errors.append(</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">f</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">"пропорции </span><span style="color:#BD93F9;--shiki-dark:#BD93F9">{</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">w</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">/</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">h</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">:.2f</span><span style="color:#BD93F9;--shiki-dark:#BD93F9">}</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">, нужны </span><span style="color:#BD93F9;--shiki-dark:#BD93F9">{</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">brand[</span><span style="color:#E9F284;--shiki-dark:#E9F284">'</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">target_ar</span><span style="color:#E9F284;--shiki-dark:#E9F284">'</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">]</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">:.2f</span><span style="color:#BD93F9;--shiki-dark:#BD93F9">}</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">"</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">)</span></span>
+<span class="line"><span style="color:#FF79C6;--shiki-dark:#FF79C6">    return</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2"> errors</span></span></code></pre>
+<p>Авто-метрики <strong>отсекают</strong>, не «оценивают». Они скажут «технически приемлемо», не «выбери это».</p>
+<h2 id="virality-predictor">Virality predictor</h2>
+<p>Из практики (skill <code>higgsfield-generate</code> с <code>brain_activity</code>): Virality Predictor анализирует видео-ролик по нескольким осям:</p>
+<ul>
+<li><strong>hook strength</strong> — насколько первые 1–3 секунды зацепят;</li>
+<li><strong>attention curve</strong> — где взгляд аудитории;</li>
+<li><strong>retention risk</strong> — где зритель потеряет интерес;</li>
+<li><strong>distraction risk</strong> — конкурирующие визуальные элементы;</li>
+<li><strong>creative score</strong> — суммарная оценка.</li>
+</ul>
+<p>Используется в A18 как <strong>AI-eval уровень</strong>: пропускаем top-N клипов через virality, выбираем по hook strength и retention.</p>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#50FA7B;--shiki-dark:#50FA7B">/higgsfield-generate</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C"> brain_activity</span><span style="color:#BD93F9;--shiki-dark:#BD93F9"> --video</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C"> path/to/clip.mp4</span></span></code></pre>
+<p>Не превращайте эту оценку в финальное решение — это <strong>сигнал</strong>, не «правда о виральности». Reality check — A/B на реальной аудитории.</p>
+<h2 id="brand-fit">Brand fit</h2>
+<p>Brand fit — отдельный AI-eval: насколько кадр/клип соответствует бренд-токенам. Дешёвый вариант — CLIP с brand-prefix prompt.</p>
+<pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="python"><code><span class="line"><span style="color:#FF79C6;--shiki-dark:#FF79C6">import</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2"> torch, open_clip</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">model, _, preprocess </span><span style="color:#FF79C6;--shiki-dark:#FF79C6">=</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2"> open_clip.create_model_and_transforms(</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">ViT-B-32</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">, </span><span style="color:#FFB86C;--shiki-light-font-style:italic;--shiki-dark:#FFB86C;--shiki-dark-font-style:italic">pretrained</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">=</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">laion2b_s34b_b79k</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">)</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">tokenizer </span><span style="color:#FF79C6;--shiki-dark:#FF79C6">=</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2"> open_clip.get_tokenizer(</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F1FA8C;--shiki-dark:#F1FA8C">ViT-B-32</span><span style="color:#E9F284;--shiki-dark:#E9F284">"</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#FF79C6;--shiki-dark:#FF79C6">def</span><span style="color:#50FA7B;--shiki-dark:#50FA7B"> brand_score</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">(</span><span style="color:#FFB86C;--shiki-light-font-style:italic;--shiki-dark:#FFB86C;--shiki-dark-font-style:italic">image</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">:</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2"> Image, </span><span style="color:#FFB86C;--shiki-light-font-style:italic;--shiki-dark:#FFB86C;--shiki-dark-font-style:italic">brand_prompt</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">:</span><span style="color:#8BE9FD;--shiki-light-font-style:italic;--shiki-dark:#8BE9FD;--shiki-dark-font-style:italic"> str</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">) </span><span style="color:#FF79C6;--shiki-dark:#FF79C6">-></span><span style="color:#8BE9FD;--shiki-light-font-style:italic;--shiki-dark:#8BE9FD;--shiki-dark-font-style:italic"> float</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">:</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    img_feat </span><span style="color:#FF79C6;--shiki-dark:#FF79C6">=</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2"> model.encode_image(preprocess(image).unsqueeze(</span><span style="color:#BD93F9;--shiki-dark:#BD93F9">0</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">))</span></span>
+<span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    txt_feat </span><span style="color:#FF79C6;--shiki-dark:#FF79C6">=</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2"> model.encode_text(tokenizer([brand_prompt]))</span></span>
+<span class="line"><span style="color:#FF79C6;--shiki-dark:#FF79C6">    return</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2"> torch.cosine_similarity(img_feat, txt_feat).item()</span></span></code></pre>
+<p><code>brand_prompt</code> — короткое описание визуального языка: «editorial high-contrast monochrome with single chartreuse accent, geometric, minimal». Кадры рангируем по score, отсекаем хвост.</p>
+<h2 id="ab-на-клиент-ревью">A/B на клиент-ревью</h2>
+<p>Из практики (memory <code>project_flag_review</code> / <code>project_svib_review</code>): клиент-ревью с видео-галереей, лайками и комментариями. Шаблон сайта (flag-review) переиспользуется под каждый проект.</p>
+<p>Архитектура:</p>
+<ul>
+<li>статика на Cloudflare Pages под <code>zavdv1</code>;</li>
+<li>Worker + KV для лайков и комментариев;</li>
+<li>30 минут — клонировать шаблон под новый проект.</li>
+</ul>
+<p>Используем как A/B: показываем 3 motion-варианта одного концепта, клиент голосует/комментирует. Решение — на основе фидбека, не на «нравится же».</p>
+<p>Старые генерации — <strong>не удаляем</strong>, переносим в архив (<code>data-default-archived="true"</code>) — правило <code>feedback_archive_never_delete</code>. Прозрачность истории дизайна важна.</p>
+<h2 id="реальный-кейс-12-постов--выбор-4-финалов">Реальный кейс: 12 постов → выбор 4 финалов</h2>
+<p>Постановка: серия из 12 hero-кадров (см. A5). Выбрать 4 финала для публикации в течение месяца.</p>
+<p>Воркфлоу:</p>
+<ol>
+<li><strong>Авто-метрики</strong> на 12 кадров → 1 отсев (Laplacian &#x3C; 50, размыт). Остаётся 11.</li>
+<li><strong>Brand fit</strong> через CLIP → ранг top-8 по score > 0.32. Остаётся 8.</li>
+<li><strong>Virality predictor на mp4-превью каждого</strong> → ранг по hook strength. Топ-5.</li>
+<li><strong>Клиент-ревью</strong>: показываем 5 в flag-review, клиент комментирует. Из 5 выбирается 4 для публикации.</li>
+</ol>
+<p>Время на отбор: 1 час (большая часть — клиентское ревью). До eval-пайплайна — 3–4 часа «на глаз» с переписками.</p>
+<h2 id="когда-оцениваем-человеком-когда-автоматом">Когда оцениваем человеком, когда автоматом</h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Что</th><th>Кто</th><th>Почему</th></tr></thead><tbody><tr><td>Тех. соответствие (пропорции, цвет, резкость)</td><td>Скрипт</td><td>Объективно, дёшево</td></tr><tr><td>Brand fit</td><td>CLIP / AI</td><td>Объективнее «на глаз», масштабируется</td></tr><tr><td>Hook / retention</td><td>Virality AI</td><td>Симуляция реакции аудитории</td></tr><tr><td>Художественная композиция</td><td>Арт-директор</td><td>Никакой AI пока не заменяет</td></tr><tr><td>Финал для клиента</td><td>Клиент</td><td>Бренд принадлежит клиенту</td></tr><tr><td>Юр. соответствие (IP, лица)</td><td>Юрист / арт-дир</td><td>Цена ошибки выше cost проверки</td></tr></tbody></table>
+<p>Не пытайтесь автоматизировать «художественную композицию» — AI eval показывает паттерны, не вкус. Не пытайтесь оценивать «hook» на глаз — virality predictor дешевле и в среднем точнее.</p>
+<h2 id="подводные-камни">Подводные камни</h2>
+<ul>
+<li><strong>Virality eval ≠ виральность</strong> — это сигнал. Хорошо работает на сравнении вариантов, плохо — как абсолютная метрика.</li>
+<li><strong>CLIP brand-fit на ProMpt-prefix плывёт</strong> — если brand prefix сменился между измерениями, score-ы несравнимы. Версионируйте prompt.</li>
+<li><strong>Клиент голосует за «как тот ролик»</strong> — субъективные предпочтения мешают системному отбору. Структурируйте опрос (по осям hook / brand / message).</li>
+<li><strong>«У нас X лайков»</strong> — лайки на ревью-сайте — это не метрика виральности, это вовлечённость 5–10 человек. Не выдавайте за «прогноз».</li>
+</ul>
+<h2 id="recap">Recap</h2>
+<ul>
+<li>Три уровня: авто-метрики (фильтр) → AI-eval (ранжирование) → человек (финал).</li>
+<li>Virality predictor — сигнал на сравнении, не «правда о виральности».</li>
+<li>Brand fit через CLIP — масштабируемая оценка соответствия бренду.</li>
+<li>A/B клиент-ревью — flag-review шаблон, 30 минут под клиента.</li>
+<li>Старые варианты не удаляем — архивируем.</li>
+</ul>
+<h2 id="дальше-посмотреть-и-почитать">Дальше: посмотреть и почитать</h2>
+<ul>
+<li><strong>Higgsfield Virality Predictor</strong> — <a href="https://higgsfield.ai/virality">higgsfield.ai/virality</a>. Что измеряет, на каком датасете обучался.</li>
+<li><strong>OpenCLIP</strong> — <a href="https://github.com/mlfoundations/open_clip">github.com/mlfoundations/open_clip</a>. Локальные CLIP-модели для brand fit.</li>
+<li><strong>Anthropic — Evals cookbook</strong> — <a href="https://github.com/anthropics/anthropic-cookbook/tree/main/misc/evaluation">github.com/anthropics/anthropic-cookbook/tree/main/misc/evaluation</a>. Паттерны eval для текста; адаптируется на креатив.</li>
+<li><strong>A/B test calculator</strong> — <a href="https://www.evanmiller.org/ab-testing/sample-size.html">evanmiller.org/ab-testing/sample-size.html</a>. Чтобы не делать A/B на 5 голосах и не выдавать за статистику.</li>
+</ul> <nav class="chapter-nav"> <a href="/vibesamurai-site/courses/advanced/a17"> <span class="dir">← Назад</span> <span class="title">A17 · Token economics через модальности</span> </a> <a href="/vibesamurai-site/courses/advanced/a19"> <span class="dir">Дальше →</span> <span class="title">A19 · Security в творческой студии</span> </a> </nav> </main> </div> <script type="module">
+    import { gatingEnabled } from '../lib/supabase';
+    import { fetchChapter } from '../lib/auth';
+
+    const base = import.meta.env.BASE_URL;
+    let mermaidLib = null;
+
+    function scopeOf(root) {
+      return root === document ? document.querySelector('.reader-main') : root;
+    }
+
+    function addCopyBtns(root) {
+      const scope = scopeOf(root); if (!scope) return;
+      scope.querySelectorAll('pre').forEach((pre) => {
+        if (pre.closest('.code-tabs')) return;
+        if (pre.querySelector('.copy-btn')) return;
+        const btn = document.createElement('button');
+        btn.className = 'copy-btn';
+        btn.textContent = 'copy';
+        btn.addEventListener('click', async () => {
+          const code = pre.querySelector('code')?.textContent ?? pre.textContent ?? '';
+          await navigator.clipboard.writeText(code.trimEnd());
+          btn.textContent = '✓ copied';
+          setTimeout(() => { btn.textContent = 'copy'; }, 1600);
+        });
+        pre.appendChild(btn);
+      });
+    }
+
+    function tightenMermaidSvgs(retries = 6) {
+      let pending = false;
+      document.querySelectorAll('.mermaid svg').forEach((svg) => {
+        if (svg.dataset.tightened === '1') return;
+        try {
+          const bbox = svg.getBBox();
+          if (!bbox || bbox.width === 0) { pending = true; return; }
+          const pad = 6;
+          svg.setAttribute('viewBox',
+            `${bbox.x - pad} ${bbox.y - pad} ${bbox.width + pad * 2} ${bbox.height + pad * 2}`);
+          svg.removeAttribute('height');
+          svg.style.height = 'auto';
+          svg.style.maxWidth = '100%';
+          svg.style.display = 'block';
+          svg.dataset.tightened = '1';
+        } catch (e) { pending = true; }
+      });
+      if (pending && retries > 0) setTimeout(() => tightenMermaidSvgs(retries - 1), 120);
+    }
+
+    async function ensureMermaid() {
+      if (mermaidLib) return mermaidLib;
+      const mod = await import('https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs');
+      mermaidLib = mod.default;
+      mermaidLib.initialize({
+        startOnLoad: false, theme: 'neutral',
+        themeVariables: {
+          fontFamily: 'JetBrains Mono, ui-monospace, monospace',
+          primaryColor: '#f5f5f5', primaryBorderColor: '#222',
+          primaryTextColor: '#111', lineColor: '#444',
+        },
+        flowchart: { curve: 'basis', padding: 12, useMaxWidth: true },
+      });
+      return mermaidLib;
+    }
+
+    async function renderMermaid(root) {
+      const scope = scopeOf(root); if (!scope) return;
+      const matches = scope.querySelectorAll(
+        'pre[data-language="mermaid"], pre.language-mermaid, code.language-mermaid'
+      );
+      if (!matches.length) return;
+      matches.forEach((el) => {
+        const block = el.tagName === 'CODE' ? el.closest('pre') || el : el;
+        const codeEl = block.querySelector('code') || block;
+        const wrap = document.createElement('div');
+        wrap.className = 'mermaid';
+        wrap.textContent = codeEl.textContent;
+        block.replaceWith(wrap);
+      });
+      try {
+        const m = await ensureMermaid();
+        await m.run();
+        tightenMermaidSvgs();
+      } catch (err) {
+        console.warn('mermaid failed', err);
+        document.querySelectorAll('.mermaid:not(:has(svg))').forEach((el) => { el.style.display = 'none'; });
+      }
+    }
+
+    async function enhance(root = document) {
+      addCopyBtns(root);
+      await renderMermaid(root);
+    }
+
+    function paywallHtml(required, needLogin) {
+      const label = { beginner: 'Beginner (300 ₽)', middle: 'Beginner + Middle (500 ₽)', all: 'Весь пакет (700 ₽)' }[required] || '';
+      return `<div class="paywall">
+        <div class="paywall-ic">🔒</div>
+        <h3>Эта глава — в платном доступе</h3>
+        <p>Нужен тариф: <strong>${label}</strong>. Доступ навсегда, без подписки.</p>
+        ${needLogin ? '<p>Войди через Google и оформи доступ — продолжишь с любого устройства.</p>' : ''}
+        <a class="paywall-btn" href="${base}pricing">Открыть доступ →</a>
+        <a class="paywall-link" href="${base}account">Войти / мой аккаунт</a>
+      </div>`;
+    }
+
+    async function gatedFlow(mount) {
+      const slug = mount.dataset.slug;
+      const required = mount.dataset.required || 'beginner';
+      mount.innerHTML = '<p class="gate-msg">Проверяем доступ…</p>';
+      const res = await fetchChapter(slug);
+      if (res.ok) {
+        mount.innerHTML = res.html;
+        await enhance(mount);
+      } else if (res.status === 401) {
+        mount.innerHTML = paywallHtml(required, true);
+      } else if (res.status === 402) {
+        mount.innerHTML = paywallHtml(res.requiredTier || required, false);
+      } else {
+        mount.innerHTML = '<p class="gate-msg">Не удалось загрузить главу. Обнови страницу.</p>';
+      }
+    }
+
+    const mount = document.getElementById('gated-mount');
+    if (mount && gatingEnabled) gatedFlow(mount);
+    else enhance(document);
+  </script> </body> </html>
