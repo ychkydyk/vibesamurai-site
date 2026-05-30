@@ -79,27 +79,393 @@
 <span class="line"><span>   (один раз — терпим        prompt caching       локальная модель</span></span>
 <span class="line"><span>    высокую цену)            (минимизируем</span></span>
 <span class="line"><span>                              стоимость)</span></span></code></pre>
-<h2 id="реальный-кейс-бренд-агентство-wedoit">Реальный кейс: бренд-агентство WEDOIT</h2>
-<p>Стек одного боевого проекта, разнесённый по ролям:</p>
+<h2 id="реальные-кейсы-из-индустрии">Реальные кейсы из индустрии</h2>
+<p>Чтобы карта стека не оставалась абстракцией — четыре публично задокументированные работы эталонных студий генеративного искусства и медиа-инсталляций.</p>
+<h3 id="refik-anadol-studio--unsupervised--machine-hallucinations-moma-20222023">Refik Anadol Studio — «Unsupervised — Machine Hallucinations: MoMA» (2022–2023)</h3>
+<p>Большая аудио-визуальная инсталляция в Музее современного искусства Нью-Йорка. Студия Анадола обучила StyleGAN-семейство моделей на датасете коллекции MoMA (около 138 000 произведений) и развернула real-time inference на LED-стене ~7 × 7 метров. Аудио синхронизировано с визуалом через OSC. Полгода непрерывной экспозиции с автоматическим перезапуском воркеров.</p>
+<p>Урок: на масштабе долгоидущей экспозиции <strong>обязательно прорабатывается uptime</strong> — система должна перезапускаться сама без оператора. Это тема модулей A11–A12: telemetry → control loop, heartbeat.</p>
+<h3 id="teamlab--borderless-tokyo--shanghai--jeddah">TeamLab — Borderless (Tokyo / Shanghai / Jeddah)</h3>
+<p>Японский коллектив TeamLab держит постоянные экспозиции в нескольких городах. Внутри — сетка из сотен GPU-станций, синхронизированных в единую сцену через TouchDesigner и Spout. AI-компонент: CV-распознавание движения посетителей плюс генеративные визуалы, реагирующие на поведение аудитории.</p>
+<p>Урок: это <strong>distributed real-time система</strong>. Одной мощной машины недостаточно — нужна сеть согласованных нод. Модули A9 (TD + StreamDiffusion) и A12 (telemetry) разбирают этот класс архитектуры детально.</p>
+<h3 id="ouchhh--poetic-ai-в-atelier-des-lumières-париж">OUCHHH — «Poetic AI» в Atelier des Lumières (Париж)</h3>
+<p>Турецкая студия проецировала AI-сгенерированный визуал, обученный на корпусе текстов Малларме, Бодлера и Рембо, на стены и пол парижского пространства Atelier des Lumières. Площадка использует порядка 140 проекторов с overlap-зонами, и медиа-сервер выравнивает кадры. ML-модель отдаёт поток в формате, совместимом с media-server.</p>
+<p>Урок: <strong>физический слой формирует limits ML-стека</strong>. Сто сорок проекторов требуют отдельной системы калибровки и выравнивания. Модель не может «генерить как хочется» — формат картинки диктует площадка.</p>
+<h3 id="random-international--rain-room-barbican--moma--lacma--sharjah">Random International — «Rain Room» (Barbican / MoMA / LACMA / Sharjah)</h3>
+<p>Британская студия Random International. Перформативная инсталляция, в которой дождь физически прекращается над посетителем. Технический слой: depth-камеры отслеживают людей, control-система отключает соответствующие секции water-grid в потолке.</p>
+<p>Урок: <strong>AI в инсталляции — это не обязательно генеративка</strong>. Здесь главное — CV-слой (трекинг людей) и control loop с физическим эффектором (соленоидами, регулирующими подачу воды). Класс работ, в которых LLM появляется только на подготовительной стадии — для документации, заявки, technical rider. Тема модулей A11 (interactive booths) и A12.</p>
+<h3 id="общий-скелет">Общий скелет</h3>
+<p>Все четыре кейса используют одинаковую архитектуру:</p>
+<ol>
+<li><strong>Pipeline orchestrator</strong> (часто TouchDesigner для real-time, Python для подготовки данных).</li>
+<li><strong>AI-модель</strong> под задачу — генеративная (Anadol, OUCHHH) или дискриминативная (Random, TeamLab CV).</li>
+<li><strong>Физический слой</strong> — проекторы / LED, сенсоры (RGB, depth), аудио-выход, опционально DMX-свет и physical actuators.</li>
+<li><strong>Control loop</strong> с heartbeat-мониторингом и автоматическим перезапуском.</li>
+</ol>
+<p>Это <strong>минимальная архитектура</strong> инсталляции класса «постоянная экспозиция» 2024–2026.</p>
+<h2 id="на-своём-масштабе-четыре-профиля">На своём масштабе: четыре профиля</h2>
+<p>У эталонных студий стек получается похожим, но <strong>профили нагрузки</strong> различаются. Тот же скелет масштабируется вниз так:</p>
+<h3 id="креативное-агентство-на-58-человек">Креативное агентство на 5–8 человек</h3>
+<p>Состав: 2 креативных директора, 2 дизайнера, 1 motion, 1 техно-художник, 1 продюсер. Делают immersive-кампании для брендов — projection mapping на product launch, иммерсивные стенды на выставках, AR-фильтры.</p>
+<p>Стек: FLUX 2 + Nano Banana 2 (статика), Seedance 2.0 + Kling 3.0 (motion offline), TouchDesigner + StreamDiffusion (real-time для стендов), Soul ID (повторяющиеся персонажи), Sonnet 4.6 + Opus 4.7 (текст).</p>
+<p>Месячно: ~$400–700 на генеративку. Капекс на железо: $15–30k (короткофокусный проектор 5000–7000 лм типа Epson EB-PU2200B, RealSense D455, рабочая станция с RTX 4090).</p>
+<h3 id="solo-media-artist-готовящий-заявки-на-open-calls">Solo media-artist, готовящий заявки на open calls</h3>
+<p>Один человек с авторской практикой. Готовит заявки на Ars Electronica, transmediale, NODE Forum, MUTEK, Lumen Prize. Месячный объём — одно-два полноценных portfolio-видео плюс рендер-документация.</p>
+<p>Стек: FLUX 2 + GPT Image 2 (визуалы для documentation и application form), Seedance 2.0 + Higgsfield Soul Cinema (cinematic teaser), TouchDesigner + StreamDiffusion (прототип инсталляции на 4070), Opus 4.7 (artist statement — важна языковая чистота), FLUX LoRA Fast (consistency между кадрами).</p>
+<p>Месячно: ~$80–150 на генеративку. Капекс: $5–10k (BenQ TH685 или аналогичный 3000 лм, Kinect Azure или RealSense, станция с RTX 4070/4080).</p>
+<h3 id="av-студия--vj-collective-на-25-человек">AV-студия / VJ-collective на 2–5 человек</h3>
+<p>Делают live visuals для events (концерты, festivals, club nights). Tour-ready setup.</p>
+<p>Стек: TouchDesigner как ядро, StreamDiffusion + FLUX schnell (AI-augmented visuals), Resolume Arena (классическая VJ-практика), FLUX 2 (подготовка сцен), Runway Gen-4 Unlimited (loop-видео в сэты), Soul ID (повторяющийся артист), Ableton Live + аудио-реактивные CHOPs в TD.</p>
+<p>Месячно: $200–500 на генеративку (большая часть real-time идёт на собственном железе). Капекс: $20–40k (1–3 проектора 8000+ лм для concert stage, MIDI-контроллер, RME Fireface UCX II или Focusrite Scarlett 18i20, ноутбук с RTX 4090).</p>
+<h3 id="резидент-инженер-при-галерее-или-музее">Резидент-инженер при галерее или музее</h3>
+<p>Один штатный технический специалист. Задачи: поддержка постоянных инсталляций, монтаж/демонтаж временных выставок, technical rider для приглашённых артистов, документация.</p>
+<p>Стек: TouchDesigner как универсальный «клей», MediaPipe + depth-камеры (touchpoint’ы и трекинг посетителей), Sonnet 4.6 (техническая документация и maintenance log), Claude Code (watchdog’и, скрипты автозапуска, утилиты для калибровки), LoRA-тренировка стиля института.</p>
+<p>Месячно: $200–400 на генеративку. Капекс: бюджет институции — проекторы 10 000+ лм класса Christie / Panasonic / Barco, mediaserver-машины (Modulo Player, Watchout), сеть DMX/Art-Net контроллеров (MA Lighting, ETC), multichannel аудио (RME MADIface XT).</p>
+<h3 id="сопоставление-с-большими-игроками">Сопоставление с большими игроками</h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Профиль</th><th>Доминирующая модальность</th><th>Месячно ген-ка</th><th>Capex железо</th><th>Code-agent доля</th></tr></thead><tbody><tr><td>Refik Anadol Studio</td><td>Video real-time + LED</td><td>6-значный</td><td>7-значный</td><td>Высокая (custom ML)</td></tr><tr><td>TeamLab</td><td>Video distributed + CV</td><td>6-значный</td><td>8-значный</td><td>Высокая (платформа)</td></tr><tr><td>OUCHHH</td><td>Video real-time + projection</td><td>6-значный per project</td><td>6-значный</td><td>Средняя</td></tr><tr><td>Random International</td><td>CV + physical actuators</td><td>6-значный per project</td><td>6-значный (custom rigs)</td><td>Средняя</td></tr><tr><td>Креативное агентство на 5–8</td><td>Image + offline video + TD стенды</td><td>$400–700</td><td>$15–30k</td><td>Низкая</td></tr><tr><td>Solo media-artist</td><td>Image + TD-прототип</td><td>$80–150</td><td>$5–10k</td><td>Низкая</td></tr><tr><td>VJ-collective на 2–5</td><td>Video real-time + TD</td><td>$200–500</td><td>$20–40k</td><td>Средняя</td></tr><tr><td>Резидент-инженер галереи</td><td>TD + CV + maintenance</td><td>$200–400</td><td>бюджет института</td><td>Средняя–высокая</td></tr></tbody></table>
+<p>Скелет архитектуры одинаков. Различаются профиль нагрузки, capex и доля code-agent деятельности. Чем меньше команда — тем чаще один человек переключается между ролями.</p>
+<h2 id="физический-слой-проекция-сенсоры-аудио-свет">Физический слой: проекция, сенсоры, аудио, свет</h2>
+<p>В отличие от чисто-software AI-продуктов, студии в инсталляционном домене <strong>обязаны</strong> держать в стеке физический слой. Эта часть не масштабируется как облачные API — нужны капитальные вложения, складское хранение, страховка и логистика.</p>
+<h3 id="проекция">Проекция</h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Класс</th><th>Световой поток</th><th>Применение</th><th>Примеры</th></tr></thead><tbody><tr><td>Pico / портативный</td><td>500–1500 лм</td><td>Прототипирование</td><td>ASUS ZenBeam, AAXA P7</td></tr><tr><td>Domestic / event</td><td>3000–5000 лм</td><td>Solo media-art, малые стенды</td><td>BenQ TH685, Epson EH-TW7000</td></tr><tr><td>Pro short-throw / installation</td><td>5000–10 000 лм</td><td>Креативные стенды, корпоративы</td><td>Epson EB-PU2200B, Panasonic PT-RZ12K</td></tr><tr><td>Концертный / fixed install</td><td>10 000–30 000 лм</td><td>Permanent installs в музеях, концерты</td><td>Christie 4K-HS, Panasonic PT-RQ50K, Barco UDM</td></tr></tbody></table>
+<p>Важные параметры помимо яркости: throw ratio (короткий — для projection mapping в малых пространствах), lens shift, edge blending, genlock (для синхронизации нескольких проекторов).</p>
+<h3 id="камеры-и-сенсоры">Камеры и сенсоры</h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Тип</th><th>Применение</th><th>Примеры</th></tr></thead><tbody><tr><td>RGB webcam</td><td>MediaPipe pose/face, простой CV</td><td>Logitech BRIO, Elgato Facecam</td></tr><tr><td>RGB DSLR / mirrorless</td><td>Documentation, видео-fed обратная связь</td><td>Sony A7 + Atomos Ninja V</td></tr><tr><td>Stereo depth</td><td>Трекинг людей, 3D-реконструкция сцены</td><td>Intel RealSense D455, Stereolabs ZED 2i</td></tr><tr><td>Time-of-flight depth</td><td>Точный depth в контролируемом свете</td><td>Kinect Azure (последняя поддерживаемая)</td></tr><tr><td>Event camera (DVS)</td><td>Низкая латентность для быстрого движения</td><td>Prophesee EVK4</td></tr><tr><td>AI-camera (on-device ML)</td><td>Edge inference без сетевого latency</td><td>Luxonis OAK-D / OAK-D-Pro / OAK-D-PoE</td></tr></tbody></table>
+<h3 id="аудио-интерфейсы">Аудио-интерфейсы</h3>
+<p>Для многоканального звука в инсталляциях — RME Fireface UCX II (8 in / 8 out), Focusrite Clarett+ 8Pre, или MADI-системы (RME MADIface XT) в распределённых установках. Для VJ — стерео-входа Focusrite Scarlett Solo хватает: забирается main signal с мастер-bus’а пульта.</p>
+<h3 id="управление-светом--dmx-512-и-art-net">Управление светом — DMX-512 и Art-Net</h3>
+<p>Свет в инсталляциях управляется через индустриальные протоколы:</p>
 <ul>
-<li><strong>Бренд-токены</strong> (палитра <code>#0A0A0A</code> + <code>#C8FF00</code>, Inter) — машинно-читаемый JSON, MDM design-system в Figma. Передаются в промпт-шаблоны.</li>
-<li><strong>Код сайта/КП</strong> — Claude Code пишет Astro + Tailwind на токенах, ревьювит Cursor.</li>
-<li><strong>Креатив для соцсетей</strong> — FLUX 2 для статики, Seedance 2.0 для motion, Higgsfield Soul Cinema если нужен ведущий с лицом.</li>
-<li><strong>Клиент-ревью</strong> — статический сайт (flag-review шаблон) + Cloudflare Worker + KV под лайки/комментарии. Каждое ревью клонируется за 30 минут.</li>
+<li><strong>DMX-512</strong> — классика, 5-pin XLR, до 512 каналов на универс.</li>
+<li><strong>Art-Net / sACN</strong> — сетевые протоколы поверх Ethernet, переносят несколько универсов. Поддерживаются TouchDesigner из коробки и большинством mediaserver’ов.</li>
 </ul>
-<p>Code agent работает с первым, вторым и четвёртым пунктом. Pipeline orchestrator — с третьим. Один проект — обе роли.</p>
+<p>Контроллеры — консоли MA Lighting / ETC; software — Lightkey, Q LAB. Световые приборы — Robe, Chauvet Professional, ETC Source Four. Для LED-стен отдельный класс (Absen, ROE Visual).</p>
+<h3 id="выбор-gpu-под-real-time-inference">Выбор GPU под real-time inference</h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>GPU</th><th>VRAM</th><th>Real-time StreamDiffusion + FLUX schnell</th><th>Применение</th></tr></thead><tbody><tr><td>RTX 4070</td><td>8/12 GB</td><td>~10 fps (512×512)</td><td>Solo-artist, прототипирование</td></tr><tr><td>RTX 4080 / 4080S</td><td>16 GB</td><td>~20 fps</td><td>Креативное агентство</td></tr><tr><td>RTX 4090</td><td>24 GB</td><td>~30–40 fps</td><td>AV-tour, мощная инсталляция</td></tr><tr><td>RTX 5090</td><td>32 GB</td><td>50+ fps</td><td>Permanent installation, demanding setups</td></tr><tr><td>L40 / A100 / H100</td><td>40–80 GB</td><td>Несколько потоков параллельно</td><td>Studio-server (Anadol/TeamLab class)</td></tr></tbody></table>
+<p>В малых командах часто <strong>обходятся одним мощным ноутбуком/станцией</strong>, в распределённых инсталляциях нужен studio-server с несколькими GPU плюс Linux + Docker для рендер-нод.</p>
+<h2 id="open-calls-и-фестивали">Open calls и фестивали</h2>
+<p>Креативно-инсталляционная индустрия в значительной части ориентирована на open calls — заявочные кампании фестивалей, резидентств, премий и грантовых программ. Это <strong>главный канал входа</strong> в индустрию для solo-художника и младшей студии.</p>
+<h3 id="премии-и-фестивали-премиум-класса">Премии и фестивали премиум-класса</h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Название</th><th>Город</th><th>Дедлайны</th><th>Спецификация</th></tr></thead><tbody><tr><td><strong>Prix Ars Electronica</strong></td><td>Linz (AT)</td><td>Февраль–март</td><td>Самая авторитетная премия в digital/AI-art. Категории Computer Animation, Digital Musics, Interactive Art, AI &#x26; Life Art.</td></tr><tr><td><strong>transmediale</strong></td><td>Berlin (DE)</td><td>Лето (за полгода до фестиваля в конце января)</td><td>Critical media art, exhibition + conference. Open call на работы и research papers.</td></tr><tr><td><strong>NODE Forum</strong></td><td>Frankfurt (DE)</td><td>Зависит от программы</td><td>Сообщество и фестиваль вокруг VVVV / TouchDesigner / generative arts.</td></tr><tr><td><strong>MUTEK</strong></td><td>Montreal / Mexico / Barcelona</td><td>Февраль–март (Montreal)</td><td>Электронная музыка + visual arts, A/V performances. Сильная open call программа.</td></tr><tr><td><strong>Sónar+D</strong></td><td>Barcelona (ES)</td><td>Декабрь–январь</td><td>Music + tech, частично open call, частично кураторская программа.</td></tr><tr><td><strong>CTM Festival</strong></td><td>Berlin (DE)</td><td>Лето</td><td>Adventurous music + sound art + commissions.</td></tr><tr><td><strong>Lumen Prize</strong></td><td>International (UK origin)</td><td>Лето</td><td>Annual digital/AI art prize, несколько категорий.</td></tr><tr><td><strong>The Wrong Biennale</strong></td><td>Online + global pavilions</td><td>Раз в два года</td><td>Распределённая онлайн-биеннале, low-barrier entry.</td></tr><tr><td><strong>Onassis Stegi</strong></td><td>Athens (GR)</td><td>Резидентские программы и production</td><td>Хорошие production-бюджеты для AV-работ.</td></tr></tbody></table>
+<h3 id="резидентские-программы">Резидентские программы</h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Программа</th><th>Локация</th><th>Длительность</th><th>Финансирование</th></tr></thead><tbody><tr><td>Akademie Schloss Solitude</td><td>Stuttgart (DE)</td><td>3–12 месяцев</td><td>Стипендия + студия</td></tr><tr><td>Pioneer Works</td><td>New York (US)</td><td>3 месяца</td><td>Studio + материалы</td></tr><tr><td>EMARE / EMAP</td><td>EU network</td><td>2–3 месяца</td><td>Production grant + studio</td></tr><tr><td>ZKM Karlsruhe</td><td>Karlsruhe (DE)</td><td>По проектам</td><td>Production support, доступ к оборудованию</td></tr><tr><td>NTU CCA Singapore</td><td>Singapore (SG)</td><td>3 месяца</td><td>Stipend</td></tr></tbody></table>
+<h3 id="что-от-вас-ждут-на-open-call">Что от вас ждут на open call</h3>
+<p>Минимальный application pack для AI/installation работы:</p>
+<ol>
+<li><strong>Artist statement</strong> (300–500 слов) — концепция работы, контекст в практике автора.</li>
+<li><strong>Project description</strong> (500–1000 слов) — техническое описание, что демонстрирует работа, риски.</li>
+<li><strong>Documentation video</strong> (2–5 минут) — монтаж демо + интервью + behind-the-scenes.</li>
+<li><strong>Technical rider</strong> — список оборудования (своё / запрашиваемое), пространственные требования, мощность, кабельная инфраструктура.</li>
+<li><strong>Budget breakdown</strong> — на что пойдут production-средства если их выделяют.</li>
+<li><strong>CV и портфолио</strong> — ссылки на предыдущие работы.</li>
+</ol>
+<p>Claude Opus 4.7 хорошо подходит для шлифовки artist statement — важна языковая точность. Но <strong>черновик пишет автор сам</strong>: кураторы считывают AI-сгенерированные тексты на глаз и относятся прохладно. ИИ полезен в подготовке documentation video (см. A5, A7, A8) и при составлении technical rider — Claude Code умеет сгенерировать аккуратный markdown по шаблону.</p>
 <h2 id="подводные-камни">Подводные камни</h2>
 <ul>
 <li><strong>«У нас же есть GPT, он всё умеет»</strong> — нет. На массовых задачах разница в стоимости и качестве между специализированными движками и универсальными LLM измеряется десятками раз.</li>
 <li><strong>«Локалка дешевле»</strong> — только если у вас есть свободное GPU-время и задача не требует свежей модели. На больших объёмах cloud Batch API часто выходит дешевле собственного железа с учётом амортизации.</li>
 <li><strong>«Подберём инструмент в процессе»</strong> — нельзя. Карту стека для проекта фиксируем до начала, иначе теряем бюджет на сравнение в проде.</li>
-<li><strong>Версии движков меняются раз в 1–3 месяца</strong> — карту пересматриваем перед каждым новым проектом. Возможные источники: arena leaderboards (image, video, code), changelogs провайдеров.</li>
+<li><strong>«Купим оборудование под конкретный проект»</strong> — capex на проекторы и сенсоры окупается только при многократном использовании. Под single-shot проект оборудование берут в аренду у профессиональных rental-компаний (AV Stumpfl, PRG, Eclipse Staging Services).</li>
+<li><strong>«AI-сгенерированный artist statement сэкономит время»</strong> — кураторы фестивалей считывают за минуту. Финальный текст — авторский; AI допустим как редактор стилистики.</li>
+<li><strong>Копирование стека крупного игрока 1-в-1</strong> — стек Refik Anadol Studio имеет смысл при её объёме production; для solo media-artist это оверинжиниринг и кассовый разрыв.</li>
+<li><strong>Версии движков меняются раз в 1–3 месяца</strong> — карту пересматриваем перед каждым новым проектом. Источники: arena leaderboards, changelogs провайдеров.</li>
 </ul>
 <h2 id="recap">Recap</h2>
 <ul>
-<li>Агент в студии — это или code agent, или pipeline orchestrator. Инструменты и метрики разные.</li>
-<li>Карта стека = таблица «модальность × инструмент × стоимость × кейс». Без неё бюджет не контролируется.</li>
+<li>Агент в студии — это или code agent, или pipeline orchestrator; в инсталляционной практике добавляется третья роль — оператор площадки.</li>
+<li>Карта стека = таблица «модальность × инструмент × стоимость × кейс» плюс физический слой (проекция / сенсоры / аудио / свет). Без неё бюджет не контролируется.</li>
 <li>Решение по трём осям: стоимость единицы, latency, privacy.</li>
+<li>Эталонные студии (Refik Anadol Studio, TeamLab, OUCHHH, Random International) и малые команды используют один скелет — различаются профили нагрузки, capex и доля code-agent деятельности.</li>
+<li>Open calls (Prix Ars Electronica, transmediale, MUTEK, NODE Forum, Lumen Prize, резидентства) — основной канал входа в индустрию.</li>
 <li>Карту пересматриваем перед каждым проектом; цены и версии меняются раз в 1–3 месяца.</li>
 </ul>
 <h2 id="дальше-посмотреть-и-почитать">Дальше: посмотреть и почитать</h2>
@@ -108,6 +474,11 @@
 <li><strong>Artificial Analysis</strong> — <a href="https://artificialanalysis.ai/">artificialanalysis.ai</a>. Независимые бенчмарки и цены по моделям всех модальностей.</li>
 <li><strong>FAL.ai model index</strong> — <a href="https://fal.ai/models">fal.ai/models</a>. Каталог image/video/audio движков с честными ценами за запуск.</li>
 <li><strong>Higgsfield docs</strong> — <a href="https://higgsfield.ai/docs">higgsfield.ai/docs</a>. Реальные тарифы Soul/Seedance/Marketing Studio.</li>
+<li><strong>Refik Anadol — Unsupervised (MoMA)</strong> — <a href="https://www.moma.org/calendar/exhibitions/5535">moma.org/calendar/exhibitions/5535</a>. Описание проекта.</li>
+<li><strong>TouchDesigner Docs</strong> — <a href="https://docs.derivative.ca/">docs.derivative.ca</a>. Базовая документация TD.</li>
+<li><strong>NODE Forum</strong> — <a href="https://nodeforum.org/">nodeforum.org</a>. Сообщество вокруг VVVV/TouchDesigner/generative arts.</li>
+<li><strong>Prix Ars Electronica</strong> — <a href="https://ars.electronica.art/prix/">ars.electronica.art/prix</a>. Архив победителей и категорий.</li>
+<li><strong>Art-Net spec</strong> — <a href="https://art-net.org.uk/">art-net.org.uk</a>. Open spec для управления светом поверх Ethernet.</li>
 </ul> <nav class="chapter-nav" data-astro-cid-a7sruqtr> <a href="/vibesamurai-site/courses/middle/m20" data-astro-cid-a7sruqtr> <span class="dir" data-astro-cid-a7sruqtr>← Назад</span> <span class="title" data-astro-cid-a7sruqtr>M20 · Финал Middle</span> </a> <a href="/vibesamurai-site/courses/advanced/a2" data-astro-cid-a7sruqtr> <span class="dir" data-astro-cid-a7sruqtr>Дальше →</span> <span class="title" data-astro-cid-a7sruqtr>A2 · Multi-modal контракт</span> </a> </nav> </main>  </div> <script type="module">
     import { gatingEnabled } from '../lib/supabase';
     import { fetchChapter } from '../lib/auth';
