@@ -58,7 +58,7 @@
 <li><code>--n-gpu-layers 28</code> — layers on GPU; the rest in RAM. 28 is the empirical max for a 4070 8 GB on IQ4_XS;</li>
 <li><code>--ctx-size 16384</code> — 16k context;</li>
 <li><code>--no-mmap</code> — on Windows sometimes improves stability under offload;</li>
-<li><code>--host 127.0.0.1</code> — mandatory (never <code>0.0.0.0</code>, rule <code>feedback_no_wildcard_http_server</code>).</li>
+<li><code>--host 127.0.0.1</code> — mandatory (never <code>0.0.0.0</code> — that immediately exposes the service to the local network).</li>
 </ul>
 <h2 id="openai-compatible-api">OpenAI-compatible API</h2>
 <p><code>llama-server</code> returns <code>/v1/chat/completions</code> in OpenAI format. Any client works without modification:</p>
@@ -78,7 +78,7 @@
 <span class="line"><span style="color:#8BE9FD;--shiki-dark:#8BE9FD">print</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">(resp.choices[</span><span style="color:#BD93F9;--shiki-dark:#BD93F9">0</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">].message.content)  </span><span style="color:#6272A4;--shiki-dark:#6272A4"># → "YES"</span></span></code></pre>
 <p>Which is why switching from Claude API to a local model is one URL.</p>
 <h2 id="real-case-curation-and-filtering">Real case: curation and filtering</h2>
-<p>From memory <code>feedback_local_qwen_for_analysis</code>: for curation / classification / verification use Qwen3.5-21B on <code>127.0.0.1:8080</code>, not Claude API.</p>
+<p>Practical pattern: for curation / classification / verification use Qwen3.5-21B on <code>127.0.0.1:8080</code>, not Claude API. Cost per 1000 calls: $0 locally vs ~$2–5 via Sonnet (depending on response size).</p>
 <p>Scenarios where the local Qwen is the default:</p>
 <ul>
 <li>post classification (category, tone, presence of links);</li>
@@ -145,7 +145,7 @@
 <li><strong>llama.cpp</strong> — <a href="https://github.com/ggerganov/llama.cpp">github.com/ggerganov/llama.cpp</a>. Inference engine; <code>llama-server</code> for OpenAI API.</li>
 <li><strong>Qwen3.5 series</strong> — <a href="https://github.com/QwenLM/Qwen">github.com/QwenLM/Qwen</a>. Family of open-weight models; DavidAU quantised variants on HF.</li>
 <li><strong>Hugging Face — quantisation guide</strong> — <a href="https://huggingface.co/docs/transformers/main/en/quantization/overview">huggingface.co/docs/transformers/main/en/quantization</a>. IQ vs Q vs K-quant — when which makes sense.</li>
-<li><strong>Memory: project_local_qwen35</strong> — exact configuration of the live local Qwen deployment.</li>
+<li><strong>QwenLM on GitHub</strong> — <a href="https://github.com/QwenLM/Qwen">github.com/QwenLM/Qwen</a>. The open-weight model family; the README has quantization and hardware recommendations.</li>
 </ul> <nav class="chapter-nav" data-astro-cid-a7sruqtr> <a href="/vibesamurai-site/courses/advanced/a13/en" data-astro-cid-a7sruqtr> <span class="dir" data-astro-cid-a7sruqtr>← Back</span> <span class="title" data-astro-cid-a7sruqtr>A13 · Private RAG for an archive</span> </a> <a href="/vibesamurai-site/courses/advanced/a15/en" data-astro-cid-a7sruqtr> <span class="dir" data-astro-cid-a7sruqtr>Next →</span> <span class="title" data-astro-cid-a7sruqtr>A15 · RunPod Flash + vLLM</span> </a> </nav> </main>  </div> <script type="module">
     import { gatingEnabled } from '../lib/supabase';
     import { fetchChapter } from '../lib/auth';

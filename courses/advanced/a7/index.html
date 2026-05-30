@@ -118,17 +118,18 @@
 <li>конкретные стили Gen-4 (есть характерный вид, который сложно воспроизвести в Seedance);</li>
 <li>web-only задачи (UI Runway удобнее API).</li>
 </ul>
-<p>Пайплайн <code>runway_queue</code> (memory <code>project_runway_queue</code>) — оркестратор Runway-видео через web-Playwright по умолчанию, Dev API как fallback. Non-aggressive: пауза между задачами, никаких параллельных вкладок.</p>
-<h2 id="реальный-кейс-svib-review">Реальный кейс: svib-review</h2>
-<p>Из практики (memory <code>project_svib_review</code>): 3 motion-вариации одного концепта (Крымский мост, под бренд WEDOIT) для клиент-ревью.</p>
+<p>Оркестратор Runway-видео обычно делают через web-Playwright по умолчанию, Dev API как fallback. Non-aggressive: пауза между задачами, никаких параллельных вкладок.</p>
+<h2 id="кейс-3-motion-вариации-для-клиент-ревью">Кейс: 3 motion-вариации для клиент-ревью</h2>
+<p>Типичная задача креативного агентства — показать клиенту 3 варианта одного motion-концепта до production. Покажу на условном брифе: бренду нужна 8-секундная анимация архитектурного объекта для baseline-серии лендингов.</p>
 <p>Стек:</p>
 <ul>
 <li><strong>Hero image</strong> — FLUX 2 на бренд-токенах (см. A5);</li>
 <li><strong>3 варианта motion</strong> — Seedance 2.0 image-to-video, image = hero, разные camera-промпты (slow push-in / static / drone arc);</li>
-<li><strong>Сборка превью</strong> — статический сайт по шаблону flag-review (memory <code>project_flag_review</code>) на Cloudflare Pages + Worker + KV для лайков и комментариев;</li>
-<li><strong>Деплой</strong> — <code>svib-review.pages.dev</code>, переиспользует Worker от flag-review.</li>
+<li><strong>Сборка превью</strong> — статический сайт по шаблону review-галереи на Cloudflare Pages + Worker + KV для лайков и комментариев клиента; шаблон клонируется за 30 минут под нового клиента.</li>
+<li><strong>Деплой</strong> — поддомен на <code>*.pages.dev</code>, отдельный Worker на ревью с rate-limiting на лайки.</li>
 </ul>
 <p>Время от брифа до ссылки клиенту: 3–4 часа. Стоимость генеративки на финальные Seedance-клипы: 3 × ~8 секунд × ~$0.27 ≈ $6.5 + ~$0.03 за hero FLUX 2 (1MP) = ~$6.5. Если черновики гнать на Kling 3.0 — добавится копейки.</p>
+<p>Формат «3 motion-варианта на одной странице с лайк-комментариями клиента» — де-факто стандарт client-review pitch’ей в 2024–2026 у студий уровня Field.io, Universal Everything, ManvsMachine.</p>
 <h2 id="tokenomics-gate-обязательно">Tokenomics gate (обязательно)</h2>
 <p>Видео — самая дорогая модальность. Считаем всегда:</p>
 <pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="python"><code><span class="line"><span style="color:#FF79C6;--shiki-dark:#FF79C6">def</span><span style="color:#50FA7B;--shiki-dark:#50FA7B"> estimate_video</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">(</span><span style="color:#FFB86C;--shiki-light-font-style:italic;--shiki-dark:#FFB86C;--shiki-dark-font-style:italic">engine</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">:</span><span style="color:#8BE9FD;--shiki-light-font-style:italic;--shiki-dark:#8BE9FD;--shiki-dark-font-style:italic"> str</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">, </span><span style="color:#FFB86C;--shiki-light-font-style:italic;--shiki-dark:#FFB86C;--shiki-dark-font-style:italic">clips</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">:</span><span style="color:#8BE9FD;--shiki-light-font-style:italic;--shiki-dark:#8BE9FD;--shiki-dark-font-style:italic"> int</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">, </span><span style="color:#FFB86C;--shiki-light-font-style:italic;--shiki-dark:#FFB86C;--shiki-dark-font-style:italic">sec_per_clip</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">:</span><span style="color:#8BE9FD;--shiki-light-font-style:italic;--shiki-dark:#8BE9FD;--shiki-dark-font-style:italic"> float</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">):</span></span>

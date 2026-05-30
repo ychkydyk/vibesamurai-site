@@ -43,7 +43,7 @@
 <ul>
 <li>Eval pipeline (A18) for selecting final variants.</li>
 <li>Tokenomics gate (A17) across all nodes.</li>
-<li>Client review template (flag-review) deployed.</li>
+<li>Client review template (review gallery on Cloudflare Pages + Worker + KV) deployed.</li>
 <li>KP / contract / generative licences reviewed.</li>
 <li>One-click commands for deploying for a new client.</li>
 </ul>
@@ -54,7 +54,7 @@
 <span class="line"><span>- brand tokens                link to brand@version</span></span>
 <span class="line"><span>- generative licences         what we generate, where commercial use is allowed</span></span>
 <span class="line"><span>- watermark / IP / faces      who signs off, which refs are forbidden</span></span>
-<span class="line"><span>- review                      number of rounds, method (flag-review)</span></span>
+<span class="line"><span>- review                      number of rounds, method (review gallery with likes/comments)</span></span>
 <span class="line"><span>- deadlines                   calendar, not "when ready"</span></span>
 <span class="line"><span>- cost                        generative + work + 15% buffer</span></span>
 <span class="line"><span>- artifact ownership          client / studio</span></span></code></pre>
@@ -99,12 +99,12 @@
 <h2 id="real-case-a-portfolio-of-interlinked-projects">Real case: a portfolio of interlinked projects</h2>
 <p>An example portfolio of interacting projects (from memory):</p>
 <ul>
-<li><strong>WEDOIT brand</strong> (<code>feedback_wedoit_brand</code>) — design system, template for KP/landing/review sites.</li>
-<li><strong>flag-review template</strong> (<code>project_flag_review</code>) — Cloudflare Pages + Worker + KV for client review; clonable in 30 minutes.</li>
-<li><strong>svib-review</strong> (<code>project_svib_review</code>) — concrete application of the flag-review template: Crimean Bridge, 3 Seedance 2.0 motion variants on brand.</li>
-<li><strong>lubava platform</strong> (<code>project_lubava_platform</code>) — artist with handpan/vocals, React+Vite+TS platform; Soul ID for a publication series.</li>
-<li><strong>tsoy_booth + fitting_kiosk + pmef_booth</strong> — three installations on one architectural base (STT+LLM+TTS+CV).</li>
-<li><strong>tg_archive</strong> (<code>project_tg_archive</code>) — private RAG as an operational tool.</li>
+<li><strong>“Atlas Studio” brand project</strong> (see A4) — design system as code, template for KP/landing/review sites; one <code>brand-tokens.json</code> consumed by code, Figma, and prompt templates.</li>
+<li><strong>Review gallery</strong> (see A7) — static on Cloudflare Pages + Worker + KV for client review with likes and comments; clones to a new client in 30 minutes.</li>
+<li><strong>3 motion variants for a client</strong> (see A7) — application of the review gallery: a FLUX 2 hero + 3 Seedance 2.0 image-to-video variants.</li>
+<li><strong>Performer artist identity pipeline</strong> (see A8) — Soul ID on 20 photos + a publication series (covers, motion pins, live-performance render); ~$3 fixed cost dissolves across the output.</li>
+<li><strong>Interactive installation stack</strong> (see A11) — three classes (voice kiosk, AI shop window, AI mirror) on one architectural base STT+LLM+TTS+CV.</li>
+<li><strong>Private RAG archive</strong> (see A13) — messenger channels + files + audio through BGE-M3 + LanceDB + Sonnet 4.6 as the studio’s operational tool.</li>
 </ul>
 <p>This isn’t “portfolio for show” — it’s one way Advanced topics tie into a full studio.</p>
 <h2 id="anti-patterns">Anti-patterns</h2>
@@ -146,8 +146,8 @@
 <h2 id="further-reading">Further reading</h2>
 <ul>
 <li><strong>All previous chapters</strong> — A1–A19. The capstone collects them into one build.</li>
-<li><strong>Memory: <code>feedback_wedoit_brand</code>, <code>project_flag_review</code>, <code>project_svib_review</code></strong> — operational templates of the studio.</li>
-<li><strong>Memory: <code>project_mcp_setup</code>, <code>project_security_monitor</code></strong> — the administrative base.</li>
+<li><strong>Anthropic Engineering — How we built our multi-agent research system</strong> — <a href="https://www.anthropic.com/engineering/multi-agent-research-system">anthropic.com/engineering/multi-agent-research-system</a>. Reference case for tying these pieces together in one R&#x26;D team.</li>
+<li><strong>Field.io / Universal Everything / Refik Anadol Studio</strong> — public case studies from these teams show how the same skeleton scales to enterprise level.</li>
 <li><strong>Anthropic — Building effective agents</strong> — <a href="https://www.anthropic.com/research/building-effective-agents">anthropic.com/research/building-effective-agents</a>. Closes the course’s conceptual loop: workflow vs agent, gates, the cost of error.</li>
 </ul> <nav class="chapter-nav" data-astro-cid-a7sruqtr> <a href="/vibesamurai-site/courses/advanced/a19/en" data-astro-cid-a7sruqtr> <span class="dir" data-astro-cid-a7sruqtr>← Back</span> <span class="title" data-astro-cid-a7sruqtr>A19 · Security in a creative studio</span> </a> <span data-astro-cid-a7sruqtr></span> </nav> </main>  </div> <script type="module">
     import { gatingEnabled } from '../lib/supabase';

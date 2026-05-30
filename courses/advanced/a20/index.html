@@ -43,7 +43,7 @@
 <ul>
 <li>Eval pipeline (A18) для отбора финальных вариантов.</li>
 <li>Tokenomics gate (A17) во всех узлах.</li>
-<li>Шаблон клиент-ревью (flag-review) развёрнут.</li>
+<li>Шаблон клиент-ревью (review-галерея на Cloudflare Pages + Worker + KV) развёрнут.</li>
 <li>KP / договор / лицензии генеративки проверены.</li>
 <li>One-click commands для развёртывания под нового клиента.</li>
 </ul>
@@ -54,7 +54,7 @@
 <span class="line"><span>- бренд-токены                     ссылка на brand@version</span></span>
 <span class="line"><span>- лицензии генеративки             что генерим, где разрешено коммерч.</span></span>
 <span class="line"><span>- watermark / IP / лица            кто согласовывает, какие референсы запрещены</span></span>
-<span class="line"><span>- ревью                            кол-во раундов, способ (flag-review)</span></span>
+<span class="line"><span>- ревью                            кол-во раундов, способ (review-галерея с лайк/комментариями)</span></span>
 <span class="line"><span>- сроки                            календарные, не «когда получится»</span></span>
 <span class="line"><span>- стоимость                        генеративка + работа + buffer 15%</span></span>
 <span class="line"><span>- собственность артефактов         клиент / студия</span></span></code></pre>
@@ -99,12 +99,12 @@
 <h2 id="реальный-кейс-связка-проектов-из-практики">Реальный кейс: связка проектов из практики</h2>
 <p>Пример работающего портфеля (взаимодействующие проекты из memory):</p>
 <ul>
-<li><strong>Бренд WEDOIT</strong> (<code>feedback_wedoit_brand</code>) — design system, шаблон KP/landing/review-сайтов.</li>
-<li><strong>flag-review шаблон</strong> (<code>project_flag_review</code>) — Cloudflare Pages + Worker + KV под клиент-ревью; клонируется за 30 минут.</li>
-<li><strong>svib-review</strong> (<code>project_svib_review</code>) — конкретное применение flag-review шаблона: Крымский мост, 3 motion-вариации Seedance 2.0 под бренд.</li>
-<li><strong>lubava platform</strong> (<code>project_lubava_platform</code>) — артистка с handpan/вокалом, React+Vite+TS платформа; Soul ID для серии публикаций.</li>
-<li><strong>tsoy_booth + fitting_kiosk + pmef_booth</strong> — три инсталляции на одной архитектурной базе (STT+LLM+TTS+CV).</li>
-<li><strong>tg_archive</strong> (<code>project_tg_archive</code>) — приватный RAG как операционный инструмент.</li>
+<li><strong>Бренд-проект «Atlas Studio»</strong> (см. A4) — design system as code, шаблон KP/landing/review-сайтов; единый <code>brand-tokens.json</code> потребляется кодом, Figma и промпт-шаблонами.</li>
+<li><strong>Review-галерея</strong> (см. A7) — статика на Cloudflare Pages + Worker + KV под клиент-ревью с лайками и комментариями; клонируется под нового клиента за 30 минут.</li>
+<li><strong>3 motion-вариации под клиента</strong> (см. A7) — применение review-галереи: hero FLUX 2 + 3 варианта Seedance 2.0 image-to-video.</li>
+<li><strong>Identity-pipeline артиста-перформера</strong> (см. A8) — Soul ID на 20 фото + серия публикаций (обложки, motion-pin, live-performance render); ~$3 fixed cost растворяется в выходе.</li>
+<li><strong>Стек интерактивных инсталляций</strong> (см. A11) — три класса (голосовой киоск, AI-витрина, ИИ-зеркало) на одной архитектурной базе STT+LLM+TTS+CV.</li>
+<li><strong>Приватный RAG-архив</strong> (см. A13) — мессенджер-каналы + файлы + аудио через BGE-M3 + LanceDB + Sonnet 4.6 как операционный инструмент студии.</li>
 </ul>
 <p>Это не «портфолио для красоты», это вариант того, как темы Advanced связываются в полноценную студию.</p>
 <h2 id="анти-паттерны">Анти-паттерны</h2>
@@ -146,8 +146,8 @@
 <h2 id="дальше-посмотреть-и-почитать">Дальше: посмотреть и почитать</h2>
 <ul>
 <li><strong>All previous chapters</strong> — A1–A19. Capstone собирает их в одну сборку.</li>
-<li><strong>Memory: <code>feedback_wedoit_brand</code>, <code>project_flag_review</code>, <code>project_svib_review</code></strong> — операционные шаблоны студии.</li>
-<li><strong>Memory: <code>project_mcp_setup</code>, <code>project_security_monitor</code></strong> — административная база.</li>
+<li><strong>Anthropic Engineering — How we built our multi-agent research system</strong> — <a href="https://www.anthropic.com/engineering/multi-agent-research-system">anthropic.com/engineering/multi-agent-research-system</a>. Эталонный кейс соединения этих элементов в одной R&#x26;D-команде.</li>
+<li><strong>Field.io / Universal Everything / Refik Anadol Studio</strong> — публичные case studies этих команд показывают, как тот же скелет разворачивается на enterprise-масштабе.</li>
 <li><strong>Anthropic — Building effective agents</strong> — <a href="https://www.anthropic.com/research/building-effective-agents">anthropic.com/research/building-effective-agents</a>. Закрытие смысловой петли курса: workflow vs agent, gates, цена ошибки.</li>
 </ul> <nav class="chapter-nav" data-astro-cid-a7sruqtr> <a href="/vibesamurai-site/courses/advanced/a19" data-astro-cid-a7sruqtr> <span class="dir" data-astro-cid-a7sruqtr>← Назад</span> <span class="title" data-astro-cid-a7sruqtr>A19 · Security в творческой студии</span> </a> <span data-astro-cid-a7sruqtr></span> </nav> </main>  </div> <script type="module">
     import { gatingEnabled } from '../lib/supabase';

@@ -78,27 +78,393 @@
 <span class="line"><span>   Runway Unlimited          Batch API LLM        StreamDiffusion +</span></span>
 <span class="line"><span>   (one-shot — eat            prompt caching       local model</span></span>
 <span class="line"><span>    the high price)           (minimise cost)</span></span></code></pre>
-<h2 id="real-case-wedoit-branding-agency">Real case: WEDOIT branding agency</h2>
-<p>Stack of a live project, split by role:</p>
+<h2 id="real-cases-from-the-industry">Real cases from the industry</h2>
+<p>To keep the stack map from staying abstract — four publicly documented works by reference studios in generative art and media installations.</p>
+<h3 id="refik-anadol-studio--unsupervised--machine-hallucinations-moma-20222023">Refik Anadol Studio — “Unsupervised — Machine Hallucinations: MoMA” (2022–2023)</h3>
+<p>A large-scale audio-visual installation at the Museum of Modern Art in New York. Anadol’s studio trained the StyleGAN family on MoMA’s collection dataset (~138,000 works) and ran real-time inference on a ~7×7 m LED wall. Audio was synchronised with visuals via OSC. Six months of continuous exhibition with automatic worker restart.</p>
+<p>Lesson: for a long-running show <strong>uptime is engineered explicitly</strong> — the system must restart itself without an operator. This is the topic of modules A11–A12: telemetry → control loop, heartbeat.</p>
+<h3 id="teamlab--borderless-tokyo--shanghai--jeddah">TeamLab — Borderless (Tokyo / Shanghai / Jeddah)</h3>
+<p>The Japanese collective TeamLab operates permanent exhibitions in several cities. Inside — a mesh of hundreds of GPU stations synchronised into one scene via TouchDesigner and Spout. The AI component: CV-based recognition of visitor movement plus generative visuals reacting to audience behaviour.</p>
+<p>Lesson: this is a <strong>distributed real-time system</strong>. One powerful machine isn’t enough — you need a network of coordinated nodes. Modules A9 (TD + StreamDiffusion) and A12 (telemetry) cover this class of architecture in detail.</p>
+<h3 id="ouchhh--poetic-ai-at-atelier-des-lumières-paris">OUCHHH — “Poetic AI” at Atelier des Lumières (Paris)</h3>
+<p>The Turkish studio projected AI-generated visuals trained on a corpus of Mallarmé, Baudelaire, and Rimbaud onto the walls and floor of the Atelier des Lumières space in Paris. The venue uses around 140 projectors with overlap zones, and the media server aligns the frames. The ML model outputs frames in a format compatible with the media server.</p>
+<p>Lesson: <strong>the physical layer constrains the ML stack</strong>. 140 projectors with overlap require a separate calibration and alignment system. The model can’t “generate however it likes” — the venue dictates the picture format.</p>
+<h3 id="random-international--rain-room-barbican--moma--lacma--sharjah">Random International — “Rain Room” (Barbican / MoMA / LACMA / Sharjah)</h3>
+<p>The British studio Random International. A performative installation in which the rain physically stops above a visitor. The technical layer: depth cameras track bodies, the control system shuts off corresponding sections of the water grid in the ceiling.</p>
+<p>Lesson: <strong>AI in an installation isn’t necessarily generative</strong>. The main thing here is a CV layer (tracking people) and a control loop with a physical effector (solenoids regulating water flow). This class of work opens an entire direction where the LLM only appears at the prep stage — for documentation, application, technical rider. Modules A11 (interactive booths) and A12 cover this.</p>
+<h3 id="the-common-skeleton">The common skeleton</h3>
+<p>All four cases use the same architecture:</p>
+<ol>
+<li><strong>Pipeline orchestrator</strong> (often TouchDesigner for real-time, Python for data prep).</li>
+<li><strong>AI model</strong> for the task — generative (Anadol, OUCHHH) or discriminative (Random, TeamLab CV).</li>
+<li><strong>Physical layer</strong> — projectors / LED, sensors (RGB, depth), audio output, optionally DMX-controlled light and physical actuators.</li>
+<li><strong>Control loop</strong> with heartbeat monitoring and automatic restart.</li>
+</ol>
+<p>This is the <strong>minimum architecture</strong> for an installation of the “permanent exhibition” class in 2024–2026.</p>
+<h2 id="on-your-own-scale-four-profiles">On your own scale: four profiles</h2>
+<p>At reference studios the stack looks similar, but the <strong>load profiles</strong> differ. The same skeleton scales down like this:</p>
+<h3 id="creative-agency-of-58-people">Creative agency of 5–8 people</h3>
+<p>Composition: 2 creative directors, 2 designers, 1 motion designer, 1 techno-artist, 1 producer. They produce immersive campaigns for brands — projection mapping for product launches, immersive stands at fairs, AR filters.</p>
+<p>Stack: FLUX 2 + Nano Banana 2 (stills), Seedance 2.0 + Kling 3.0 (offline motion), TouchDesigner + StreamDiffusion (real-time for stands), Soul ID (recurring characters), Sonnet 4.6 + Opus 4.7 (copy).</p>
+<p>Monthly: ~$400–700 on generative. Capex on hardware: $15–30k (short-throw 5000–7000 lm projector such as Epson EB-PU2200B, RealSense D455, workstation with RTX 4090).</p>
+<h3 id="solo-media-artist-preparing-open-call-submissions">Solo media artist preparing open-call submissions</h3>
+<p>One person with an authorial practice. Prepares submissions to Ars Electronica, transmediale, NODE Forum, MUTEK, Lumen Prize. Monthly volume — one or two full portfolio videos plus render documentation.</p>
+<p>Stack: FLUX 2 + GPT Image 2 (visuals for documentation and application forms), Seedance 2.0 + Higgsfield Soul Cinema (cinematic teaser), TouchDesigner + StreamDiffusion (installation prototype on a 4070), Opus 4.7 (artist statement — linguistic precision matters), FLUX LoRA Fast (consistency between documentation frames).</p>
+<p>Monthly: ~$80–150 on generative. Capex: $5–10k (BenQ TH685 or similar 3000-lm projector, Kinect Azure or RealSense, station with RTX 4070/4080).</p>
+<h3 id="av-studio--vj-collective-of-25">AV studio / VJ collective of 2–5</h3>
+<p>Live visuals for events (concerts, festivals, club nights). Tour-ready setup.</p>
+<p>Stack: TouchDesigner as the core, StreamDiffusion + FLUX schnell (AI-augmented visuals), Resolume Arena (classic VJ practice), FLUX 2 (scene prep), Runway Gen-4 Unlimited (loop video for sets), Soul ID (recurring artist), Ableton Live + audio-reactive CHOPs in TD.</p>
+<p>Monthly: $200–500 on generative (most real-time runs on owned hardware). Capex: $20–40k (1–3 projectors 8000+ lm for concert stage, MIDI controller, RME Fireface UCX II or Focusrite Scarlett 18i20, laptop with RTX 4090).</p>
+<h3 id="resident-engineer-at-a-gallery-or-museum">Resident engineer at a gallery or museum</h3>
+<p>One in-house technical specialist. Tasks: maintenance of permanent installations, mounting/dismounting of temporary exhibitions, technical riders for invited artists, documentation.</p>
+<p>Stack: TouchDesigner as a universal “glue,” MediaPipe + depth cameras (touchpoints and visitor tracking), Sonnet 4.6 (technical documentation and maintenance log), Claude Code (watchdogs, autorun scripts, projector calibration utilities), LoRA training of the institution’s style.</p>
+<p>Monthly: $200–400 on generative. Capex: institution budget — 10,000+ lm projectors of the Christie / Panasonic / Barco class, media-server machines (Modulo Player, Watchout), a network of DMX/Art-Net controllers (MA Lighting, ETC), multichannel audio (RME MADIface XT).</p>
+<h3 id="side-by-side-with-the-big-players">Side-by-side with the big players</h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Profile</th><th>Dominant modality</th><th>Monthly gen</th><th>Hardware capex</th><th>Code-agent share</th></tr></thead><tbody><tr><td>Refik Anadol Studio</td><td>Real-time video + LED</td><td>6-figure</td><td>7-figure</td><td>High (custom ML)</td></tr><tr><td>TeamLab</td><td>Distributed video + CV</td><td>6-figure</td><td>8-figure</td><td>High (platform)</td></tr><tr><td>OUCHHH</td><td>Real-time video + projection</td><td>6-figure per project</td><td>6-figure</td><td>Medium</td></tr><tr><td>Random International</td><td>CV + physical actuators</td><td>6-figure per project</td><td>6-figure (custom rigs)</td><td>Medium</td></tr><tr><td>Creative agency 5–8</td><td>Image + offline video + TD stands</td><td>$400–700</td><td>$15–30k</td><td>Low</td></tr><tr><td>Solo media artist</td><td>Image + TD prototype</td><td>$80–150</td><td>$5–10k</td><td>Low</td></tr><tr><td>VJ collective 2–5</td><td>Real-time video + TD</td><td>$200–500</td><td>$20–40k</td><td>Medium</td></tr><tr><td>Gallery resident engineer</td><td>TD + CV + maintenance</td><td>$200–400</td><td>institution budget</td><td>Medium–High</td></tr></tbody></table>
+<p>The architectural skeleton is the same. What differs is the load profile, the capex and the share of code-agent work. The smaller the team, the more often one person switches between roles.</p>
+<h2 id="physical-layer-projection-sensors-audio-light">Physical layer: projection, sensors, audio, light</h2>
+<p>Unlike pure-software AI products, studios in the installation domain <strong>must</strong> keep a physical layer in their stack. This part doesn’t scale like cloud APIs — it requires capital investment, storage, insurance, logistics.</p>
+<h3 id="projection">Projection</h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Class</th><th>Lumens</th><th>Use</th><th>Examples</th></tr></thead><tbody><tr><td>Pico / portable</td><td>500–1500 lm</td><td>Prototyping</td><td>ASUS ZenBeam, AAXA P7</td></tr><tr><td>Domestic / event</td><td>3000–5000 lm</td><td>Solo media art, small stands</td><td>BenQ TH685, Epson EH-TW7000</td></tr><tr><td>Pro short-throw / installation</td><td>5000–10,000 lm</td><td>Creative stands, corporate</td><td>Epson EB-PU2200B, Panasonic PT-RZ12K</td></tr><tr><td>Concert / fixed install</td><td>10,000–30,000 lm</td><td>Museum permanent installs, concerts</td><td>Christie 4K-HS, Panasonic PT-RQ50K, Barco UDM</td></tr></tbody></table>
+<p>Important parameters besides brightness: throw ratio (short for projection mapping in small spaces), lens shift, edge blending, genlock (for syncing multiple projectors).</p>
+<h3 id="cameras-and-sensors">Cameras and sensors</h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Type</th><th>Use</th><th>Examples</th></tr></thead><tbody><tr><td>RGB webcam</td><td>MediaPipe pose/face, simple CV</td><td>Logitech BRIO, Elgato Facecam</td></tr><tr><td>RGB DSLR / mirrorless</td><td>Documentation, video-fed feedback</td><td>Sony A7 + Atomos Ninja V</td></tr><tr><td>Stereo depth</td><td>Person tracking, 3D scene reconstruction</td><td>Intel RealSense D455, Stereolabs ZED 2i</td></tr><tr><td>Time-of-flight depth</td><td>Accurate depth in controlled light</td><td>Kinect Azure (latest supported)</td></tr><tr><td>Event camera (DVS)</td><td>Low latency for fast motion</td><td>Prophesee EVK4</td></tr><tr><td>AI camera (on-device ML)</td><td>Edge inference without network latency</td><td>Luxonis OAK-D / OAK-D-Pro / OAK-D-PoE</td></tr></tbody></table>
+<h3 id="audio-interfaces">Audio interfaces</h3>
+<p>For multichannel sound in installations — RME Fireface UCX II (8 in / 8 out), Focusrite Clarett+ 8Pre, or MADI systems (RME MADIface XT) in distributed setups. For VJ work, a Focusrite Scarlett Solo stereo input is enough: it taps the main signal from the master bus of the mixer.</p>
+<h3 id="lighting-control--dmx-512-and-art-net">Lighting control — DMX-512 and Art-Net</h3>
+<p>Lights in installations are controlled through industrial protocols:</p>
 <ul>
-<li><strong>Brand tokens</strong> (palette <code>#0A0A0A</code> + <code>#C8FF00</code>, Inter) — machine-readable JSON, MDM design system in Figma. Fed into prompt templates.</li>
-<li><strong>Site / KP code</strong> — Claude Code writes Astro + Tailwind on tokens, Cursor reviews.</li>
-<li><strong>Social media creative</strong> — FLUX 2 for stills, Seedance 2.0 for motion, Higgsfield Soul Cinema when a host’s face is needed.</li>
-<li><strong>Client review</strong> — static site (flag-review template) + Cloudflare Worker + KV for likes/comments. Each review is cloned in 30 minutes.</li>
+<li><strong>DMX-512</strong> — the classic 5-pin XLR protocol, up to 512 channels per universe.</li>
+<li><strong>Art-Net / sACN</strong> — network protocols on top of Ethernet, carrying multiple DMX universes. Supported by TouchDesigner out of the box and by most media servers.</li>
 </ul>
-<p>Code agent owns points 1, 2 and 4. Pipeline orchestrator owns 3. One project — both roles.</p>
+<p>Controllers — MA Lighting / ETC consoles; software — Lightkey, Q LAB. Fixtures — Robe, Chauvet Professional, ETC Source Four. For LED walls there’s a separate class (Absen, ROE Visual).</p>
+<h3 id="choosing-a-gpu-for-real-time-inference">Choosing a GPU for real-time inference</h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>GPU</th><th>VRAM</th><th>Real-time StreamDiffusion + FLUX schnell</th><th>Use</th></tr></thead><tbody><tr><td>RTX 4070</td><td>8/12 GB</td><td>~10 fps (512×512)</td><td>Solo artist, prototyping</td></tr><tr><td>RTX 4080 / 4080S</td><td>16 GB</td><td>~20 fps</td><td>Creative agency</td></tr><tr><td>RTX 4090</td><td>24 GB</td><td>~30–40 fps</td><td>AV tour, demanding installation</td></tr><tr><td>RTX 5090</td><td>32 GB</td><td>50+ fps</td><td>Permanent installation, demanding setups</td></tr><tr><td>L40 / A100 / H100</td><td>40–80 GB</td><td>Several streams in parallel</td><td>Studio server (Anadol/TeamLab class)</td></tr></tbody></table>
+<p>Small teams often <strong>get by with a single strong laptop or workstation</strong>; distributed installations need a studio server with several GPUs plus Linux + Docker for render nodes.</p>
+<h2 id="open-calls-and-festivals">Open calls and festivals</h2>
+<p>The creative-installation industry is largely organised around open calls — submission campaigns for festivals, residencies, prizes, and grant programmes. This is the <strong>main entry channel</strong> for a solo artist and a junior studio.</p>
+<h3 id="premium-tier-prizes-and-festivals">Premium-tier prizes and festivals</h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Name</th><th>City</th><th>Deadlines</th><th>Notes</th></tr></thead><tbody><tr><td><strong>Prix Ars Electronica</strong></td><td>Linz (AT)</td><td>February–March</td><td>The most authoritative prize in digital/AI art. Categories Computer Animation, Digital Musics, Interactive Art, AI &#x26; Life Art.</td></tr><tr><td><strong>transmediale</strong></td><td>Berlin (DE)</td><td>Summer (half a year before the late-January festival)</td><td>Critical media art, exhibition + conference. Open call for works and research papers.</td></tr><tr><td><strong>NODE Forum</strong></td><td>Frankfurt (DE)</td><td>Depends on the programme</td><td>Community and festival around VVVV / TouchDesigner / generative arts.</td></tr><tr><td><strong>MUTEK</strong></td><td>Montreal / Mexico / Barcelona</td><td>February–March (Montreal)</td><td>Electronic music + visual arts, A/V performances. Strong open-call programme.</td></tr><tr><td><strong>Sónar+D</strong></td><td>Barcelona (ES)</td><td>December–January</td><td>Music + tech, partly open call, partly curated.</td></tr><tr><td><strong>CTM Festival</strong></td><td>Berlin (DE)</td><td>Summer</td><td>Adventurous music + sound art + commissions.</td></tr><tr><td><strong>Lumen Prize</strong></td><td>International (UK origin)</td><td>Summer</td><td>Annual digital/AI art prize, several categories.</td></tr><tr><td><strong>The Wrong Biennale</strong></td><td>Online + global pavilions</td><td>Every two years</td><td>Distributed online biennial, low-barrier entry.</td></tr><tr><td><strong>Onassis Stegi</strong></td><td>Athens (GR)</td><td>Residencies and production</td><td>Strong production budgets for AV work.</td></tr></tbody></table>
+<h3 id="residency-programmes">Residency programmes</h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Programme</th><th>Location</th><th>Length</th><th>Funding</th></tr></thead><tbody><tr><td>Akademie Schloss Solitude</td><td>Stuttgart (DE)</td><td>3–12 months</td><td>Stipend + studio</td></tr><tr><td>Pioneer Works</td><td>New York (US)</td><td>3 months</td><td>Studio + materials</td></tr><tr><td>EMARE / EMAP</td><td>EU network</td><td>2–3 months</td><td>Production grant + studio</td></tr><tr><td>ZKM Karlsruhe</td><td>Karlsruhe (DE)</td><td>Per project</td><td>Production support, equipment access</td></tr><tr><td>NTU CCA Singapore</td><td>Singapore (SG)</td><td>3 months</td><td>Stipend</td></tr></tbody></table>
+<h3 id="what-they-expect-on-an-open-call">What they expect on an open call</h3>
+<p>A minimum application pack for an AI/installation work:</p>
+<ol>
+<li><strong>Artist statement</strong> (300–500 words) — concept of the work, context in the artist’s practice.</li>
+<li><strong>Project description</strong> (500–1000 words) — technical description, what the work demonstrates, risks.</li>
+<li><strong>Documentation video</strong> (2–5 minutes) — demo cut + interview + behind-the-scenes.</li>
+<li><strong>Technical rider</strong> — equipment list (owned / requested), spatial requirements, power, cable infrastructure.</li>
+<li><strong>Budget breakdown</strong> — what production funds will be spent on if granted.</li>
+<li><strong>CV and portfolio</strong> — links to previous work.</li>
+</ol>
+<p>Claude Opus 4.7 is well-suited for polishing the artist statement — linguistic precision matters. But <strong>the artist writes the draft themselves</strong>: festival curators read AI-generated text “at a glance” and treat it coolly. AI is useful in preparing the documentation video (see A5, A7, A8) and when assembling the technical rider — Claude Code can produce a neat markdown to a template.</p>
 <h2 id="pitfalls">Pitfalls</h2>
 <ul>
 <li><strong>“We have GPT, it can do everything”</strong> — no. At scale, the gap between specialised engines and universal LLMs is 10–100× in cost and quality.</li>
 <li><strong>“Local is cheaper”</strong> — only if you have free GPU time and don’t need a fresh model. At volume cloud Batch API often beats your own hardware once you amortise the silicon.</li>
 <li><strong>“We’ll pick tools as we go”</strong> — no. Lock the stack map for a project before you start, or you’ll burn budget benchmarking in production.</li>
+<li><strong>“We’ll buy hardware for this specific project”</strong> — capex on projectors and sensors only pays off with repeated use. For a single-shot project, rent from professional rental companies (AV Stumpfl, PRG, Eclipse Staging Services).</li>
+<li><strong>“An AI-generated artist statement saves time”</strong> — festival curators spot it in a minute. The final text is authorial; AI is admissible as a style editor.</li>
+<li><strong>Copying a big player’s stack one-to-one</strong> — Refik Anadol Studio’s stack only makes sense at its production volume; for a solo media artist it’s overengineering and a cash gap.</li>
 <li><strong>Engine versions change every 1–3 months</strong> — re-review the map before each new project. Source: vendor changelogs + arena leaderboards (image, video, code).</li>
 </ul>
 <h2 id="recap">Recap</h2>
 <ul>
-<li>The agent in a studio is either a code agent or a pipeline orchestrator. Different tooling, different metrics.</li>
-<li>Stack map = “modality × tool × cost × case” table. Without it, budget is uncontrolled.</li>
+<li>The agent in a studio is either a code agent or a pipeline orchestrator; in installation practice a third role is added — the on-site operator.</li>
+<li>Stack map = “modality × tool × cost × case” table plus the physical layer (projection / sensors / audio / light). Without it, the budget isn’t controlled.</li>
 <li>Decision along three axes: cost per unit, latency, privacy.</li>
+<li>Reference studios (Refik Anadol Studio, TeamLab, OUCHHH, Random International) and small teams use the same skeleton — what differs is the load profile, capex, and share of code-agent work.</li>
+<li>Open calls (Prix Ars Electronica, transmediale, MUTEK, NODE Forum, Lumen Prize, residencies) are the main entry channel into the industry.</li>
 <li>Re-review the map before each project; vendor prices and model versions shift every 1–3 months.</li>
 </ul>
 <h2 id="further-reading">Further reading</h2>
@@ -107,6 +473,11 @@
 <li><strong>Artificial Analysis</strong> — <a href="https://artificialanalysis.ai/">artificialanalysis.ai</a>. Independent benchmarks and prices across all modalities.</li>
 <li><strong>FAL.ai model index</strong> — <a href="https://fal.ai/models">fal.ai/models</a>. Catalogue of image/video/audio engines with honest per-call costs.</li>
 <li><strong>Higgsfield docs</strong> — <a href="https://higgsfield.ai/docs">higgsfield.ai/docs</a>. Real tariffs for Soul / Seedance / Marketing Studio.</li>
+<li><strong>Refik Anadol — Unsupervised (MoMA)</strong> — <a href="https://www.moma.org/calendar/exhibitions/5535">moma.org/calendar/exhibitions/5535</a>. Project description.</li>
+<li><strong>TouchDesigner Docs</strong> — <a href="https://docs.derivative.ca/">docs.derivative.ca</a>. Base TD documentation.</li>
+<li><strong>NODE Forum</strong> — <a href="https://nodeforum.org/">nodeforum.org</a>. Community around VVVV / TouchDesigner / generative arts.</li>
+<li><strong>Prix Ars Electronica</strong> — <a href="https://ars.electronica.art/prix/">ars.electronica.art/prix</a>. Archive of winners and categories.</li>
+<li><strong>Art-Net spec</strong> — <a href="https://art-net.org.uk/">art-net.org.uk</a>. Open spec for lighting control over Ethernet.</li>
 </ul> <nav class="chapter-nav" data-astro-cid-a7sruqtr> <a href="/vibesamurai-site/courses/middle/m20/en" data-astro-cid-a7sruqtr> <span class="dir" data-astro-cid-a7sruqtr>← Back</span> <span class="title" data-astro-cid-a7sruqtr>M20 · Middle finale</span> </a> <a href="/vibesamurai-site/courses/advanced/a2/en" data-astro-cid-a7sruqtr> <span class="dir" data-astro-cid-a7sruqtr>Next →</span> <span class="title" data-astro-cid-a7sruqtr>A2 · Multi-modal pipeline contract</span> </a> </nav> </main>  </div> <script type="module">
     import { gatingEnabled } from '../lib/supabase';
     import { fetchChapter } from '../lib/auth';

@@ -73,19 +73,19 @@
 <li><strong>Нужен LLM</strong>: «несколько людей разной возрастной группы — какой message показать», «активность сцены изменилась — переписать subtitle для текущего видео».</li>
 </ul>
 <p>Кэш ответов LLM на event-key обязателен — иначе платите за повторяющиеся ситуации.</p>
-<h2 id="реальный-кейс-pmef-neuromirror">Реальный кейс: PMEF neuromirror</h2>
-<p>Из memory <code>project_pmef_neuromirror</code>: ИИ-зеркало для ПМЭФ. Галерея <code>https://neuromirror-mockups.pages.dev</code>, backend <code>C:\Rendered\AK\ayna\ayna</code>.</p>
+<h2 id="кейс-ии-зеркало-для-бизнес-форума">Кейс: ИИ-зеркало для бизнес-форума</h2>
+<p>Типовая инсталляция для крупного форума (бизнес, культурный, технологический): ИИ-зеркало на входе в павильон, посетитель подходит → CV классифицирует по архетипам → выводится персонализированная реплика и визуальная композиция.</p>
 <p>Петля:</p>
 <ul>
-<li><strong>Sensor</strong> — камера + CV (6 архетипов из <code>content/archetypes.json</code>).</li>
+<li><strong>Sensor</strong> — камера + CV (например, 6 архетипов из заранее подготовленного JSON-каталога).</li>
 <li><strong>Event</strong> — <code>person.archetype_matched</code> с <code>archetype_id</code>.</li>
 <li><strong>Rule</strong> — каждому архетипу соответствует подобранный текст и визуал; LLM подключается только для генерации «персонализированной» части реплики.</li>
 <li><strong>Action</strong> — визуал зеркала меняется (фон, типографика, motion).</li>
 </ul>
-<p>Spec для CV-подрядчика: <code>spec/{API,METRICS,WS_PROTOCOL}.md</code> — собственный контракт WS-протокола, чтобы CV-команда работала независимо.</p>
+<p>Spec для CV-подрядчика: внутренний <code>spec/{API,METRICS,WS_PROTOCOL}.md</code> — собственный контракт WS-протокола, чтобы CV-команда работала независимо от ML-стороны.</p>
 <h2 id="td-main-thread-hang-диагностика">TD main-thread hang: диагностика</h2>
-<p>Из практики (memory <code>project_td_audioreact_hang</code>): Clode_React.toe залипает на <code>:44444</code>/<code>:7878</code> даже <strong>без</strong> WS-клиента.</p>
-<p>Чек-лист (повторяет диагностику из memory):</p>
+<p>Известная проблема: TD-проект залипает на WS-порте (типично <code>:44444</code>/<code>:7878</code>) даже <strong>без</strong> активного WS-клиента.</p>
+<p>Чек-лист:</p>
 <ol>
 <li><strong>par_bindings</strong> — все ли параметры разрешены? Висящий bind на отсутствующий operator валит main thread.</li>
 <li><strong>pack_json</strong> — не парсится ли невалидный JSON синхронно? Перенесите в <code>td.run('...', delayFrames=1)</code>.</li>

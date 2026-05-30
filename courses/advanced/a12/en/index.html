@@ -73,19 +73,19 @@
 <li><strong>LLM</strong>: “several people of different age groups — which message to show,” “scene activity changed — rewrite the subtitle for the current video.”</li>
 </ul>
 <p>A response cache keyed on event-key is mandatory — otherwise you pay for recurring situations.</p>
-<h2 id="real-case-pmef-neuromirror">Real case: PMEF neuromirror</h2>
-<p>From memory <code>project_pmef_neuromirror</code>: an AI mirror for the SPIEF. Gallery <code>https://neuromirror-mockups.pages.dev</code>, backend <code>C:\Rendered\AK\ayna\ayna</code>.</p>
+<h2 id="case-ai-mirror-for-a-business-forum">Case: AI mirror for a business forum</h2>
+<p>A typical installation for a large forum (business, cultural, technology): an AI mirror at the pavilion entrance, a visitor approaches → CV classifies them by archetype → a personalised reply and visual composition is displayed.</p>
 <p>Loop:</p>
 <ul>
-<li><strong>Sensor</strong> — camera + CV (6 archetypes from <code>content/archetypes.json</code>).</li>
+<li><strong>Sensor</strong> — camera + CV (e.g. 6 archetypes from a pre-prepared JSON catalogue).</li>
 <li><strong>Event</strong> — <code>person.archetype_matched</code> with <code>archetype_id</code>.</li>
 <li><strong>Rule</strong> — each archetype has matched text and visuals; the LLM is invoked only to generate the “personalised” portion of the reply.</li>
 <li><strong>Action</strong> — the mirror’s visual changes (background, typography, motion).</li>
 </ul>
-<p>Spec for the CV contractor: <code>spec/{API,METRICS,WS_PROTOCOL}.md</code> — an in-house WS protocol contract so the CV team can work independently.</p>
+<p>Spec for the CV contractor: an internal <code>spec/{API,METRICS,WS_PROTOCOL}.md</code> — an in-house WS protocol contract so the CV team can work independently of the ML side.</p>
 <h2 id="td-main-thread-hang-diagnostics">TD main-thread hang: diagnostics</h2>
-<p>From production (memory <code>project_td_audioreact_hang</code>): <code>Clode_React.toe</code> hangs on <code>:44444</code> / <code>:7878</code> even <strong>without</strong> a WS client.</p>
-<p>Checklist (mirrors the diagnostics in memory):</p>
+<p>Known issue: a TD project hangs on a WS port (typically <code>:44444</code> / <code>:7878</code>) even <strong>without</strong> an active WS client.</p>
+<p>Checklist:</p>
 <ol>
 <li><strong>par_bindings</strong> — are all parameters resolved? A hanging bind on a missing operator kills the main thread.</li>
 <li><strong>pack_json</strong> — is invalid JSON being parsed synchronously? Move it into <code>td.run('...', delayFrames=1)</code>.</li>

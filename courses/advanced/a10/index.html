@@ -11,7 +11,7 @@
 <p>Архитектура контейнеров в .toe:</p>
 <pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>INPUT  (subcontainer)   audio in CHOP + analyzer CHOPs</span></span>
 <span class="line"><span>OUTPUT (subcontainer)   visual rendering, projector mapping</span></span></code></pre>
-<p>Эталонный файл проекта — <code>Clode_React.toe</code> на Десктопе.</p>
+<p>Эталонный файл проекта храните в репо в <code>td-templates/audio-reactive.toe</code> — версионируется через TouchDesigner snapshot (binary, но git LFS норм).</p>
 <h2 id="признаки-аудио">Признаки аудио</h2>
 
 
@@ -80,16 +80,16 @@
 </ul>
 <p>Tier 1 — для прода (фестиваль, клиент-инсталляция). Tier 2 — для прототипа или AV-вечера, где допустима небольшая задержка.</p>
 <p>Также есть <strong>55 factory presets</strong> — отправная точка для скетча, не финальный продукт.</p>
-<h2 id="реальный-кейс-av-вечер-av_jam_lab_demo">Реальный кейс: AV-вечер av_jam_lab_demo</h2>
-<p>Из memory <code>project_av_jam_lab_demo</code>: серия AV-вечеров, первый демо 2026-05-08 в офис-лабе (24 часа), tdmkii + TD на 4070, инсталляции A/B/C/F.</p>
-<p>Стек:</p>
+<h2 id="кейс-av-вечер-в-офис-лабе-на-24-часа">Кейс: AV-вечер в офис-лабе на 24 часа</h2>
+<p>Типичный сценарий VJ-collective: пилотный AV-вечер на одной площадке, 4 инсталляции вокруг одного звукового концепта, день подготовки. Стек на 4070-станции (или RTX 4080 ноут):</p>
 <ul>
 <li><strong>A</strong> — звук → spectrum → 3D-частицы;</li>
 <li><strong>B</strong> — onset → trigger generative video (StreamDiffusion из A9);</li>
 <li><strong>C</strong> — envelope + centroid → цвет проекции;</li>
 <li><strong>F</strong> — голосовой вход → text → визуальная типографика (через STT — см. A11).</li>
 </ul>
-<p>Подготовка за день: загружаем 55 factory presets, выбираем ближайшие к концепции, настраиваем VB-Cable, тестируем 30 минут на живом звуке, фиксируем сетап. Без factory presets — день уходит только на компоновку базовых CHOPs.</p>
+<p>Подготовка за день: загружаем factory presets из библиотеки, выбираем ближайшие к концепции, настраиваем VB-Cable, тестируем 30 минут на живом звуке, фиксируем сетап. Без factory presets — день уходит только на компоновку базовых CHOPs.</p>
+<p>В формате «вечеров» / club nights / festival-вечеринок такой setup стандартен у студий уровня Rhizomatiks (Daito Manabe), Onyx Collective, и solo-практик уровня Memo Akten (через TouchDesigner + custom shader code). Главный навык — успеть выстроить связку под конкретный звуковой материал за репетицию длиной в часы, не дни.</p>
 <h2 id="scene-player">Scene Player</h2>
 <p>Из memory <code>project_td_audioreact_flows</code>: Scene Player — Фаза C. Это управляющий слой над flows: переключение между сценами по timeline, MIDI, OSC или горячим клавишам.</p>
 <p>Архитектура простая: один параметрический контейнер хранит активную scene, при переключении меняются routes к выходным TOPs.</p>
@@ -106,7 +106,7 @@
 <li><strong>Listen-Through забыли</strong> — публика не слышит, но видит реакцию. Заметьте сами на 30-секундном тесте перед публикой.</li>
 <li><strong>Smoothing подавляет onset</strong> — если onset CHOP сглажен, удары пропадают. Сглаживание — только на envelope, не на onset.</li>
 <li><strong>Большой буфер FFT</strong> — спектр «отстаёт». Держите 512–1024 семпла на блок FFT при 48kHz.</li>
-<li><strong>TD main-thread hang</strong> — известная проблема (memory <code>project_td_audioreact_hang</code>). Не запускайте WS-серверы в одном потоке с frame_exec.</li>
+<li><strong>TD main-thread hang</strong> — известная проблема: WS-сервер на одном потоке с <code>frame_exec</code> блокирует кадр. Не запускайте WS-серверы в одном потоке.</li>
 </ul>
 <h2 id="recap">Recap</h2>
 <ul>

@@ -57,8 +57,8 @@
 <span class="line"><span style="color:#FF79C6;--shiki-dark:#FF79C6">  -</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">Name TdrDelay </span><span style="color:#FF79C6;--shiki-dark:#FF79C6">-</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">Value </span><span style="color:#BD93F9;--shiki-dark:#BD93F9">60</span><span style="color:#FF79C6;--shiki-dark:#FF79C6"> -</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">PropertyType DWORD </span><span style="color:#FF79C6;--shiki-dark:#FF79C6">-</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">Force</span></span>
 <span class="line"><span style="color:#8BE9FD;--shiki-dark:#8BE9FD">Restart-Computer</span></span></code></pre>
 <p>After the reboot, TRT <code>load_config</code> no longer crashes. This is a required step, not a “might be useful.”</p>
-<h2 id="real-case-streamdiffusion_td-patch">Real case: streamdiffusion_td patch</h2>
-<p>From memory <code>project_streamdiffusion_td</code>: the TD + StreamDiffusion patch is almost ready; the last bug is <code>No module 'StreamDiffusion'</code> inside TD. Fix via <code>site.addsitedir()</code> in the init script.</p>
+<h2 id="typical-bug-when-bringing-up-td--streamdiffusion">Typical bug when bringing up TD + StreamDiffusion</h2>
+<p>One of the most common blockers when first wiring TD + StreamDiffusion on Windows: TouchDesigner’s Python doesn’t see the StreamDiffusion package installed in a separate venv. Symptom: importing inside TD fails with <code>No module 'StreamDiffusion'</code> despite a clean pip install. Fix — <code>site.addsitedir()</code> in the TD project’s init script.</p>
 <p>The fix:</p>
 <pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="python"><code><span class="line"><span style="color:#6272A4;--shiki-dark:#6272A4"># init.py in the TD project</span></span>
 <span class="line"><span style="color:#FF79C6;--shiki-dark:#FF79C6">import</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2"> site, sys</span></span>
@@ -93,7 +93,7 @@
 <h2 id="pitfalls">Pitfalls</h2>
 <ul>
 <li><strong>“I have a 4090, it’ll just run”</strong> — on 8 GB VRAM (4070) FLUX schnell does ~10 fps. On a 4090 it’s better, but not “no budget.” Model size and step count call the tune.</li>
-<li><strong>TD main-thread hang</strong> — a known issue (memory <code>project_td_audioreact_hang</code>): <code>Clode_React.toe</code> hangs on :44444/:7878 even without a WS client. Checklist: par_bindings / pack_json / frame_exec. Don’t diagnose by eye.</li>
+<li><strong>TD main-thread hang</strong> — a known issue: a TD project hangs on the WebSocket port (typically :44444/:7878) even without an active WS client. Checklist: par_bindings / pack_json / frame_exec. Don’t diagnose by eye.</li>
 <li><strong>Vulkan on NVIDIA drivers &#x3C;555</strong> — unstable with StreamDiffusion. Upgrade to the latest stable driver before the installation.</li>
 <li><strong>Warm model in GPU cache</strong> — the first frame after start is 500+ ms, then normal. Warm up before the public launch.</li>
 <li><strong>Overheating on long installations</strong> — 4 hours of realtime inference on a 4070 sits at 70–80 °C. Plan cooling or throttle mode.</li>

@@ -57,8 +57,8 @@
 <span class="line"><span style="color:#FF79C6;--shiki-dark:#FF79C6">  -</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">Name TdrDelay </span><span style="color:#FF79C6;--shiki-dark:#FF79C6">-</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">Value </span><span style="color:#BD93F9;--shiki-dark:#BD93F9">60</span><span style="color:#FF79C6;--shiki-dark:#FF79C6"> -</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">PropertyType DWORD </span><span style="color:#FF79C6;--shiki-dark:#FF79C6">-</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">Force</span></span>
 <span class="line"><span style="color:#8BE9FD;--shiki-dark:#8BE9FD">Restart-Computer</span></span></code></pre>
 <p>После reboot — TRT load_config не валится. Это обязательный шаг, не «может пригодится».</p>
-<h2 id="реальный-кейс-streamdiffusion_td-patch">Реальный кейс: streamdiffusion_td patch</h2>
-<p>Из memory <code>project_streamdiffusion_td</code>: патч TD + StreamDiffusion почти готов; последний баг — <code>No module 'StreamDiffusion'</code> в TD. Фикс через <code>site.addsitedir()</code> в init-скрипте.</p>
+<h2 id="типовой-баг-при-поднятии-td--streamdiffusion">Типовой баг при поднятии TD + StreamDiffusion</h2>
+<p>Один из самых частых блокеров при первом запуске связки TD + StreamDiffusion на Windows — Python в TouchDesigner не видит StreamDiffusion-пакет, установленный в отдельный venv. Симптом: при импорте в TD выпадает <code>No module 'StreamDiffusion'</code> несмотря на корректную установку через pip. Фикс — через <code>site.addsitedir()</code> в init-скрипте TD-проекта.</p>
 <p>Логика фикса:</p>
 <pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="python"><code><span class="line"><span style="color:#6272A4;--shiki-dark:#6272A4"># init.py в TD-проекте</span></span>
 <span class="line"><span style="color:#FF79C6;--shiki-dark:#FF79C6">import</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2"> site, sys</span></span>
@@ -93,7 +93,7 @@
 <h2 id="подводные-камни">Подводные камни</h2>
 <ul>
 <li><strong>«У меня 4090, всё взлетит»</strong> — на 8GB VRAM (4070) FLUX schnell идёт ~10 fps. На 4090 — лучше, но не «без бюджета». Размер модели и steps решают.</li>
-<li><strong>TD main-thread hang</strong> — известная проблема (memory <code>project_td_audioreact_hang</code>): Clode_React.toe залипает на :44444/:7878 даже без WS-клиента. Чек-лист: par_bindings / pack_json / frame_exec. Не диагностируйте на глаз.</li>
+<li><strong>TD main-thread hang</strong> — известная проблема: TD-проект залипает на WebSocket-порте (типично :44444/:7878) даже без активного WS-клиента. Чек-лист: par_bindings / pack_json / frame_exec. Не диагностируйте на глаз.</li>
 <li><strong>Vulkan на драйверах NVIDIA &#x3C;555</strong> — нестабилен с StreamDiffusion. Обновляйтесь до последнего стабильного драйвера перед инсталляцией.</li>
 <li><strong>Тёплая модель в кэше GPU</strong> — первый кадр после старта 500 ms+, дальше — нормально. Прогрейте перед публичным запуском.</li>
 <li><strong>Перегрев при длинной инсталляции</strong> — 4 часа real-time inference на 4070 — это 70–80°C. Готовьте охлаждение или режим throttle.</li>

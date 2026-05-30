@@ -66,17 +66,17 @@
 <li>Higgsfield CLI with a single ref file.</li>
 </ul>
 <p>Downside: drifts on long series. Upside: $0 setup, only the generation cost.</p>
-<h2 id="real-case-artist-lubava">Real case: artist Lubava</h2>
-<p>From <code>project_lubava_platform</code> (Lyubov Sokolova — handpan/vocals/percussion):</p>
-<p>The brief: a publication series for the artist’s React+Vite+TS platform — photos, clip previews, motion-pins for SMM.</p>
-<p>Approach: <strong>Soul ID training</strong> on 22 studio photos of the artist (varied lighting, varied angles, neutral expressions). Cost: ~$3 per session, ~5 minutes training. Result: a <code>reference_id</code> lives in the project and is reused across every generation.</p>
+<h2 id="case-a-performing-artist-with-regular-publish-cycles">Case: a performing artist with regular publish cycles</h2>
+<p>A typical scenario — a solo artist (musician, performer, dancer) runs their own brand: track covers, clip previews, motion pins for socials, documentation for the booking site. Between releases 1–3 months pass, and each round requires consistent identity (face, body) across different stylistic treatments.</p>
+<p>Approach: <strong>Soul ID training</strong> on 20–25 studio photos of the artist (varied lighting, varied angles, neutral expressions). Cost: ~$3 per session, ~5 minutes training. Result: a <code>reference_id</code> lives in the project and is reused across every generation.</p>
 <p>Stack from there:</p>
 <ul>
-<li><strong>Static</strong>: <code>text2image_soul_v2</code> + the platform’s brand tokens → a series of portraits for track covers.</li>
-<li><strong>Motion</strong>: <code>soul_cinema_studio</code> (<code>--soul-id &#x3C;id></code> + cinematic prompt) → 8-second motion pins for Instagram.</li>
-<li><strong>Live performance render</strong>: image-to-video with a hero frame from a real shoot + Soul ID to guarantee recognisability across stylised transitions.</li>
+<li><strong>Static</strong>: <code>text2image_soul_v2</code> + brand tokens → a series of portraits for track covers and posters.</li>
+<li><strong>Motion</strong>: <code>soul_cinema_studio</code> (<code>--soul-id &#x3C;id></code> + cinematic prompt) → 8-second motion pins for Instagram/TikTok.</li>
+<li><strong>Live performance render</strong>: image-to-video with a hero frame from a real concert shoot + Soul ID to guarantee recognisability across stylised transitions.</li>
 </ul>
 <p>Time for an 8-artifact series: 1 working day, ~$20–25 of generative + $3 Soul ID (the fixed-cost dissolves across hundreds of frames).</p>
+<p>Similar identity pipelines are used by artists like Holly Herndon (her Holly+ project — a publicly documented AI double for the voice), Grimes (a brand double through voice + likeness rights), Dadabots (neural-network “versions” of musicians). The principle is the same: one identity anchor + many stylistic contexts around it.</p>
 <h2 id="pitfalls">Pitfalls</h2>
 <ul>
 <li><strong>Soul ID on bad source material</strong> — if the photos all have the same lighting/angle, training produces “one frame in different poses.” Variety of source is critical.</li>

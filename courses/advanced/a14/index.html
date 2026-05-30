@@ -58,7 +58,7 @@
 <li><code>--n-gpu-layers 28</code> — слои на GPU; остальное в RAM. 28 — эмпирический максимум для 4070 8GB при IQ4_XS;</li>
 <li><code>--ctx-size 16384</code> — контекст 16k;</li>
 <li><code>--no-mmap</code> — на Windows иногда улучшает стабильность при offload;</li>
-<li><code>--host 127.0.0.1</code> — обязательно (никогда <code>0.0.0.0</code>, правило <code>feedback_no_wildcard_http_server</code>).</li>
+<li><code>--host 127.0.0.1</code> — обязательно (никогда <code>0.0.0.0</code> — это сразу открывает сервис в локальную сеть).</li>
 </ul>
 <h2 id="openai-совместимый-api">OpenAI-совместимый API</h2>
 <p>llama-server отдаёт <code>/v1/chat/completions</code> в формате OpenAI. Любой клиент работает без модификаций:</p>
@@ -78,7 +78,7 @@
 <span class="line"><span style="color:#8BE9FD;--shiki-dark:#8BE9FD">print</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">(resp.choices[</span><span style="color:#BD93F9;--shiki-dark:#BD93F9">0</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">].message.content)  </span><span style="color:#6272A4;--shiki-dark:#6272A4"># → "YES"</span></span></code></pre>
 <p>Поэтому переключение с Claude API на локальную модель — это один URL.</p>
 <h2 id="реальный-кейс-курация-и-фильтрация">Реальный кейс: курация и фильтрация</h2>
-<p>Из memory <code>feedback_local_qwen_for_analysis</code>: для курации/классификации/верификации использовать Qwen3.5-21B на <code>127.0.0.1:8080</code>, не Claude API.</p>
+<p>Практический паттерн: для курации/классификации/верификации использовать Qwen3.5-21B на <code>127.0.0.1:8080</code>, не Claude API. Стоимость на 1000 вызовов: $0 локально vs ~$2–5 через Sonnet (зависит от размера ответов).</p>
 <p>Сценарии, в которых локальный Qwen ставится по умолчанию:</p>
 <ul>
 <li>классификация поста (категория, тон, наличие ссылок);</li>
@@ -145,7 +145,7 @@
 <li><strong>llama.cpp</strong> — <a href="https://github.com/ggerganov/llama.cpp">github.com/ggerganov/llama.cpp</a>. Inference engine; <code>llama-server</code> для OpenAI API.</li>
 <li><strong>Qwen3.5 series</strong> — <a href="https://github.com/QwenLM/Qwen">github.com/QwenLM/Qwen</a>. Семейство open-weight моделей; DavidAU квантизованные варианты на HF.</li>
 <li><strong>Hugging Face — quantization guide</strong> — <a href="https://huggingface.co/docs/transformers/main/en/quantization/overview">huggingface.co/docs/transformers/main/en/quantization</a>. Что такое IQ vs Q vs K-quant, когда какая разумна.</li>
-<li><strong>Memory: project_local_qwen35</strong> — точная конфигурация боевого деплоя локального Qwen.</li>
+<li><strong>QwenLM на GitHub</strong> — <a href="https://github.com/QwenLM/Qwen">github.com/QwenLM/Qwen</a>. Семейство open-weight моделей; в README есть рекомендации по quantization и hardware.</li>
 </ul> <nav class="chapter-nav" data-astro-cid-a7sruqtr> <a href="/vibesamurai-site/courses/advanced/a13" data-astro-cid-a7sruqtr> <span class="dir" data-astro-cid-a7sruqtr>← Назад</span> <span class="title" data-astro-cid-a7sruqtr>A13 · Private RAG для архива</span> </a> <a href="/vibesamurai-site/courses/advanced/a15" data-astro-cid-a7sruqtr> <span class="dir" data-astro-cid-a7sruqtr>Дальше →</span> <span class="title" data-astro-cid-a7sruqtr>A15 · RunPod Flash + vLLM</span> </a> </nav> </main>  </div> <script type="module">
     import { gatingEnabled } from '../lib/supabase';
     import { fetchChapter } from '../lib/auth';

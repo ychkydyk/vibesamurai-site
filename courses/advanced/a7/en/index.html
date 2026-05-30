@@ -117,17 +117,18 @@
 <li>specific Gen-4 styles (a distinctive look that’s hard to reproduce in Seedance);</li>
 <li>web-only tasks (Runway’s UI is more convenient than the API).</li>
 </ul>
-<p>The <code>runway_queue</code> pipeline (memory <code>project_runway_queue</code>) is a Runway video orchestrator over web-Playwright by default, with the Dev API as fallback. Non-aggressive: pauses between tasks, no parallel tabs.</p>
-<h2 id="real-case-svib-review">Real case: svib-review</h2>
-<p>From production (memory <code>project_svib_review</code>): 3 motion variants of one concept (Crimean Bridge, WEDOIT brand) for client review.</p>
+<p>A Runway video orchestrator is typically a web-Playwright pipeline by default, with the Dev API as fallback. Non-aggressive: pauses between tasks, no parallel tabs.</p>
+<h2 id="case-3-motion-variants-for-client-review">Case: 3 motion variants for client review</h2>
+<p>A typical creative-agency task — show the client 3 variants of one motion concept before production. I’ll illustrate with a generic brief: a brand needs an 8-second animation of an architectural object for the baseline landing series.</p>
 <p>Stack:</p>
 <ul>
 <li><strong>Hero image</strong> — FLUX 2 on brand tokens (see A5);</li>
 <li><strong>3 motion variants</strong> — Seedance 2.0 image-to-video, image = hero, different camera prompts (slow push-in / static / drone arc);</li>
-<li><strong>Preview assembly</strong> — static site templated from flag-review (memory <code>project_flag_review</code>) on Cloudflare Pages + Worker + KV for likes and comments;</li>
-<li><strong>Deploy</strong> — <code>svib-review.pages.dev</code>, reuses the flag-review Worker.</li>
+<li><strong>Preview assembly</strong> — static site templated from a review-gallery skeleton on Cloudflare Pages + Worker + KV for likes and client comments; the template clones to a new client in 30 minutes.</li>
+<li><strong>Deploy</strong> — a subdomain on <code>*.pages.dev</code>, dedicated Worker per review with rate-limiting on likes.</li>
 </ul>
 <p>Time from brief to client link: 3–4 hours. Cost of generative for the final Seedance clips: 3 × ~8 seconds × ~$0.27 ≈ $6.5 + ~$0.03 for the FLUX 2 hero (1 MP) ≈ $6.5. If drafts run on Kling 3.0, add small change.</p>
+<p>The format “three motion variants on a single page with like/comment threads” is the de facto standard for client-review motion pitches in 2024–2026, used by studios at the level of Field.io, Universal Everything, and ManvsMachine.</p>
 <h2 id="tokenomics-gate-mandatory">Tokenomics gate (mandatory)</h2>
 <p>Video is the most expensive modality. Compute the cost every time:</p>
 <pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="python"><code><span class="line"><span style="color:#FF79C6;--shiki-dark:#FF79C6">def</span><span style="color:#50FA7B;--shiki-dark:#50FA7B"> estimate_video</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">(</span><span style="color:#FFB86C;--shiki-light-font-style:italic;--shiki-dark:#FFB86C;--shiki-dark-font-style:italic">engine</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">:</span><span style="color:#8BE9FD;--shiki-light-font-style:italic;--shiki-dark:#8BE9FD;--shiki-dark-font-style:italic"> str</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">, </span><span style="color:#FFB86C;--shiki-light-font-style:italic;--shiki-dark:#FFB86C;--shiki-dark-font-style:italic">clips</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">:</span><span style="color:#8BE9FD;--shiki-light-font-style:italic;--shiki-dark:#8BE9FD;--shiki-dark-font-style:italic"> int</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">, </span><span style="color:#FFB86C;--shiki-light-font-style:italic;--shiki-dark:#FFB86C;--shiki-dark-font-style:italic">sec_per_clip</span><span style="color:#FF79C6;--shiki-dark:#FF79C6">:</span><span style="color:#8BE9FD;--shiki-light-font-style:italic;--shiki-dark:#8BE9FD;--shiki-dark-font-style:italic"> float</span><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">):</span></span>

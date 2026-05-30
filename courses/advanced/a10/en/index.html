@@ -11,7 +11,7 @@
 <p>Container layout in the <code>.toe</code>:</p>
 <pre class="astro-code astro-code-themes dracula dracula" style="background-color:#282A36;--shiki-dark-bg:#282A36;color:#F8F8F2;--shiki-dark:#F8F8F2; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>INPUT  (subcontainer)   audio in CHOP + analyzer CHOPs</span></span>
 <span class="line"><span>OUTPUT (subcontainer)   visual rendering, projector mapping</span></span></code></pre>
-<p>Reference project file — <code>Clode_React.toe</code> on the desktop.</p>
+<p>Keep the reference project file in the repo at <code>td-templates/audio-reactive.toe</code> — versioned via TouchDesigner snapshot (binary, but git LFS works fine).</p>
 <h2 id="audio-features">Audio features</h2>
 
 
@@ -80,16 +80,16 @@
 </ul>
 <p>Tier 1 — for production (a festival, a client install). Tier 2 — for a prototype or an AV evening where a small delay is acceptable.</p>
 <p>There are also <strong>55 factory presets</strong> — a starting sketch, not the finished product.</p>
-<h2 id="real-case-av_jam_lab_demo-av-evening">Real case: av_jam_lab_demo AV evening</h2>
-<p>From memory <code>project_av_jam_lab_demo</code>: a series of AV evenings, the first demo on 2026-05-08 in the office lab (24-hour event), tdmkii + TD on a 4070, installations A/B/C/F.</p>
-<p>Stack:</p>
+<h2 id="case-a-24-hour-office-lab-av-evening">Case: a 24-hour office-lab AV evening</h2>
+<p>A typical VJ-collective scenario: a pilot AV evening on one venue, 4 installations around one sonic concept, a day of preparation. Stack on a 4070 workstation (or RTX 4080 laptop):</p>
 <ul>
 <li><strong>A</strong> — sound → spectrum → 3D particles;</li>
 <li><strong>B</strong> — onset → trigger generative video (StreamDiffusion from A9);</li>
 <li><strong>C</strong> — envelope + centroid → projection colour;</li>
 <li><strong>F</strong> — voice input → text → visual typography (via STT — see A11).</li>
 </ul>
-<p>Day-of prep: load 55 factory presets, pick the closest matches to the concept, set up VB-Cable, test for 30 minutes on a live signal, freeze the setup. Without the factory presets you spend the whole day on basic CHOP plumbing.</p>
+<p>Day-of prep: load factory presets from the library, pick the closest matches to the concept, set up VB-Cable, test for 30 minutes on a live signal, freeze the setup. Without the factory presets you spend the whole day on basic CHOP plumbing.</p>
+<p>In the “evenings” / club nights / festival format this setup is standard at studios like Rhizomatiks (Daito Manabe), Onyx Collective, and solo practitioners like Memo Akten (via TouchDesigner + custom shader code). The main skill is being able to wire the chain to the specific sonic material in rehearsal hours, not days.</p>
 <h2 id="scene-player">Scene Player</h2>
 <p>From memory <code>project_td_audioreact_flows</code>: Scene Player is Phase C. It’s a control layer on top of the flows — switching scenes via timeline, MIDI, OSC, or hotkeys.</p>
 <p>The architecture is simple: one parameter container holds the active scene; switching changes the routes to the output TOPs.</p>
@@ -106,7 +106,7 @@
 <li><strong>Forgot Listen-Through</strong> — the audience hears nothing but sees the reaction. Catch this in a 30-second test before the public.</li>
 <li><strong>Smoothing kills onset</strong> — if you smooth the onset CHOP, the hits disappear. Smooth the envelope, not the onset.</li>
 <li><strong>Big FFT buffer</strong> — the spectrum “lags.” Keep 512–1024 samples per FFT block at 48 kHz.</li>
-<li><strong>TD main-thread hang</strong> — a known issue (memory <code>project_td_audioreact_hang</code>). Don’t run WS servers on the same thread as <code>frame_exec</code>.</li>
+<li><strong>TD main-thread hang</strong> — a known issue: a WS server on the same thread as <code>frame_exec</code> blocks the frame. Don’t run WS servers on the same thread.</li>
 </ul>
 <h2 id="recap">Recap</h2>
 <ul>

@@ -48,9 +48,9 @@
 <span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    }</span></span>
 <span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">  }</span></span>
 <span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">}</span></span></code></pre>
-<p>Rule (memory <code>feedback_mcp_panel_sync</code>): on any change to <code>mcpServers</code> in <code>~/.claude.json</code>, synchronously update <code>C:\Claude\mcp-admin\mcps.json</code> — that’s the control panel.</p>
+<p>Rule: on any change to <code>mcpServers</code> in <code>~/.claude.json</code>, synchronously update the MCP control panel (typical location — <code>mcp-admin/mcps.json</code> next to the project or in the studio’s tooling repo).</p>
 <h2 id="security-audit-for-a-third-party-mcp">Security audit for a third-party MCP</h2>
-<p>The main rule (memory <code>feedback_comfyui_node_security</code>): <strong>before installing any third-party MCP / custom node</strong> — a mandatory check:</p>
+<p>The main rule: <strong>before installing any third-party MCP / custom node</strong> — a mandatory check:</p>
 <ol>
 <li><strong>GitHub link to the source</strong>. Not “tried it, it worked,” but a concrete repo.</li>
 <li><strong>Code audit</strong>:
@@ -65,7 +65,7 @@
 </li>
 <li><strong>Explicit “yes” from the user</strong>. Not “I see a green logo, fine.”</li>
 </ol>
-<p>For skills additionally (<code>feedback_skill_install_no_y</code>, <code>feedback_skill_install_audit</code>):</p>
+<p>For skills additionally:</p>
 <ul>
 <li><code>npx skills add</code> always <strong>without</strong> <code>-y</code>, manual confirmation;</li>
 <li>read <code>SKILL.md</code> in full — look for hidden directives, exfiltration, zero-width chars, transitive installers.</li>
@@ -86,7 +86,7 @@
 <span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">}</span></span></code></pre>
 <p>Allow-list, not “everything allowed.” This is a Middle rule (M4 — Tool inventory &#x26; permissions), but studios slack on it for their own MCPs in particular. Don’t.</p>
 <h2 id="real-case-mcp-admin-panel">Real case: MCP admin panel</h2>
-<p>From memory <code>project_mcp_setup</code>: 5 active MCPs (fs, playwright, github, comfyui, davinci) + the panel at <code>C:\Claude\mcp-admin\</code> + <code>GUIDE.md</code>.</p>
+<p>A typical configuration for one studio: 5 active MCPs (fs, playwright, github, comfyui, davinci) + a control panel (<code>mcp-admin/</code>) + a <code>GUIDE.md</code> describing each node.</p>
 <p>Architecture:</p>
 <ul>
 <li><code>mcps.json</code> — single source of truth for installed MCPs;</li>
@@ -125,7 +125,7 @@
 <li><strong>Model Context Protocol — Spec 2025-11-25</strong> — <a href="https://modelcontextprotocol.io/specification/2025-11-25">modelcontextprotocol.io/specification/2025-11-25</a>. Current spec and the Streamable HTTP transport.</li>
 <li><strong>MCP Python SDK</strong> — <a href="https://github.com/modelcontextprotocol/python-sdk">github.com/modelcontextprotocol/python-sdk</a>. Official SDK with FastMCP framework.</li>
 <li><strong>MCP server examples</strong> — <a href="https://github.com/modelcontextprotocol/servers">github.com/modelcontextprotocol/servers</a>. Reference servers (fs, github, sqlite, etc.).</li>
-<li><strong>Memory: project_mcp_setup</strong> — real configuration of the studio MCP stack with the admin panel.</li>
+<li><strong>Anthropic — Claude Code MCP</strong> — <a href="https://code.claude.com/docs/en/mcp">code.claude.com/docs/en/mcp</a>. Registration, allow-list, debug.</li>
 </ul> <nav class="chapter-nav" data-astro-cid-a7sruqtr> <a href="/vibesamurai-site/courses/advanced/a15/en" data-astro-cid-a7sruqtr> <span class="dir" data-astro-cid-a7sruqtr>← Back</span> <span class="title" data-astro-cid-a7sruqtr>A15 · RunPod Flash + vLLM</span> </a> <a href="/vibesamurai-site/courses/advanced/a17/en" data-astro-cid-a7sruqtr> <span class="dir" data-astro-cid-a7sruqtr>Next →</span> <span class="title" data-astro-cid-a7sruqtr>A17 · Token economics across modalities</span> </a> </nav> </main>  </div> <script type="module">
     import { gatingEnabled } from '../lib/supabase';
     import { fetchChapter } from '../lib/auth';

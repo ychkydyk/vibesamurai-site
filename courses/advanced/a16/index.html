@@ -48,9 +48,9 @@
 <span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">    }</span></span>
 <span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">  }</span></span>
 <span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">}</span></span></code></pre>
-<p>Правило (memory <code>feedback_mcp_panel_sync</code>): при любом изменении <code>mcpServers</code> в <code>~/.claude.json</code> синхронно править <code>C:\Claude\mcp-admin\mcps.json</code> — это панель управления.</p>
+<p>Правило: при любом изменении <code>mcpServers</code> в <code>~/.claude.json</code> синхронно править панель управления MCP (типовая локация — <code>mcp-admin/mcps.json</code> рядом с проектом или в студийном tooling-репо).</p>
 <h2 id="security-audit-стороннего-mcp">Security audit стороннего MCP</h2>
-<p>Главное правило (memory <code>feedback_comfyui_node_security</code>): <strong>перед установкой любого стороннего MCP/custom node</strong> — обязательный чек:</p>
+<p>Главное правило: <strong>перед установкой любого стороннего MCP/custom node</strong> — обязательный чек:</p>
 <ol>
 <li><strong>GitHub-ссылка на код</strong>. Не «попробовал, поработало» — а конкретный репо.</li>
 <li><strong>Аудит кода</strong>:
@@ -65,7 +65,7 @@
 </li>
 <li><strong>Явное «да» от пользователя</strong>. Не «вижу зелёный логотип — норм».</li>
 </ol>
-<p>Дополнительно для skill (<code>feedback_skill_install_no_y</code>, <code>feedback_skill_install_audit</code>):</p>
+<p>Дополнительно для skill:</p>
 <ul>
 <li><code>npx skills add</code> всегда <strong>без</strong> <code>-y</code>, ручное подтверждение;</li>
 <li>читаем <code>SKILL.md</code> целиком — ищем скрытые директивы, exfiltration, zero-width chars, транзитивные установщики.</li>
@@ -86,7 +86,7 @@
 <span class="line"><span style="color:#F8F8F2;--shiki-dark:#F8F8F2">}</span></span></code></pre>
 <p>Allow-list, не «разрешено всё». Это правило Middle (M4 — Tool inventory &#x26; permissions), но именно на собственных MCP студия часто ленится — а зря.</p>
 <h2 id="реальный-кейс-mcp-админка">Реальный кейс: MCP-админка</h2>
-<p>Из memory <code>project_mcp_setup</code>: 5 активных MCP (fs, playwright, github, comfyui, davinci) + панель <code>C:\Claude\mcp-admin\</code> + <code>GUIDE.md</code>.</p>
+<p>Типичная конфигурация для одной студии: 5 активных MCP (fs, playwright, github, comfyui, davinci) + панель управления (<code>mcp-admin/</code>) + <code>GUIDE.md</code> с описанием каждого узла.</p>
 <p>Архитектура:</p>
 <ul>
 <li><code>mcps.json</code> — единственная источник правды о подключённых MCP;</li>
@@ -125,7 +125,7 @@
 <li><strong>Model Context Protocol — Spec</strong> — <a href="https://modelcontextprotocol.io/">modelcontextprotocol.io</a>. Базовый протокол, server SDKs (Python, TS).</li>
 <li><strong>MCP server examples</strong> — <a href="https://github.com/modelcontextprotocol/servers">github.com/modelcontextprotocol/servers</a>. Готовые серверы (fs, github, sqlite и др.) как референс.</li>
 <li><strong>Anthropic — Claude Code MCP guide</strong> — <a href="https://code.claude.com/docs/en/mcp">code.claude.com/docs/en/mcp</a>. Регистрация, allow-list, debugging.</li>
-<li><strong>Memory: project_mcp_setup</strong> — реальная конфигурация студийного MCP-стека с админкой.</li>
+<li><strong>Anthropic — Claude Code MCP</strong> — <a href="https://code.claude.com/docs/en/mcp">code.claude.com/docs/en/mcp</a>. Регистрация, allow-list, дебаг.</li>
 </ul> <nav class="chapter-nav" data-astro-cid-a7sruqtr> <a href="/vibesamurai-site/courses/advanced/a15" data-astro-cid-a7sruqtr> <span class="dir" data-astro-cid-a7sruqtr>← Назад</span> <span class="title" data-astro-cid-a7sruqtr>A15 · RunPod Flash + vLLM</span> </a> <a href="/vibesamurai-site/courses/advanced/a17" data-astro-cid-a7sruqtr> <span class="dir" data-astro-cid-a7sruqtr>Дальше →</span> <span class="title" data-astro-cid-a7sruqtr>A17 · Token economics через модальности</span> </a> </nav> </main>  </div> <script type="module">
     import { gatingEnabled } from '../lib/supabase';
     import { fetchChapter } from '../lib/auth';
